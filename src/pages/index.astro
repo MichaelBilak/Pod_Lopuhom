@@ -97,6 +97,6 @@ import { products } from "../data/products";
       </div>
     </section>
   </main>
-  <script type="module" src="/src/scripts/activeSection.ts"></script>
-  <script type="module" src="/src/scripts/revealProducts.ts"></script>
+  <script type="module" src={Astro.resolve("../scripts/activeSection.ts")}></script>
+  <script type="module" src={Astro.resolve("../scripts/revealProducts.ts")}></script>
 </BaseLayout>
