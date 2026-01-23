@@ -25,13 +25,13 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-.reveal-item {
+.reveal-ready .reveal-item {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 500ms ease, transform 500ms ease;
 }
 
-.reveal-item.is-visible {
+.reveal-ready .reveal-item.is-visible {
   opacity: 1;
   transform: translateY(0);
 }

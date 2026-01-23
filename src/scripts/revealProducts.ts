@@ -1,3 +1,5 @@
+document.documentElement.classList.add("reveal-ready");
+
 const revealItems = Array.from(
   document.querySelectorAll<HTMLElement>("[data-reveal]")
 );
