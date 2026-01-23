@@ -10,7 +10,7 @@ import { products } from "../data/products";
   <Topbar />
   <Sidebar />
   <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-20 pt-12 md:ml-[260px]">
-    <section id="top" class="space-y-8">
+    <section id="top" class="section-reveal space-y-8">
       <div class="max-w-2xl space-y-4">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-muted">
           Handmade collection
@@ -50,7 +50,7 @@ import { products } from "../data/products";
       </div>
     </section>
 
-    <section id="about" class="grid gap-10 md:grid-cols-[280px,1fr]">
+    <section id="about" class="section-reveal grid gap-10 md:grid-cols-[280px,1fr]">
       <div class="h-56 rounded-3xl bg-panel"></div>
       <div class="space-y-4">
         <h2 class="text-2xl font-semibold">About</h2>
@@ -66,7 +66,7 @@ import { products } from "../data/products";
       </div>
     </section>
 
-    <section id="catalog" class="space-y-8">
+    <section id="catalog" class="section-reveal space-y-8">
       <div class="space-y-2">
         <h2 class="text-2xl font-semibold">Catalog</h2>
         <p class="text-base text-muted">
@@ -81,7 +81,7 @@ import { products } from "../data/products";
       </div>
     </section>
 
-    <section id="shipping" class="space-y-6">
+    <section id="shipping" class="section-reveal space-y-6">
       <h2 class="text-2xl font-semibold">Shipping</h2>
       <ul class="space-y-3 text-base text-muted">
         <li>Regions: Italy and nearby European destinations.</li>
@@ -90,7 +90,7 @@ import { products } from "../data/products";
       </ul>
     </section>
 
-    <section id="contacts" class="space-y-6">
+    <section id="contacts" class="section-reveal space-y-6">
       <h2 class="text-2xl font-semibold">Contacts</h2>
       <div class="flex w-full justify-center md:justify-start">
         <ContactCTA />
@@ -100,5 +100,6 @@ import { products } from "../data/products";
   <script type="module">
     import "../scripts/activeSection.ts";
     import "../scripts/revealProducts.ts";
+    import "../scripts/revealSections.ts";
   </script>
 </BaseLayout>
