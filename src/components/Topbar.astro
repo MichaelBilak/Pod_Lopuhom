@@ -1,0 +1,44 @@
+---
+const navLinks = [
+  { label: "ABOUT", href: "#about" },
+  { label: "CATALOG", href: "#catalog" },
+  { label: "SHIPPING", href: "#shipping" },
+  { label: "CONTACTS", href: "#contacts" },
+];
+---
+<header class="md:hidden sticky top-0 z-50 border-b border-border bg-white">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+    <a
+      href="#top"
+      class="text-lg font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+      data-nav
+    >
+      LOGO
+    </a>
+    <details class="group relative">
+      <summary
+        class="list-none rounded-full border border-border p-2 text-ink shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+        aria-label="Open navigation menu"
+      >
+        <span class="block h-0.5 w-5 bg-ink"></span>
+        <span class="mt-1.5 block h-0.5 w-5 bg-ink"></span>
+        <span class="mt-1.5 block h-0.5 w-5 bg-ink"></span>
+      </summary>
+      <nav
+        class="absolute right-0 mt-3 w-44 rounded-2xl border border-border bg-white p-4 text-xs font-semibold tracking-[0.2em] text-muted shadow-soft"
+      >
+        <div class="grid gap-3">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+              data-nav
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </details>
+  </div>
+</header>

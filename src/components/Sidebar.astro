@@ -1,0 +1,33 @@
+---
+const navLinks = [
+  { label: "ABOUT", href: "#about" },
+  { label: "CATALOG", href: "#catalog" },
+  { label: "SHIPPING", href: "#shipping" },
+  { label: "CONTACTS", href: "#contacts" },
+];
+---
+<aside
+  class="hidden md:flex fixed left-0 top-0 h-screen w-[260px] flex-col justify-between border-r border-border bg-white px-6 py-8"
+>
+  <div class="space-y-10">
+    <a
+      href="#top"
+      class="text-xl font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+      data-nav
+    >
+      LOGO
+    </a>
+    <nav class="space-y-4 text-sm font-semibold tracking-[0.2em] text-muted">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          data-nav
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+  <div></div>
+</aside>

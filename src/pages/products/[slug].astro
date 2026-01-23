@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Sidebar from "../../components/Sidebar.astro";
+import Topbar from "../../components/Topbar.astro";
+import { products } from "../../data/products";
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const message = encodeURIComponent(`Hi! I'd like to order: ${product.title}`);
+const orderLink = `https://wa.me/393331112233?text=${message}`;
+---
+<BaseLayout title={`MAMA | ${product.title}`}>
+  <Topbar />
+  <Sidebar />
+  <main class="mx-auto w-full max-w-5xl space-y-10 px-6 pb-20 pt-12 md:ml-[260px]">
+    <a
+      href="/#catalog"
+      class="text-xs font-semibold tracking-[0.2em] text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+    >
+      ← BACK TO CATALOG
+    </a>
+    <section class="grid gap-10 md:grid-cols-[360px,1fr]">
+      <div class="h-64 rounded-3xl bg-panel"></div>
+      <div class="space-y-4">
+        <h1 class="text-3xl font-semibold">{product.title}</h1>
+        <p class="text-base text-muted">{product.description}</p>
+        <p class="text-sm font-semibold text-muted">{product.price}</p>
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a
+            href={orderLink}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          >
+            Order on WhatsApp
+          </a>
+          <a
+            href="/#contacts"
+            class="inline-flex items-center justify-center rounded-full border border-border bg-white px-6 py-3 text-sm font-semibold text-ink shadow-soft transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          >
+            Contact Options
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

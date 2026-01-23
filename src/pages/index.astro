@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Topbar from "../components/Topbar.astro";
+import ProductCard from "../components/ProductCard.astro";
+import ContactCTA from "../components/ContactCTA.astro";
+import { products } from "../data/products";
+---
+<BaseLayout title="MAMA | One-Page Catalog">
+  <Topbar />
+  <Sidebar />
+  <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-20 pt-12 md:ml-[260px]">
+    <section id="top" class="space-y-8">
+      <div class="max-w-2xl space-y-4">
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-muted">
+          Handmade collection
+        </p>
+        <h1 class="text-4xl font-semibold leading-tight md:text-5xl">
+          Minimal, elegant goods crafted with care.
+        </h1>
+        <p class="text-base text-muted md:text-lg">
+          Discover a calm, curated catalog and message me directly to place an
+          order.
+        </p>
+      </div>
+      <div class="mt-12 flex w-full max-w-[360px] flex-col items-start gap-3">
+        <a
+          href="https://wa.me/393331112233"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+            <circle cx="12" cy="12" r="12" fill="#111827" />
+            <path
+              fill="#ffffff"
+              d="M17.5 6.5a7 7 0 0 0-11.9 5.6L5 19l3-1a7 7 0 0 0 9.5-6.5 7 7 0 0 0-0.1-1 7 7 0 0 0-0.9-3zm-5.6 10.3c-1.1 0-2.2-.3-3.1-.9l-.2-.1-1.8.6.6-1.7-.1-.2a5 5 0 1 1 4.6 2.3zm3-3.5c-.1-.1-.8-.4-.9-.4-.1 0-.3-.1-.4.1l-.6.6c-.1.1-.2.1-.4.1-.1-.1-.7-.3-1.4-1-.5-.4-.9-1-1-1.1-.1-.2 0-.3.1-.4l.3-.4c.1-.1.1-.2.2-.3.1-.1 0-.2 0-.3 0-.1-.4-1.1-.6-1.4-.1-.3-.3-.3-.4-.3h-.3c-.1 0-.3 0-.5.2-.2.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.1 1.4 2.1 3.4 2.9.5.2.9.3 1.1.4.5.1.9.1 1.2.1.4-.1.9-.4 1-.8.2-.4.2-.7.1-.7-.1-.1-.1-.1-.3-.2z"
+            />
+          </svg>
+          Message on WhatsApp
+        </a>
+        <a
+          href="https://t.me/your_username"
+          target="_blank"
+          rel="noreferrer"
+          class="text-sm font-semibold text-slate-500 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+        >
+          or message on Telegram →
+        </a>
+      </div>
+    </section>
+
+    <section id="about" class="grid gap-10 md:grid-cols-[280px,1fr]">
+      <div class="h-56 rounded-3xl bg-panel"></div>
+      <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">About</h2>
+        <p class="text-base text-muted">
+          This is a calm introduction about the brand, the craft, and the care
+          behind each order. Share a short story, values, or what makes the
+          pieces special.
+        </p>
+        <p class="text-base text-muted">
+          Keep the text warm and concise, highlighting the handmade nature and
+          personal attention to every request.
+        </p>
+      </div>
+    </section>
+
+    <section id="catalog" class="space-y-8">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-semibold">Catalog</h2>
+        <p class="text-base text-muted">
+          Choose your favorites from the current selection and order directly
+          via WhatsApp.
+        </p>
+      </div>
+      <div class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3">
+        {products.map((product) => (
+          <ProductCard {...product} />
+        ))}
+      </div>
+    </section>
+
+    <section id="shipping" class="space-y-6">
+      <h2 class="text-2xl font-semibold">Shipping</h2>
+      <ul class="space-y-3 text-base text-muted">
+        <li>Regions: Italy and nearby European destinations.</li>
+        <li>Timing: Dispatch within 2-4 business days after confirmation.</li>
+        <li>Cost: Calculated based on destination and order size.</li>
+      </ul>
+    </section>
+
+    <section id="contacts" class="space-y-6">
+      <h2 class="text-2xl font-semibold">Contacts</h2>
+      <div class="flex w-full justify-center md:justify-start">
+        <ContactCTA />
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/src/scripts/activeSection.ts"></script>
+  <script type="module" src="/src/scripts/revealProducts.ts"></script>
+</BaseLayout>
