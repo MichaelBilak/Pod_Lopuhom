@@ -27,11 +27,12 @@ button:focus-visible {
 
 .reveal-ready .reveal-item {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 500ms ease, transform 500ms ease;
+  transform: translateY(32px) scale(0.98);
+  transition: opacity 700ms ease, transform 700ms ease;
+  will-change: opacity, transform;
 }
 
 .reveal-ready .reveal-item.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
