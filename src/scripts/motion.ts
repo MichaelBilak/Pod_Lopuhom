@@ -4,8 +4,6 @@ declare global {
   }
 }
 
-document.documentElement.classList.add("motion-ready");
-
 const DEBUG_MOTION = Boolean(window.DEBUG_MOTION);
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
@@ -118,6 +116,8 @@ const setupReveal = () => {
   if (!items.length) {
     return;
   }
+
+  document.documentElement.classList.add("motion-ready");
 
   if (prefersReducedMotion) {
     items.forEach((item) => item.classList.add("is-visible"));
