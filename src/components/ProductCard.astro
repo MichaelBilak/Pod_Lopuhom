@@ -12,12 +12,12 @@ const orderLink = `https://wa.me/393331112233?text=${message}`;
 const detailsLink = `/products/${slug}`;
 ---
 <article
-  class="reveal-item flex h-[300px] flex-col rounded-3xl border border-border bg-white p-4 shadow-soft sm:h-[340px] sm:p-5 lg:h-[360px] lg:p-6"
-  data-reveal
+  class="motion-card motion-reveal flex h-[300px] flex-col rounded-3xl border border-border bg-white p-4 shadow-soft sm:h-[340px] sm:p-5 lg:h-[360px] lg:p-6"
+  data-motion-reveal
 >
   <a
     href={detailsLink}
-    class="mb-4 h-28 rounded-2xl bg-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 sm:mb-5 sm:h-36 lg:h-40"
+    class="motion-card__media mb-4 h-28 rounded-2xl bg-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 sm:mb-5 sm:h-36 lg:h-40"
     aria-label={`View details for ${title}`}
   ></a>
   <div class="flex-1 space-y-2 sm:space-y-3">
@@ -35,7 +35,7 @@ const detailsLink = `/products/${slug}`;
     <p class="text-xs text-muted sm:text-sm">{description}</p>
     <a
       href={detailsLink}
-      class="text-xs font-semibold tracking-[0.2em] text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+      class="motion-button text-xs font-semibold tracking-[0.2em] text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
     >
       VIEW DETAILS
     </a>

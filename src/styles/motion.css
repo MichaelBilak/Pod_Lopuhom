@@ -1,0 +1,178 @@
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fast: 200ms;
+  --motion-medium: 360ms;
+  --motion-slow: 640ms;
+  --motion-blur: 4px;
+}
+
+.motion-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: #111827;
+  transition: transform var(--motion-fast) linear;
+  will-change: transform;
+}
+
+.motion-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(17, 24, 39, 0.06);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.motion-overlay.is-active {
+  opacity: 1;
+}
+
+.motion-nav-shell {
+  transition: background-color var(--motion-medium) var(--motion-ease),
+    box-shadow var(--motion-medium) var(--motion-ease),
+    backdrop-filter var(--motion-medium) var(--motion-ease);
+  backdrop-filter: blur(0);
+}
+
+.motion-nav-shell.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+}
+
+.motion-nav {
+  position: relative;
+}
+
+.motion-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--motion-fast) ease;
+  text-decoration: none;
+}
+
+.motion-nav-link[data-active="true"] {
+  color: #111827;
+}
+
+.motion-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: #111827;
+  opacity: 0;
+  transform: scaleX(0.6);
+  transform-origin: left;
+  transition: opacity var(--motion-fast) ease, transform var(--motion-fast) ease;
+}
+
+.motion-nav-link:hover::after,
+.motion-nav-link[data-active="true"]::after {
+  opacity: 0.6;
+  transform: scaleX(1);
+}
+
+.motion-nav-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: #111827;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--motion-medium) var(--motion-ease),
+    width var(--motion-medium) var(--motion-ease),
+    opacity var(--motion-fast) ease;
+  will-change: transform, width;
+}
+
+.motion-nav-indicator.is-visible {
+  opacity: 1;
+}
+
+.motion-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(var(--motion-blur));
+  transition: opacity var(--motion-slow) var(--motion-ease),
+    transform var(--motion-slow) var(--motion-ease),
+    filter var(--motion-slow) var(--motion-ease);
+  will-change: opacity, transform, filter;
+}
+
+.motion-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.motion-card {
+  transition: transform var(--motion-medium) var(--motion-ease),
+    box-shadow var(--motion-medium) var(--motion-ease);
+  will-change: transform, box-shadow;
+}
+
+.motion-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.motion-card__media {
+  transition: transform var(--motion-slow) var(--motion-ease);
+  will-change: transform;
+}
+
+.motion-card:hover .motion-card__media {
+  transform: scale(1.02);
+}
+
+.motion-button {
+  transition: transform 140ms ease, box-shadow var(--motion-medium) ease,
+    background-color var(--motion-medium) ease, color var(--motion-medium) ease;
+}
+
+.motion-button:active {
+  transform: translateY(1px);
+}
+
+.motion-parallax {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-progress,
+  .motion-overlay,
+  .motion-nav-shell,
+  .motion-nav-link,
+  .motion-nav-indicator,
+  .motion-reveal,
+  .motion-card,
+  .motion-card__media,
+  .motion-button,
+  .motion-parallax {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .motion-reveal {
+    opacity: 1;
+  }
+
+  .motion-overlay {
+    opacity: 0 !important;
+  }
+}
