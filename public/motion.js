@@ -220,6 +220,9 @@
 
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+    document.querySelectorAll("details").forEach((details) => {
+      details.addEventListener("toggle", requestUpdate);
+    });
     requestUpdate();
   };
 

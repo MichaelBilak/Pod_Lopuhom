@@ -52,6 +52,20 @@
   position: relative;
 }
 
+details > [data-nav-group] {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+details[open] > [data-nav-group] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 .motion-nav-link {
   position: relative;
   display: inline-flex;
