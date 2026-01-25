@@ -104,26 +104,17 @@
   opacity: 1;
 }
 
-.motion-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-.motion-ready .motion-reveal {
+.reveal {
   opacity: 0;
-  transform: translateY(18px);
-  filter: blur(var(--motion-blur));
+  transform: translateY(32px);
   transition: opacity var(--motion-slow) var(--motion-ease),
-    transform var(--motion-slow) var(--motion-ease),
-    filter var(--motion-slow) var(--motion-ease);
-  will-change: opacity, transform, filter;
+    transform var(--motion-slow) var(--motion-ease);
+  will-change: opacity, transform;
 }
 
-.motion-ready .motion-reveal.is-visible {
+.reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
 }
 
 .motion-card {
@@ -165,7 +156,7 @@
   .motion-nav-shell,
   .motion-nav-link,
   .motion-nav-indicator,
-  .motion-reveal,
+  .reveal,
   .motion-card,
   .motion-card__media,
   .motion-button,
@@ -175,7 +166,7 @@
     filter: none !important;
   }
 
-  .motion-reveal {
+  .reveal {
     opacity: 1;
   }
 

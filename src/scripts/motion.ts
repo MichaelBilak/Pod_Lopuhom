@@ -110,9 +110,11 @@ const setupSmoothScroll = () => {
 };
 
 const setupReveal = () => {
+  console.log("MOTION LOADED");
   const items = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-motion-reveal]")
+    document.querySelectorAll<HTMLElement>(".reveal")
   );
+  console.log("FOUND REVEALS:", items.length);
   if (!items.length) {
     return;
   }
