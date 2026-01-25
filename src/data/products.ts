@@ -1,7 +1,7 @@
 export const products = [
   {
     slug: "signature-gift-box",
-    title: "Signature Gift Box",
+    title: "Golden Meadow Earrings",
     materials: "Cotton ribbon, artisan paper",
     price: "€45",
     description: "A curated set of bestsellers with a soft, minimalist wrap.",
@@ -9,7 +9,7 @@ export const products = [
   },
   {
     slug: "seasonal-selection",
-    title: "Seasonal Selection",
+    title: "Berry Bloom Set",
     materials: "Natural fibers, seasonal accents",
     price: "€38",
     description: "Limited collection with fresh textures and subtle colors.",
@@ -17,7 +17,7 @@ export const products = [
   },
   {
     slug: "classic-collection",
-    title: "Classic Collection",
+    title: "Forest Leaf Pendant",
     materials: "Linen blend, matte finish",
     price: "€52",
     description: "Elegant lineup designed for everyday moments.",
@@ -25,7 +25,7 @@ export const products = [
   },
   {
     slug: "mini-assortment",
-    title: "Mini Assortment",
+    title: "Midnight Herb Earrings",
     materials: "Recycled card, soft wrap",
     price: "€24",
     description: "Compact set for small gifts and thoughtful surprises.",

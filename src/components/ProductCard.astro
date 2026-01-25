@@ -22,11 +22,11 @@ const { slug, title, materials, price, description, image } = Astro.props;
     data-description={description}
     data-image={image}
   >
-    <div class="motion-card__media mb-4 h-40 w-full rounded-2xl bg-panel sm:mb-5 sm:h-44 lg:h-48">
+    <div class="motion-card__media product-frame mb-4 h-40 w-full rounded-2xl bg-panel sm:mb-5 sm:h-44 lg:h-48">
       <img
         src={image}
         alt={title}
-        class="h-full w-full rounded-2xl object-cover"
+        class="h-full w-full rounded-2xl object-cover object-center"
         loading="lazy"
       />
     </div>
