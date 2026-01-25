@@ -158,6 +158,21 @@ section.reveal {
   background: #f9fafb;
 }
 
+.card-materials,
+.card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-materials {
+  -webkit-line-clamp: 1;
+}
+
+.card-description {
+  -webkit-line-clamp: 2;
+}
+
 .motion-card:hover .motion-card__media {
   transform: scale(1.02);
 }
