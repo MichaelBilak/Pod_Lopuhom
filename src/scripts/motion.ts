@@ -4,6 +4,8 @@ declare global {
   }
 }
 
+document.documentElement.classList.add("motion-ready");
+
 const DEBUG_MOTION = Boolean(window.DEBUG_MOTION);
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"

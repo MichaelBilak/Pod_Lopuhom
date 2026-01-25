@@ -105,6 +105,12 @@
 }
 
 .motion-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.motion-ready .motion-reveal {
   opacity: 0;
   transform: translateY(18px);
   filter: blur(var(--motion-blur));
@@ -114,7 +120,7 @@
   will-change: opacity, transform, filter;
 }
 
-.motion-reveal.is-visible {
+.motion-ready .motion-reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
