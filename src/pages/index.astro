@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Sidebar from "../components/Sidebar.astro";
 import Topbar from "../components/Topbar.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { products } from "../data/products";
@@ -9,8 +8,7 @@ import { products } from "../data/products";
   <div class="motion-progress" data-scroll-progress></div>
   <div class="motion-overlay" data-motion-overlay></div>
   <Topbar />
-  <Sidebar />
-  <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-20 pt-12 md:ml-[260px]">
+  <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-20 pt-12">
     <section id="works" class="reveal space-y-8" data-section tabindex="-1">
       <div class="max-w-2xl space-y-3">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-muted">

@@ -7,11 +7,11 @@ const navLinks = [
 ];
 ---
 <header
-  class="motion-nav-shell md:hidden sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur"
+  class="motion-nav-shell sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur"
   data-nav-shell
   data-scroll-offset
 >
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
     <a
       href="#works"
       class="motion-nav-link text-lg font-semibold tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
@@ -19,32 +19,20 @@ const navLinks = [
     >
       LOGO
     </a>
-    <details class="group relative">
-      <summary
-        class="list-none rounded-full border border-border p-2 text-ink shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
-        aria-label="Open navigation menu"
-      >
-        <span class="block h-0.5 w-5 bg-ink"></span>
-        <span class="mt-1.5 block h-0.5 w-5 bg-ink"></span>
-        <span class="mt-1.5 block h-0.5 w-5 bg-ink"></span>
-      </summary>
-      <nav
-        class="motion-nav absolute right-0 mt-3 w-44 rounded-2xl border border-border bg-white p-4 text-xs font-semibold tracking-[0.2em] text-muted shadow-soft"
-        data-nav-group
-      >
-        <div class="grid gap-3">
-          {navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="motion-nav-link transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
-              data-nav
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-        <span class="motion-nav-indicator" data-nav-indicator aria-hidden="true"></span>
-      </nav>
-    </details>
+    <nav
+      class="motion-nav flex flex-wrap items-center gap-4 text-xs font-semibold tracking-[0.2em] text-muted"
+      data-nav-group
+    >
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="motion-nav-link transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          data-nav
+        >
+          {link.label}
+        </a>
+      ))}
+      <span class="motion-nav-indicator" data-nav-indicator aria-hidden="true"></span>
+    </nav>
   </div>
 </header>
