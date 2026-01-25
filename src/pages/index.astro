@@ -5,7 +5,6 @@ import Topbar from "../components/Topbar.astro";
 import ProductCard from "../components/ProductCard.astro";
 import ContactCTA from "../components/ContactCTA.astro";
 import { products } from "../data/products";
-import motionUrl from "../scripts/motion.ts?url";
 ---
 <BaseLayout title="MAMA | One-Page Catalog">
   <div class="motion-progress" data-scroll-progress></div>
@@ -130,5 +129,7 @@ import motionUrl from "../scripts/motion.ts?url";
       </div>
     </section>
   </main>
-  <script type="module" src={motionUrl}></script>
+  <script type="module">
+    import "../scripts/motion.ts";
+  </script>
 </BaseLayout>
