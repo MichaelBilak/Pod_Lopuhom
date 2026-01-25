@@ -105,6 +105,11 @@
 }
 
 .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-ready .reveal {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity var(--motion-slow) var(--motion-ease),
@@ -112,7 +117,7 @@
   will-change: opacity, transform;
 }
 
-.reveal.is-visible {
+.motion-ready .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
