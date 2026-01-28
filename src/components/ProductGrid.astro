@@ -18,9 +18,9 @@ const { products } = Astro.props;
   {products.map((product) => (
     <a
       href={`/product/${product.slug}`}
-      class="group flex flex-col gap-3"
+      class="group flex flex-col gap-3 rounded-3xl border border-slate-200 p-4 transition hover:border-slate-300"
     >
-      <div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
+      <div class="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-100">
         <img
           src={product.images[0]}
           alt={product.title}
@@ -30,7 +30,11 @@ const { products } = Astro.props;
       </div>
       <div class="space-y-2 text-left">
         <p class="text-sm font-medium text-slate-900">{product.title}</p>
-        <p class="text-xs text-slate-600">{product.description}</p>
+        <p class="text-xs text-slate-600">
+          {product.description.length > 80
+            ? `${product.description.slice(0, 80)}...`
+            : product.description}
+        </p>
         <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-500">
           <span>{product.price}</span>
           <span class="text-slate-700 transition group-hover:text-slate-900">
