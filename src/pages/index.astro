@@ -39,12 +39,12 @@ import { products } from "../data/products";
   <FooterSocial />
 
   <div
-    class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/40 opacity-0 transition-opacity"
+    class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/35 opacity-0 transition-opacity duration-300"
     data-modal-backdrop
     aria-hidden="true"
   >
     <div
-      class="pointer-events-auto mx-6 w-full max-w-4xl rounded-3xl bg-white p-6 shadow-2xl"
+      class="pointer-events-auto mx-6 w-full max-w-4xl translate-y-3 scale-95 rounded-3xl border border-white/70 bg-white/95 p-6 opacity-0 shadow-[0_30px_80px_rgba(15,23,42,0.25)] transition duration-300"
       role="dialog"
       aria-modal="true"
       aria-hidden="true"
@@ -103,10 +103,13 @@ import { products } from "../data/products";
 
     const whatsappNumber = "972501234567";
 
-    const openModal = () => {
+    const openModal = (originX, originY) => {
       if (!backdrop || !modal) return;
       backdrop.classList.remove("pointer-events-none", "opacity-0");
       backdrop.classList.add("opacity-100");
+      modal.style.transformOrigin = `${originX}px ${originY}px`;
+      modal.classList.remove("opacity-0", "translate-y-3", "scale-95");
+      modal.classList.add("opacity-100", "translate-y-0", "scale-100");
       modal.setAttribute("aria-hidden", "false");
       backdrop.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -116,13 +119,15 @@ import { products } from "../data/products";
       if (!backdrop || !modal) return;
       backdrop.classList.add("pointer-events-none", "opacity-0");
       backdrop.classList.remove("opacity-100");
+      modal.classList.add("opacity-0", "translate-y-3", "scale-95");
+      modal.classList.remove("opacity-100", "translate-y-0", "scale-100");
       modal.setAttribute("aria-hidden", "true");
       backdrop.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
     };
 
     document.querySelectorAll("[data-product]").forEach((button) => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", (event) => {
         const images = JSON.parse(button.getAttribute("data-images") || "[]");
         const productTitle = button.getAttribute("data-title") || "";
         const productDescription = button.getAttribute("data-description") || "";
@@ -161,7 +166,10 @@ import { products } from "../data/products";
           });
         }
 
-        openModal();
+        const rect = modal.getBoundingClientRect();
+        const originX = event.clientX - rect.left;
+        const originY = event.clientY - rect.top;
+        openModal(originX, originY);
       });
     });
 
