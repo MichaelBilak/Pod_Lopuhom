@@ -44,47 +44,52 @@ import { products } from "../data/products";
     aria-hidden="true"
   >
     <div
-      class="pointer-events-auto mx-4 w-full max-w-4xl translate-y-3 scale-95 rounded-3xl border border-white/70 bg-white/95 p-4 opacity-0 shadow-[0_30px_80px_rgba(15,23,42,0.25)] transition duration-300 sm:mx-6 sm:max-h-[85vh] sm:overflow-y-auto sm:p-6"
+      class="pointer-events-auto mx-4 w-full max-w-4xl translate-y-3 scale-95 opacity-0 transition duration-300 sm:mx-6"
       role="dialog"
       aria-modal="true"
       aria-hidden="true"
       data-modal
     >
-      <div class="flex items-start justify-between">
-        <h2 class="text-2xl font-semibold text-slate-900" data-modal-title></h2>
-        <button
-          type="button"
-          class="text-2xl text-slate-500 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-          data-modal-close
-          aria-label="Close"
-        >
-          ×
-        </button>
-      </div>
-      <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
-        <div class="grid gap-0 md:grid-cols-[72px,1fr]">
-          <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible" data-modal-thumbs></div>
-          <div class="order-1 overflow-hidden rounded-3xl bg-slate-100">
-            <img
-              src=""
-              alt=""
-              class="h-full w-full object-cover"
-              data-modal-main
-            />
-          </div>
-        </div>
-        <div class="space-y-4">
-          <p class="text-sm text-slate-600" data-modal-description></p>
-          <p class="text-2xl font-semibold text-slate-900" data-modal-price></p>
-          <a
-            href="#"
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-            data-modal-cta
+      <div
+        class="rounded-3xl border border-white/70 bg-white/95 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.25)] sm:max-h-[85vh] sm:overflow-y-auto sm:p-6"
+        data-modal-panel
+      >
+        <div class="flex items-start justify-between">
+          <h2 class="text-2xl font-semibold text-slate-900" data-modal-title></h2>
+          <button
+            type="button"
+            class="text-2xl text-slate-500 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+            data-modal-close
+            aria-label="Close"
           >
-            Choose and message
-          </a>
+            ×
+          </button>
+        </div>
+        <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
+          <div class="grid gap-0 md:grid-cols-[72px,1fr]">
+            <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible" data-modal-thumbs></div>
+            <div class="order-1 overflow-hidden rounded-3xl bg-slate-100">
+              <img
+                src=""
+                alt=""
+                class="h-full w-full object-cover"
+                data-modal-main
+              />
+            </div>
+          </div>
+          <div class="space-y-4">
+            <p class="text-sm text-slate-600" data-modal-description></p>
+            <p class="text-2xl font-semibold text-slate-900" data-modal-price></p>
+            <a
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              data-modal-cta
+            >
+              Choose and message
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -99,6 +104,7 @@ import { products } from "../data/products";
     const mainImage = document.querySelector("[data-modal-main]");
     const thumbs = document.querySelector("[data-modal-thumbs]");
     const cta = document.querySelector("[data-modal-cta]");
+    const panel = document.querySelector("[data-modal-panel]");
     const closeBtn = document.querySelector("[data-modal-close]");
 
     const whatsappNumber = "972501234567";
@@ -174,6 +180,11 @@ import { products } from "../data/products";
     });
 
     closeBtn?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (event) => {
+      if (panel && !panel.contains(event.target)) {
+        closeModal();
+      }
+    });
     backdrop?.addEventListener("click", (event) => {
       if (event.target === backdrop) closeModal();
     });
