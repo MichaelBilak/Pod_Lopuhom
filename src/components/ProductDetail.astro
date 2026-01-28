@@ -13,13 +13,13 @@ const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 ---
 
-<section class="mx-auto grid w-full max-w-5xl gap-10 px-6 pb-20 pt-12 lg:grid-cols-[1.1fr,0.9fr]">
+<section class="mx-auto grid w-full max-w-5xl gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1.1fr,0.9fr]">
   <div class="grid gap-6 md:grid-cols-[80px,1fr]">
-    <div class="order-2 flex gap-3 md:order-1 md:flex-col">
+    <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible">
       {images.slice(0, 4).map((image, index) => (
         <button
           type="button"
-          class="group h-20 w-20 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+          class="group h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:h-20 sm:w-20"
           data-thumb
           aria-label={`View image ${index + 1}`}
         >
@@ -43,8 +43,8 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
   </div>
   <div class="flex flex-col gap-6">
     <div class="space-y-3">
-      <h1 class="text-3xl font-semibold text-slate-900">{title}</h1>
-      <p class="text-base text-slate-600">{description}</p>
+      <h1 class="text-2xl font-semibold text-slate-900 sm:text-3xl">{title}</h1>
+      <p class="text-sm text-slate-600 sm:text-base">{description}</p>
       <p class="inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
         Materials: {materials}
       </p>
@@ -54,7 +54,7 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
       href={whatsappLink}
       target="_blank"
       rel="noreferrer"
-      class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+      class="inline-flex w-full items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:w-fit sm:text-sm"
     >
       Choose and message
     </a>

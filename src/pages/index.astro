@@ -44,7 +44,7 @@ import { products } from "../data/products";
     aria-hidden="true"
   >
     <div
-      class="pointer-events-auto mx-6 w-full max-w-4xl translate-y-3 scale-95 rounded-3xl border border-white/70 bg-white/95 p-6 opacity-0 shadow-[0_30px_80px_rgba(15,23,42,0.25)] transition duration-300"
+      class="pointer-events-auto mx-4 w-full max-w-4xl translate-y-3 scale-95 rounded-3xl border border-white/70 bg-white/95 p-4 opacity-0 shadow-[0_30px_80px_rgba(15,23,42,0.25)] transition duration-300 sm:mx-6 sm:max-h-[85vh] sm:overflow-y-auto sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-hidden="true"
@@ -63,7 +63,7 @@ import { products } from "../data/products";
       </div>
       <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
         <div class="grid gap-4 md:grid-cols-[72px,1fr]">
-          <div class="order-2 flex gap-3 md:order-1 md:flex-col" data-modal-thumbs></div>
+          <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible" data-modal-thumbs></div>
           <div class="order-1 overflow-hidden rounded-3xl bg-slate-100">
             <img
               src=""
