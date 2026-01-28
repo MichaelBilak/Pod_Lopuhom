@@ -2,6 +2,7 @@
 interface Product {
   slug: string;
   title: string;
+  description: string;
   price: string;
   images: string[];
 }
@@ -27,11 +28,15 @@ const { products } = Astro.props;
           loading="lazy"
         />
       </div>
-      <div class="space-y-1 text-center">
-        <span class="sr-only">{product.title}</span>
-        <p class="text-xs uppercase tracking-[0.2em] text-slate-500">
-          {product.price}
-        </p>
+      <div class="space-y-2 text-left">
+        <p class="text-sm font-medium text-slate-900">{product.title}</p>
+        <p class="text-xs text-slate-600">{product.description}</p>
+        <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-500">
+          <span>{product.price}</span>
+          <span class="text-slate-700 transition group-hover:text-slate-900">
+            View details
+          </span>
+        </div>
       </div>
     </a>
   ))}
