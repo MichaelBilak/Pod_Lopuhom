@@ -1,0 +1,62 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  materials: string;
+  price: string;
+  images: string[];
+  whatsappNumber: string;
+}
+
+const { title, description, materials, price, images, whatsappNumber } = Astro.props;
+const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
+---
+
+<section class="mx-auto grid w-full max-w-5xl gap-10 px-6 pb-20 pt-12 lg:grid-cols-[1.1fr,0.9fr]">
+  <div class="grid gap-6 md:grid-cols-[80px,1fr]">
+    <div class="order-2 flex gap-3 md:order-1 md:flex-col">
+      {images.slice(0, 4).map((image, index) => (
+        <button
+          type="button"
+          class="group h-20 w-20 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+          data-thumb
+          aria-label={`View image ${index + 1}`}
+        >
+          <img
+            src={image}
+            alt={`${title} thumbnail ${index + 1}`}
+            class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        </button>
+      ))}
+    </div>
+    <div class="order-1 overflow-hidden rounded-3xl bg-slate-100">
+      <img
+        src={images[0]}
+        alt={title}
+        class="h-full w-full object-cover"
+        data-main-image
+      />
+    </div>
+  </div>
+  <div class="flex flex-col gap-6">
+    <div class="space-y-3">
+      <h1 class="text-3xl font-semibold text-slate-900">{title}</h1>
+      <p class="text-base text-slate-600">{description}</p>
+      <p class="inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
+        Materials: {materials}
+      </p>
+    </div>
+    <p class="text-2xl font-semibold text-slate-900">{price}</p>
+    <a
+      href={whatsappLink}
+      target="_blank"
+      rel="noreferrer"
+      class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+    >
+      Choose and message
+    </a>
+  </div>
+</section>

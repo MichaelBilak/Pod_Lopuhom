@@ -1,34 +1,58 @@
 export const products = [
   {
-    slug: "signature-gift-box",
+    slug: "golden-meadow-earrings",
     title: "Golden Meadow Earrings",
-    materials: "Cotton ribbon, artisan paper",
-    price: "€45",
-    description: "A curated set of bestsellers with a soft, minimalist wrap.",
-    image: "/images/IMG_1760.jpeg",
+    materials: "Gold-filled hoops, freshwater pearls",
+    price: "₪200",
+    description:
+      "Soft, luminous earrings made for everyday light. Each pair is finished by hand with gentle, organic details.",
+    images: [
+      "/images/IMG_1760.jpeg",
+      "/images/IMG_2607.jpeg",
+      "/images/IMG_3293.jpeg",
+      "/images/72BD87FF-ACA3-40E1-8229-B2977C24F80F.jpeg",
+    ],
   },
   {
-    slug: "seasonal-selection",
+    slug: "berry-bloom-set",
     title: "Berry Bloom Set",
-    materials: "Natural fibers, seasonal accents",
-    price: "€38",
-    description: "Limited collection with fresh textures and subtle colors.",
-    image: "/images/IMG_2607.jpeg",
+    materials: "Sterling silver, rose quartz",
+    price: "₪240",
+    description:
+      "A delicate set with soft pink accents and a refined silhouette. Light enough for daily wear, special enough for events.",
+    images: [
+      "/images/IMG_2607.jpeg",
+      "/images/IMG_1760.jpeg",
+      "/images/72BD87FF-ACA3-40E1-8229-B2977C24F80F.jpeg",
+      "/images/IMG_3293.jpeg",
+    ],
   },
   {
-    slug: "classic-collection",
+    slug: "forest-leaf-pendant",
     title: "Forest Leaf Pendant",
-    materials: "Linen blend, matte finish",
-    price: "€52",
-    description: "Elegant lineup designed for everyday moments.",
-    image: "/images/IMG_3293.jpeg",
+    materials: "Brass, green enamel",
+    price: "₪180",
+    description:
+      "Nature-inspired pendant with a matte finish and soft green tone. Designed to sit close to the heart.",
+    images: [
+      "/images/IMG_3293.jpeg",
+      "/images/IMG_1760.jpeg",
+      "/images/IMG_2607.jpeg",
+      "/images/72BD87FF-ACA3-40E1-8229-B2977C24F80F.jpeg",
+    ],
   },
   {
-    slug: "mini-assortment",
+    slug: "midnight-herb-earrings",
     title: "Midnight Herb Earrings",
-    materials: "Recycled card, soft wrap",
-    price: "€24",
-    description: "Compact set for small gifts and thoughtful surprises.",
-    image: "/images/72BD87FF-ACA3-40E1-8229-B2977C24F80F.jpeg",
+    materials: "Sterling silver, matte onyx",
+    price: "₪210",
+    description:
+      "Elegant earrings with a subtle dark stone and a soft glow. Balanced, minimal, and easy to style.",
+    images: [
+      "/images/72BD87FF-ACA3-40E1-8229-B2977C24F80F.jpeg",
+      "/images/IMG_1760.jpeg",
+      "/images/IMG_2607.jpeg",
+      "/images/IMG_3293.jpeg",
+    ],
   },
 ];

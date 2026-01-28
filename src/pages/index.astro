@@ -1,151 +1,40 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Topbar from "../components/Topbar.astro";
-import ProductCard from "../components/ProductCard.astro";
+import Nav from "../components/Nav.astro";
+import ProductGrid from "../components/ProductGrid.astro";
+import FooterSocial from "../components/FooterSocial.astro";
 import { products } from "../data/products";
 ---
-<BaseLayout title="MAMA | One-Page Catalog">
-  <div class="motion-progress" data-scroll-progress></div>
-  <div class="motion-overlay" data-motion-overlay></div>
-  <Topbar />
-  <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-20 pt-12">
-    <section id="works" class="reveal space-y-8" data-section tabindex="-1">
-      <div class="max-w-2xl space-y-3">
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-muted">
-          Catalog
-        </p>
-        <h1 class="text-3xl font-semibold leading-tight md:text-4xl">
-          A quiet feed of recent handmade pieces.
+<BaseLayout title="MAMA | Gallery">
+  <Nav />
+  <main class="mx-auto w-full max-w-5xl space-y-16 px-6 pb-20 pt-12">
+    <section class="space-y-6 text-center">
+      <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-slate-300 text-sm uppercase tracking-[0.3em] text-slate-500">
+        Logo
+      </div>
+      <div class="space-y-3">
+        <h1 class="text-3xl font-semibold text-slate-900 md:text-4xl">
+          Handmade jewelry, softly crafted in Haifa.
         </h1>
-        <p class="text-base text-muted">
-          Tap any item to see the details and order directly.
-        </p>
-      </div>
-      <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {products.map((product) => (
-          <ProductCard {...product} />
-        ))}
-      </div>
-    </section>
-
-    <section
-      id="about"
-      class="reveal grid gap-10 md:grid-cols-[280px,1fr]"
-      data-section
-      tabindex="-1"
-    >
-      <div class="h-56 rounded-3xl bg-panel"></div>
-      <div class="space-y-4">
-        <h2 class="text-2xl font-semibold">About</h2>
-        <p class="text-base text-muted">
-          This is a calm introduction about the brand, the craft, and the care
-          behind each order. Share a short story, values, or what makes the
-          pieces special.
-        </p>
-        <p class="text-base text-muted">
-          Keep the text warm and concise, highlighting the handmade nature and
-          personal attention to every request.
+        <p class="mx-auto max-w-xl text-base text-slate-600">
+          A calm collection of small-batch pieces. Choose a piece, message us,
+          and we will prepare it with care.
         </p>
       </div>
     </section>
 
-    <section
-      id="shipping"
-      class="reveal space-y-6"
-      data-section
-      tabindex="-1"
-    >
-      <h2 class="text-2xl font-semibold">Shipping</h2>
-      <ul class="space-y-3 text-base text-muted">
-        <li>Regions: Italy and nearby European destinations.</li>
-        <li>Timing: Dispatch within 2-4 business days after confirmation.</li>
-        <li>Cost: Calculated based on destination and order size.</li>
-      </ul>
+    <section id="gallery" class="space-y-8">
+      <ProductGrid products={products} />
     </section>
 
-    <section id="order" class="reveal space-y-6" data-section tabindex="-1">
-      <h2 class="text-2xl font-semibold">How to order</h2>
-      <p class="text-base text-muted">
-        To place an order, message me directly.
+    <section id="about" class="mx-auto max-w-3xl space-y-4 text-center">
+      <h2 class="text-2xl font-semibold text-slate-900">About</h2>
+      <p class="text-base text-slate-600">
+        Each piece is created by hand with attention to materials, texture, and
+        light. We keep our collections small, so every order feels personal and
+        intentional.
       </p>
-      <div class="flex w-full max-w-[360px] flex-col gap-3">
-        <a
-          href="https://wa.me/393331112233"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Message on WhatsApp"
-          class="inline-flex w-full items-center justify-center gap-3 rounded-full bg-slate-900 px-6 py-4 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
-        >
-          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-            <circle cx="12" cy="12" r="12" fill="#111827" />
-            <path
-              fill="#ffffff"
-              d="M17.5 6.5a7 7 0 0 0-11.9 5.6L5 19l3-1a7 7 0 0 0 9.5-6.5 7 7 0 0 0-0.1-1 7 7 0 0 0-0.9-3zm-5.6 10.3c-1.1 0-2.2-.3-3.1-.9l-.2-.1-1.8.6.6-1.7-.1-.2a5 5 0 1 1 4.6 2.3zm3-3.5c-.1-.1-.8-.4-.9-.4-.1 0-.3-.1-.4.1l-.6.6c-.1.1-.2.1-.4.1-.1-.1-.7-.3-1.4-1-.5-.4-.9-1-1-1.1-.1-.2 0-.3.1-.4l.3-.4c.1-.1.1-.2.2-.3.1-.1 0-.2 0-.3 0-.1-.4-1.1-.6-1.4-.1-.3-.3-.3-.4-.3h-.3c-.1 0-.3 0-.5.2-.2.2-.7.7-.7 1.7s.7 2 .8 2.1c.1.1 1.4 2.1 3.4 2.9.5.2.9.3 1.1.4.5.1.9.1 1.2.1.4-.1.9-.4 1-.8.2-.4.2-.7.1-.7-.1-.1-.1-.1-.3-.2z"
-            />
-          </svg>
-          Message on WhatsApp
-        </a>
-        <a
-          href="https://instagram.com/your_handle"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Message on Instagram"
-          class="inline-flex w-full items-center justify-center gap-3 rounded-full border border-border px-6 py-4 text-sm font-semibold text-ink transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
-        >
-          Message on Instagram
-        </a>
-      </div>
     </section>
   </main>
-  <div class="modal-backdrop" data-modal-backdrop aria-hidden="true"></div>
-  <div
-    class="modal-panel"
-    data-modal
-    role="dialog"
-    aria-modal="true"
-    aria-hidden="true"
-  >
-    <div class="modal-shell">
-      <button
-        type="button"
-        class="modal-close"
-        data-modal-close
-        aria-label="Close"
-      >
-        ×
-      </button>
-      <div class="modal-media">
-        <img src="" alt="" data-modal-image />
-      </div>
-      <div class="modal-content">
-        <p class="modal-meta" data-modal-materials></p>
-        <h2 class="modal-title" data-modal-title></h2>
-        <p class="modal-price" data-modal-price></p>
-        <p class="modal-description" data-modal-description></p>
-        <div class="modal-actions">
-          <a
-            href="https://wa.me/393331112233"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Order on WhatsApp"
-            class="modal-primary"
-            data-modal-whatsapp
-          >
-            Order on WhatsApp
-          </a>
-          <a
-            href="https://instagram.com/your_handle"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Order on Instagram"
-            class="modal-secondary"
-          >
-            Order on Instagram
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="/motion.js"></script>
-  <script type="module" src="/modal.js"></script>
+  <FooterSocial />
 </BaseLayout>

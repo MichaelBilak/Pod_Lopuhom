@@ -1,0 +1,38 @@
+---
+interface Product {
+  slug: string;
+  title: string;
+  price: string;
+  images: string[];
+}
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+<div class="grid grid-cols-2 gap-6 lg:grid-cols-3">
+  {products.map((product) => (
+    <a
+      href={`/product/${product.slug}`}
+      class="group flex flex-col gap-3"
+    >
+      <div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
+        <img
+          src={product.images[0]}
+          alt={product.title}
+          class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+          loading="lazy"
+        />
+      </div>
+      <div class="space-y-1 text-center">
+        <span class="sr-only">{product.title}</span>
+        <p class="text-xs uppercase tracking-[0.2em] text-slate-500">
+          {product.price}
+        </p>
+      </div>
+    </a>
+  ))}
+</div>

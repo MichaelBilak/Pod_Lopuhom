@@ -5,10 +5,10 @@ interface Props {
   materials: string;
   price: string;
   description: string;
-  image: string;
+  images: string[];
 }
 
-const { slug, title, materials, price, description, image } = Astro.props;
+const { slug, title, materials, price, description, images } = Astro.props;
 ---
 <article class="motion-card rounded-3xl border border-border bg-white shadow-soft">
   <button
@@ -20,11 +20,11 @@ const { slug, title, materials, price, description, image } = Astro.props;
     data-price={price}
     data-materials={materials}
     data-description={description}
-    data-image={image}
+    data-image={images[0]}
   >
     <div class="motion-card__media product-frame mb-4 h-40 w-full rounded-2xl bg-panel sm:mb-5 sm:h-44 lg:h-48">
       <img
-        src={image}
+        src={images[0]}
         alt={title}
         class="h-full w-full rounded-2xl object-cover object-center"
         loading="lazy"
