@@ -7,13 +7,13 @@ import { products } from "../data/products";
 ---
 <BaseLayout title="MAMA | Gallery">
   <Nav />
-  <main class="mx-auto w-full max-w-5xl space-y-16 px-6 pb-20 pt-12">
-    <section class="space-y-6 text-center">
-      <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-slate-300 text-sm uppercase tracking-[0.3em] text-slate-500">
+  <main class="mx-auto w-full max-w-5xl space-y-24 px-6 pb-28 pt-16">
+    <section class="space-y-8 text-center">
+      <div class="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-slate-300 text-sm uppercase tracking-[0.35em] text-slate-500">
         Logo
       </div>
-      <div class="space-y-3">
-        <h1 class="text-3xl font-semibold text-slate-900 md:text-4xl">
+      <div class="space-y-4">
+        <h1 class="text-3xl font-semibold text-slate-900 md:text-5xl">
           Handmade jewelry, softly crafted in Haifa.
         </h1>
         <p class="mx-auto max-w-xl text-base text-slate-600">
@@ -23,11 +23,11 @@ import { products } from "../data/products";
       </div>
     </section>
 
-    <section id="gallery" class="space-y-8">
-      <ProductGrid products={products} enableModal />
+    <section id="gallery" class="space-y-12">
+      <ProductGrid products={products} />
     </section>
 
-    <section id="about" class="mx-auto max-w-3xl space-y-4 text-center">
+    <section id="about" class="mx-auto max-w-3xl space-y-6 text-center">
       <h2 class="text-2xl font-semibold text-slate-900">About</h2>
       <p class="text-base text-slate-600">
         Each piece is created by hand with attention to materials, texture, and
@@ -37,140 +37,4 @@ import { products } from "../data/products";
     </section>
   </main>
   <FooterSocial />
-
-  <div
-    class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/40 opacity-0 transition-opacity"
-    data-modal-backdrop
-    aria-hidden="true"
-  >
-    <div
-      class="pointer-events-auto mx-6 w-full max-w-4xl rounded-3xl bg-white p-6 shadow-2xl"
-      role="dialog"
-      aria-modal="true"
-      aria-hidden="true"
-      data-modal
-    >
-      <div class="flex items-start justify-between">
-        <h2 class="text-2xl font-semibold text-slate-900" data-modal-title></h2>
-        <button
-          type="button"
-          class="text-2xl text-slate-500 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-          data-modal-close
-          aria-label="Close"
-        >
-          ×
-        </button>
-      </div>
-      <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
-        <div class="grid gap-4 md:grid-cols-[72px,1fr]">
-          <div class="order-2 flex gap-3 md:order-1 md:flex-col" data-modal-thumbs></div>
-          <div class="order-1 overflow-hidden rounded-3xl bg-slate-100">
-            <img
-              src=""
-              alt=""
-              class="h-full w-full object-cover"
-              data-modal-main
-            />
-          </div>
-        </div>
-        <div class="space-y-4">
-          <p class="text-sm text-slate-600" data-modal-description></p>
-          <p class="text-2xl font-semibold text-slate-900" data-modal-price></p>
-          <a
-            href="#"
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-            data-modal-cta
-          >
-            Choose and message
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const backdrop = document.querySelector("[data-modal-backdrop]");
-    const modal = document.querySelector("[data-modal]");
-    const title = document.querySelector("[data-modal-title]");
-    const description = document.querySelector("[data-modal-description]");
-    const price = document.querySelector("[data-modal-price]");
-    const mainImage = document.querySelector("[data-modal-main]");
-    const thumbs = document.querySelector("[data-modal-thumbs]");
-    const cta = document.querySelector("[data-modal-cta]");
-    const closeBtn = document.querySelector("[data-modal-close]");
-
-    const whatsappNumber = "972501234567";
-
-    const openModal = () => {
-      if (!backdrop || !modal) return;
-      backdrop.classList.remove("pointer-events-none", "opacity-0");
-      backdrop.classList.add("opacity-100");
-      modal.setAttribute("aria-hidden", "false");
-      backdrop.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    };
-
-    const closeModal = () => {
-      if (!backdrop || !modal) return;
-      backdrop.classList.add("pointer-events-none", "opacity-0");
-      backdrop.classList.remove("opacity-100");
-      modal.setAttribute("aria-hidden", "true");
-      backdrop.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-    };
-
-    document.querySelectorAll("[data-product]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const images = JSON.parse(button.getAttribute("data-images") || "[]");
-        const productTitle = button.getAttribute("data-title") || "";
-        const productDescription = button.getAttribute("data-description") || "";
-        const productPrice = button.getAttribute("data-price") || "";
-        const message = encodeURIComponent(
-          `Hi! I want to order: ${productTitle} (${productPrice}).`
-        );
-
-        if (title) title.textContent = productTitle;
-        if (description) description.textContent = productDescription;
-        if (price) price.textContent = productPrice;
-        if (mainImage) {
-          mainImage.src = images[0] || "";
-          mainImage.alt = productTitle;
-        }
-        if (cta) {
-          cta.href = `https://wa.me/${whatsappNumber}?text=${message}`;
-        }
-
-        if (thumbs) {
-          thumbs.innerHTML = "";
-          images.slice(0, 4).forEach((image, index) => {
-            const thumb = document.createElement("button");
-            thumb.type = "button";
-            thumb.className =
-              "group h-16 w-16 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2";
-            thumb.setAttribute("aria-label", `View image ${index + 1}`);
-            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
-            thumb.addEventListener("click", () => {
-              if (mainImage) {
-                mainImage.src = image;
-                mainImage.alt = productTitle;
-              }
-            });
-            thumbs.appendChild(thumb);
-          });
-        }
-
-        openModal();
-      });
-    });
-
-    closeBtn?.addEventListener("click", closeModal);
-    backdrop?.addEventListener("click", (event) => {
-      if (event.target === backdrop) closeModal();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeModal();
-    });
-  </script>
 </BaseLayout>
