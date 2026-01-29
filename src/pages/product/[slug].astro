@@ -35,11 +35,8 @@ const whatsappNumber = "972501234567";
     const imageFocus = {
       "/images/products/product_7.0.JPG": "35% 55%",
     };
-    const imageFit = {
-      "/images/products/product_13.0.JPG": "contain",
-    };
     const getObjectPosition = (src) => imageFocus[src] || "50% 50%";
-    const getObjectFit = (src) => imageFit[src] || "cover";
+    const getObjectFit = () => "contain";
 
     const setActiveThumb = (index) => {
       thumbs.forEach((thumb, thumbIndex) => {
@@ -60,7 +57,7 @@ const whatsappNumber = "972501234567";
         mainImage.src = img.src;
         mainImage.alt = img.alt.replace("thumbnail", "main");
         mainImage.style.objectPosition = getObjectPosition(img.src);
-        mainImage.style.objectFit = getObjectFit(img.src);
+        mainImage.style.objectFit = getObjectFit();
         activeIndex = index;
         setActiveThumb(index);
       }

@@ -14,11 +14,8 @@ const { slug, title, materials, price, description, images, enableModal = false 
 const imageFocus: Record<string, string> = {
   "/images/products/product_7.0.JPG": "35% 55%",
 };
-const imageFit: Record<string, string> = {
-  "/images/products/product_13.0.JPG": "contain",
-};
 const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
-const getObjectFit = (src: string) => imageFit[src] ?? "cover";
+const getObjectFit = () => "contain";
 ---
 <article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
   {enableModal ? (
@@ -36,7 +33,7 @@ const getObjectFit = (src: string) => imageFit[src] ?? "cover";
         <img
           src={images[0]}
           alt={title}
-          class="h-full w-full origin-center rounded-2xl object-cover object-center transition duration-300 group-hover:scale-[1.06]"
+          class="h-full w-full origin-center rounded-2xl object-contain object-center transition duration-300"
           style={`object-position: ${getObjectPosition(images[0])}; object-fit: ${getObjectFit(
             images[0]
           )};`}
@@ -69,7 +66,7 @@ const getObjectFit = (src: string) => imageFit[src] ?? "cover";
         <img
           src={images[0]}
           alt={title}
-          class="h-full w-full origin-center rounded-2xl object-cover object-center transition duration-300 group-hover:scale-[1.06]"
+          class="h-full w-full origin-center rounded-2xl object-contain object-center transition duration-300"
           style={`object-position: ${getObjectPosition(images[0])}; object-fit: ${getObjectFit(
             images[0]
           )};`}
