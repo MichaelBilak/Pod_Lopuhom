@@ -13,50 +13,92 @@ const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 ---
 
-<section class="mx-auto grid w-full max-w-5xl gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1.1fr,0.9fr]">
-  <div class="grid gap-6 md:grid-cols-[80px,1fr]">
-    <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible">
-      {images.slice(0, 4).map((image, index) => (
-        <button
-          type="button"
-          class="group h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:h-20 sm:w-20"
-          data-thumb
-          aria-label={`View image ${index + 1}`}
-        >
+<section class="mx-auto w-full max-w-5xl px-4 pb-24 pt-8 sm:px-6 lg:pb-16">
+  <!-- Unified gallery block with thumbnails + main image -->
+  <div class="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+    <div class="rounded-3xl border border-slate-200 bg-white/90 p-3 sm:p-4">
+      <div class="grid gap-4 md:grid-cols-[80px,1fr]">
+        <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible">
+          {images.slice(0, 4).map((image, index) => (
+            <button
+              type="button"
+              class:list={[
+                "group h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl border bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:h-20 sm:w-20",
+                index === 0
+                  ? "border-slate-900 ring-2 ring-slate-900 ring-offset-2"
+                  : "border-slate-200",
+              ]}
+              data-thumb
+              aria-label={`View image ${index + 1}`}
+              aria-current={index === 0 ? "true" : "false"}
+            >
+              <img
+                src={image}
+                alt={`${title} thumbnail ${index + 1}`}
+                class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+        <div class="order-1 aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
           <img
-            src={image}
-            alt={`${title} thumbnail ${index + 1}`}
-            class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
-            loading="lazy"
+            src={images[0]}
+            alt={title}
+            class="h-full w-full object-cover object-center"
+            data-main-image
           />
-        </button>
-      ))}
+        </div>
+      </div>
     </div>
-    <div class="order-1 aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
-      <img
-        src={images[0]}
-        alt={title}
-        class="h-full w-full object-cover object-center"
-        data-main-image
-      />
+
+    <div class="rounded-3xl border border-slate-200/70 bg-white/80 divide-y divide-slate-200/70">
+      <div class="p-4 space-y-3">
+        <h1 class="text-2xl font-semibold text-slate-900 sm:text-3xl">
+          {title}
+        </h1>
+        <p class="text-sm text-slate-600 sm:text-base">{description}</p>
+        <p class="inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
+          Materials: {materials}
+        </p>
+      </div>
+
+      <div class="p-4">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+            Price
+          </span>
+          <span class="text-2xl font-semibold text-slate-900">{price}</span>
+        </div>
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noreferrer"
+          class="mt-4 hidden w-full items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:inline-flex sm:text-sm"
+        >
+          Choose and message
+        </a>
+      </div>
     </div>
   </div>
-  <div class="flex flex-col gap-6">
-    <div class="space-y-3">
-      <h1 class="text-2xl font-semibold text-slate-900 sm:text-3xl">{title}</h1>
-      <p class="text-sm text-slate-600 sm:text-base">{description}</p>
-      <p class="inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
-        Materials: {materials}
-      </p>
+
+  <!-- Mobile sticky purchase bar keeps CTA visible while scrolling -->
+  <div class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/95 px-4 py-3 backdrop-blur sm:hidden">
+    <div class="mx-auto flex w-full max-w-5xl items-center justify-between gap-3">
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+          Price
+        </p>
+        <p class="text-lg font-semibold text-slate-900">{price}</p>
+      </div>
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center justify-center rounded-full border border-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+      >
+        Choose
+      </a>
     </div>
-    <p class="text-2xl font-semibold text-slate-900">{price}</p>
-    <a
-      href={whatsappLink}
-      target="_blank"
-      rel="noreferrer"
-      class="inline-flex w-full items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:w-fit sm:text-sm"
-    >
-      Choose and message
-    </a>
   </div>
 </section>

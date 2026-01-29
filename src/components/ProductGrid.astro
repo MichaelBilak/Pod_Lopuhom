@@ -1,8 +1,11 @@
 ---
+import ProductCard from "./ProductCard.astro";
+
 interface Product {
   slug: string;
   title: string;
   description: string;
+  materials: string;
   price: string;
   images: string[];
 }
@@ -17,76 +20,14 @@ const { products, enableModal = false } = Astro.props;
 
 <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
   {products.map((product) => (
-    <div class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
-      {enableModal ? (
-        <button
-          type="button"
-          class="flex h-full w-full flex-col gap-3 rounded-3xl p-2 text-left sm:gap-4 sm:p-3"
-          data-product
-          data-title={product.title}
-          data-description={product.description}
-          data-price={product.price}
-          data-images={JSON.stringify(product.images)}
-          aria-label={`Open ${product.title} details`}
-        >
-          <div class="relative h-56 w-full overflow-hidden rounded-xl bg-slate-100 sm:h-64 sm:rounded-2xl lg:h-72">
-            <img
-              src={product.images[0]}
-              alt={product.title}
-              class="h-full w-full origin-center rounded-xl object-cover object-center transition duration-300 group-hover:scale-[1.08] sm:rounded-2xl"
-              loading="lazy"
-            />
-            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
-          </div>
-          <div class="space-y-2 px-0.5 pb-0.5 sm:space-y-3 sm:px-1 sm:pb-1">
-            <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
-              {product.title}
-            </p>
-            <p class="hidden text-xs text-slate-600 sm:block">
-              {product.description.length > 80
-                ? `${product.description.slice(0, 80)}...`
-                : product.description}
-            </p>
-            <div class="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-xs sm:tracking-[0.2em]">
-              <span>{product.price}</span>
-              <span class="hidden text-slate-700 transition group-hover:text-slate-900 sm:inline">
-                View details
-              </span>
-            </div>
-          </div>
-        </button>
-      ) : (
-        <a
-          href={`/product/${product.slug}`}
-          class="flex h-full w-full flex-col gap-3 rounded-3xl p-2 text-left sm:gap-4 sm:p-3"
-        >
-          <div class="relative h-56 w-full overflow-hidden rounded-xl bg-slate-100 sm:h-64 sm:rounded-2xl lg:h-72">
-            <img
-              src={product.images[0]}
-              alt={product.title}
-              class="h-full w-full origin-center rounded-xl object-cover object-center transition duration-300 group-hover:scale-[1.08] sm:rounded-2xl"
-              loading="lazy"
-            />
-            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
-          </div>
-          <div class="space-y-2 px-0.5 pb-0.5 sm:space-y-3 sm:px-1 sm:pb-1">
-            <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
-              {product.title}
-            </p>
-            <p class="hidden text-xs text-slate-600 sm:block">
-              {product.description.length > 80
-                ? `${product.description.slice(0, 80)}...`
-                : product.description}
-            </p>
-            <div class="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-xs sm:tracking-[0.2em]">
-              <span>{product.price}</span>
-              <span class="hidden text-slate-700 transition group-hover:text-slate-900 sm:inline">
-                View details
-              </span>
-            </div>
-          </div>
-        </a>
-      )}
-    </div>
+    <ProductCard
+      slug={product.slug}
+      title={product.title}
+      description={product.description}
+      materials={product.materials}
+      price={product.price}
+      images={product.images}
+      enableModal={enableModal}
+    />
   ))}
 </div>

@@ -30,16 +30,55 @@ const whatsappNumber = "972501234567";
 
   <script>
     const mainImage = document.querySelector("[data-main-image]");
-    const thumbs = document.querySelectorAll("[data-thumb]");
+    const thumbs = Array.from(document.querySelectorAll("[data-thumb]"));
+    let activeIndex = 0;
 
-    thumbs.forEach((thumb) => {
-      thumb.addEventListener("click", () => {
-        const img = thumb.querySelector("img");
-        if (img && mainImage) {
-          mainImage.src = img.src;
-          mainImage.alt = img.alt.replace("thumbnail", "main");
-        }
+    const setActiveThumb = (index) => {
+      thumbs.forEach((thumb, thumbIndex) => {
+        const isActive = thumbIndex === index;
+        thumb.classList.toggle("border-slate-200", !isActive);
+        thumb.classList.toggle("border-slate-900", isActive);
+        thumb.classList.toggle("ring-2", isActive);
+        thumb.classList.toggle("ring-slate-900", isActive);
+        thumb.classList.toggle("ring-offset-2", isActive);
+        thumb.setAttribute("aria-current", isActive ? "true" : "false");
       });
+    };
+
+    const setMainImage = (index) => {
+      const thumb = thumbs[index];
+      const img = thumb?.querySelector("img");
+      if (img && mainImage) {
+        mainImage.src = img.src;
+        mainImage.alt = img.alt.replace("thumbnail", "main");
+        activeIndex = index;
+        setActiveThumb(index);
+      }
+    };
+
+    // Keep thumbnails and swipe gestures in sync.
+    thumbs.forEach((thumb, index) => {
+      const activate = () => setMainImage(index);
+      thumb.addEventListener("click", activate);
+      thumb.addEventListener("mouseenter", activate);
+      thumb.addEventListener("focus", activate);
     });
+
+    if (mainImage) {
+      let touchStartX = 0;
+      const swipeThreshold = 40;
+      mainImage.addEventListener("touchstart", (event) => {
+        touchStartX = event.touches[0].clientX;
+      });
+      mainImage.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        if (Math.abs(deltaX) < swipeThreshold) return;
+        const nextIndex =
+          deltaX < 0 ? activeIndex + 1 : activeIndex - 1;
+        const safeIndex = (nextIndex + thumbs.length) % thumbs.length;
+        setMainImage(safeIndex);
+      });
+    }
   </script>
 </BaseLayout>

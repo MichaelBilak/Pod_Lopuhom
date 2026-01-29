@@ -3,13 +3,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import ProductGrid from "../components/ProductGrid.astro";
 import FooterSocial from "../components/FooterSocial.astro";
+import ProductModal from "../components/ProductModal.astro";
 import { products } from "../data/products";
 ---
 <BaseLayout title="MAMA | Gallery">
   <Nav />
-  <main class="mx-auto w-full max-w-5xl space-y-24 px-6 pb-28 pt-16">
-    <section class="space-y-8 text-center">
-      <div class="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-slate-300 bg-white">
+  <main class="mx-auto w-full max-w-5xl space-y-20 px-6 pb-28 pt-12">
+    <section class="space-y-6 text-center">
+      <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-slate-300 bg-white sm:h-28 sm:w-28">
         <img
           src="/images/products/Logo.%20pod_lopuhom.jpeg"
           alt="MAMA logo"
@@ -43,62 +44,7 @@ import { products } from "../data/products";
   </main>
   <FooterSocial />
 
-  <div
-    class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/35 opacity-0 transition-opacity duration-300 ease-out"
-    data-modal-backdrop
-    aria-hidden="true"
-  >
-    <div
-      class="pointer-events-none mx-4 w-full max-w-4xl translate-y-3 scale-95 opacity-0 transition-[transform,opacity] duration-300 ease-out will-change-transform sm:mx-6"
-      role="dialog"
-      aria-modal="true"
-      aria-hidden="true"
-      data-modal
-    >
-      <div
-        class="rounded-3xl border border-white/70 bg-white/95 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.25)] sm:max-h-[85vh] sm:overflow-y-auto sm:p-6"
-        data-modal-panel
-      >
-        <div class="flex items-start justify-between">
-          <h2 class="text-2xl font-semibold text-slate-900" data-modal-title></h2>
-          <button
-            type="button"
-            class="text-2xl text-slate-500 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-            data-modal-close
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </div>
-        <div class="mt-6 grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
-          <div class="grid gap-0 md:grid-cols-[72px,1fr]">
-            <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible" data-modal-thumbs></div>
-            <div class="order-1 aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
-              <img
-                src=""
-                alt=""
-                class="h-full w-full object-cover object-center"
-                data-modal-main
-              />
-            </div>
-          </div>
-          <div class="space-y-4">
-            <p class="text-sm text-slate-600" data-modal-description></p>
-            <p class="text-2xl font-semibold text-slate-900" data-modal-price></p>
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex w-fit items-center justify-center rounded-full border border-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-              data-modal-cta
-            >
-              Choose and message
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ProductModal />
 
   <script>
     const backdrop = document.querySelector("[data-modal-backdrop]");
@@ -106,13 +52,42 @@ import { products } from "../data/products";
     const title = document.querySelector("[data-modal-title]");
     const description = document.querySelector("[data-modal-description]");
     const price = document.querySelector("[data-modal-price]");
+    const priceSticky = document.querySelector("[data-modal-price-sticky]");
     const mainImage = document.querySelector("[data-modal-main]");
     const thumbs = document.querySelector("[data-modal-thumbs]");
     const cta = document.querySelector("[data-modal-cta]");
+    const ctaSticky = document.querySelector("[data-modal-cta-sticky]");
     const panel = document.querySelector("[data-modal-panel]");
     const closeBtn = document.querySelector("[data-modal-close]");
 
     const whatsappNumber = "972501234567";
+    const activeThumbClass =
+      "border-slate-900 ring-2 ring-slate-900 ring-offset-2";
+
+    let galleryImages = [];
+    let activeIndex = 0;
+    let thumbButtons = [];
+
+    const setActiveThumb = (index) => {
+      thumbButtons.forEach((thumb, thumbIndex) => {
+        const isActive = thumbIndex === index;
+        thumb.classList.toggle("border-slate-200", !isActive);
+        thumb.classList.toggle("border-slate-900", isActive);
+        thumb.classList.toggle("ring-2", isActive);
+        thumb.classList.toggle("ring-slate-900", isActive);
+        thumb.classList.toggle("ring-offset-2", isActive);
+        thumb.setAttribute("aria-current", isActive ? "true" : "false");
+      });
+    };
+
+    const setActiveImage = (index) => {
+      if (!mainImage || galleryImages.length === 0) return;
+      const nextIndex = (index + galleryImages.length) % galleryImages.length;
+      activeIndex = nextIndex;
+      mainImage.src = galleryImages[nextIndex];
+      mainImage.alt = title?.textContent || "";
+      setActiveThumb(nextIndex);
+    };
 
     const openModal = (originX, originY) => {
       if (!backdrop || !modal) return;
@@ -143,7 +118,8 @@ import { products } from "../data/products";
 
     document.querySelectorAll("[data-product]").forEach((button) => {
       button.addEventListener("click", (event) => {
-        const images = JSON.parse(button.getAttribute("data-images") || "[]");
+        galleryImages = JSON.parse(button.getAttribute("data-images") || "[]");
+        activeIndex = 0;
         const productTitle = button.getAttribute("data-title") || "";
         const productDescription = button.getAttribute("data-description") || "";
         const productPrice = button.getAttribute("data-price") || "";
@@ -154,42 +130,59 @@ import { products } from "../data/products";
         if (title) title.textContent = productTitle;
         if (description) description.textContent = productDescription;
         if (price) price.textContent = productPrice;
-        if (mainImage) {
-          mainImage.src = images[0] || "";
-          mainImage.alt = productTitle;
-        }
-        if (cta) {
-          cta.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+        if (priceSticky) priceSticky.textContent = productPrice;
+        if (cta) cta.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+        if (ctaSticky) {
+          ctaSticky.href = `https://wa.me/${whatsappNumber}?text=${message}`;
         }
 
         if (thumbs) {
           thumbs.innerHTML = "";
-          images.slice(0, 4).forEach((image, index) => {
+          thumbButtons = [];
+          galleryImages.slice(0, 4).forEach((image, index) => {
             const thumb = document.createElement("button");
             thumb.type = "button";
             thumb.className =
-              "group h-16 w-16 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2";
+              "group h-16 w-16 overflow-hidden rounded-2xl border bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2";
             thumb.setAttribute("aria-label", `View image ${index + 1}`);
+            thumb.setAttribute("aria-current", index === 0 ? "true" : "false");
+            if (index === 0) {
+              thumb.classList.add(...activeThumbClass.split(" "));
+            } else {
+              thumb.classList.add("border-slate-200");
+            }
             thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
-            const swapImage = () => {
-              if (mainImage) {
-                mainImage.src = image;
-                mainImage.alt = productTitle;
-              }
-            };
+            const swapImage = () => setActiveImage(index);
             thumb.addEventListener("mouseenter", swapImage);
             thumb.addEventListener("focus", swapImage);
             thumb.addEventListener("click", swapImage);
             thumbs.appendChild(thumb);
+            thumbButtons.push(thumb);
           });
         }
 
+        setActiveImage(0);
         const rect = modal.getBoundingClientRect();
         const originX = event.clientX - rect.left;
         const originY = event.clientY - rect.top;
         openModal(originX, originY);
       });
     });
+
+    if (mainImage) {
+      let touchStartX = 0;
+      const swipeThreshold = 40;
+      // Subtle swipe handler for gallery navigation.
+      mainImage.addEventListener("touchstart", (event) => {
+        touchStartX = event.touches[0].clientX;
+      });
+      mainImage.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        if (Math.abs(deltaX) < swipeThreshold) return;
+        setActiveImage(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
+      });
+    }
 
     closeBtn?.addEventListener("click", closeModal);
     modal?.addEventListener("click", (event) => {
