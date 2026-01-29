@@ -14,7 +14,11 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 const imageFocus: Record<string, string> = {
   "/images/products/product_7.0.JPG": "35% 55%",
 };
+const imageFit: Record<string, string> = {
+  "/images/products/product_13.0.JPG": "contain",
+};
 const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
+const getObjectFit = (src: string) => imageFit[src] ?? "cover";
 ---
 
 <section class="mx-auto w-full max-w-5xl px-4 pb-24 pt-8 sm:px-6 lg:pb-16">
@@ -50,7 +54,9 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
             src={images[0]}
             alt={title}
             class="h-full w-full object-cover object-center"
-            style={`object-position: ${getObjectPosition(images[0])};`}
+            style={`object-position: ${getObjectPosition(images[0])}; object-fit: ${getObjectFit(
+              images[0]
+            )};`}
             data-main-image
           />
         </div>

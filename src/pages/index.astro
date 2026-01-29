@@ -66,7 +66,11 @@ import { products } from "../data/products";
     const imageFocus = {
       "/images/products/product_7.0.JPG": "35% 55%",
     };
+    const imageFit = {
+      "/images/products/product_13.0.JPG": "contain",
+    };
     const getObjectPosition = (src) => imageFocus[src] || "50% 50%";
+    const getObjectFit = (src) => imageFit[src] || "cover";
 
     let galleryImages = [];
     let activeIndex = 0;
@@ -91,6 +95,7 @@ import { products } from "../data/products";
       mainImage.src = galleryImages[nextIndex];
       mainImage.alt = title?.textContent || "";
       mainImage.style.objectPosition = getObjectPosition(galleryImages[nextIndex]);
+      mainImage.style.objectFit = getObjectFit(galleryImages[nextIndex]);
       setActiveThumb(nextIndex);
     };
 
