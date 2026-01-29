@@ -28,7 +28,7 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
       data-price={price}
       data-images={JSON.stringify(images)}
     >
-      <div class="relative h-56 w-full overflow-hidden rounded-2xl bg-slate-100 sm:h-64 lg:h-72">
+      <div class="relative h-64 w-full overflow-hidden rounded-2xl bg-slate-100 sm:h-72 lg:h-80">
         <img
           src={images[0]}
           alt={title}
@@ -39,15 +39,15 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
       </div>
       <div class="flex flex-1 flex-col gap-2 px-1 pb-1">
-        <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
+        <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm whitespace-nowrap">
           {title}
         </p>
-        <p class="text-xs text-slate-600 sm:block">{materials}</p>
+        <p class="text-xs text-slate-600 sm:block whitespace-nowrap">{materials}</p>
         <div class="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-between">
-          <span class="text-base font-semibold leading-tight text-slate-900 sm:text-lg">
+          <span class="text-base font-semibold leading-tight text-slate-900 sm:text-lg whitespace-nowrap">
             {price}
           </span>
-          <span class="text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-right">
+          <span class="text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-right whitespace-nowrap">
             View details
           </span>
         </div>
@@ -59,7 +59,7 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
       class="flex h-full w-full flex-col gap-3 rounded-3xl p-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
       aria-label={`Open ${title} details`}
     >
-      <div class="relative h-56 w-full overflow-hidden rounded-2xl bg-slate-100 sm:h-64 lg:h-72">
+      <div class="relative h-64 w-full overflow-hidden rounded-2xl bg-slate-100 sm:h-72 lg:h-80">
         <img
           src={images[0]}
           alt={title}
@@ -70,15 +70,15 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
       </div>
       <div class="flex flex-1 flex-col gap-2 px-1 pb-1">
-        <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
+        <p class="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm whitespace-nowrap">
           {title}
         </p>
-        <p class="text-xs text-slate-600 sm:block">{materials}</p>
+        <p class="text-xs text-slate-600 sm:block whitespace-nowrap">{materials}</p>
         <div class="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-between">
-          <span class="text-base font-semibold leading-tight text-slate-900 sm:text-lg">
+          <span class="text-base font-semibold leading-tight text-slate-900 sm:text-lg whitespace-nowrap">
             {price}
           </span>
-          <span class="text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-right">
+          <span class="text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-right whitespace-nowrap">
             View details
           </span>
         </div>
