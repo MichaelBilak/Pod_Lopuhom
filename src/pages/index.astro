@@ -156,7 +156,7 @@ import { products } from "../data/products";
             } else {
               thumb.classList.add("border-slate-200");
             }
-            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
+            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-contain object-center transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
             const swapImage = () => setActiveImage(index);
             thumb.addEventListener("mouseenter", swapImage);
             thumb.addEventListener("focus", swapImage);
