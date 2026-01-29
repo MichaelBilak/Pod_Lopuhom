@@ -67,7 +67,6 @@ import { products } from "../data/products";
       "/images/products/product_7.0.JPG": "35% 55%",
     };
     const getObjectPosition = (src) => imageFocus[src] || "50% 50%";
-    const getObjectFit = () => "contain";
 
     let galleryImages = [];
     let activeIndex = 0;
@@ -92,7 +91,6 @@ import { products } from "../data/products";
       mainImage.src = galleryImages[nextIndex];
       mainImage.alt = title?.textContent || "";
       mainImage.style.objectPosition = getObjectPosition(galleryImages[nextIndex]);
-      mainImage.style.objectFit = getObjectFit();
       setActiveThumb(nextIndex);
     };
 
@@ -158,7 +156,7 @@ import { products } from "../data/products";
             } else {
               thumb.classList.add("border-slate-200");
             }
-            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
+            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-contain transition duration-200 group-hover:scale-[1.03] sm:object-cover" loading="lazy" />`;
             const swapImage = () => setActiveImage(index);
             thumb.addEventListener("mouseenter", swapImage);
             thumb.addEventListener("focus", swapImage);
