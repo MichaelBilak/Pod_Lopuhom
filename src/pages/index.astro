@@ -62,7 +62,7 @@ import { products } from "../data/products";
 
     const whatsappNumber = "972501234567";
     const activeThumbClass =
-      "border-slate-900 ring-2 ring-slate-900 ring-offset-2";
+      "border-slate-900 ring-2 ring-inset ring-slate-900";
     const imageFocus = {
       "/images/products/product_7.0.JPG": "35% 55%",
     };
@@ -78,8 +78,8 @@ import { products } from "../data/products";
         thumb.classList.toggle("border-slate-200", !isActive);
         thumb.classList.toggle("border-slate-900", isActive);
         thumb.classList.toggle("ring-2", isActive);
+        thumb.classList.toggle("ring-inset", isActive);
         thumb.classList.toggle("ring-slate-900", isActive);
-        thumb.classList.toggle("ring-offset-2", isActive);
         thumb.setAttribute("aria-current", isActive ? "true" : "false");
       });
     };
@@ -148,7 +148,7 @@ import { products } from "../data/products";
             const thumb = document.createElement("button");
             thumb.type = "button";
             thumb.className =
-              "group h-16 w-16 overflow-hidden rounded-2xl border bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2";
+              "group aspect-square h-16 w-16 overflow-hidden rounded-2xl border border-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:h-20 sm:w-20";
             thumb.setAttribute("aria-label", `View image ${index + 1}`);
             thumb.setAttribute("aria-current", index === 0 ? "true" : "false");
             if (index === 0) {
@@ -156,7 +156,7 @@ import { products } from "../data/products";
             } else {
               thumb.classList.add("border-slate-200");
             }
-            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-contain transition duration-200 group-hover:scale-[1.03] sm:object-cover" loading="lazy" />`;
+            thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
             const swapImage = () => setActiveImage(index);
             thumb.addEventListener("mouseenter", swapImage);
             thumb.addEventListener("focus", swapImage);

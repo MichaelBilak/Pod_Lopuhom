@@ -8,6 +8,8 @@ interface Props {
   whatsappNumber: string;
 }
 
+import Thumbnail from "./Thumbnail.astro";
+
 const { title, description, materials, price, images, whatsappNumber } = Astro.props;
 const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -24,25 +26,13 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
       <div class="grid gap-4 md:grid-cols-[80px,1fr]">
         <div class="order-2 flex gap-3 overflow-x-auto md:order-1 md:flex-col md:overflow-visible">
           {images.slice(0, 4).map((image, index) => (
-            <button
-              type="button"
-              class:list={[
-                "group h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl border bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:h-20 sm:w-20",
-                index === 0
-                  ? "border-slate-900 ring-2 ring-slate-900 ring-offset-2"
-                  : "border-slate-200",
-              ]}
-              data-thumb
-              aria-label={`View image ${index + 1}`}
-              aria-current={index === 0 ? "true" : "false"}
-            >
-              <img
-                src={image}
-                alt={`${title} thumbnail ${index + 1}`}
-                class="h-full w-full object-contain transition duration-200 group-hover:scale-[1.03] sm:object-cover"
-                loading="lazy"
-              />
-            </button>
+            <Thumbnail
+              src={image}
+              alt={`${title} thumbnail ${index + 1}`}
+              ariaLabel={`View image ${index + 1}`}
+              isActive={index === 0}
+              dataThumb
+            />
           ))}
         </div>
         <div class="order-1 aspect-[4/5] w-full overflow-hidden rounded-3xl bg-slate-100">
