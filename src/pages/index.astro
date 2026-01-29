@@ -63,6 +63,10 @@ import { products } from "../data/products";
     const whatsappNumber = "972501234567";
     const activeThumbClass =
       "border-slate-900 ring-2 ring-slate-900 ring-offset-2";
+    const imageFocus = {
+      "/images/products/product_7.0.JPG": "35% 55%",
+    };
+    const getObjectPosition = (src) => imageFocus[src] || "50% 50%";
 
     let galleryImages = [];
     let activeIndex = 0;
@@ -86,6 +90,7 @@ import { products } from "../data/products";
       activeIndex = nextIndex;
       mainImage.src = galleryImages[nextIndex];
       mainImage.alt = title?.textContent || "";
+      mainImage.style.objectPosition = getObjectPosition(galleryImages[nextIndex]);
       setActiveThumb(nextIndex);
     };
 
