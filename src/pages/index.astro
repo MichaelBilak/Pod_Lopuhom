@@ -166,12 +166,15 @@ import { products } from "../data/products";
               "group h-16 w-16 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2";
             thumb.setAttribute("aria-label", `View image ${index + 1}`);
             thumb.innerHTML = `<img src="${image}" alt="${productTitle} thumbnail ${index + 1}" class="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]" loading="lazy" />`;
-            thumb.addEventListener("click", () => {
+            const swapImage = () => {
               if (mainImage) {
                 mainImage.src = image;
                 mainImage.alt = productTitle;
               }
-            });
+            };
+            thumb.addEventListener("mouseenter", swapImage);
+            thumb.addEventListener("focus", swapImage);
+            thumb.addEventListener("click", swapImage);
             thumbs.appendChild(thumb);
           });
         }
