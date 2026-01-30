@@ -68,19 +68,19 @@ import FooterSocial from "../components/FooterSocial.astro";
           <p class="mx-auto max-w-xl text-base text-slate-700">
             Choose the piece you like and feel free to message me.
           </p>
-          <div class="flex flex-wrap items-center justify-center gap-4">
-            {["Rings", "Pendants", "Earrings"].map((label) => (
-              <button
-                type="button"
-                class="bg-transparent px-2 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-700 underline decoration-slate-300 decoration-2 underline-offset-[10px] transition hover:text-slate-900 hover:decoration-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-              >
-                {label}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
     </section>
+    <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+      {["Rings", "Necklace", "Earrings"].map((label) => (
+        <button
+          type="button"
+          class="bg-transparent px-2 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-700 underline decoration-slate-300 decoration-2 underline-offset-[10px] transition hover:text-slate-900 hover:decoration-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+        >
+          {label}
+        </button>
+      ))}
+    </div>
   </main>
   <FooterSocial />
 </BaseLayout>
