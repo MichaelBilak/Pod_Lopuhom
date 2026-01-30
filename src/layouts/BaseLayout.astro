@@ -10,6 +10,7 @@ const { title = "MAMA" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body class="bg-white text-ink">
     <slot />
