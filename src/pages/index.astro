@@ -6,32 +6,46 @@ import FooterSocial from "../components/FooterSocial.astro";
 <BaseLayout title="MAMA | Gallery">
   <Nav />
   <main class="mx-auto w-full max-w-6xl space-y-20 px-6 pb-28 pt-12">
-    <section class="space-y-6 text-center">
-      <div class="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white shadow-[0_6px_18px_rgba(15,23,42,0.06)] sm:h-28 sm:w-28">
-        <img
-          src="/images/products/Logo.%20pod_lopuhom.jpeg"
-          alt="MAMA logo"
-          class="h-full w-full object-cover object-center"
-          loading="lazy"
-        />
+    <section class="hero-panel text-center">
+      <div class="hero-backdrop" aria-hidden="true">
+        <div class="hero-row hero-row--one">
+          <img src="/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg" alt="" />
+          <img src="/images/hero%20img/IMG_2028.JPG" alt="" />
+          <img src="/images/hero%20img/IMG_3292.JPG" alt="" />
+        </div>
+        <div class="hero-row hero-row--two">
+          <img src="/images/hero%20img/IMG_6353%20(2).JPG" alt="" />
+          <img src="/images/hero%20img/IMG_6912.jpg" alt="" />
+          <img src="/images/hero%20img/IMG_9258.JPG" alt="" />
+        </div>
+        <span class="hero-wash"></span>
       </div>
-      <div class="space-y-6">
-        <h1 class="text-3xl font-semibold text-slate-900 md:text-5xl">
-          Handmade jewelry, softly crafted in Haifa.
-        </h1>
-        <p class="mx-auto max-w-xl text-base text-slate-600">
-          A calm collection of small-batch pieces. Choose a piece, message us,
-          and we will prepare it with care.
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-3">
-          {["Rings", "Pendants", "Earrings"].map((label) => (
-            <button
-              type="button"
-              class="rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-            >
-              {label}
-            </button>
-          ))}
+      <div class="relative z-10 space-y-6">
+        <div class="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white shadow-[0_6px_18px_rgba(15,23,42,0.06)] sm:h-28 sm:w-28">
+          <img
+            src="/images/products/Logo.%20pod_lopuhom.jpeg"
+            alt="MAMA logo"
+            class="h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+        <div class="space-y-6">
+          <h1 class="text-3xl font-semibold text-slate-900 md:text-5xl">
+            Welcome to my creation!
+          </h1>
+          <p class="mx-auto max-w-xl text-base text-slate-700">
+            Choose the piece you like and feel free to message me.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            {["Rings", "Pendants", "Earrings"].map((label) => (
+              <button
+                type="button"
+                class="rounded-full border border-slate-200 bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

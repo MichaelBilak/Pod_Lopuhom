@@ -15,6 +15,66 @@ body {
   line-height: 1.6;
 }
 
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 3rem 1.5rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-row {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 2rem;
+  animation: heroFade 14s ease-in-out infinite;
+}
+
+.hero-row img {
+  flex: 1 1 0;
+  height: 100%;
+  border-radius: 1rem;
+  object-fit: cover;
+  opacity: 0.6;
+  filter: saturate(0.75) brightness(1.08);
+}
+
+.hero-row--two {
+  animation-delay: 7s;
+}
+
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes heroFade {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid #111827;
