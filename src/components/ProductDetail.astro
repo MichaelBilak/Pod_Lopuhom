@@ -42,6 +42,8 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
             class="h-full w-full object-cover object-center"
             style={`object-position: ${getObjectPosition(images[0])};`}
             data-main-image
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
       </div>
