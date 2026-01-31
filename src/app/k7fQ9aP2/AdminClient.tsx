@@ -6,6 +6,7 @@ import type { Product } from "../../../lib/products";
 type FormState = {
   slug: string;
   title: string;
+  category: string;
   materials: string;
   price: string;
   description: string;
@@ -19,6 +20,7 @@ type AdminClientProps = {
 const emptyForm = (): FormState => ({
   slug: "",
   title: "",
+  category: "Rings",
   materials: "",
   price: "",
   description: "",
@@ -68,6 +70,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         body: JSON.stringify({
           slug: form.slug,
           title: form.title,
+          category: form.category,
           materials: form.materials,
           price: form.price,
           description: form.description,
@@ -95,6 +98,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
     setEditForm({
       slug: product.slug,
       title: product.title,
+      category: product.category ?? "Rings",
       materials: product.materials ?? "",
       price: product.price ?? "",
       description: product.description ?? "",
@@ -119,6 +123,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         body: JSON.stringify({
           slug: editForm.slug,
           title: editForm.title,
+          category: editForm.category,
           materials: editForm.materials,
           price: editForm.price,
           description: editForm.description,
@@ -189,7 +194,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
           ) : null}
         </div>
         <form className="mt-6 grid gap-4" onSubmit={handleCreate}>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <label className="text-xs text-slate-500">
               Slug
               <input
@@ -211,6 +216,20 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 required
                 className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
               />
+            </label>
+            <label className="text-xs text-slate-500">
+              Category
+              <select
+                value={form.category}
+                onChange={(event) =>
+                  setForm((prev) => ({ ...prev, category: event.target.value }))
+                }
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+              >
+                <option value="Rings">Rings</option>
+                <option value="Necklaces">Necklaces</option>
+                <option value="Earrings">Earrings</option>
+              </select>
             </label>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
@@ -328,7 +347,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 </div>
                 {isEditing ? (
                   <form className="mt-6 grid gap-4" onSubmit={handleEditSave}>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-3">
                       <label className="text-xs text-slate-500">
                         Slug
                         <input
@@ -356,6 +375,23 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                           required
                           className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                         />
+                      </label>
+                      <label className="text-xs text-slate-500">
+                        Category
+                        <select
+                          value={editForm.category}
+                          onChange={(event) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              category: event.target.value,
+                            }))
+                          }
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+                        >
+                          <option value="Rings">Rings</option>
+                          <option value="Necklaces">Necklaces</option>
+                          <option value="Earrings">Earrings</option>
+                        </select>
                       </label>
                     </div>
                     <div className="grid gap-4 md:grid-cols-2">

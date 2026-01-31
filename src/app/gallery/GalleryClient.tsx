@@ -37,7 +37,8 @@ export default function GalleryClient({ products }: GalleryClientProps) {
   const filteredProducts = useMemo(() => {
     if (selected === "All") return products;
     return products.filter((product) => {
-      const category = getCategoryFromImage(product.images[0]);
+      const category =
+        product.category || getCategoryFromImage(product.images[0]);
       return category === selected;
     });
   }, [products, selected]);

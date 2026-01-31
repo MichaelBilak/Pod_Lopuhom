@@ -22,6 +22,14 @@ const parseImages = (value: unknown) => {
     .filter((item) => item.length > 0);
 };
 
+const allowedCategories = ["Rings", "Necklaces", "Earrings"];
+
+const parseCategory = (value: unknown) => {
+  const parsed = parseString(value);
+  if (allowedCategories.includes(parsed)) return parsed;
+  return "Rings";
+};
+
 const buildInput = (payload: Record<string, unknown>): ProductInput | null => {
   const slug = parseString(payload.slug);
   const title = parseString(payload.title);
@@ -29,6 +37,7 @@ const buildInput = (payload: Record<string, unknown>): ProductInput | null => {
   return {
     slug,
     title,
+    category: parseCategory(payload.category),
     materials: parseNullableString(payload.materials),
     price: parseNullableString(payload.price),
     description: parseNullableString(payload.description),

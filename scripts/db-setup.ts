@@ -23,6 +23,7 @@ create table if not exists products (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
   title text not null,
+  category text not null default 'Rings',
   materials text,
   price text,
   description text,
@@ -30,6 +31,9 @@ create table if not exists products (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table products
+  add column if not exists category text not null default 'Rings';
 
 create or replace function set_updated_at()
 returns trigger as $$
