@@ -1,7 +1,7 @@
 import "../styles/global.css";
 
 export const metadata = {
-  title: "Mama",
+  title: "MAMA",
   description: "Handmade jewelry",
 };
 
