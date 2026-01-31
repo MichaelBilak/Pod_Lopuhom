@@ -25,13 +25,27 @@ export default function AboutPage() {
               />
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 text-base text-slate-700 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:p-8">
-              <p>
-                Hello! I&apos;m Olga BiIak. I create epoxy resin jewelry that
-                holds real dried flowers.
-                <br />
-                Through my work, I try to gently preserve what nature gives us
-                and what our memories leave behind.
-              </p>
+              <div className="space-y-4">
+                <p>
+                  Hello! I&apos;m Olga. I am a handmade jewelry artist, working
+                  with jewelry epoxy resin.
+                </p>
+                <p>
+                  In each piece, I try to preserve what nature gives us only
+                  for a short while. Inside my work are real flowers, small
+                  branches, and leaves — carefully dried and thoughtfully
+                  saved.
+                </p>
+                <p>
+                  Flowers fade, moments pass, and yet sometimes we want to hold
+                  on to feelings and memories just a little longer, to carry
+                  them with us and keep them close.
+                </p>
+                <p>
+                  My jewelry is for those who notice the little details and
+                  would love to wear a small piece of nature with them.
+                </p>
+              </div>
             </div>
           </div>
         </section>
