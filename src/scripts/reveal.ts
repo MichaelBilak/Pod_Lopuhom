@@ -29,3 +29,5 @@ if (prefersReducedMotion) {
 
   revealItems.forEach((item) => observer.observe(item));
 }
+
+export {};

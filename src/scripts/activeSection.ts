@@ -34,3 +34,5 @@ if (initialTarget) {
 } else if (sections[0]) {
   setActive(sections[0].id);
 }
+
+export {};

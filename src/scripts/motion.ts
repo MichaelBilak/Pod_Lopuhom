@@ -259,3 +259,5 @@ setupSmoothScroll();
 setupReveal();
 setupScrollEffects();
 debugLog("motion booted", { prefersReducedMotion });
+
+export {};
