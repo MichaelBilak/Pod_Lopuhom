@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifyAdminSession } from "../../../lib/auth";
 import { fetchProducts } from "../../../lib/products";
@@ -101,7 +102,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
   return (
     <main className="min-h-screen bg-white text-slate-900 font-sans">
       <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-12">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-semibold text-slate-900">
               Admin dashboard
@@ -110,14 +111,22 @@ export default async function AdminPage({ searchParams }: PageProps) {
               Products editor placeholder.
             </p>
           </div>
-          <form method="post" action="/api/auth/logout">
-            <button
-              type="submit"
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-400"
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-300"
             >
-              Logout
-            </button>
-          </form>
+              Back to home
+            </Link>
+            <form method="post" action="/api/auth/logout">
+              <button
+                type="submit"
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-400"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
         </div>
         <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
           Manage products and update the catalog.

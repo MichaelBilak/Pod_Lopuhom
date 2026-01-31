@@ -15,6 +15,7 @@ type SessionCookieOptions = {
   sameSite: "lax";
   path: "/";
   maxAge: number;
+  expires: Date;
 };
 
 const base64UrlToBase64 = (input: string) => {
@@ -142,6 +143,7 @@ export const getSessionCookieOptions = (): SessionCookieOptions => ({
   sameSite: "lax",
   path: "/",
   maxAge: SESSION_MAX_AGE_SECONDS,
+  expires: new Date(Date.now() + SESSION_MAX_AGE_SECONDS * 1000),
 });
 
 export const getClearSessionCookieOptions = (): SessionCookieOptions => ({
@@ -150,6 +152,7 @@ export const getClearSessionCookieOptions = (): SessionCookieOptions => ({
   sameSite: "lax",
   path: "/",
   maxAge: 0,
+  expires: new Date(0),
 });
 
 export const getAdminEnv = () => {
