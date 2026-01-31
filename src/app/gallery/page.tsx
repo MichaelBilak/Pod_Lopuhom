@@ -23,16 +23,16 @@ export default async function GalleryPage() {
     <>
       <Nav />
       <main className="mx-auto w-full max-w-6xl space-y-14 px-6 pb-24 pt-12">
-        <section className="space-y-6 text-center">
-          <h1 className="text-4xl font-medium tracking-tight text-slate-900 md:text-6xl">
+        <section className="space-y-7 text-center">
+          <h1 className="text-5xl font-medium tracking-tight text-slate-900 md:text-6xl">
             Gallery
           </h1>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">
             {["Rings", "Pendants", "Earrings"].map((label) => (
               <button
                 key={label}
                 type="button"
-                className="border-b border-transparent pb-1 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                className="border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
               >
                 {label}
               </button>
