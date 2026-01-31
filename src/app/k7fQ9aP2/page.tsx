@@ -36,7 +36,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-white text-slate-900 font-sans">
+      <main className="min-h-screen bg-white text-slate-900">
         <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6 py-12">
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
             <h1 className="text-2xl font-semibold text-slate-900">
@@ -100,7 +100,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const products = await fetchProducts();
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 font-sans">
+    <main className="min-h-screen bg-white text-slate-900">
       <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-12">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>

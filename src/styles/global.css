@@ -8,11 +8,19 @@
 }
 
 html {
+  font-family: "Lora", "Georgia", serif;
 }
 
 body {
   font-family: "Lora", "Georgia", serif;
   line-height: 1.65;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
 }
 
 .hero-panel {
