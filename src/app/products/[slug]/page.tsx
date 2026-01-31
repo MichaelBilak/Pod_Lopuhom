@@ -30,7 +30,7 @@ export default async function ProductPage({ params }: PageProps) {
           </Link>
           <div className="mt-8 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
             <div className="grid gap-4">
-              {product.images.map((image) => (
+              {product.images.map((image, index) => (
                 <div
                   key={image}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
@@ -39,6 +39,8 @@ export default async function ProductPage({ params }: PageProps) {
                     src={image}
                     alt={product.title}
                     className="h-full w-full object-cover"
+                    loading="eager"
+                    fetchPriority={index === 0 ? "high" : "auto"}
                   />
                 </div>
               ))}
