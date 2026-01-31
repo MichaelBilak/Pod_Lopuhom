@@ -28,7 +28,7 @@ export default async function GalleryPage() {
             Gallery
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">
-            {["Rings", "Pendants", "Earrings"].map((label) => (
+            {["Rings", "Necklaces", "Earrings"].map((label) => (
               <button
                 key={label}
                 type="button"

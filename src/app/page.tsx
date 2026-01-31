@@ -83,7 +83,7 @@ export default function HomePage() {
           </div>
         </section>
         <div className="flex flex-wrap items-center justify-center gap-4 text-center">
-          {["Rings", "Necklace", "Earrings"].map((label) => (
+          {["Rings", "Necklaces", "Earrings"].map((label) => (
             <button
               key={label}
               type="button"
