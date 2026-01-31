@@ -41,13 +41,21 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
   const [message, setMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
 
-  const sortedProducts = useMemo(
-    () =>
-      [...products].sort((a, b) =>
-        a.created_at.localeCompare(b.created_at)
-      ),
-    [products]
-  );
+  const sortedProducts = useMemo(() => {
+    const getSortValue = (value: unknown) => {
+      if (typeof value === "string") {
+        const parsed = Date.parse(value);
+        return Number.isNaN(parsed) ? 0 : parsed;
+      }
+      if (value instanceof Date) {
+        return value.getTime();
+      }
+      return 0;
+    };
+    return [...products].sort(
+      (a, b) => getSortValue(a.created_at) - getSortValue(b.created_at)
+    );
+  }, [products]);
 
   const handleCreate = async (event: React.FormEvent) => {
     event.preventDefault();
