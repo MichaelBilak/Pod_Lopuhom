@@ -1,3 +1,4 @@
+import Link from "next/link";
 import FooterSocial from "../components/FooterSocial";
 import Nav from "../components/Nav";
 
@@ -84,13 +85,13 @@ export default function HomePage() {
         </section>
         <div className="flex flex-wrap items-center justify-center gap-4 text-center">
           {["Rings", "Necklaces", "Earrings"].map((label) => (
-            <button
+            <Link
               key={label}
-              type="button"
+              href={`/gallery?category=${encodeURIComponent(label)}`}
               className="bg-transparent px-2 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-700 underline decoration-slate-300 decoration-2 underline-offset-[10px] transition hover:text-slate-900 hover:decoration-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
             >
               {label}
-            </button>
+            </Link>
           ))}
         </div>
       </main>
