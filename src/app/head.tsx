@@ -11,7 +11,7 @@ export default function Head() {
         crossOrigin="anonymous"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
       <link
