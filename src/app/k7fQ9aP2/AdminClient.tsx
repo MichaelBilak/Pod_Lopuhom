@@ -172,25 +172,25 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
 
   return (
     <div className="mt-10 space-y-10">
-      <section className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6">
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-neutral-100">
+            <h2 className="text-lg font-semibold text-slate-900">
               Create product
             </h2>
-            <p className="text-xs text-neutral-400">
+            <p className="text-xs text-slate-500">
               Add a new item to the catalog.
             </p>
           </div>
           {message ? (
-            <div className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-300">
+            <div className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600">
               {message}
             </div>
           ) : null}
         </div>
         <form className="mt-6 grid gap-4" onSubmit={handleCreate}>
           <div className="grid gap-4 md:grid-cols-2">
-            <label className="text-xs text-neutral-400">
+            <label className="text-xs text-slate-500">
               Slug
               <input
                 value={form.slug}
@@ -198,10 +198,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                   setForm((prev) => ({ ...prev, slug: event.target.value }))
                 }
                 required
-                className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
               />
             </label>
-            <label className="text-xs text-neutral-400">
+            <label className="text-xs text-slate-500">
               Title
               <input
                 value={form.title}
@@ -209,12 +209,12 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                   setForm((prev) => ({ ...prev, title: event.target.value }))
                 }
                 required
-                className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
               />
             </label>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            <label className="text-xs text-neutral-400">
+            <label className="text-xs text-slate-500">
               Materials
               <input
                 value={form.materials}
@@ -224,21 +224,21 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                     materials: event.target.value,
                   }))
                 }
-                className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
               />
             </label>
-            <label className="text-xs text-neutral-400">
+            <label className="text-xs text-slate-500">
               Price
               <input
                 value={form.price}
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, price: event.target.value }))
                 }
-                className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
               />
             </label>
           </div>
-          <label className="text-xs text-neutral-400">
+          <label className="text-xs text-slate-500">
             Description
             <textarea
               value={form.description}
@@ -249,10 +249,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 }))
               }
               rows={3}
-              className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+              className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
             />
           </label>
-          <label className="text-xs text-neutral-400">
+          <label className="text-xs text-slate-500">
             Images (one URL per line)
             <textarea
               value={form.images}
@@ -260,35 +260,35 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 setForm((prev) => ({ ...prev, images: event.target.value }))
               }
               rows={4}
-              className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+              className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
             />
           </label>
           <button
             type="submit"
             disabled={isBusy}
-            className="w-full rounded-lg bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isBusy ? "Saving..." : "Create product"}
           </button>
         </form>
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-neutral-800">
-        <div className="flex items-center justify-between bg-neutral-900/60 px-5 py-3">
-          <div className="text-xs uppercase tracking-widest text-neutral-400">
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
+        <div className="flex items-center justify-between bg-slate-50 px-5 py-3">
+          <div className="text-xs uppercase tracking-widest text-slate-500">
             Products ({sortedProducts.length})
           </div>
-          <div className="text-xs text-neutral-500">
+          <div className="text-xs text-slate-500">
             Click a product to edit.
           </div>
         </div>
-        <div className="divide-y divide-neutral-800">
+        <div className="divide-y divide-slate-200">
           {sortedProducts.map((product) => {
             const isEditing = editingId === product.id;
             return (
-              <div key={product.id} className="bg-neutral-950/40 px-5 py-4">
+              <div key={product.id} className="bg-white px-5 py-4">
                 <div className="flex flex-wrap items-center gap-4">
-                  <div className="h-16 w-16 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900">
+                  <div className="h-16 w-16 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
                     {product.images[0] ? (
                       <img
                         src={product.images[0]}
@@ -298,10 +298,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                     ) : null}
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-semibold text-neutral-100">
+                    <div className="text-sm font-semibold text-slate-900">
                       {product.title}
                     </div>
-                    <div className="text-xs text-neutral-400">
+                    <div className="text-xs text-slate-500">
                       {product.slug}
                     </div>
                   </div>
@@ -313,14 +313,14 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                           ? handleEditCancel()
                           : handleEditStart(product)
                       }
-                      className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-200 transition hover:border-neutral-500"
+                      className="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-700 transition hover:border-slate-300"
                     >
                       {isEditing ? "Cancel" : "Edit"}
                     </button>
                     <button
                       type="button"
                       onClick={() => handleDelete(product)}
-                      className="rounded-full border border-red-400/40 px-3 py-1 text-xs text-red-200 transition hover:border-red-300"
+                      className="rounded-full border border-red-200 px-3 py-1 text-xs text-red-700 transition hover:border-red-300"
                     >
                       Delete
                     </button>
@@ -329,7 +329,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 {isEditing ? (
                   <form className="mt-6 grid gap-4" onSubmit={handleEditSave}>
                     <div className="grid gap-4 md:grid-cols-2">
-                      <label className="text-xs text-neutral-400">
+                      <label className="text-xs text-slate-500">
                         Slug
                         <input
                           value={editForm.slug}
@@ -340,10 +340,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                             }))
                           }
                           required
-                          className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                         />
                       </label>
-                      <label className="text-xs text-neutral-400">
+                      <label className="text-xs text-slate-500">
                         Title
                         <input
                           value={editForm.title}
@@ -354,12 +354,12 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                             }))
                           }
                           required
-                          className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                         />
                       </label>
                     </div>
                     <div className="grid gap-4 md:grid-cols-2">
-                      <label className="text-xs text-neutral-400">
+                      <label className="text-xs text-slate-500">
                         Materials
                         <input
                           value={editForm.materials}
@@ -369,10 +369,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                               materials: event.target.value,
                             }))
                           }
-                          className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                         />
                       </label>
-                      <label className="text-xs text-neutral-400">
+                      <label className="text-xs text-slate-500">
                         Price
                         <input
                           value={editForm.price}
@@ -382,11 +382,11 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                               price: event.target.value,
                             }))
                           }
-                          className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                         />
                       </label>
                     </div>
-                    <label className="text-xs text-neutral-400">
+                    <label className="text-xs text-slate-500">
                       Description
                       <textarea
                         value={editForm.description}
@@ -397,10 +397,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                           }))
                         }
                         rows={3}
-                        className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                       />
                     </label>
-                    <label className="text-xs text-neutral-400">
+                    <label className="text-xs text-slate-500">
                       Images (one URL per line)
                       <textarea
                         value={editForm.images}
@@ -411,21 +411,21 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                           }))
                         }
                         rows={4}
-                        className="mt-2 w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                       />
                     </label>
                     <div className="flex items-center justify-end gap-3">
                       <button
                         type="button"
                         onClick={handleEditCancel}
-                        className="rounded-full border border-neutral-700 px-4 py-2 text-xs text-neutral-200 transition hover:border-neutral-500"
+                        className="rounded-full border border-slate-200 px-4 py-2 text-xs text-slate-700 transition hover:border-slate-300"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
                         disabled={isBusy}
-                        className="rounded-full bg-white px-5 py-2 text-xs font-semibold text-neutral-900 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="rounded-full bg-slate-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {isBusy ? "Saving..." : "Save changes"}
                       </button>

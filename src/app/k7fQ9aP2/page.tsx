@@ -35,20 +35,22 @@ export default async function AdminPage({ searchParams }: PageProps) {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-neutral-950 text-neutral-100">
+      <main className="min-h-screen bg-white text-slate-900 font-sans">
         <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6 py-12">
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-8 shadow-xl">
-            <h1 className="text-2xl font-semibold">Admin access</h1>
-            <p className="mt-2 text-sm text-neutral-400">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
+            <h1 className="text-2xl font-semibold text-slate-900">
+              Admin access
+            </h1>
+            <p className="mt-2 text-sm text-slate-600">
               Enter the admin login and password to continue.
             </p>
             {showLoginHint && (
-              <div className="mt-4 rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-xs text-neutral-300">
+              <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
                 Please sign in to view the admin dashboard.
               </div>
             )}
             {showError && (
-              <div className="mt-4 rounded-lg border border-red-500/50 bg-red-500/10 px-4 py-3 text-xs text-red-200">
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700">
                 Invalid login or password. Please try again.
               </div>
             )}
@@ -58,7 +60,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
               action="/api/auth/login"
             >
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wide text-neutral-400">
+                <label className="text-xs uppercase tracking-wide text-slate-500">
                   Login
                 </label>
                 <input
@@ -66,11 +68,11 @@ export default async function AdminPage({ searchParams }: PageProps) {
                   type="text"
                   autoComplete="username"
                   required
-                  className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wide text-neutral-400">
+                <label className="text-xs uppercase tracking-wide text-slate-500">
                   Password
                 </label>
                 <input
@@ -78,12 +80,12 @@ export default async function AdminPage({ searchParams }: PageProps) {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-neutral-600 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full rounded-lg bg-white px-4 py-2 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-200"
+                className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
               >
                 Sign in
               </button>
@@ -97,25 +99,27 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const products = await fetchProducts();
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100">
-      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-6 py-12">
+    <main className="min-h-screen bg-white text-slate-900 font-sans">
+      <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-12">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">Admin dashboard</h1>
-            <p className="mt-2 text-sm text-neutral-400">
+            <h1 className="text-2xl font-semibold text-slate-900">
+              Admin dashboard
+            </h1>
+            <p className="mt-2 text-sm text-slate-600">
               Products editor placeholder.
             </p>
           </div>
           <form method="post" action="/api/auth/logout">
             <button
               type="submit"
-              className="rounded-lg border border-neutral-700 px-4 py-2 text-sm text-neutral-100 transition hover:border-neutral-500"
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-400"
             >
               Logout
             </button>
           </form>
         </div>
-        <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-6 text-sm text-neutral-300">
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
           Manage products and update the catalog.
         </div>
         <AdminClient initialProducts={products} />
