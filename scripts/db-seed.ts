@@ -41,6 +41,8 @@ const getCategoryFromImages = (images: string[]) => {
 const run = async () => {
   await client.connect();
 
+  await client.query(`delete from products where slug like 'product-%'`);
+
   for (const product of products) {
     await client.query(upsertSql, [
       product.slug,
