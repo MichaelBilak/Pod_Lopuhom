@@ -25,17 +25,23 @@ export default function OrderDeliveryPage() {
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
             <div className="space-y-4 text-sm uppercase tracking-[0.2em] text-slate-700">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+              <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
                 <span>Delivery within Israel by Israel Post</span>
-                <span>25 ILS</span>
+                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
+                  25 ILS
+                </span>
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+              <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
                 <span>Self-pickup and delivery within Haifa directly to your door</span>
-                <span>Free</span>
+                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
+                  Free
+                </span>
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
                 <span>Worldwide delivery</span>
-                <span>13 EUR</span>
+                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
+                  13 EUR
+                </span>
               </div>
             </div>
           </div>
