@@ -6,12 +6,16 @@ export const metadata = {
 };
 
 export default function OrderDeliveryPage() {
+  const instagramUrl = "https://instagram.com/your_handle";
+  const whatsappNumber = "972501234567";
+  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-4xl space-y-8 px-6 pb-20 pt-12">
+      <main className="mx-auto w-full max-w-4xl space-y-10 px-6 pb-20 pt-12">
         <section className="space-y-4 text-center">
-          <h1 className="text-3xl font-semibold text-slate-900">
+          <h1 className="text-4xl font-semibold text-slate-900">
             Order & Delivery
           </h1>
           <p className="text-base text-slate-600">
@@ -19,17 +23,46 @@ export default function OrderDeliveryPage() {
           </p>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
-          <div className="flex items-center justify-between border-b border-slate-200 py-3 text-sm uppercase tracking-[0.2em] text-slate-700">
-            <span>Delivery within Israel by Israel Post</span>
-            <span>25 ILS</span>
+          <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+            <div className="space-y-4 text-sm uppercase tracking-[0.2em] text-slate-700">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                <span>Delivery within Israel by Israel Post</span>
+                <span>25 ILS</span>
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                <span>Self-pickup and delivery within Haifa directly to your door</span>
+                <span>Free</span>
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span>Worldwide delivery</span>
+                <span>13 EUR</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center justify-between border-b border-slate-200 py-3 text-sm uppercase tracking-[0.2em] text-slate-700">
-            <span>Self-pickup and delivery within Haifa directly to your door</span>
-            <span>0 ILS</span>
-          </div>
-          <div className="flex items-center justify-between border-b border-slate-200 py-3 text-sm uppercase tracking-[0.2em] text-slate-700">
-            <span>Worldwide delivery</span>
-            <span>13 EUR</span>
+        </section>
+        <section className="mx-auto w-full max-w-2xl space-y-4 text-center">
+          <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+            <p className="text-sm uppercase tracking-[0.2em] text-slate-600">
+              To place an order, please message us:
+            </p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
+              >
+                Instagram
+              </a>
+            </div>
           </div>
         </section>
       </main>
