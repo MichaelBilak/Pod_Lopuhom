@@ -18,8 +18,8 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
+    <div className="mx-auto w-full max-w-md space-y-4">
+      <div className="aspect-square overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
         <img
           src={activeImage}
           alt={title}
@@ -28,7 +28,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
           fetchPriority="high"
         />
       </div>
-      <div className="flex gap-3 overflow-x-auto pb-1">
+      <div className="flex justify-center gap-3 overflow-x-auto pb-1">
         {safeImages.map((image, index) => {
           const isActive = index === activeIndex;
           return (
@@ -37,7 +37,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
               type="button"
               onClick={() => setActiveIndex(index)}
               className={[
-                "flex h-20 w-20 flex-none items-center justify-center overflow-hidden rounded-2xl border bg-slate-50 transition",
+                "flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-2xl border bg-slate-50 transition sm:h-20 sm:w-20",
                 isActive
                   ? "border-slate-900 ring-2 ring-inset ring-slate-900"
                   : "border-slate-200 hover:border-slate-300",
