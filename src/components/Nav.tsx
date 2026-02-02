@@ -36,7 +36,7 @@ export default function Nav() {
           className="absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
           aria-label="Pod Lopuhom home"
         >
-          <span className="inline-block origin-center scale-[2.4]">
+          <span className="inline-block origin-center scale-[1.9]">
             Pod&nbsp;Lopuhom
           </span>
         </Link>
