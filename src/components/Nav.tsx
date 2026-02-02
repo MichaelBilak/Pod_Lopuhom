@@ -32,7 +32,9 @@ export default function Nav() {
           />
         </Link>
         <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 sm:text-xs">
-          Pod&nbsp;Lopuhom
+          <span className="inline-block origin-center scale-200">
+            Pod&nbsp;Lopuhom
+          </span>
         </span>
         <nav className="flex flex-wrap items-center justify-start gap-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-600 sm:gap-7 sm:text-xs">
           {navLinks.map((link) => (
