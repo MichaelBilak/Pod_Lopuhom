@@ -44,6 +44,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
   );
   const [showStickyMenu, setShowStickyMenu] = useState(false);
   const lastScrollY = useRef(0);
+  const showTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,8 +54,17 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       const isScrollingDown = delta > 8;
 
       if (isScrollingUp) {
-        setShowStickyMenu(currentY > 0);
+        if (showTimerRef.current === null && currentY > 0) {
+          showTimerRef.current = window.setTimeout(() => {
+            setShowStickyMenu(true);
+            showTimerRef.current = null;
+          }, 140);
+        }
       } else if (isScrollingDown && showStickyMenu) {
+        if (showTimerRef.current !== null) {
+          window.clearTimeout(showTimerRef.current);
+          showTimerRef.current = null;
+        }
         setShowStickyMenu(false);
       }
 
@@ -63,7 +73,13 @@ export default function GalleryClient({ products }: GalleryClientProps) {
 
     lastScrollY.current = window.scrollY;
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (showTimerRef.current !== null) {
+        window.clearTimeout(showTimerRef.current);
+        showTimerRef.current = null;
+      }
+    };
   }, [showStickyMenu]);
 
   const filteredProducts = useMemo(() => {
@@ -103,7 +119,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
     <>
       <div
         className={[
-          "fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur transition",
+          "fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur transition duration-300 ease-out",
           showStickyMenu
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0 pointer-events-none",
