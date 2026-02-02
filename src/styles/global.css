@@ -8,11 +8,13 @@
 }
 
 html {
-  font-family: "Lora", "Georgia", serif;
+  font-family: "Century Gothic", "CenturyGothic", "AppleGothic", "Futura",
+    "Trebuchet MS", sans-serif;
 }
 
 body {
-  font-family: "Lora", "Georgia", serif;
+  font-family: "Century Gothic", "CenturyGothic", "AppleGothic", "Futura",
+    "Trebuchet MS", sans-serif;
   line-height: 1.65;
 }
 
