@@ -88,7 +88,7 @@ export default function HomePage() {
             <Link
               key={label}
               href={`/gallery?category=${encodeURIComponent(label)}`}
-              className="bg-transparent px-2 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-700 underline decoration-slate-300 decoration-2 underline-offset-[10px] transition hover:text-slate-900 hover:decoration-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              className="rounded-full border border-slate-200 bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition hover:border-slate-300 hover:text-slate-900 hover:shadow-[0_10px_22px_rgba(15,23,42,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
             >
               {label}
             </Link>
