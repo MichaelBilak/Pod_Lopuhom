@@ -15,7 +15,7 @@ const imageFocus: Record<string, string> = {
   "/images/products/product_7.0.JPG": "35% 55%",
   "/images/products/necklaces_2.0.jpg": "50% 58%",
   "/images/products/necklaces_3.0.JPG": "50% 58%",
-  "/images/products/earrings_7.0.JPG": "74% 60%",
+  "/images/products/earrings_7.0.JPG": "100% 60%",
 };
 
 const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
