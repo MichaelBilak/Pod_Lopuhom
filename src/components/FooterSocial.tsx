@@ -1,5 +1,5 @@
 const instagramUrl = "https://instagram.com/your_handle";
-const whatsappNumber = "972501234567";
+const whatsappNumber = "972533794428";
 const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
 export default function FooterSocial() {

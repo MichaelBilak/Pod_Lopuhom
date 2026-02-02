@@ -31,7 +31,7 @@
     }
     if (whatsappEl) {
       const message = encodeURIComponent(`Hi! I'd like to order: ${title}`);
-      whatsappEl.href = `https://wa.me/393331112233?text=${message}`;
+      whatsappEl.href = `https://wa.me/972533794428?text=${message}`;
     }
 
     modal.classList.add("is-open");

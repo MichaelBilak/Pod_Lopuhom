@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function OrderDeliveryPage() {
   const instagramUrl = "https://instagram.com/your_handle";
-  const whatsappNumber = "972501234567";
+  const whatsappNumber = "972533794428";
   const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
   return (
