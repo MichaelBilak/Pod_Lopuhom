@@ -156,8 +156,3 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-@media (max-width: 640px) {
-  .gallery-image {
-    object-position: 50% 50% !important;
-  }
-}
