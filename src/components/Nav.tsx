@@ -14,15 +14,22 @@ export default function Nav() {
 
   return (
     <header className="border-b border-slate-200/70 bg-white/80 backdrop-blur">
-      <div className="flex w-full flex-col gap-4 px-6 py-6 text-left sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex w-full flex-col items-center gap-4 px-6 py-6 text-center">
         <Link
           href="/"
-          className="inline-flex items-center justify-start text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
+          className="inline-flex items-center justify-center gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
           aria-label="Pod Lopuhom home"
         >
+          <img
+            src="/images/products/Logo.%20pod_lopuhom.jpeg"
+            alt=""
+            className="h-6 w-6 rounded-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+          />
           Pod&nbsp;Lopuhom
         </Link>
-        <nav className="flex flex-wrap items-center justify-start gap-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-600 sm:gap-7 sm:text-xs">
+        <nav className="flex flex-wrap items-center justify-center gap-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-600 sm:gap-7 sm:text-xs">
           {navLinks.map((link) => (
             <Link
               key={link.href}
