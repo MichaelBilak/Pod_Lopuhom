@@ -31,11 +31,15 @@ export default function Nav() {
             fetchPriority="high"
           />
         </Link>
-        <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 sm:text-xs">
-          <span className="inline-block origin-center scale-200">
+        <Link
+          href="/"
+          className="absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
+          aria-label="Pod Lopuhom home"
+        >
+          <span className="inline-block origin-center scale-[2.4]">
             Pod&nbsp;Lopuhom
           </span>
-        </span>
+        </Link>
         <nav className="flex flex-wrap items-center justify-start gap-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-600 sm:gap-7 sm:text-xs">
           {navLinks.map((link) => (
             <Link
