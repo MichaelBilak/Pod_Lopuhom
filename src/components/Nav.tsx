@@ -17,7 +17,7 @@ export default function Nav() {
       id="main-nav"
       className="border-b border-slate-200/70 bg-white/80 backdrop-blur"
     >
-      <div className="flex w-full flex-col gap-4 px-6 py-6 text-left sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative flex w-full flex-col gap-4 px-6 py-6 text-left sm:flex-row sm:items-center sm:justify-between">
         <Link
           href="/"
           className="inline-flex items-center justify-start gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
@@ -30,8 +30,10 @@ export default function Nav() {
             loading="eager"
             fetchPriority="high"
           />
-          Pod&nbsp;Lopuhom
         </Link>
+        <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 sm:text-xs">
+          Pod&nbsp;Lopuhom
+        </span>
         <nav className="flex flex-wrap items-center justify-start gap-5 text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-600 sm:gap-7 sm:text-xs">
           {navLinks.map((link) => (
             <Link
