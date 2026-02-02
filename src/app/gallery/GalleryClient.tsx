@@ -43,8 +43,27 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       : "All"
   );
   const [showStickyMenu, setShowStickyMenu] = useState(false);
+  const [isMainNavVisible, setIsMainNavVisible] = useState(true);
   const lastScrollY = useRef(0);
   const showTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const navElement = document.getElementById("main-nav");
+    if (!navElement || typeof IntersectionObserver === "undefined") {
+      setIsMainNavVisible(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsMainNavVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(navElement);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +71,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       const delta = currentY - lastScrollY.current;
       const isScrollingUp = delta < -8;
       const isScrollingDown = delta > 8;
-      const isNearTop = currentY < 80;
+      const isNearTop = currentY < 80 || isMainNavVisible;
 
       if (isNearTop) {
         if (showTimerRef.current !== null) {
