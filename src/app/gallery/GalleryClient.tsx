@@ -53,7 +53,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       const isScrollingDown = delta > 8;
 
       if (isScrollingUp) {
-        setShowStickyMenu(currentY > 200);
+        setShowStickyMenu(currentY > 0);
       } else if (isScrollingDown && showStickyMenu) {
         setShowStickyMenu(false);
       }
