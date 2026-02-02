@@ -164,7 +164,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       )}
 
       <section id="gallery" className="space-y-12">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-2 lg:grid-cols-3">
           {sortedProducts.map((product) => (
             <article
               key={product.id}
