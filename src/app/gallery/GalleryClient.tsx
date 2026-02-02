@@ -175,7 +175,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
                 className="flex h-full w-full flex-col gap-3 rounded-3xl p-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >
-                <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-slate-50 sm:h-72 lg:h-80">
+                <div className="relative h-52 w-full overflow-hidden rounded-2xl bg-slate-50 sm:h-72 lg:h-80">
                   {product.images[0] ? (
                     <img
                       src={product.images[0]}
