@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { Product } from "../../../lib/products";
@@ -42,6 +42,29 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       ? initialCategory
       : "All"
   );
+  const [showStickyMenu, setShowStickyMenu] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+      const isScrollingUp = delta < -8;
+      const isScrollingDown = delta > 8;
+
+      if (isScrollingUp) {
+        setShowStickyMenu(currentY > 200);
+      } else if (isScrollingDown && showStickyMenu) {
+        setShowStickyMenu(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    lastScrollY.current = window.scrollY;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [showStickyMenu]);
 
   const filteredProducts = useMemo(() => {
     if (selected === "All") return products;
@@ -58,23 +81,43 @@ export default function GalleryClient({ products }: GalleryClientProps) {
     );
   }, [filteredProducts]);
 
+  const renderCategoryMenu = (wrapperClassName: string) => (
+    <div className={wrapperClassName}>
+      {categories.map((label) => (
+        <button
+          key={label}
+          type="button"
+          onClick={() => setSelected(label)}
+          className={[
+            "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+            selected === label ? "border-slate-400 text-slate-900" : "",
+          ].join(" ")}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <>
-      <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-semibold uppercase tracking-[0.34em] text-slate-500">
-        {categories.map((label) => (
-          <button
-            key={label}
-            type="button"
-            onClick={() => setSelected(label)}
-            className={[
-              "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-              selected === label ? "border-slate-400 text-slate-900" : "",
-            ].join(" ")}
-          >
-            {label}
-          </button>
-        ))}
+      <div
+        className={[
+          "fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur transition",
+          showStickyMenu
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-full opacity-0 pointer-events-none",
+        ].join(" ")}
+      >
+        <div className="mx-auto flex w-full max-w-6xl justify-center px-6 py-3">
+          {renderCategoryMenu(
+            "flex flex-wrap items-center justify-center gap-6 text-[10px] font-semibold uppercase tracking-[0.32em] text-slate-600 sm:gap-7 sm:text-xs"
+          )}
+        </div>
       </div>
+      {renderCategoryMenu(
+        "flex flex-wrap items-center justify-center gap-8 text-xs font-semibold uppercase tracking-[0.34em] text-slate-500"
+      )}
 
       <section id="gallery" className="space-y-12">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
