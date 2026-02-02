@@ -3,7 +3,7 @@ import FooterSocial from "../components/FooterSocial";
 import Nav from "../components/Nav";
 
 export const metadata = {
-  title: "MAMA | Gallery",
+  title: "Pod Lopuhom | Gallery",
 };
 
 export default function HomePage() {
@@ -67,7 +67,7 @@ export default function HomePage() {
             <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white shadow-[0_6px_18px_rgba(15,23,42,0.06)] sm:h-28 sm:w-28">
               <img
                 src="/images/products/Logo.%20pod_lopuhom.jpeg"
-                alt="MAMA logo"
+                alt="Pod Lopuhom logo"
                 className="h-full w-full object-cover object-center"
                 loading="eager"
                 fetchPriority="high"

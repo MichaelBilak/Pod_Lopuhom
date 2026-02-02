@@ -2,7 +2,7 @@ import FooterSocial from "../../components/FooterSocial";
 import Nav from "../../components/Nav";
 
 export const metadata = {
-  title: "MAMA | About",
+  title: "Pod Lopuhom | About",
 };
 
 export default function AboutPage() {

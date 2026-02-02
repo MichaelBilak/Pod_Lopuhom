@@ -4,7 +4,7 @@ import { fetchProducts } from "../../../lib/products";
 import GalleryClient from "./GalleryClient";
 
 export const metadata = {
-  title: "MAMA | Gallery",
+  title: "Pod Lopuhom | Gallery",
 };
 
 export const dynamic = "force-dynamic";

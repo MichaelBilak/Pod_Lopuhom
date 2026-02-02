@@ -2,7 +2,7 @@ import FooterSocial from "../../components/FooterSocial";
 import Nav from "../../components/Nav";
 
 export const metadata = {
-  title: "MAMA | Order & Delivery",
+  title: "Pod Lopuhom | Order & Delivery",
 };
 
 export default function OrderDeliveryPage() {
