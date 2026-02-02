@@ -25,6 +25,15 @@ const getCategoryFromImage = (image?: string | null) => {
   return "Rings";
 };
 
+const getProductNumber = (product: Product) => {
+  const candidates = [product.title, product.slug, product.images?.[0] ?? ""];
+  for (const value of candidates) {
+    const match = value.match(/(\d+)/);
+    if (match) return Number(match[1]);
+  }
+  return Number.MAX_SAFE_INTEGER;
+};
+
 export default function GalleryClient({ products }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams?.get("category");
@@ -42,6 +51,12 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       return category === selected;
     });
   }, [products, selected]);
+
+  const sortedProducts = useMemo(() => {
+    return [...filteredProducts].sort(
+      (a, b) => getProductNumber(a) - getProductNumber(b)
+    );
+  }, [filteredProducts]);
 
   return (
     <>
@@ -63,7 +78,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
 
       <section id="gallery" className="space-y-12">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((product) => (
+          {sortedProducts.map((product) => (
             <article
               key={product.id}
               className="group overflow-hidden rounded-3xl border border-slate-100 bg-white transition hover:border-slate-200"
