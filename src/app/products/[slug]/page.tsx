@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { fetchProductBySlug } from "../../../../lib/products";
 import FooterSocial from "../../../components/FooterSocial";
 import Nav from "../../../components/Nav";
+import ProductGallery from "./ProductGallery";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -29,22 +30,7 @@ export default async function ProductPage({ params }: PageProps) {
             ← Back to gallery
           </Link>
           <div className="mt-8 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-            <div className="grid gap-4">
-              {product.images.map((image, index) => (
-                <div
-                  key={image}
-                  className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
-                >
-                  <img
-                    src={image}
-                    alt={product.title}
-                    className="h-full w-full object-cover"
-                    loading="eager"
-                    fetchPriority={index === 0 ? "high" : "auto"}
-                  />
-                </div>
-              ))}
-            </div>
+            <ProductGallery title={product.title} images={product.images} />
             <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
               <h1 className="text-3xl font-semibold text-slate-900">
                 {product.title}
