@@ -6,61 +6,46 @@ export const metadata = {
   title: "Pod Lopuhom | Gallery",
 };
 
+export const dynamic = "force-dynamic";
+
+const heroImages = [
+  "/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg",
+  "/images/hero%20img/IMG_2028.JPG",
+  "/images/hero%20img/IMG_3292.JPG",
+  "/images/hero%20img/IMG_6353%20(2).JPG",
+  "/images/hero%20img/IMG_6912.jpg",
+  "/images/hero%20img/IMG_9258.JPG",
+];
+
+const shuffle = (images: string[]) => {
+  const result = [...images];
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+};
+
 export default function HomePage() {
+  const randomizedHeroImages = shuffle(heroImages);
+
   return (
     <>
       <Nav />
       <main className="mx-auto w-full max-w-6xl space-y-20 px-6 pb-28 pt-12">
         <section className="hero-panel text-center">
           <div className="hero-backdrop" aria-hidden="true">
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/IMG_2028.JPG"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/IMG_3292.JPG"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/IMG_6353%20(2).JPG"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/IMG_6912.jpg"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <img
-              className="hero-slide"
-              src="/images/hero%20img/IMG_9258.JPG"
-              alt=""
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
-            />
+            {randomizedHeroImages.map((src) => (
+              <img
+                key={src}
+                className="hero-slide"
+                src={src}
+                alt=""
+                decoding="async"
+                loading="eager"
+                fetchPriority="high"
+              />
+            ))}
             <span className="hero-wash" />
           </div>
           <div className="relative z-10 space-y-6">
