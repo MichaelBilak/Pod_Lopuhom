@@ -20,13 +20,13 @@ export default function Nav() {
       <div className="relative flex w-full flex-col gap-4 px-6 py-6 text-left sm:flex-row sm:items-center sm:justify-between">
         <Link
           href="/"
-          className="inline-flex items-center justify-start gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-base"
+          className="inline-flex items-center justify-start gap-3 text-base font-semibold uppercase tracking-[0.18em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-lg"
           aria-label="Pod Lopuhom home"
         >
           <img
             src="/images/products/Logo.%20pod_lopuhom.jpeg"
             alt=""
-            className="h-8 w-8 rounded-full object-cover"
+            className="h-10 w-10 rounded-full object-cover"
             loading="eager"
             fetchPriority="high"
           />
