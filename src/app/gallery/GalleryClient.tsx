@@ -52,9 +52,16 @@ export default function GalleryClient({ products }: GalleryClientProps) {
       const delta = currentY - lastScrollY.current;
       const isScrollingUp = delta < -8;
       const isScrollingDown = delta > 8;
+      const isNearTop = currentY < 80;
 
-      if (isScrollingUp) {
-        if (showTimerRef.current === null && currentY > 0) {
+      if (isNearTop) {
+        if (showTimerRef.current !== null) {
+          window.clearTimeout(showTimerRef.current);
+          showTimerRef.current = null;
+        }
+        if (showStickyMenu) setShowStickyMenu(false);
+      } else if (isScrollingUp) {
+        if (showTimerRef.current === null) {
           showTimerRef.current = window.setTimeout(() => {
             setShowStickyMenu(true);
             showTimerRef.current = null;
