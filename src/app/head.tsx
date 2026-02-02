@@ -9,6 +9,10 @@ export default function Head() {
         type="image/jpeg"
       />
       <link
+        rel="apple-touch-icon"
+        href="/images/products/Logo.%20pod_lopuhom.jpeg"
+      />
+      <link
         rel="preload"
         as="image"
         href="/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg"
