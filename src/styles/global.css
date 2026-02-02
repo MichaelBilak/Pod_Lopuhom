@@ -73,7 +73,7 @@ select {
   object-fit: cover;
   opacity: 0;
   filter: saturate(0.75) brightness(1.08);
-  animation: heroSlide 30s ease-in-out infinite;
+  animation: heroSlide 24s ease-in-out infinite;
 }
 
 .hero-backdrop img.hero-slide:nth-of-type(1) {
