@@ -24,8 +24,8 @@ export default function AboutPage() {
                 fetchPriority="high"
               />
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 text-base text-slate-700 shadow-[0_16px_40px_rgba(15,23,42,0.06)] md:p-8">
-              <div className="space-y-4">
+            <div className="p-2 text-base leading-relaxed text-slate-700 md:p-4">
+              <div className="space-y-4 text-[15px] md:text-base">
                 <p>
                   Hello! I&apos;m Olga. I am a handmade jewelry artist, working
                   with jewelry epoxy resin.
