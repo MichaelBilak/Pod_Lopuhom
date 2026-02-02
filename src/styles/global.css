@@ -111,14 +111,14 @@ select {
 
 @keyframes heroSlide {
   0%,
-  6% {
+  2% {
     opacity: 0;
   }
-  12%,
-  22% {
+  8%,
+  20% {
     opacity: 1;
   }
-  28%,
+  26%,
   100% {
     opacity: 0;
   }
@@ -126,10 +126,10 @@ select {
 
 @keyframes heroSlideFirst {
   0%,
-  12% {
+  16% {
     opacity: 1;
   }
-  22%,
+  24%,
   100% {
     opacity: 0;
   }
