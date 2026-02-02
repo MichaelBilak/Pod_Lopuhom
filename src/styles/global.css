@@ -110,14 +110,10 @@ select {
 
 @keyframes heroSlide {
   0%,
-  6% {
-    opacity: 0;
-  }
-  12%,
-  22% {
+  12% {
     opacity: 1;
   }
-  28%,
+  22%,
   100% {
     opacity: 0;
   }
