@@ -83,14 +83,16 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <div className="flex flex-wrap items-center justify-center gap-4 text-center">
+        <div className="flex flex-wrap items-center justify-center gap-6 text-center">
           {["Rings", "Necklaces", "Earrings"].map((label) => (
             <Link
               key={label}
               href={`/gallery?category=${encodeURIComponent(label)}`}
-              className="rounded-full border border-slate-200 bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-800 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition hover:border-slate-300 hover:text-slate-900 hover:shadow-[0_10px_22px_rgba(15,23,42,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
+              className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
             >
-              {label}
+              <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
+                {label}
+              </span>
             </Link>
           ))}
         </div>
