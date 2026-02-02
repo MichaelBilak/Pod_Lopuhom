@@ -15,11 +15,11 @@ export default function AboutPage() {
             About
           </h1>
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-            <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div className="about-photo-wrap">
               <img
                 src="/images/about/about.jpg"
                 alt="Olga BiIak portrait"
-                className="h-full w-full rounded-2xl object-cover"
+                className="h-full w-full object-cover"
                 loading="eager"
                 fetchPriority="high"
               />
