@@ -4,6 +4,7 @@ import Nav from "../../components/Nav.astro";
 import ProductDetail from "../../components/ProductDetail.astro";
 import FooterSocial from "../../components/FooterSocial.astro";
 import { products } from "../../data/products";
+import { getLocaleFromUrl } from "../../lib/i18n";
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -13,10 +14,11 @@ export function getStaticPaths() {
 }
 
 const { product } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
 const whatsappNumber = "972533794428";
 ---
 
-<BaseLayout title={`Pod Lopuhom | ${product.title}`}>
+<BaseLayout title={`Pod Lopuhom | ${product.title}`} locale={locale}>
   <Nav />
   <ProductDetail
     title={product.title}
@@ -25,6 +27,7 @@ const whatsappNumber = "972533794428";
     price={product.price}
     images={product.images}
     whatsappNumber={whatsappNumber}
+    locale={locale}
   />
   <FooterSocial />
 

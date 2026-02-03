@@ -7,9 +7,9 @@ import type { Product } from "../../../lib/products";
 
 type GalleryClientProps = {
   products: Product[];
+  categories: { id: string; label: string }[];
+  viewDetailsLabel: string;
 };
-
-const categories = ["All", "Rings", "Necklaces", "Earrings", "Sets"] as const;
 
 const imageFocus: Record<string, string> = {
   "/images/products/product_7.0.JPG": "35% 55%",
@@ -38,11 +38,16 @@ const getProductNumber = (product: Product) => {
   return Number.MAX_SAFE_INTEGER;
 };
 
-export default function GalleryClient({ products }: GalleryClientProps) {
+export default function GalleryClient({
+  products,
+  categories,
+  viewDetailsLabel,
+}: GalleryClientProps) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams?.get("category");
+  const categoryIds = categories.map((category) => category.id);
   const [selected, setSelected] = useState<string>(
-    initialCategory && categories.includes(initialCategory as (typeof categories)[number])
+    initialCategory && categoryIds.includes(initialCategory)
       ? initialCategory
       : "All"
   );
@@ -129,17 +134,17 @@ export default function GalleryClient({ products }: GalleryClientProps) {
 
   const renderCategoryMenu = (wrapperClassName: string) => (
     <div className={wrapperClassName}>
-      {categories.map((label) => (
+      {categories.map((category) => (
         <button
-          key={label}
+          key={category.id}
           type="button"
-          onClick={() => setSelected(label)}
+          onClick={() => setSelected(category.id)}
           className={[
             "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-            selected === label ? "border-slate-400 text-slate-900" : "",
+            selected === category.id ? "border-slate-400 text-slate-900" : "",
           ].join(" ")}
         >
-          {label}
+          {category.label}
         </button>
       ))}
     </div>
@@ -204,7 +209,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
                       {product.price}
                     </span>
                     <span className="hidden whitespace-nowrap text-[10px] uppercase tracking-[0.22em] text-slate-400 sm:inline sm:text-right">
-                      View details
+                      {viewDetailsLabel}
                     </span>
                   </div>
                 </div>

@@ -2,6 +2,11 @@ import Link from "next/link";
 import FooterSocial from "../components/FooterSocial";
 import Nav from "../components/Nav";
 import { fetchProducts } from "../../lib/products";
+import {
+  getLocaleFromSearchParams,
+  getTranslations,
+  withLang,
+} from "../lib/i18n";
 
 export const metadata = {
   title: "Pod Lopuhom | Gallery",
@@ -27,7 +32,16 @@ const shuffle = (images: string[]) => {
   return result;
 };
 
-export default async function HomePage() {
+type PageProps = {
+  searchParams?: Promise<{
+    lang?: string;
+  }>;
+};
+
+export default async function HomePage({ searchParams }: PageProps) {
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const locale = getLocaleFromSearchParams(resolvedSearchParams);
+  const t = getTranslations(locale);
   const products = await fetchProducts();
   const newProducts = products.filter((product) => product.is_new).slice(0, 4);
   const randomizedHeroImages = shuffle(heroImages);
@@ -63,23 +77,31 @@ export default async function HomePage() {
             </div>
             <div className="space-y-6">
               <h1 className="text-3xl font-semibold text-slate-900 md:text-5xl">
-                Welcome to my creation!
+                {t.home.title}
               </h1>
               <p className="mx-auto max-w-xl text-base text-slate-700">
-                Choose the piece you like and feel free to message me.
+                {t.home.subtitle}
               </p>
             </div>
           </div>
         </section>
         <div className="flex flex-wrap items-center justify-center gap-6 text-center">
-          {["Rings", "Necklaces", "Earrings", "Sets"].map((label) => (
+          {[
+            { id: "Rings", label: t.categories.rings },
+            { id: "Necklaces", label: t.categories.necklaces },
+            { id: "Earrings", label: t.categories.earrings },
+            { id: "Sets", label: t.categories.sets },
+          ].map((item) => (
             <Link
-              key={label}
-              href={`/gallery?category=${encodeURIComponent(label)}`}
+              key={item.id}
+              href={withLang(
+                `/gallery?category=${encodeURIComponent(item.id)}`,
+                locale
+              )}
               className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
             >
               <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
-                {label}
+                {item.label}
               </span>
             </Link>
           ))}
@@ -88,10 +110,10 @@ export default async function HomePage() {
           <section className="space-y-6">
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-500">
-                New
+                {t.home.newLabel}
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-slate-900">
-                Latest pieces
+                {t.home.newTitle}
               </h2>
             </div>
             <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
@@ -129,7 +151,7 @@ export default async function HomePage() {
                           {product.price}
                         </span>
                         <span className="hidden whitespace-nowrap text-[10px] uppercase tracking-[0.22em] text-slate-400 sm:inline sm:text-right">
-                          View details
+                          {t.home.viewDetails}
                         </span>
                       </div>
                     </div>

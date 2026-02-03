@@ -1,11 +1,24 @@
 import FooterSocial from "../../components/FooterSocial";
 import Nav from "../../components/Nav";
+import {
+  getLocaleFromSearchParams,
+  getTranslations,
+} from "../../lib/i18n";
 
 export const metadata = {
   title: "Pod Lopuhom | Order & Delivery",
 };
 
-export default function OrderDeliveryPage() {
+type PageProps = {
+  searchParams?: Promise<{
+    lang?: string;
+  }>;
+};
+
+export default async function OrderDeliveryPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const locale = getLocaleFromSearchParams(resolvedSearchParams);
+  const t = getTranslations(locale);
   const instagramUrl =
     "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
   const whatsappNumber = "972533794428";
@@ -17,29 +30,29 @@ export default function OrderDeliveryPage() {
       <main className="mx-auto w-full max-w-4xl space-y-10 px-6 pb-20 pt-12">
         <section className="space-y-4 text-center">
           <h1 className="text-4xl font-semibold text-slate-900">
-            Order & Delivery
+            {t.order.title}
           </h1>
           <p className="text-base text-slate-600">
-            We send jewelry anywhere in the world.
+            {t.order.subtitle}
           </p>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
             <div className="space-y-4 text-sm uppercase tracking-[0.2em] text-slate-700">
               <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>Delivery within Israel by Israel Post</span>
+                <span>{t.order.deliveryIsrael}</span>
                 <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
                   25 ILS
                 </span>
               </div>
               <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>Self-pickup and delivery within Haifa directly to your door</span>
+                <span>{t.order.deliveryHaifa}</span>
                 <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
-                  Free
+                  {t.order.free}
                 </span>
               </div>
               <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>Worldwide delivery</span>
+                <span>{t.order.deliveryWorldwide}</span>
                 <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
                   13 EUR
                 </span>
@@ -50,7 +63,7 @@ export default function OrderDeliveryPage() {
         <section className="mx-auto w-full max-w-2xl space-y-4 text-center">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
             <p className="text-sm uppercase tracking-[0.2em] text-slate-600">
-              To place an order, please message us:
+              {t.order.orderCta}
             </p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
               <a
@@ -59,7 +72,7 @@ export default function OrderDeliveryPage() {
                 rel="noreferrer"
                 className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
               >
-                WhatsApp
+                {t.order.whatsapp}
               </a>
               <a
                 href={instagramUrl}
@@ -67,7 +80,7 @@ export default function OrderDeliveryPage() {
                 rel="noreferrer"
                 className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
               >
-                Instagram
+                {t.order.instagram}
               </a>
             </div>
           </div>

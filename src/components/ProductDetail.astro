@@ -6,12 +6,25 @@ interface Props {
   price: string;
   images: string[];
   whatsappNumber: string;
+  locale?: "en" | "ru";
 }
 
 import Thumbnail from "./Thumbnail.astro";
+import { getTranslations } from "../lib/i18n";
 
-const { title, description, materials, price, images, whatsappNumber } = Astro.props;
-const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
+const {
+  title,
+  description,
+  materials,
+  price,
+  images,
+  whatsappNumber,
+  locale = "en",
+} = Astro.props;
+const t = getTranslations(locale);
+const message = encodeURIComponent(
+  `${t.messages.order} ${title} (${price}).`
+);
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 const instagramUrl =
   "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
@@ -58,14 +71,14 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
         </h1>
         <p class="text-sm text-slate-600 sm:text-base">{description}</p>
         <p class="inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
-          Materials: {materials}
+          {t.product.materials}: {materials}
         </p>
       </div>
 
       <div class="p-4">
         <div class="flex items-center justify-between">
           <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">
-            Price
+            {t.product.price}
           </span>
           <span class="text-2xl font-semibold text-slate-900">{price}</span>
         </div>
@@ -76,7 +89,7 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
             rel="noreferrer"
             class="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
           >
-            Request via WhatsApp
+            {t.product.requestWhatsapp}
           </a>
           <a
             href={instagramUrl}
@@ -84,7 +97,7 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
             rel="noreferrer"
             class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
           >
-            Request via Instagram
+            {t.product.requestInstagram}
           </a>
         </div>
       </div>
@@ -106,7 +119,7 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
         rel="noreferrer"
         class="inline-flex items-center justify-center rounded-full border border-slate-900 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
       >
-        WhatsApp
+        {t.common.whatsapp}
       </a>
     </div>
   </div>

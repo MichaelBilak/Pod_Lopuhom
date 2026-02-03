@@ -1,16 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const navLinks = [
-  { label: "GALLERY", href: "/gallery" },
-  { label: "ABOUT", href: "/about" },
-  { label: "ORDER & DELIVERY", href: "/order-delivery" },
-];
+import { usePathname, useSearchParams } from "next/navigation";
+import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 
 export default function Nav() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const locale = getLocale(searchParams?.get("lang"));
+  const t = getTranslations(locale);
+  const navLinks = [
+    { label: t.nav.gallery, href: "/gallery" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.orderDelivery, href: "/order-delivery" },
+  ];
+
+  const buildHref = (href: string) => withLang(href, locale);
+  const buildLangHref = (nextLocale: Locale) => {
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set("lang", nextLocale);
+    const query = params.toString();
+    return `${pathname}${query ? `?${query}` : ""}`;
+  };
 
   return (
     <header
@@ -44,7 +55,7 @@ export default function Nav() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={buildHref(link.href)}
               className={[
                 "relative transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
                 "after:absolute after:-bottom-2 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition",
@@ -55,6 +66,22 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
+          <div className="flex items-center gap-2">
+            {(["en", "ru"] as Locale[]).map((option) => (
+              <Link
+                key={option}
+                href={buildLangHref(option)}
+                className={[
+                  "rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
+                  option === locale
+                    ? "border-slate-900 text-slate-900"
+                    : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
+                ].join(" ")}
+              >
+                {t.language[option]}
+              </Link>
+            ))}
+          </div>
         </nav>
       </div>
     </header>
