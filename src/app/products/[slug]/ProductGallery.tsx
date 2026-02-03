@@ -14,11 +14,11 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
     activeImage.includes("/necklaces_21.0.") ||
     activeImage.includes("necklaces_21.0.");
   const imageFocus: Record<string, string> = {
-    "/images/products/necklaces_21.0.jpg": "60% 70%",
-    "/images/products/necklaces_21.0.JPG": "60% 70%",
+    "/images/products/necklaces_21.0.jpg": "60% 90%",
+    "/images/products/necklaces_21.0.JPG": "60% 90%",
   };
   const objectPosition = isNecklaces21
-    ? imageFocus[activeImage] ?? "60% 70%"
+    ? imageFocus[activeImage] ?? "60% 90%"
     : "50% 50%";
 
   const safeImages = useMemo(() => images.filter(Boolean), [images]);
