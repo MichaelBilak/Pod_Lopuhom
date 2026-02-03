@@ -13,6 +13,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   const isNecklaces21 =
     activeImage.includes("/necklaces_21.0.") ||
     activeImage.includes("necklaces_21.0.");
+  const imageFitClass = isNecklaces21 ? "object-contain scale-90" : "object-cover";
 
   const safeImages = useMemo(() => images.filter(Boolean), [images]);
 
@@ -27,8 +28,8 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
           src={activeImage}
           alt={title}
           className={[
-            "h-full w-full object-cover",
-            isNecklaces21 ? "scale-80 origin-center" : "",
+            "h-full w-full origin-center",
+            imageFitClass,
           ].join(" ")}
           loading="eager"
           fetchPriority="high"
