@@ -24,6 +24,7 @@ create table if not exists products (
   slug text not null unique,
   title text not null,
   category text not null default 'Rings',
+  is_new boolean not null default false,
   materials text,
   price text,
   description text,
@@ -34,6 +35,8 @@ create table if not exists products (
 
 alter table products
   add column if not exists category text not null default 'Rings';
+alter table products
+  add column if not exists is_new boolean not null default false;
 
 create or replace function set_updated_at()
 returns trigger as $$

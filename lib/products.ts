@@ -5,6 +5,7 @@ export type Product = {
   slug: string;
   title: string;
   category: string;
+  is_new: boolean;
   materials: string | null;
   price: string | null;
   description: string | null;
@@ -17,6 +18,7 @@ export type ProductInput = {
   slug: string;
   title: string;
   category: string;
+  is_new: boolean;
   materials: string | null;
   price: string | null;
   description: string | null;
@@ -37,16 +39,19 @@ const normalizeImages = (value: unknown): string[] => {
   return [];
 };
 
+const normalizeIsNew = (value: unknown) => value === true;
+
 const mapProductRow = (row: Record<string, unknown>) =>
   ({
     ...row,
     images: normalizeImages(row.images),
+    is_new: normalizeIsNew(row.is_new),
   }) as Product;
 
 export const fetchProducts = async () => {
   const pool = getPool();
   const { rows } = await pool.query(
-    `select id, slug, title, category, materials, price, description, images, created_at, updated_at
+    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
      from products
      order by created_at asc`
   );
@@ -56,7 +61,7 @@ export const fetchProducts = async () => {
 export const fetchProductBySlug = async (slug: string) => {
   const pool = getPool();
   const { rows } = await pool.query(
-    `select id, slug, title, category, materials, price, description, images, created_at, updated_at
+    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
      from products
      where slug = $1
      limit 1`,
@@ -69,7 +74,7 @@ export const fetchProductBySlug = async (slug: string) => {
 export const fetchProductById = async (id: string) => {
   const pool = getPool();
   const { rows } = await pool.query(
-    `select id, slug, title, category, materials, price, description, images, created_at, updated_at
+    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
      from products
      where id = $1
      limit 1`,
@@ -82,13 +87,14 @@ export const fetchProductById = async (id: string) => {
 export const createProduct = async (input: ProductInput) => {
   const pool = getPool();
   const { rows } = await pool.query(
-    `insert into products (slug, title, category, materials, price, description, images)
-     values ($1, $2, $3, $4, $5, $6, $7)
-     returning id, slug, title, category, materials, price, description, images, created_at, updated_at`,
+    `insert into products (slug, title, category, is_new, materials, price, description, images)
+     values ($1, $2, $3, $4, $5, $6, $7, $8)
+     returning id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at`,
     [
       input.slug,
       input.title,
       input.category,
+      input.is_new,
       input.materials,
       input.price,
       input.description,
@@ -105,16 +111,18 @@ export const updateProduct = async (id: string, input: ProductInput) => {
      set slug = $1,
          title = $2,
          category = $3,
-         materials = $4,
-         price = $5,
-         description = $6,
-         images = $7
-     where id = $8
-     returning id, slug, title, category, materials, price, description, images, created_at, updated_at`,
+         is_new = $4,
+         materials = $5,
+         price = $6,
+         description = $7,
+         images = $8
+     where id = $9
+     returning id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at`,
     [
       input.slug,
       input.title,
       input.category,
+      input.is_new,
       input.materials,
       input.price,
       input.description,

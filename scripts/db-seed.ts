@@ -18,12 +18,13 @@ const client = new Client({
 });
 
 const upsertSql = `
-insert into products (slug, title, category, materials, price, description, images)
-values ($1, $2, $3, $4, $5, $6, $7)
+insert into products (slug, title, category, is_new, materials, price, description, images)
+values ($1, $2, $3, $4, $5, $6, $7, $8)
 on conflict (slug)
 do update set
   title = excluded.title,
   category = excluded.category,
+  is_new = excluded.is_new,
   materials = excluded.materials,
   price = excluded.price,
   description = excluded.description,
@@ -49,6 +50,7 @@ const run = async () => {
       product.slug,
       product.title,
       getCategoryFromImages(product.images),
+      product.isNew ?? false,
       product.materials,
       product.price,
       product.description,

@@ -1,4 +1,14 @@
-export const products = [
+type SeedProduct = {
+  slug: string;
+  title: string;
+  materials: string;
+  price: string;
+  description: string;
+  images: string[];
+  isNew?: boolean;
+};
+
+export const products: SeedProduct[] = [
   {
     slug: "earrings-1",
     title: "Earrings 1",

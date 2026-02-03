@@ -15,6 +15,15 @@ const parseNullableString = (value: unknown) => {
   return parsed ? parsed : null;
 };
 
+const parseBoolean = (value: unknown) => {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    return normalized === "true" || normalized === "1" || normalized === "on";
+  }
+  return false;
+};
+
 const parseImages = (value: unknown) => {
   if (!Array.isArray(value)) return [];
   return value
@@ -38,6 +47,7 @@ const buildInput = (payload: Record<string, unknown>): ProductInput | null => {
     slug,
     title,
     category: parseCategory(payload.category),
+    is_new: parseBoolean(payload.is_new),
     materials: parseNullableString(payload.materials),
     price: parseNullableString(payload.price),
     description: parseNullableString(payload.description),

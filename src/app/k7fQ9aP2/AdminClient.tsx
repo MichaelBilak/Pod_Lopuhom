@@ -7,6 +7,7 @@ type FormState = {
   slug: string;
   title: string;
   category: string;
+  isNew: boolean;
   materials: string;
   price: string;
   description: string;
@@ -21,6 +22,7 @@ const emptyForm = (): FormState => ({
   slug: "",
   title: "",
   category: "Rings",
+  isNew: false,
   materials: "",
   price: "",
   description: "",
@@ -71,6 +73,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
           slug: form.slug,
           title: form.title,
           category: form.category,
+          is_new: form.isNew,
           materials: form.materials,
           price: form.price,
           description: form.description,
@@ -99,6 +102,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
       slug: product.slug,
       title: product.title,
       category: product.category ?? "Rings",
+      isNew: Boolean(product.is_new),
       materials: product.materials ?? "",
       price: product.price ?? "",
       description: product.description ?? "",
@@ -124,6 +128,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
           slug: editForm.slug,
           title: editForm.title,
           category: editForm.category,
+          is_new: editForm.isNew,
           materials: editForm.materials,
           price: editForm.price,
           description: editForm.description,
@@ -233,6 +238,25 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
               </select>
             </label>
           </div>
+          <label className="text-xs text-slate-500">
+            New
+            <div className="mt-2 flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={form.isNew}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    isNew: event.target.checked,
+                  }))
+                }
+                className="h-4 w-4 rounded border-slate-300 text-slate-900"
+              />
+              <span className="text-xs text-slate-600">
+                Show in New gallery
+              </span>
+            </div>
+          </label>
           <div className="grid gap-4 md:grid-cols-2">
             <label className="text-xs text-slate-500">
               Materials
@@ -320,6 +344,11 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                   <div className="flex-1">
                     <div className="text-sm font-semibold text-slate-900">
                       {product.title}
+                      {product.is_new ? (
+                        <span className="ml-2 rounded-full bg-slate-900 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-white">
+                          New
+                        </span>
+                      ) : null}
                     </div>
                     <div className="text-xs text-slate-500">
                       {product.slug}
@@ -396,6 +425,25 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                         </select>
                       </label>
                     </div>
+                    <label className="text-xs text-slate-500">
+                      New
+                      <div className="mt-2 flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={editForm.isNew}
+                          onChange={(event) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              isNew: event.target.checked,
+                            }))
+                          }
+                          className="h-4 w-4 rounded border-slate-300 text-slate-900"
+                        />
+                        <span className="text-xs text-slate-600">
+                          Show in New gallery
+                        </span>
+                      </div>
+                    </label>
                     <div className="grid gap-4 md:grid-cols-2">
                       <label className="text-xs text-slate-500">
                         Materials
