@@ -69,7 +69,7 @@ export default function HomePage() {
           </div>
         </section>
         <div className="flex flex-wrap items-center justify-center gap-6 text-center">
-          {["Rings", "Necklaces", "Earrings"].map((label) => (
+          {["Rings", "Necklaces", "Earrings", "Sets"].map((label) => (
             <Link
               key={label}
               href={`/gallery?category=${encodeURIComponent(label)}`}

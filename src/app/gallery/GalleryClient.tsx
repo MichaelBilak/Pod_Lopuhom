@@ -9,7 +9,7 @@ type GalleryClientProps = {
   products: Product[];
 };
 
-const categories = ["All", "Rings", "Necklaces", "Earrings"] as const;
+const categories = ["All", "Rings", "Necklaces", "Earrings", "Sets"] as const;
 
 const imageFocus: Record<string, string> = {
   "/images/products/product_7.0.JPG": "35% 55%",
@@ -25,6 +25,7 @@ const getCategoryFromImage = (image?: string | null) => {
   const normalized = image.toLowerCase();
   if (normalized.includes("earrings_")) return "Earrings";
   if (normalized.includes("necklaces_")) return "Necklaces";
+  if (normalized.includes("set_")) return "Sets";
   return "Rings";
 };
 

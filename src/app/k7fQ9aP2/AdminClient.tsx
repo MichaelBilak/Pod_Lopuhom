@@ -229,6 +229,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                 <option value="Rings">Rings</option>
                 <option value="Necklaces">Necklaces</option>
                 <option value="Earrings">Earrings</option>
+                <option value="Sets">Sets</option>
               </select>
             </label>
           </div>
@@ -391,6 +392,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
                           <option value="Rings">Rings</option>
                           <option value="Necklaces">Necklaces</option>
                           <option value="Earrings">Earrings</option>
+                          <option value="Sets">Sets</option>
                         </select>
                       </label>
                     </div>

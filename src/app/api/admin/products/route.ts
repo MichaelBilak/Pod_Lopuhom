@@ -22,7 +22,7 @@ const parseImages = (value: unknown) => {
     .filter((item) => item.length > 0);
 };
 
-const allowedCategories = ["Rings", "Necklaces", "Earrings"];
+const allowedCategories = ["Rings", "Necklaces", "Earrings", "Sets"];
 
 const parseCategory = (value: unknown) => {
   const parsed = parseString(value);
