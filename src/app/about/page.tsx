@@ -43,6 +43,7 @@ export default async function AboutPage({ searchParams }: PageProps) {
                 <p>{t.about.paragraph2}</p>
                 <p>{t.about.paragraph3}</p>
                 <p>{t.about.paragraph4}</p>
+                {t.about.paragraph5 ? <p>{t.about.paragraph5}</p> : null}
               </div>
             </div>
           </div>
