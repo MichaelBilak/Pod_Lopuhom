@@ -35,6 +35,7 @@ const getCategoryFromImages = (images: string[]) => {
   if (normalized.some((image) => image.includes("earrings_"))) return "Earrings";
   if (normalized.some((image) => image.includes("necklaces_")))
     return "Necklaces";
+  if (normalized.some((image) => image.includes("set_"))) return "Sets";
   return "Rings";
 };
 
