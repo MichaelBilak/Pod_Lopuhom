@@ -75,13 +75,14 @@ export const translations = {
     about: {
       title: "About",
       paragraph1:
-        "Hello! I'm Olga. I am a handmade jewelry artist, working with jewelry epoxy resin.",
+        "Hello! I’m Olga. I am a handmade jewelry artist, working with jewelry epoxy resin.",
       paragraph2:
         "In each piece, I try to preserve what nature gives us only for a short while. Inside my work are real flowers, small branches, and leaves — carefully dried and thoughtfully saved.",
       paragraph3:
         "Flowers fade, moments pass, and yet sometimes we want to hold on to feelings and memories just a little longer, to carry them with us and keep them close.",
       paragraph4:
         "My jewelry is for those who notice the little details and would love to wear a small piece of nature with them.",
+      paragraph5: "",
     },
     cta: {
       helperText: "To place an order, message me directly.",
