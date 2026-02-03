@@ -13,7 +13,6 @@ import Thumbnail from "./Thumbnail.astro";
 const { title, description, materials, price, images, whatsappNumber } = Astro.props;
 const message = encodeURIComponent(`Hi! I want to order: ${title} (${price}).`);
 const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
-const whatsappPlain = `https://wa.me/${whatsappNumber}`;
 const instagramUrl =
   "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
 const imageFocus: Record<string, string> = {
@@ -78,14 +77,6 @@ const getObjectPosition = (src: string) => imageFocus[src] ?? "50% 50%";
             class="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
           >
             Request this piece
-          </a>
-          <a
-            href={whatsappPlain}
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-sm"
-          >
-            WhatsApp
           </a>
           <a
             href={instagramUrl}
