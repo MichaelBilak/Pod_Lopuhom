@@ -8,6 +8,10 @@ import ProductGallery from "./ProductGallery";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+const instagramUrl =
+  "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
+const whatsappNumber = "972533794428";
+
 type PageProps = {
   params: Promise<{
     slug: string;
@@ -20,6 +24,9 @@ export default async function ProductPage({ params }: PageProps) {
   if (!product) {
     notFound();
   }
+  const whatsappMessage = encodeURIComponent(
+    `Hi! I want to order: ${product.title} (${product.price}).`
+  );
 
   return (
     <>
@@ -44,6 +51,26 @@ export default async function ProductPage({ params }: PageProps) {
               <p className="mt-4 text-2xl font-semibold text-slate-900">
                 {product.price}
               </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+                  className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                >
+                  Request this piece
+                </a>
+                <a
+                  href={`https://wa.me/${whatsappNumber}`}
+                  className="inline-flex items-center justify-center rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300"
+                >
+                  WhatsApp
+                </a>
+                <a
+                  href={instagramUrl}
+                  className="inline-flex items-center justify-center rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300"
+                >
+                  Instagram
+                </a>
+              </div>
             </div>
           </div>
         </section>
