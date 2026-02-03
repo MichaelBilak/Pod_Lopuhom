@@ -182,7 +182,7 @@ export default function GalleryClient({ products }: GalleryClientProps) {
                     <img
                       src={product.images[0]}
                       alt={product.title}
-                      className="gallery-image h-full w-full scale-90 origin-center rounded-2xl object-cover object-center transition duration-300 group-hover:scale-[0.95]"
+                      className="gallery-image h-full w-full scale-80 origin-center rounded-2xl object-cover object-center transition duration-300 group-hover:scale-[0.85]"
                       style={{
                         objectPosition: getObjectPosition(product.images[0]),
                       }}
