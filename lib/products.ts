@@ -23,9 +23,16 @@ export type ProductInput = {
   images: string[];
 };
 
+const imageCaseMap: Record<string, string> = {
+  "/images/products/necklaces_21.0.JPG": "/images/products/necklaces_21.0.jpg",
+  "/images/products/necklaces_21.1.JPG": "/images/products/necklaces_21.1.jpg",
+};
+
 const normalizeImages = (value: unknown): string[] => {
   if (Array.isArray(value)) {
-    return value.filter((item) => typeof item === "string");
+    return value
+      .filter((item) => typeof item === "string")
+      .map((item) => imageCaseMap[item] ?? item);
   }
   return [];
 };
