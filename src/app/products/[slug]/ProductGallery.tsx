@@ -10,6 +10,9 @@ type ProductGalleryProps = {
 export default function ProductGallery({ title, images }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeImage = images[activeIndex] ?? images[0] ?? "";
+  const isNecklaces21 =
+    activeImage.includes("/necklaces_21.0.") ||
+    activeImage.includes("necklaces_21.0.");
 
   const safeImages = useMemo(() => images.filter(Boolean), [images]);
 
@@ -23,7 +26,10 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
         <img
           src={activeImage}
           alt={title}
-          className="h-full w-full object-cover"
+          className={[
+            "h-full w-full object-cover",
+            isNecklaces21 ? "scale-80 origin-center" : "",
+          ].join(" ")}
           loading="eager"
           fetchPriority="high"
         />
