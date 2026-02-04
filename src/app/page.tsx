@@ -116,7 +116,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                 {t.home.newTitle}
               </h2>
             </div>
-            <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {newProducts.map((product) => (
                 <article
                   key={product.id}
@@ -140,14 +140,14 @@ export default async function HomePage({ searchParams }: PageProps) {
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"></div>
                     </div>
                     <div className="flex flex-1 flex-col gap-2 px-1 pb-1">
-                      <p className="whitespace-nowrap text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
+                      <p className="text-xs font-medium tracking-[0.02em] text-slate-900 sm:text-sm">
                         {product.title}
                       </p>
-                      <p className="whitespace-nowrap text-xs text-slate-500 sm:block">
+                      <p className="text-xs text-slate-500 sm:block">
                         {product.materials}
                       </p>
                       <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-between">
-                        <span className="whitespace-nowrap text-base font-semibold leading-tight text-slate-900 sm:text-lg">
+                        <span className="text-base font-semibold leading-tight text-slate-900 sm:text-lg">
                           {product.price}
                         </span>
                         <span className="hidden whitespace-nowrap text-[10px] uppercase tracking-[0.22em] text-slate-400 sm:inline sm:text-right">
