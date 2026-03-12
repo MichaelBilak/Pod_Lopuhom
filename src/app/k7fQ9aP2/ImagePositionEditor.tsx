@@ -31,6 +31,8 @@ export default function ImagePositionEditor({
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState(() => parsePosition(objectPosition));
   const positionRef = useRef(position);
+  /** Updated on every move so handleUp reads the final position (setState is async). */
+  const lastMoveRef = useRef(position);
   const [dragging, setDragging] = useState(false);
 
   positionRef.current = position;
@@ -39,9 +41,11 @@ export default function ImagePositionEditor({
     const el = containerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = ((clientX - rect.left) / rect.width) * 100;
-    const y = ((clientY - rect.top) / rect.height) * 100;
-    setPosition({ x: Math.min(100, Math.max(0, x)), y: Math.min(100, Math.max(0, y)) });
+    const x = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+    const y = Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100));
+    const next = { x, y };
+    lastMoveRef.current = next;
+    setPosition(next);
   }, []);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -54,7 +58,7 @@ export default function ImagePositionEditor({
     const handleMove = (e: PointerEvent) => updateFromEvent(e.clientX, e.clientY);
     const handleUp = () => {
       setDragging(false);
-      const { x, y } = positionRef.current;
+      const { x, y } = lastMoveRef.current;
       onSave(toPosition(x, y));
     };
     window.addEventListener("pointermove", handleMove);

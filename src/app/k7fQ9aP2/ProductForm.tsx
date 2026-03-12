@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageManager from "./ImageManager";
 import type { Product, ProductImage } from "@/lib/supabase-products";
 
@@ -66,6 +66,10 @@ export default function ProductForm({
       : emptyForm
   );
   const [images, setImages] = useState<ProductImage[]>(product?.images ?? []);
+
+  useEffect(() => {
+    if (product?.images) setImages(product.images);
+  }, [product?.id, product?.images]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

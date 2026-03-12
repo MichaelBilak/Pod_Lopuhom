@@ -104,9 +104,17 @@ export default function ImageManager({
         }
       );
       if (!res.ok) return;
+      let savedPosition = objectPosition;
+      try {
+        const data = await res.json();
+        if (typeof data?.objectPosition === "string") savedPosition = data.objectPosition;
+      } catch {
+        // use sent value if response body is invalid
+      }
+      const next = savedPosition;
       onImagesChange(
         images.map((img) =>
-          img.id === imageId ? { ...img, object_position: objectPosition } : img
+          img.id === imageId ? { ...img, object_position: next } : img
         )
       );
     },

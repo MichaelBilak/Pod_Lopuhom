@@ -353,16 +353,21 @@ export async function addProductImage(
   };
 }
 
+/** Returns the new object_position if update succeeded, null otherwise. */
 export async function updateProductImagePosition(
   imageId: string,
   objectPosition: string
-): Promise<boolean> {
+): Promise<string | null> {
   const supabase = getSupabaseAdmin();
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("product_images")
     .update({ object_position: objectPosition } as never)
-    .eq("id", imageId);
-  return !error;
+    .eq("id", imageId)
+    .select("object_position")
+    .single();
+  if (error || !data) return null;
+  const pos = (data as { object_position?: string | null }).object_position;
+  return typeof pos === "string" ? pos : null;
 }
 
 export async function updateProductImageOrder(

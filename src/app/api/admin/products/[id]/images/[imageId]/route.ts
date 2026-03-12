@@ -26,11 +26,11 @@ export async function PATCH(
   const raw = typeof body?.objectPosition === "string" ? body.objectPosition.trim() : "";
   const objectPosition = raw && OBJECT_POSITION_REGEX.test(raw) ? raw : "50% 50%";
   try {
-    const ok = await updateProductImagePosition(imageId, objectPosition);
-    if (!ok) {
+    const saved = await updateProductImagePosition(imageId, objectPosition);
+    if (saved === null) {
       return NextResponse.json({ message: "Image not found." }, { status: 404 });
     }
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, objectPosition: saved });
   } catch {
     return NextResponse.json({ message: "Failed to update." }, { status: 500 });
   }
