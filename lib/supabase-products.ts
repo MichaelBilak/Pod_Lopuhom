@@ -353,18 +353,22 @@ export async function addProductImage(
   };
 }
 
-/** Returns the new object_position if update succeeded, null otherwise. */
+/** Returns the new object_position if update succeeded, null otherwise.
+ * If productId is provided, only updates when the image belongs to that product. */
 export async function updateProductImagePosition(
   imageId: string,
-  objectPosition: string
+  objectPosition: string,
+  productId?: string
 ): Promise<string | null> {
   const supabase = getSupabaseAdmin();
-  const { data, error } = await supabase
+  let query = supabase
     .from("product_images")
     .update({ object_position: objectPosition } as never)
-    .eq("id", imageId)
-    .select("object_position")
-    .single();
+    .eq("id", imageId);
+  if (productId) {
+    query = query.eq("product_id", productId);
+  }
+  const { data, error } = await query.select("object_position").single();
   if (error || !data) return null;
   const pos = (data as { object_position?: string | null }).object_position;
   return typeof pos === "string" ? pos : null;
@@ -419,4 +423,19 @@ export async function getProductImage(
   if (error || !data) return null;
   const d = data as { image_url: string; object_position?: string | null };
   return { image_url: d.image_url, object_position: d.object_position ?? null };
+}
+
+/** Get image with product_id to verify it belongs to the product. */
+export async function getProductImageWithProductId(
+  imageId: string
+): Promise<{ product_id: string; object_position?: string | null } | null> {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("product_images")
+    .select("product_id, object_position")
+    .eq("id", imageId)
+    .single();
+  if (error || !data) return null;
+  const d = data as { product_id: string; object_position?: string | null };
+  return { product_id: d.product_id, object_position: d.object_position ?? null };
 }

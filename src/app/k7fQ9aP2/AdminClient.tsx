@@ -72,6 +72,21 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
     }
   };
 
+  const refetchProduct = async (id: string) => {
+    try {
+      const res = await fetch(`/api/admin/products/${id}`);
+      const data = await res.json();
+      if (res.ok && data?.product) {
+        setFormProduct(data.product);
+        setProducts((prev) =>
+          prev.map((p) => (p.id === id ? data.product : p))
+        );
+      }
+    } catch {
+      // ignore
+    }
+  };
+
   const handleDelete = async (product: Product) => {
     const ok = window.confirm(
       `Delete "${product.title}"? This will remove the product and all its images.`
@@ -123,6 +138,11 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
               product={formProduct === "add" ? null : formProduct}
               onSave={handleSave}
               onCancel={() => setFormProduct(null)}
+              onImageNotFound={
+                formProduct !== "add" && formProduct?.id
+                  ? () => refetchProduct(formProduct.id)
+                  : undefined
+              }
               isBusy={isBusy}
             />
           </div>

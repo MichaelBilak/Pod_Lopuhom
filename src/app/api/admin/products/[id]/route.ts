@@ -56,6 +56,23 @@ function buildProductUpdate(payload: Record<string, unknown>): ProductUpdate | n
 
 type RouteParams = Promise<{ id: string }>;
 
+export async function GET(_req: NextRequest, { params }: { params: RouteParams }) {
+  const { id } = await params;
+  try {
+    const product = await fetchProductById(id);
+    if (!product) {
+      return NextResponse.json({ message: "Product not found." }, { status: 404 });
+    }
+    return NextResponse.json({ product });
+  } catch (error) {
+    console.error("Admin get product:", error);
+    return NextResponse.json(
+      { message: "Unable to load product." },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PUT(req: NextRequest, { params }: { params: RouteParams }) {
   const { id } = await params;
   const payload = (await req.json().catch(() => null)) as Record<string, unknown> | null;

@@ -22,6 +22,18 @@ type ImagePositionEditorProps = {
   onClose: () => void;
 };
 
+/** Call onSave with current position, then onClose. Ensures position is saved when user clicks Done. */
+function useSaveOnClose(
+  getCurrentPosition: () => string,
+  onSave: (objectPosition: string) => void,
+  onClose: () => void
+) {
+  return useCallback(() => {
+    onSave(getCurrentPosition());
+    onClose();
+  }, [getCurrentPosition, onSave, onClose]);
+}
+
 export default function ImagePositionEditor({
   imageUrl,
   objectPosition,
@@ -70,9 +82,14 @@ export default function ImagePositionEditor({
   }, [dragging, updateFromEvent, onSave]);
 
   const positionStr = toPosition(position.x, position.y);
+  const getCurrentPosition = useCallback(
+    () => toPosition(position.x, position.y),
+    [position.x, position.y]
+  );
+  const handleDone = useSaveOnClose(getCurrentPosition, onSave, onClose);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={handleDone}>
       <div
         className="relative max-h-[90vh] w-full max-w-md rounded-2xl border border-slate-200 bg-white p-4 shadow-xl"
         onClick={(e) => e.stopPropagation()}
@@ -83,7 +100,7 @@ export default function ImagePositionEditor({
           </p>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleDone}
             className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
           >
             Done

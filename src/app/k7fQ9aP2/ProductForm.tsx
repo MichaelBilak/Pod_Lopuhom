@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ImageManager from "./ImageManager";
+import ProductPreview from "./ProductPreview";
 import type { Product, ProductImage } from "@/lib/supabase-products";
 
 const CATEGORIES = ["Rings", "Necklaces", "Earrings", "Sets"];
@@ -38,6 +39,7 @@ type ProductFormProps = {
   product: Product | null;
   onSave: (payload: ProductFormState, imageIds: string[]) => Promise<void>;
   onCancel: () => void;
+  onImageNotFound?: () => void;
   isBusy: boolean;
 };
 
@@ -45,6 +47,7 @@ export default function ProductForm({
   product,
   onSave,
   onCancel,
+  onImageNotFound,
   isBusy,
 }: ProductFormProps) {
   const isEdit = Boolean(product?.id);
@@ -84,7 +87,8 @@ export default function ProductForm({
       .replace(/[^a-z0-9-]/g, "");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:items-start">
+      <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
@@ -258,6 +262,7 @@ export default function ProductForm({
         productId={product?.id ?? null}
         images={images}
         onImagesChange={setImages}
+        onImageNotFound={onImageNotFound}
         disabled={isBusy}
       />
 
@@ -276,6 +281,11 @@ export default function ProductForm({
         >
           {isBusy ? "Saving…" : isEdit ? "Save changes" : "Create product"}
         </button>
+      </div>
+      </div>
+
+      <div className="lg:sticky lg:top-6">
+        <ProductPreview form={form} images={images} />
       </div>
     </form>
   );

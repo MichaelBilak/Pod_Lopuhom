@@ -16,7 +16,7 @@ export async function PATCH(
   req: Request,
   { params }: { params: Params }
 ) {
-  const { imageId } = await params;
+  const { id: productId, imageId } = await params;
   let body: { objectPosition?: string };
   try {
     body = await req.json();
@@ -26,11 +26,29 @@ export async function PATCH(
   const raw = typeof body?.objectPosition === "string" ? body.objectPosition.trim() : "";
   const objectPosition = raw && OBJECT_POSITION_REGEX.test(raw) ? raw : "50% 50%";
   try {
+    // Update by imageId only (no product_id filter) to avoid mismatches
     const saved = await updateProductImagePosition(imageId, objectPosition);
-    if (saved === null) {
-      return NextResponse.json({ message: "Image not found." }, { status: 404 });
+    if (saved !== null) {
+      return NextResponse.json({ ok: true, objectPosition: saved });
     }
-    return NextResponse.json({ ok: true, objectPosition: saved });
+    // Update failed: check if image exists to choose error message
+    const imageExists = await getProductImage(imageId);
+    if (!imageExists) {
+      return NextResponse.json(
+        {
+          message:
+            "Image not found. Click «Обновить товар», or check that .env (NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY) points to the same Supabase project as your data.",
+        },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      {
+        message:
+          "Could not save position. In Supabase → SQL Editor run: ALTER TABLE product_images ADD COLUMN IF NOT EXISTS object_position text DEFAULT '50% 50%';",
+      },
+      { status: 500 }
+    );
   } catch {
     return NextResponse.json({ message: "Failed to update." }, { status: 500 });
   }

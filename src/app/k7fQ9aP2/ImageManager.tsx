@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { ProductImage } from "@/lib/supabase-products";
 import ImagePositionEditor from "./ImagePositionEditor";
 
@@ -8,6 +8,7 @@ type ImageManagerProps = {
   productId: string | null;
   images: ProductImage[];
   onImagesChange: (images: ProductImage[]) => void;
+  onImageNotFound?: () => void;
   disabled?: boolean;
 };
 
@@ -15,11 +16,15 @@ export default function ImageManager({
   productId,
   images,
   onImagesChange,
+  onImageNotFound,
   disabled,
 }: ImageManagerProps) {
   const [uploading, setUploading] = useState(false);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [adjustImageId, setAdjustImageId] = useState<string | null>(null);
+  const [positionError, setPositionError] = useState<string | null>(null);
+  const imagesRef = useRef(images);
+  imagesRef.current = images;
 
   const uploadFiles = useCallback(
     async (files: FileList | null) => {
@@ -95,6 +100,7 @@ export default function ImageManager({
   const updatePosition = useCallback(
     async (imageId: string, objectPosition: string) => {
       if (!productId) return;
+      setPositionError(null);
       const res = await fetch(
         `/api/admin/products/${productId}/images/${imageId}`,
         {
@@ -103,7 +109,18 @@ export default function ImageManager({
           body: JSON.stringify({ objectPosition }),
         }
       );
-      if (!res.ok) return;
+      if (!res.ok) {
+        let message = "Failed to save position. Try again.";
+        try {
+          const data = await res.json();
+          if (typeof data?.message === "string") message = data.message;
+        } catch {
+          // use default message
+        }
+        setPositionError(message);
+        if (res.status === 404) onImageNotFound?.();
+        return;
+      }
       let savedPosition = objectPosition;
       try {
         const data = await res.json();
@@ -113,12 +130,12 @@ export default function ImageManager({
       }
       const next = savedPosition;
       onImagesChange(
-        images.map((img) =>
+        imagesRef.current.map((img) =>
           img.id === imageId ? { ...img, object_position: next } : img
         )
       );
     },
-    [productId, images, onImagesChange]
+    [productId, onImagesChange, onImageNotFound]
   );
 
   const handleDragStart = (index: number) => setDragIndex(index);
@@ -142,6 +159,23 @@ export default function ImageManager({
           </span>
         )}
       </div>
+      {positionError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+          <p className="mb-2">{positionError}</p>
+          {onImageNotFound && (
+            <button
+              type="button"
+              onClick={() => {
+                setPositionError(null);
+                onImageNotFound();
+              }}
+              className="rounded border border-red-300 bg-white px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-100"
+            >
+              Обновить товар
+            </button>
+          )}
+        </div>
+      )}
       {productId ? (
         <>
           <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-6 transition hover:border-slate-300 hover:bg-slate-50">
@@ -197,7 +231,10 @@ export default function ImageManager({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setAdjustImageId(img.id)}
+                      onClick={() => {
+                        setPositionError(null);
+                        setAdjustImageId(img.id);
+                      }}
                       className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800"
                       title="Adjust position / crop focus"
                     >

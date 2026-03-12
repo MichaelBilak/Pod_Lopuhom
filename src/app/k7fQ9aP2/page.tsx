@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifyAdminSession } from "@/lib/auth";
 import { fetchProductsAdmin } from "@/lib/supabase-products";
 import AdminClient from "./AdminClient";
+import ConsoleErrorsHint from "./ConsoleErrorsHint";
 
 export const metadata = {
   robots: {
@@ -127,6 +128,9 @@ export default async function AdminPage({ searchParams }: PageProps) {
               </button>
             </form>
           </div>
+        </div>
+        <div className="mt-4">
+          <ConsoleErrorsHint />
         </div>
         <AdminClient initialProducts={products} />
       </div>
