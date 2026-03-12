@@ -3,6 +3,14 @@ import { uploadBuffer } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 
+const ALLOWED_MIMES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
+const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -21,11 +29,27 @@ export async function POST(req: Request) {
       );
     }
 
+    for (const file of toUpload) {
+      const mime = (file.type || "").toLowerCase().split(";")[0]?.trim();
+      if (!mime || !ALLOWED_MIMES.has(mime)) {
+        return NextResponse.json(
+          { message: "Only image files (JPEG, PNG, WebP, GIF) are allowed." },
+          { status: 400 }
+        );
+      }
+      if (file.size > MAX_FILE_BYTES) {
+        return NextResponse.json(
+          { message: "File size must not exceed 10 MB." },
+          { status: 400 }
+        );
+      }
+    }
+
     const urls: string[] = [];
     for (const file of toUpload) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      const mime = file.type || "image/jpeg";
+      const mime = (file.type || "image/jpeg").toLowerCase().split(";")[0]?.trim() || "image/jpeg";
       const { secure_url } = await uploadBuffer(buffer, {
         folder: "mama-products",
         mime,
