@@ -31,7 +31,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   if (!safeImages.length) {
     return (
       <div className="mx-auto w-full max-w-md lg:max-w-xl">
-        <div className="aspect-square overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
+        <div className="min-h-[75vh] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:min-h-0 sm:aspect-square">
           <ProductImagePlaceholder
             className="h-full w-full rounded-3xl"
             aria-label={title}
@@ -43,8 +43,8 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
 
   return (
     <div className="mx-auto w-full max-w-md lg:max-w-xl">
-      <div className="flex gap-3 sm:gap-4">
-        <div className="flex flex-col gap-2 sm:gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+        <div className="order-2 flex flex-row flex-wrap gap-2 sm:order-1 sm:flex-col sm:gap-3">
           {safeImages.map((item, index) => {
             const isActive = index === activeIndex;
             return (
@@ -71,7 +71,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
             );
           })}
         </div>
-        <div className="min-w-0 flex-1 aspect-square overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
+        <div className="order-1 min-h-[75vh] min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:min-h-0 sm:aspect-square">
           <img
             src={activeImage}
             alt={title}
