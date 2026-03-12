@@ -130,33 +130,39 @@ export default function ProductForm({
         </label>
       </div>
 
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-          Description (EN)
-        </span>
-        <textarea
-          value={form.description}
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, description: e.target.value }))
-          }
-          rows={3}
-          className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-        />
-      </label>
-
-      <label className="block">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-          Description (RU)
-        </span>
-        <textarea
-          value={form.description_ru}
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, description_ru: e.target.value }))
-          }
-          rows={3}
-          className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-        />
-      </label>
+      <div className="space-y-4 rounded-xl border border-slate-200 bg-slate-50/50 p-4">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          Описание
+        </p>
+        <label className="block">
+          <span className="text-xs font-medium text-slate-600">
+            Описание для английской версии сайта
+          </span>
+          <textarea
+            value={form.description}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, description: e.target.value }))
+            }
+            rows={3}
+            placeholder="Description (EN)"
+            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium text-slate-600">
+            Описание для русской версии сайта
+          </span>
+          <textarea
+            value={form.description_ru}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, description_ru: e.target.value }))
+            }
+            rows={3}
+            placeholder="Описание (RU)"
+            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+          />
+        </label>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <label className="block">
