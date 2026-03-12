@@ -131,18 +131,25 @@ export default function GalleryClient({
 
   const renderCategoryMenu = (wrapperClassName: string) => (
     <div className={wrapperClassName}>
-      {categories.map((category) => (
-        <button
-          key={category.id}
-          type="button"
-          onClick={() => setSelected(category.id)}
-          className={[
-            "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-            selected === category.id ? "border-slate-400 text-slate-900" : "",
-          ].join(" ")}
-        >
-          {category.label}
-        </button>
+      {categories.map((category, index) => (
+        <div key={category.id} className="flex shrink-0 items-center gap-1.5 sm:gap-0">
+          <button
+            type="button"
+            onClick={() => setSelected(category.id)}
+            className={[
+              "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+              selected === category.id ? "border-slate-400 text-slate-900" : "",
+            ].join(" ")}
+          >
+            {category.label}
+          </button>
+          {index < categories.length - 1 && (
+            <span
+              className="h-3 w-px shrink-0 bg-slate-200/50 sm:hidden"
+              aria-hidden
+            />
+          )}
+        </div>
       ))}
     </div>
   );
@@ -159,12 +166,12 @@ export default function GalleryClient({
       >
         <div className="mx-auto flex w-full max-w-6xl justify-center px-6 py-3">
           {renderCategoryMenu(
-            "flex flex-wrap items-center justify-center gap-6 text-xs font-semibold uppercase tracking-[0.32em] text-slate-600 sm:gap-7 sm:text-sm"
+            "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-600 sm:gap-7 sm:text-sm sm:tracking-[0.32em]"
           )}
         </div>
       </div>
       {renderCategoryMenu(
-        "flex flex-wrap items-center justify-center gap-8 text-sm font-semibold uppercase tracking-[0.34em] text-slate-500 sm:text-base"
+        "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.34em] sm:text-base"
       )}
 
       <section id="gallery" className="space-y-12">
@@ -179,7 +186,7 @@ export default function GalleryClient({
                 className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >
-                <div className="relative h-52 w-full overflow-hidden rounded-t-2xl bg-slate-50/60 sm:h-72 lg:h-80">
+                <div className="relative w-full overflow-hidden rounded-t-2xl bg-slate-50/60 aspect-[4/5] sm:aspect-auto sm:h-72 lg:h-80">
                   {productMainImageUrl(product) ? (
                     <img
                       src={productMainImageUrl(product)}

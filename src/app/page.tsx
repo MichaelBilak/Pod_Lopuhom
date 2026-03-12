@@ -76,7 +76,7 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
           </div>
         </section>
-        <div className="flex flex-wrap items-center justify-center gap-6 text-center">
+        <div className="flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-center sm:gap-6">
           {[
             { id: "Rings", label: t.categories.rings },
             { id: "Necklaces", label: t.categories.necklaces },
@@ -89,7 +89,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                 `/gallery?category=${encodeURIComponent(item.id)}`,
                 locale
               )}
-              className="px-3 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-base"
+              className="shrink-0 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-2 sm:text-sm sm:tracking-[0.28em] md:text-base"
             >
               <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
                 {item.label}

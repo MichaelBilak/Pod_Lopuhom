@@ -23,11 +23,33 @@ export default function Nav() {
     return `${pathname}${query ? `?${query}` : ""}`;
   };
 
+  const langSwitcher = (
+    <div className="flex items-center gap-2">
+      {(["en", "ru"] as Locale[]).map((option) => (
+        <Link
+          key={option}
+          href={buildLangHref(option)}
+          className={[
+            "rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
+            option === locale
+              ? "border-slate-900 text-slate-900"
+              : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
+          ].join(" ")}
+        >
+          {t.language[option]}
+        </Link>
+      ))}
+    </div>
+  );
+
   return (
     <header
       id="main-nav"
-      className="border-b border-slate-200/70 bg-white/80 backdrop-blur"
+      className="relative border-b border-slate-200/70 bg-white/80 backdrop-blur"
     >
+      <div className="absolute right-4 top-4 z-10 sm:hidden">
+        {langSwitcher}
+      </div>
       <div className="relative flex w-full flex-col items-center gap-3 px-6 py-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
         <Link
           href={buildHref("/")}
@@ -66,21 +88,8 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <div className="flex items-center gap-2">
-            {(["en", "ru"] as Locale[]).map((option) => (
-              <Link
-                key={option}
-                href={buildLangHref(option)}
-                className={[
-                  "rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
-                  option === locale
-                    ? "border-slate-900 text-slate-900"
-                    : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
-                ].join(" ")}
-              >
-                {t.language[option]}
-              </Link>
-            ))}
+          <div className="hidden sm:block">
+            {langSwitcher}
           </div>
         </nav>
       </div>
