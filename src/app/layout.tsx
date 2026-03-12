@@ -4,9 +4,9 @@ export const metadata = {
   title: "Pod Lopuhom",
   description: "Handmade jewelry",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: "/images/products/Logo._pod_lopuhom-removebg-preview.png",
+    shortcut: "/images/products/Logo._pod_lopuhom-removebg-preview.png",
+    apple: "/images/products/Logo._pod_lopuhom-removebg-preview.png",
   },
 };
 
@@ -18,8 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/images/products/Logo._pod_lopuhom-removebg-preview.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
