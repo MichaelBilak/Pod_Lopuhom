@@ -29,7 +29,7 @@ export const translations = {
   en: {
     nav: {
       gallery: "Gallery",
-      about: "About",
+      about: "About me",
       orderDelivery: "Order & Delivery",
     },
     language: {
@@ -55,7 +55,7 @@ export const translations = {
       viewDetails: "View details",
     },
     product: {
-      back: "← Back to gallery",
+      back: "← Back",
       materials: "Materials",
       price: "Price",
       requestWhatsapp: "Request via WhatsApp",
@@ -68,12 +68,12 @@ export const translations = {
       deliveryHaifa: "Self-pickup and delivery within Haifa directly to your door",
       deliveryWorldwide: "Worldwide delivery",
       free: "Free",
-      orderCta: "To place an order, please message us:",
+      orderCta: "To place an order, please message me:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
     },
     about: {
-      title: "About",
+      title: "About me",
       paragraph1:
         "Hello! I’m Olga. I am a handmade jewelry artist, working with jewelry epoxy resin.",
       paragraph2:
@@ -102,7 +102,7 @@ export const translations = {
   ru: {
     nav: {
       gallery: "Галерея",
-      about: "О нас",
+      about: "Обо мне",
       orderDelivery: "Заказ и доставка",
     },
     language: {
@@ -128,7 +128,7 @@ export const translations = {
       viewDetails: "Подробнее",
     },
     product: {
-      back: "← Назад в галерею",
+      back: "← Назад",
       materials: "Материалы",
       price: "Цена",
       requestWhatsapp: "Запросить через WhatsApp",
@@ -141,12 +141,12 @@ export const translations = {
       deliveryHaifa: "Самовывоз и доставка по Хайфе до двери",
       deliveryWorldwide: "Доставка по миру",
       free: "Бесплатно",
-      orderCta: "Чтобы сделать заказ, напишите нам:",
+      orderCta: "Чтобы сделать заказ, напишите мне:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
     },
     about: {
-      title: "О нас",
+      title: "Обо мне",
       paragraph1: "Привет! Меня зовут Ольга.",
       paragraph2:
         "Свои украшения я создаю вручную из ювелирной эпоксидной смолы.",

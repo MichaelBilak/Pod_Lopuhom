@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackButton from "./BackButton";
 import {
   fetchProductBySlug,
   productDisplayPrice,
@@ -11,7 +11,6 @@ import ProductGallery from "./ProductGallery";
 import {
   getLocaleFromSearchParams,
   getTranslations,
-  withLang,
 } from "@/src/lib/i18n";
 
 export const dynamic = "force-dynamic";
@@ -48,9 +47,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       <Nav />
       <main className="min-h-screen bg-white text-ink">
         <section className="mx-auto w-full max-w-5xl px-6 pb-20 pt-12">
-          <Link href={withLang("/gallery", locale)} className="text-sm text-slate-600">
-            {t.product.back}
-          </Link>
+          <BackButton label={t.product.back} />
           <div className="mt-8 grid gap-10 lg:grid-cols-[1.35fr_1fr]">
             <ProductGallery
               title={product.title}

@@ -6,7 +6,7 @@ import {
 } from "@/src/lib/i18n";
 
 export const metadata = {
-  title: "Pod Lopuhom | About",
+  title: "Pod Lopuhom | About me",
 };
 
 type PageProps = {

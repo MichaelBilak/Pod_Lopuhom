@@ -32,9 +32,6 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
           <h1 className="text-4xl font-semibold text-slate-900">
             {t.order.title}
           </h1>
-          <p className="text-base text-slate-600">
-            {t.order.subtitle}
-          </p>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
@@ -45,16 +42,10 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
                   25 ILS
                 </span>
               </div>
-              <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
                 <span>{t.order.deliveryHaifa}</span>
                 <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
                   {t.order.free}
-                </span>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>{t.order.deliveryWorldwide}</span>
-                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
-                  13 EUR
                 </span>
               </div>
             </div>
