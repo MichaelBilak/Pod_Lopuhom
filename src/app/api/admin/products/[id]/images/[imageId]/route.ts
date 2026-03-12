@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   deleteProductImage,
   getProductImage,
+  productImageExists,
   updateProductImagePosition,
 } from "@/lib/supabase-products";
 import { deleteByUrl } from "@/lib/cloudinary";
@@ -31,8 +32,8 @@ export async function PATCH(
     if (saved !== null) {
       return NextResponse.json({ ok: true, objectPosition: saved });
     }
-    // Update failed: check if image exists to choose error message
-    const imageExists = await getProductImage(imageId);
+    // Update failed: check if image row exists (by id only, so it works without object_position column)
+    const imageExists = await productImageExists(imageId);
     if (!imageExists) {
       return NextResponse.json(
         {

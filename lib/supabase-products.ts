@@ -425,6 +425,17 @@ export async function getProductImage(
   return { image_url: d.image_url, object_position: d.object_position ?? null };
 }
 
+/** Check if an image row exists (uses only 'id' so it works even without object_position column). */
+export async function productImageExists(imageId: string): Promise<boolean> {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("product_images")
+    .select("id")
+    .eq("id", imageId)
+    .maybeSingle();
+  return !error && data != null;
+}
+
 /** Get image with product_id to verify it belongs to the product. */
 export async function getProductImageWithProductId(
   imageId: string
