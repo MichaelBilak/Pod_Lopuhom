@@ -18,7 +18,10 @@ export { fetchProductBySlug };
 export async function fetchProducts(): Promise<Product[]> {
   try {
     return await fetchProductsForPublic();
-  } catch {
+  } catch (err) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("[fetchProducts] Failed to load products:", err);
+    }
     return [];
   }
 }
@@ -27,7 +30,11 @@ export async function fetchProducts(): Promise<Product[]> {
 export async function fetchNewProducts(limit = 8): Promise<Product[]> {
   try {
     return await fetchNewProductsForHome(limit);
-  } catch {
+  } catch (err) {
+    // On deploy, missing SUPABASE env vars or wrong DB → empty section. Log to aid debugging.
+    if (process.env.NODE_ENV === "development") {
+      console.error("[fetchNewProducts] Failed to load new products:", err);
+    }
     return [];
   }
 }
@@ -37,6 +44,7 @@ export function productDisplayPrice(p: Product): string {
   if (p.price_on_request) return "Price on request";
   if (p.price != null) {
     const num = Number(p.price);
+    if (!Number.isFinite(num)) return "Price on request";
     if (p.discount && p.discount > 0) {
       const discounted = num * (1 - Number(p.discount) / 100);
       return `€${discounted.toFixed(2)}`;

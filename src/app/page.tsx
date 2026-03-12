@@ -89,7 +89,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                 `/gallery?category=${encodeURIComponent(item.id)}`,
                 locale
               )}
-              className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-xs"
+              className="px-3 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:text-base"
             >
               <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
                 {item.label}

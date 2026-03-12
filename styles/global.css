@@ -127,21 +127,21 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Elegant thin scrollbar for horizontal product gallery */
+/* Very subtle scrollbar for horizontal product gallery */
 .new-products-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
 }
 .new-products-scroll::-webkit-scrollbar {
-  height: 6px;
+  height: 4px;
 }
 .new-products-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 .new-products-scroll::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
-  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 2px;
 }
 .new-products-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: rgba(148, 163, 184, 0.35);
 }

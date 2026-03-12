@@ -68,19 +68,19 @@ export default function NewProductsScroll({
           {products.map((product) => (
             <article
               key={product.id}
-              className="group w-[248px] flex-shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-shadow duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)]"
+              className="group w-[298px] flex-shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)]"
             >
               <Link
                 href={`/products/${product.slug}`}
                 className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-t-2xl bg-slate-50/80">
+                <div className="relative h-[250px] w-full overflow-hidden rounded-t-2xl bg-slate-50/60">
                   {productMainImageUrl(product) ? (
                     <img
                       src={productMainImageUrl(product)}
                       alt={product.title}
-                      className="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.03]"
+                      className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                       style={{
                         objectPosition: productMainImageObjectPosition(product),
                       }}
@@ -93,17 +93,17 @@ export default function NewProductsScroll({
                       aria-label={product.title}
                     />
                   )}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute bottom-3 right-3 opacity-0 transition duration-300 group-hover:opacity-60 text-white/90 text-[10px] uppercase tracking-widest">
+                    →
+                  </span>
                 </div>
-                <div className="flex flex-1 flex-col gap-1.5 px-3 pb-3 pt-2">
-                  <p className="truncate text-sm font-medium tracking-tight text-slate-800">
-                    {product.title}
-                  </p>
-                  <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                    <span className="text-sm font-semibold text-slate-900">
+                <div className="flex flex-1 flex-col gap-2 px-3 pt-4 pb-3 sm:px-4 sm:pb-4">
+                  <div className="flex min-w-0 items-end justify-between gap-2">
+                    <span className="whitespace-nowrap text-sm font-semibold text-slate-900">
                       {productDisplayPrice(product)}
                     </span>
-                    <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600">
+                    <span className="shrink-0 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600">
                       {viewDetails}
                     </span>
                   </div>

@@ -157,12 +157,12 @@ export default function GalleryClient({
       >
         <div className="mx-auto flex w-full max-w-6xl justify-center px-6 py-3">
           {renderCategoryMenu(
-            "flex flex-wrap items-center justify-center gap-6 text-[10px] font-semibold uppercase tracking-[0.32em] text-slate-600 sm:gap-7 sm:text-xs"
+            "flex flex-wrap items-center justify-center gap-6 text-xs font-semibold uppercase tracking-[0.32em] text-slate-600 sm:gap-7 sm:text-sm"
           )}
         </div>
       </div>
       {renderCategoryMenu(
-        "flex flex-wrap items-center justify-center gap-8 text-xs font-semibold uppercase tracking-[0.34em] text-slate-500"
+        "flex flex-wrap items-center justify-center gap-8 text-sm font-semibold uppercase tracking-[0.34em] text-slate-500 sm:text-base"
       )}
 
       <section id="gallery" className="space-y-12">
