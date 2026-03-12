@@ -166,12 +166,12 @@ export default function GalleryClient({
       >
         <div className="mx-auto flex w-full max-w-6xl justify-center px-6 py-3">
           {renderCategoryMenu(
-            "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-600 sm:gap-7 sm:text-sm sm:tracking-[0.32em]"
+            "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-xs font-semibold uppercase tracking-[0.1em] text-slate-600 sm:gap-7 sm:text-sm sm:tracking-[0.32em]"
           )}
         </div>
       </div>
       {renderCategoryMenu(
-        "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.34em] sm:text-base"
+        "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-xs font-semibold uppercase tracking-[0.1em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.34em] sm:text-base"
       )}
 
       <section id="gallery" className="space-y-12">
