@@ -175,7 +175,7 @@ export default function GalleryClient({
       )}
 
       <section id="gallery" className="space-y-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-10 lg:grid-cols-3 lg:gap-12">
           {sortedProducts.map((product) => (
             <article
               key={product.id}
@@ -210,12 +210,12 @@ export default function GalleryClient({
                     →
                   </span>
                 </div>
-                <div className="flex flex-1 flex-col gap-2 px-3 pt-4 pb-3 sm:px-4 sm:pb-4">
-                  <div className="flex items-end justify-between gap-2">
-                    <span className="text-sm font-semibold text-slate-900">
+                <div className="flex flex-1 flex-col gap-1 px-2 pt-2 pb-2 sm:gap-2 sm:px-4 sm:pt-4 sm:pb-4">
+                  <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-2">
+                    <span className="min-w-0 shrink whitespace-nowrap text-[10px] font-semibold text-slate-900 sm:text-sm">
                       {productDisplayPrice(product)}
                     </span>
-                    <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600">
+                    <span className="shrink-0 whitespace-nowrap text-[8px] uppercase tracking-[0.12em] text-slate-400 group-hover:text-slate-600 sm:text-[10px] sm:tracking-[0.2em]">
                       {viewDetailsLabel}
                     </span>
                   </div>
