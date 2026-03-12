@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Product } from "@/lib/supabase-products";
 import type { ProductFormState } from "./ProductForm";
 import ProductForm from "./ProductForm";
@@ -15,6 +15,13 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
   const [formProduct, setFormProduct] = useState<Product | null | "add">(null);
   const [message, setMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
+  const editPanelRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (formProduct !== null && editPanelRef.current) {
+      editPanelRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [formProduct]);
 
   const handleSave = async (
     payload: ProductFormState,
@@ -124,7 +131,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
       )}
 
       {formProduct !== null ? (
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+        <section
+          ref={editPanelRef}
+          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.06)]"
+        >
           <h2 className="text-lg font-semibold text-slate-900">
             {formProduct === "add" ? "New product" : "Edit product"}
           </h2>
