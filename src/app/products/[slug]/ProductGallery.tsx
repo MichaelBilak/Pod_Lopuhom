@@ -31,7 +31,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   if (!safeImages.length) {
     return (
       <div className="mx-auto w-full max-w-md lg:max-w-xl">
-        <div className="min-h-[75vh] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:min-h-0 sm:aspect-square">
+        <div className="min-h-[50vh] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:min-h-0 sm:aspect-square">
           <ProductImagePlaceholder
             className="h-full w-full rounded-3xl"
             aria-label={title}
@@ -71,7 +71,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
             );
           })}
         </div>
-        <div className="order-1 h-[75vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
+        <div className="order-1 h-[50vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
           <img
             src={activeImage}
             alt={title}
