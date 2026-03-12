@@ -1,11 +1,11 @@
-import FooterSocial from "../../components/FooterSocial";
-import Nav from "../../components/Nav";
-import { fetchProducts } from "../../../lib/products";
+import FooterSocial from "@/src/components/FooterSocial";
+import Nav from "@/src/components/Nav";
+import { fetchProducts } from "@/lib/products";
 import GalleryClient from "./GalleryClient";
 import {
   getLocaleFromSearchParams,
   getTranslations,
-} from "../../lib/i18n";
+} from "@/src/lib/i18n";
 
 export const metadata = {
   title: "Pod Lopuhom | Gallery",
@@ -45,7 +45,7 @@ export default async function GalleryPage({ searchParams }: PageProps) {
           <GalleryClient
             products={products}
             categories={categories}
-            viewDetailsLabel={t.gallery.viewDetails}
+            viewDetailsLabel={t.home.viewDetails}
           />
         </section>
       </main>

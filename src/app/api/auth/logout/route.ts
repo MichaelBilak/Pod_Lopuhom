@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import {
   SESSION_COOKIE,
   getClearSessionCookieOptions,
-} from "../../../../../lib/auth";
+} from "@/lib/auth";
 
 const parseWantsJson = (req: Request) => {
   const contentType = req.headers.get("content-type") ?? "";

@@ -1,141 +1,77 @@
-import { getPool } from "./db";
+/**
+ * Public product API: uses Supabase, returns only active products.
+ * For admin and full CRUD use lib/supabase-products.
+ */
 
-export type Product = {
-  id: string;
-  slug: string;
-  title: string;
-  category: string;
-  is_new: boolean;
-  materials: string | null;
-  price: string | null;
-  description: string | null;
-  images: string[];
-  created_at: string;
-  updated_at?: string;
-};
+import {
+  fetchProductsForPublic,
+  fetchProductBySlug,
+  fetchNewProductsForHome,
+  type Product,
+} from "./supabase-products";
 
-export type ProductInput = {
-  slug: string;
-  title: string;
-  category: string;
-  is_new: boolean;
-  materials: string | null;
-  price: string | null;
-  description: string | null;
-  images: string[];
-};
+export type { Product };
 
-const imageCaseMap: Record<string, string> = {
-  "/images/products/necklaces_21.0.JPG": "/images/products/necklaces_21.0.jpg",
-  "/images/products/necklaces_21.1.JPG": "/images/products/necklaces_21.1.jpg",
-};
+export { fetchProductBySlug };
 
-const normalizeImages = (value: unknown): string[] => {
-  if (Array.isArray(value)) {
-    return value
-      .filter((item) => typeof item === "string")
-      .map((item) => imageCaseMap[item] ?? item);
+/** Fetch products for public catalog; returns [] if Supabase is unavailable or errors. */
+export async function fetchProducts(): Promise<Product[]> {
+  try {
+    return await fetchProductsForPublic();
+  } catch {
+    return [];
   }
-  return [];
-};
+}
 
-const normalizeIsNew = (value: unknown) => value === true;
+/** Fetch products marked as "New" for home page "Latest pieces"; returns [] on error. */
+export async function fetchNewProducts(limit = 8): Promise<Product[]> {
+  try {
+    return await fetchNewProductsForHome(limit);
+  } catch {
+    return [];
+  }
+}
 
-const mapProductRow = (row: Record<string, unknown>) =>
-  ({
-    ...row,
-    images: normalizeImages(row.images),
-    is_new: normalizeIsNew(row.is_new),
-  }) as Product;
+/** Format price for display (uses first image as main is in Product.images[0]) */
+export function productDisplayPrice(p: Product): string {
+  if (p.price_on_request) return "Price on request";
+  if (p.price != null) {
+    const num = Number(p.price);
+    if (p.discount && p.discount > 0) {
+      const discounted = num * (1 - Number(p.discount) / 100);
+      return `€${discounted.toFixed(2)}`;
+    }
+    return `€${num.toFixed(2)}`;
+  }
+  return "";
+}
 
-export const fetchProducts = async () => {
-  const pool = getPool();
-  const { rows } = await pool.query(
-    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
-     from products
-     order by created_at asc`
-  );
-  return rows.map((row) => mapProductRow(row));
-};
+/** First image URL (main image by sort_order) */
+export function productMainImageUrl(p: Product): string | undefined {
+  return p.images[0]?.image_url;
+}
 
-export const fetchProductBySlug = async (slug: string) => {
-  const pool = getPool();
-  const { rows } = await pool.query(
-    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
-     from products
-     where slug = $1
-     limit 1`,
-    [slug]
-  );
-  if (!rows[0]) return null;
-  return mapProductRow(rows[0]);
-};
+/** All image URLs in order */
+export function productImageUrls(p: Product): string[] {
+  return p.images.map((i) => i.image_url);
+}
 
-export const fetchProductById = async (id: string) => {
-  const pool = getPool();
-  const { rows } = await pool.query(
-    `select id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at
-     from products
-     where id = $1
-     limit 1`,
-    [id]
-  );
-  if (!rows[0]) return null;
-  return mapProductRow(rows[0]);
-};
+/** Object position for main (first) image, for use in style.objectPosition */
+const OBJECT_POSITION_RE = /^\d+(\.\d+)?% \d+(\.\d+)?%$/;
 
-export const createProduct = async (input: ProductInput) => {
-  const pool = getPool();
-  const { rows } = await pool.query(
-    `insert into products (slug, title, category, is_new, materials, price, description, images)
-     values ($1, $2, $3, $4, $5, $6, $7, $8)
-     returning id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at`,
-    [
-      input.slug,
-      input.title,
-      input.category,
-      input.is_new,
-      input.materials,
-      input.price,
-      input.description,
-      JSON.stringify(input.images),
-    ]
-  );
-  return mapProductRow(rows[0]);
-};
+export function productMainImageObjectPosition(p: Product): string {
+  const pos = p.images[0]?.object_position;
+  return pos && OBJECT_POSITION_RE.test(pos) ? pos : "50% 50%";
+}
 
-export const updateProduct = async (id: string, input: ProductInput) => {
-  const pool = getPool();
-  const { rows } = await pool.query(
-    `update products
-     set slug = $1,
-         title = $2,
-         category = $3,
-         is_new = $4,
-         materials = $5,
-         price = $6,
-         description = $7,
-         images = $8
-     where id = $9
-     returning id, slug, title, category, is_new, materials, price, description, images, created_at, updated_at`,
-    [
-      input.slug,
-      input.title,
-      input.category,
-      input.is_new,
-      input.materials,
-      input.price,
-      input.description,
-      JSON.stringify(input.images),
-      id,
-    ]
-  );
-  if (!rows[0]) return null;
-  return mapProductRow(rows[0]);
-};
-
-export const deleteProduct = async (id: string) => {
-  const pool = getPool();
-  const result = await pool.query(`delete from products where id = $1`, [id]);
-  return (result.rowCount ?? 0) > 0;
-};
+/** Images with URL and position for gallery */
+export function productImagesWithPosition(
+  p: Product
+): { url: string; objectPosition: string }[] {
+  return p.images.map((i) => ({
+    url: i.image_url,
+    objectPosition: i.object_position && OBJECT_POSITION_RE.test(i.object_position)
+      ? i.object_position
+      : "50% 50%",
+  }));
+}

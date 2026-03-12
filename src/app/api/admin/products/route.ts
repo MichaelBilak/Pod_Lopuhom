@@ -1,75 +1,79 @@
 import { NextResponse, type NextRequest } from "next/server";
 import {
   createProduct,
-  fetchProducts,
-  type ProductInput,
-} from "../../../../../lib/products";
+  fetchProductsAdmin,
+  addProductImage,
+  fetchProductById,
+  type ProductInsert,
+} from "@/lib/supabase-products";
 
 export const runtime = "nodejs";
 
-const parseString = (value: unknown) =>
-  typeof value === "string" ? value.trim() : "";
-
-const parseNullableString = (value: unknown) => {
-  const parsed = parseString(value);
-  return parsed ? parsed : null;
-};
-
-const parseBoolean = (value: unknown) => {
-  if (typeof value === "boolean") return value;
-  if (typeof value === "string") {
-    const normalized = value.trim().toLowerCase();
-    return normalized === "true" || normalized === "1" || normalized === "on";
+const parseString = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+const parseNum = (v: unknown): number | null => {
+  if (typeof v === "number" && !Number.isNaN(v)) return v;
+  if (typeof v === "string") {
+    const n = parseFloat(v);
+    return Number.isNaN(n) ? null : n;
   }
+  return null;
+};
+const parseBool = (v: unknown) => {
+  if (typeof v === "boolean") return v;
+  if (typeof v === "string")
+    return ["true", "1", "on"].includes(v.trim().toLowerCase());
   return false;
 };
-
-const parseImages = (value: unknown) => {
-  if (!Array.isArray(value)) return [];
-  return value
-    .map((item) => (typeof item === "string" ? item.trim() : ""))
-    .filter((item) => item.length > 0);
+const parseNullableString = (v: unknown) => {
+  const s = parseString(v);
+  return s || null;
 };
 
-const allowedCategories = ["Rings", "Necklaces", "Earrings", "Sets"];
-
-const parseCategory = (value: unknown) => {
-  const parsed = parseString(value);
-  if (allowedCategories.includes(parsed)) return parsed;
-  return "Rings";
+const CATEGORIES = ["Rings", "Necklaces", "Earrings", "Sets"];
+const parseCategory = (v: unknown) => {
+  const s = parseString(v);
+  return CATEGORIES.includes(s) ? s : "Rings";
 };
 
-const buildInput = (payload: Record<string, unknown>): ProductInput | null => {
-  const slug = parseString(payload.slug);
+function buildProductInsert(payload: Record<string, unknown>): ProductInsert | null {
   const title = parseString(payload.title);
-  if (!slug || !title) return null;
+  const slug = parseString(payload.slug);
+  if (!title || !slug) return null;
   return {
-    slug,
     title,
-    category: parseCategory(payload.category),
-    is_new: parseBoolean(payload.is_new),
-    materials: parseNullableString(payload.materials),
-    price: parseNullableString(payload.price),
+    slug,
     description: parseNullableString(payload.description),
-    images: parseImages(payload.images),
+    price: parseNum(payload.price),
+    discount: parseNum(payload.discount) ?? 0,
+    materials: parseNullableString(payload.materials),
+    category: parseCategory(payload.category),
+    price_on_request: parseBool(payload.price_on_request),
+    is_active: parseBool(payload.is_active),
+    is_new: parseBool(payload.is_new),
+    sort_order: parseNum(payload.sort_order) ?? 0,
   };
-};
+}
 
 export async function GET() {
-  const products = await fetchProducts();
-  return NextResponse.json({ products });
+  try {
+    const products = await fetchProductsAdmin();
+    return NextResponse.json({ products });
+  } catch (error) {
+    console.error("Admin GET products:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch products." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const payload = (await req.json().catch(() => null)) as Record<
-    string,
-    unknown
-  > | null;
+  const payload = (await req.json().catch(() => null)) as Record<string, unknown> | null;
   if (!payload) {
     return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
   }
 
-  const input = buildInput(payload);
+  const input = buildProductInsert(payload);
   if (!input) {
     return NextResponse.json(
       { message: "Title and slug are required." },
@@ -79,8 +83,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const product = await createProduct(input);
-    return NextResponse.json({ product }, { status: 201 });
-  } catch (error) {
+    const imageUrls = Array.isArray(payload.images)
+      ? payload.images.filter((u): u is string => typeof u === "string" && u.trim().length > 0)
+      : [];
+    for (let i = 0; i < imageUrls.length; i++) {
+      await addProductImage(product.id, imageUrls[i], null, i);
+    }
+    const full = await fetchProductById(product.id);
+    return NextResponse.json({ product: full ?? product }, { status: 201 });
+  } catch (error: unknown) {
     const code = (error as { code?: string })?.code;
     if (code === "23505") {
       return NextResponse.json(
@@ -88,6 +99,7 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
+    console.error("Admin create product:", error);
     return NextResponse.json(
       { message: "Unable to create product." },
       { status: 500 }

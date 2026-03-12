@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, verifyAdminSession } from "./lib/auth";
+import { SESSION_COOKIE, verifyAdminSession } from "@/lib/auth";
 
 export async function middleware(req: NextRequest) {
   const url = new URL(req.url);

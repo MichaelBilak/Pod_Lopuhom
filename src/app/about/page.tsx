@@ -1,9 +1,9 @@
-import FooterSocial from "../../components/FooterSocial";
-import Nav from "../../components/Nav";
+import FooterSocial from "@/src/components/FooterSocial";
+import Nav from "@/src/components/Nav";
 import {
   getLocaleFromSearchParams,
   getTranslations,
-} from "../../lib/i18n";
+} from "@/src/lib/i18n";
 
 export const metadata = {
   title: "Pod Lopuhom | About",

@@ -5,7 +5,7 @@ import {
   getAdminEnv,
   getSessionCookieOptions,
   signAdminSession,
-} from "../../../../../lib/auth";
+} from "@/lib/auth";
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_ATTEMPTS = 5;

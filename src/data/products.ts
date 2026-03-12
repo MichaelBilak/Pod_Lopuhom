@@ -15,6 +15,7 @@ export const products: SeedProduct[] = [
     materials: "Handmade jewelry",
     price: "Price on request",
     description: "Lightweight earrings with a soft botanical shimmer.",
+    isNew: true,
     images: [
       "/images/products/earrings_1.0.JPG",
       "/images/products/earrings_1.1.JPG",
@@ -124,6 +125,7 @@ export const products: SeedProduct[] = [
     materials: "Handmade jewelry",
     price: "Price on request",
     description: "Necklace with preserved petals and soft glow.",
+    isNew: true,
     images: [
       "/images/products/necklaces_2.0.jpg",
       "/images/products/necklaces_2.1.jpg",
@@ -280,6 +282,7 @@ export const products: SeedProduct[] = [
     materials: "Handmade jewelry",
     price: "Price on request",
     description: "Coordinated set with botanical accents.",
+    isNew: true,
     images: ["/images/products/set_1.jpg"],
   },
   {
@@ -320,6 +323,7 @@ export const products: SeedProduct[] = [
     materials: "Handmade jewelry",
     price: "Price on request",
     description: "Handmade ring with a gentle sheen.",
+    isNew: true,
     images: [
       "/images/products/product_10.0.jpeg",
       "/images/products/product_10.1.jpeg",

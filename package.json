@@ -1,5 +1,5 @@
 {
-  "name": "mama-astro-site",
+  "name": "mama-next-site",
   "type": "module",
   "version": "0.1.0",
   "scripts": {
@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "db:setup": "tsx scripts/db-setup.ts",
-    "db:seed": "tsx scripts/db-seed.ts"
+    "db:seed": "tsx scripts/db-seed.ts",
+    "upload-images": "tsx scripts/upload-product-images-to-cloudinary.ts"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.16.1",
+    "@supabase/supabase-js": "^2.99.0",
     "autoprefixer": "^10.4.20",
+    "cloudinary": "^2.9.0",
     "dotenv": "^16.6.1",
     "next": "^15.5.11",
     "pg": "^8.18.0",
@@ -22,9 +23,11 @@
     "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
+    "@types/node": "^22",
     "@types/pg": "^8.16.0",
     "@types/react": "19.2.10",
     "sharp": "^0.34.5",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5"
   }
 }

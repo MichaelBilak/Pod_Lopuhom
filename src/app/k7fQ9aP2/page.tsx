@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { SESSION_COOKIE, verifyAdminSession } from "../../../lib/auth";
-import { fetchProducts } from "../../../lib/products";
+import { SESSION_COOKIE, verifyAdminSession } from "@/lib/auth";
+import { fetchProductsAdmin } from "@/lib/supabase-products";
 import AdminClient from "./AdminClient";
 
 export const metadata = {
@@ -97,7 +97,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
     );
   }
 
-  const products = await fetchProducts();
+  const products = await fetchProductsAdmin();
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -108,7 +108,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
               Admin dashboard
             </h1>
             <p className="mt-2 text-sm text-slate-600">
-              Products editor placeholder.
+              Manage products and catalog.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -127,9 +127,6 @@ export default async function AdminPage({ searchParams }: PageProps) {
               </button>
             </form>
           </div>
-        </div>
-        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
-          Manage products and update the catalog.
         </div>
         <AdminClient initialProducts={products} />
       </div>
