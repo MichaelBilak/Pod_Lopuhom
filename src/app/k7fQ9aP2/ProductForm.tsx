@@ -11,6 +11,7 @@ export type ProductFormState = {
   title: string;
   slug: string;
   description: string;
+  description_ru: string;
   price: string;
   discount: string;
   materials: string;
@@ -25,6 +26,7 @@ const emptyForm: ProductFormState = {
   title: "",
   slug: "",
   description: "",
+  description_ru: "",
   price: "",
   discount: "0",
   materials: "",
@@ -57,6 +59,7 @@ export default function ProductForm({
           title: product.title,
           slug: product.slug,
           description: product.description ?? "",
+          description_ru: product.description_ru ?? "",
           price: product.price != null ? String(product.price) : "",
           discount: String(product.discount ?? 0),
           materials: product.materials ?? "",
@@ -129,12 +132,26 @@ export default function ProductForm({
 
       <label className="block">
         <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-          Description
+          Description (EN)
         </span>
         <textarea
           value={form.description}
           onChange={(e) =>
             setForm((prev) => ({ ...prev, description: e.target.value }))
+          }
+          rows={3}
+          className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+        />
+      </label>
+
+      <label className="block">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          Description (RU)
+        </span>
+        <textarea
+          value={form.description_ru}
+          onChange={(e) =>
+            setForm((prev) => ({ ...prev, description_ru: e.target.value }))
           }
           rows={3}
           className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"

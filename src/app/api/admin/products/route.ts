@@ -43,6 +43,7 @@ function buildProductInsert(payload: Record<string, unknown>): ProductInsert | n
     title,
     slug,
     description: parseNullableString(payload.description),
+    description_ru: parseNullableString(payload.description_ru),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     materials: parseNullableString(payload.materials),

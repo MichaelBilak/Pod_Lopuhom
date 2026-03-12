@@ -30,7 +30,7 @@ export default function Nav() {
     >
       <div className="relative flex w-full flex-col items-center gap-3 px-6 py-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
         <Link
-          href="/"
+          href={buildHref("/")}
           className="inline-flex items-center justify-center gap-3 text-base font-semibold uppercase tracking-[0.18em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:justify-start sm:text-lg"
           aria-label="Pod Lopuhom home"
         >
@@ -43,7 +43,7 @@ export default function Nav() {
           />
         </Link>
         <Link
-          href="/"
+          href={buildHref("/")}
           className="mt-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:mt-0 sm:text-xs"
           aria-label="Pod Lopuhom home"
         >

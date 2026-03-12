@@ -28,6 +28,7 @@ alter table products add column if not exists price_on_request boolean default f
 alter table products add column if not exists is_active boolean default true;
 alter table products add column if not exists sort_order integer default 0;
 alter table products add column if not exists is_new boolean default false;
+alter table products add column if not exists description_ru text;
 
 -- If price was created as text (old schema), convert to numeric (optional; remove if it fails)
 do $$

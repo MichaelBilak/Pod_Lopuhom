@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { getLocale, withLang } from "@/src/lib/i18n";
 import type { Product } from "@/lib/products";
 import {
   productMainImageUrl,
@@ -40,6 +41,7 @@ export default function GalleryClient({
   viewDetailsLabel,
 }: GalleryClientProps) {
   const searchParams = useSearchParams();
+  const locale = getLocale(searchParams?.get("lang"));
   const initialCategory = searchParams?.get("category");
   const categoryIds = categories.map((category) => category.id);
   const [selected, setSelected] = useState<string>(
@@ -173,7 +175,7 @@ export default function GalleryClient({
               className="group overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)]"
             >
               <Link
-                href={`/products/${product.slug}`}
+                href={withLang(`/products/${product.slug}`, locale)}
                 className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >

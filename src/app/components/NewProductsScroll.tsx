@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { getLocale, withLang } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
 import {
   productDisplayPrice,
@@ -23,6 +25,8 @@ export default function NewProductsScroll({
   newTitle,
   viewDetails,
 }: NewProductsScrollProps) {
+  const searchParams = useSearchParams();
+  const locale = getLocale(searchParams?.get("lang"));
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showRightFade, setShowRightFade] = useState(false);
 
@@ -71,7 +75,7 @@ export default function NewProductsScroll({
               className="group w-[298px] flex-shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)]"
             >
               <Link
-                href={`/products/${product.slug}`}
+                href={withLang(`/products/${product.slug}`, locale)}
                 className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >

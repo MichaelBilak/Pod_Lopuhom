@@ -35,6 +35,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         title: payload.title,
         slug: payload.slug,
         description: payload.description || null,
+        description_ru: payload.description_ru || null,
         price: payload.price ? num(payload.price) : null,
         discount: payload.discount ? num(payload.discount) : 0,
         materials: payload.materials || null,

@@ -22,6 +22,7 @@ export type Product = {
   title: string;
   slug: string;
   description: string | null;
+  description_ru?: string | null;
   price: number | null;
   discount: number;
   materials: string | null;
@@ -247,6 +248,7 @@ export type ProductInsert = {
   title: string;
   slug: string;
   description?: string | null;
+  description_ru?: string | null;
   price?: number | null;
   discount?: number;
   materials?: string | null;
@@ -263,6 +265,7 @@ export async function createProduct(input: ProductInsert): Promise<Product> {
     title: input.title,
     slug: input.slug,
     description: input.description ?? null,
+    description_ru: input.description_ru ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
     materials: input.materials ?? null,
@@ -293,6 +296,7 @@ export async function updateProduct(
     title: input.title,
     slug: input.slug,
     description: input.description ?? null,
+    description_ru: input.description_ru ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
     materials: input.materials ?? null,
