@@ -71,7 +71,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
             );
           })}
         </div>
-        <div className="order-1 min-h-[75vh] min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:min-h-0 sm:aspect-square">
+        <div className="order-1 h-[75vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
           <img
             src={activeImage}
             alt={title}
