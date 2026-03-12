@@ -50,33 +50,34 @@ export default async function HomePage({ searchParams }: PageProps) {
     <>
       <Nav />
       <main className="mx-auto w-full max-w-6xl space-y-20 px-6 pb-28 pt-12">
-        <section className="hero-panel text-center">
-          <div className="hero-backdrop" aria-hidden="true">
-            {randomizedHeroImages.map((src) => (
-              <img
-                key={src}
-                className="hero-slide"
-                src={src}
-                alt=""
-                decoding="async"
-                loading="eager"
-                fetchPriority="high"
-              />
-            ))}
-            <span className="hero-wash" />
-          </div>
-          <div className="relative z-10 space-y-6">
-            <div className="space-y-6">
-              <h1 className="text-3xl font-semibold text-slate-900 md:text-5xl">
-                {t.home.title}
-              </h1>
-              <p className="mx-auto max-w-xl text-base text-slate-700">
-                {t.home.subtitle}
-              </p>
+        <div className="space-y-4">
+          <section className="hero-panel text-center">
+            <div className="hero-backdrop" aria-hidden="true">
+              {randomizedHeroImages.map((src) => (
+                <img
+                  key={src}
+                  className="hero-slide"
+                  src={src}
+                  alt=""
+                  decoding="async"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              ))}
+              <span className="hero-wash" />
             </div>
-          </div>
-        </section>
-        <div className="flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-center sm:gap-6">
+            <div className="relative z-10 space-y-6">
+              <div className="space-y-6">
+                <h1 className="text-3xl font-semibold text-slate-900 md:text-5xl">
+                  {t.home.title}
+                </h1>
+                <p className="mx-auto max-w-xl text-base text-slate-700">
+                  {t.home.subtitle}
+                </p>
+              </div>
+            </div>
+          </section>
+          <div className="flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-center sm:gap-6">
           {[
             { id: "Rings", label: t.categories.rings },
             { id: "Necklaces", label: t.categories.necklaces },
@@ -96,6 +97,7 @@ export default async function HomePage({ searchParams }: PageProps) {
               </span>
             </Link>
           ))}
+          </div>
         </div>
         {newProducts.length > 0 ? (
           <NewProductsScroll
