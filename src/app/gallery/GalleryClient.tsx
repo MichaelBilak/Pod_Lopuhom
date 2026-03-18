@@ -175,7 +175,7 @@ export default function GalleryClient({
       )}
 
       <section id="gallery" className="space-y-12">
-        <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-10 lg:grid-cols-3 lg:gap-12">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12">
           {sortedProducts.map((product) => (
             <article
               key={product.id}
@@ -186,7 +186,7 @@ export default function GalleryClient({
                 className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label={`Open ${product.title} details`}
               >
-                <div className="relative w-full overflow-hidden rounded-t-2xl bg-slate-50/60 aspect-[4/5] sm:aspect-auto sm:h-72 lg:h-80">
+                <div className="relative w-full overflow-hidden rounded-t-2xl bg-slate-50/60 aspect-[16/15] sm:aspect-auto sm:h-72 lg:h-80">
                   {productMainImageUrl(product) ? (
                     <img
                       src={productMainImageUrl(product)}
