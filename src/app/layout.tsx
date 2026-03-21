@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import ViewportOverflowDebug from "@/src/components/ViewportOverflowDebug";
 
 export const metadata = {
   title: "Pod Lopuhom",
@@ -26,7 +27,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-white text-ink">{children}</body>
+      <body className="bg-white text-ink">
+        {children}
+        {process.env.NODE_ENV === "development" ? <ViewportOverflowDebug /> : null}
+      </body>
     </html>
   );
 }

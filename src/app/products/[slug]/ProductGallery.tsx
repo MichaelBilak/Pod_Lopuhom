@@ -30,7 +30,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
 
   if (!safeImages.length) {
     return (
-      <div className="mx-auto w-full max-w-md lg:max-w-xl">
+      <div className="mx-auto w-full min-w-0 max-w-md lg:max-w-xl">
         <div className="min-h-[50vh] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:min-h-0 sm:aspect-square">
           <ProductImagePlaceholder
             className="h-full w-full rounded-3xl"
@@ -42,8 +42,8 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md lg:max-w-xl">
-      <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+    <div className="mx-auto w-full min-w-0 max-w-md lg:max-w-xl">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:gap-4">
         <div className="order-2 flex flex-row flex-wrap gap-2 sm:order-1 sm:flex-col sm:gap-3">
           {safeImages.map((item, index) => {
             const isActive = index === activeIndex;
@@ -63,7 +63,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
                 <img
                   src={item.url}
                   alt=""
-                  className="h-full w-full object-cover"
+                  className="gallery-image h-full w-full object-cover"
                   style={{ objectPosition: item.objectPosition }}
                   loading="eager"
                 />
@@ -75,7 +75,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
           <img
             src={activeImage}
             alt={title}
-            className="h-full w-full origin-center object-cover"
+            className="gallery-image h-full w-full origin-center object-cover"
             style={{ objectPosition }}
             loading="eager"
             fetchPriority="high"

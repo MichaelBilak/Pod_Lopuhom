@@ -49,8 +49,8 @@ export default async function HomePage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-6xl space-y-20 px-6 pb-28 pt-12">
-        <div className="space-y-4">
+      <main className="mx-auto w-full min-w-0 max-w-6xl space-y-20 px-4 pb-28 pt-12 sm:px-6">
+        <div className="min-w-0 space-y-4">
           <section className="hero-panel text-center">
             <div className="hero-backdrop" aria-hidden="true">
               {randomizedHeroImages.map((src) => (
@@ -68,35 +68,37 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
             <div className="relative z-10 space-y-6">
               <div className="space-y-6">
-                <h1 className="text-3xl font-semibold text-slate-900 md:text-5xl">
+                <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl md:text-5xl md:tracking-normal">
                   {t.home.title}
                 </h1>
-                <p className="mx-auto max-w-xl text-base text-slate-700">
+                <p className="mx-auto max-w-xl text-base text-slate-700 [overflow-wrap:anywhere]">
                   {t.home.subtitle}
                 </p>
               </div>
             </div>
           </section>
-          <div className="flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-center sm:gap-6">
-          {[
-            { id: "Rings", label: t.categories.rings },
-            { id: "Necklaces", label: t.categories.necklaces },
-            { id: "Earrings", label: t.categories.earrings },
-            { id: "Sets", label: t.categories.sets },
-          ].map((item) => (
-            <Link
-              key={item.id}
-              href={withLang(
-                `/gallery?category=${encodeURIComponent(item.id)}`,
-                locale
-              )}
-              className="shrink-0 px-2 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-2 sm:text-sm sm:tracking-[0.28em] md:text-base"
-            >
-              <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
-                {item.label}
-              </span>
-            </Link>
-          ))}
+          <div className="category-tabs-scroll -mx-4 flex w-full min-w-0 justify-center overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
+            <div className="inline-flex min-w-max flex-nowrap items-center gap-2 text-center sm:gap-6">
+              {[
+                { id: "Rings", label: t.categories.rings },
+                { id: "Necklaces", label: t.categories.necklaces },
+                { id: "Earrings", label: t.categories.earrings },
+                { id: "Sets", label: t.categories.sets },
+              ].map((item) => (
+                <Link
+                  key={item.id}
+                  href={withLang(
+                    `/gallery?category=${encodeURIComponent(item.id)}`,
+                    locale
+                  )}
+                  className="inline-flex shrink-0 whitespace-nowrap px-2 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-2 sm:text-sm sm:tracking-[0.24em] md:text-base md:tracking-[0.28em]"
+                >
+                  <span className="border-b border-transparent pb-2 transition hover:border-slate-400">
+                    {item.label}
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
         {newProducts.length > 0 ? (

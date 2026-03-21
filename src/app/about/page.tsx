@@ -22,13 +22,13 @@ export default async function AboutPage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-5xl space-y-16 px-6 pb-28 pt-12">
-        <section className="space-y-8">
-          <h1 className="text-center text-3xl font-semibold text-slate-900 md:text-4xl">
+      <main className="mx-auto w-full min-w-0 max-w-5xl space-y-16 px-4 pb-28 pt-12 sm:px-6">
+        <section className="min-w-0 space-y-8">
+          <h1 className="text-center text-2xl font-semibold tracking-tight text-slate-900 [overflow-wrap:anywhere] sm:text-3xl md:text-4xl">
             {t.about.title}
           </h1>
-          <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-            <div className="about-photo-wrap">
+          <div className="grid min-w-0 items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+            <div className="about-photo-wrap min-w-0">
               <img
                 src="/images/about/about.jpg"
                 alt="Olga BiIak portrait"
@@ -37,8 +37,8 @@ export default async function AboutPage({ searchParams }: PageProps) {
                 fetchPriority="high"
               />
             </div>
-            <div className="p-2 text-base leading-relaxed text-slate-700 md:p-4">
-              <div className="space-y-4 text-[15px] md:text-base">
+            <div className="min-w-0 p-2 text-base leading-relaxed text-slate-700 md:p-4">
+              <div className="space-y-4 text-[15px] [overflow-wrap:anywhere] md:text-base">
                 <p>{t.about.paragraph1}</p>
                 <p>{t.about.paragraph2}</p>
                 <p>{t.about.paragraph3}</p>

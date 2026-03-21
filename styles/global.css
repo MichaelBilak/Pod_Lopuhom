@@ -10,12 +10,27 @@
 html {
   font-family: "Century Gothic", "CenturyGothic", "AppleGothic", "Futura",
     "Trebuchet MS", sans-serif;
+  overflow-x: clip;
 }
 
 body {
   font-family: "Century Gothic", "CenturyGothic", "AppleGothic", "Futura",
     "Trebuchet MS", sans-serif;
   line-height: 1.65;
+  min-width: 0;
+}
+
+/* Default fluid images; hero/gallery override below */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.hero-backdrop img.hero-slide,
+img.gallery-image {
+  max-width: none;
+  width: 100%;
+  height: 100%;
 }
 
 button,
@@ -33,6 +48,12 @@ select {
   background: rgba(255, 255, 255, 0.7);
   padding: 3rem 1.5rem;
   box-shadow: none;
+}
+
+@media (max-width: 639px) {
+  .hero-panel {
+    padding: 2rem 1rem;
+  }
 }
 
 .hero-panel::after {
@@ -105,6 +126,7 @@ select {
 .about-photo-wrap img {
   display: block;
   width: 100%;
+  max-width: none;
   height: 100%;
   mask-image: radial-gradient(circle at center, #000 58%, transparent 100%);
   -webkit-mask-image: radial-gradient(circle at center, #000 58%, transparent 100%);
@@ -144,4 +166,20 @@ button:focus-visible {
 }
 .new-products-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.35);
+}
+
+/* Category tab rows: horizontal scroll on small screens */
+.category-tabs-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+}
+.category-tabs-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.category-tabs-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.category-tabs-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 2px;
 }

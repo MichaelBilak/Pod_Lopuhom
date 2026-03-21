@@ -148,28 +148,35 @@ export default function GalleryClient({
     return [{ categoryId: selected, label, products: sortedProducts }];
   }, [selected, products, categoryOrder, categories, sortedProducts]);
 
-  const renderCategoryMenu = (wrapperClassName: string) => (
-    <div className={wrapperClassName}>
-      {categories.map((category, index) => (
-        <div key={category.id} className="flex shrink-0 items-center gap-1.5 sm:gap-0">
-          <button
-            type="button"
-            onClick={() => setSelected(category.id)}
-            className={[
-              "border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-              selected === category.id ? "border-slate-400 text-slate-900" : "",
-            ].join(" ")}
-          >
-            {category.label}
-          </button>
-          {index < categories.length - 1 && (
-            <span
-              className="h-3 w-px shrink-0 bg-slate-200/50 sm:hidden"
-              aria-hidden
-            />
-          )}
-        </div>
-      ))}
+  const renderCategoryMenu = (innerClassName: string) => (
+    <div className="category-tabs-scroll w-full min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-1 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:px-0 sm:pb-0">
+      <div
+        className={[
+          "inline-flex min-w-max flex-nowrap items-center justify-center gap-x-2 gap-y-2 sm:gap-x-7",
+          innerClassName,
+        ].join(" ")}
+      >
+        {categories.map((category, index) => (
+          <div key={category.id} className="flex shrink-0 items-center gap-1.5 sm:gap-0">
+            <button
+              type="button"
+              onClick={() => setSelected(category.id)}
+              className={[
+                "shrink-0 whitespace-nowrap border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+                selected === category.id ? "border-slate-400 text-slate-900" : "",
+              ].join(" ")}
+            >
+              {category.label}
+            </button>
+            {index < categories.length - 1 && (
+              <span
+                className="h-3 w-px shrink-0 bg-slate-200/50 sm:hidden"
+                aria-hidden
+              />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 
@@ -183,25 +190,25 @@ export default function GalleryClient({
             : "-translate-y-full opacity-0 pointer-events-none",
         ].join(" ")}
       >
-        <div className="mx-auto flex w-full max-w-6xl justify-center px-6 py-3">
+        <div className="mx-auto w-full min-w-0 max-w-6xl px-4 py-3 sm:px-6">
           {renderCategoryMenu(
-            "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-xs font-semibold uppercase tracking-[0.1em] text-slate-600 sm:gap-7 sm:text-sm sm:tracking-[0.32em]"
+            "text-xs font-semibold uppercase tracking-[0.08em] text-slate-600 sm:text-sm sm:tracking-[0.28em]"
           )}
         </div>
       </div>
       {renderCategoryMenu(
-        "flex flex-nowrap items-center justify-center gap-2 overflow-x-auto text-xs font-semibold uppercase tracking-[0.1em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.34em] sm:text-base"
+        "text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.3em] sm:text-base"
       )}
 
-      <section id="gallery" className="space-y-14">
+      <section id="gallery" className="min-w-0 space-y-14">
         {sections.map(({ categoryId, label, products: sectionProducts }) => (
           <div key={categoryId} className="space-y-6">
-            <div className="flex items-center gap-4">
-              <span className="h-0.5 flex-1 bg-slate-300" aria-hidden />
-              <h2 className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600 sm:text-sm sm:tracking-[0.28em]">
+            <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+              <span className="h-0.5 min-w-[1rem] flex-1 bg-slate-300" aria-hidden />
+              <h2 className="min-w-0 max-w-[min(100%,28rem)] shrink text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-600 [overflow-wrap:anywhere] sm:text-sm sm:tracking-[0.24em]">
                 {label}
               </h2>
-              <span className="h-0.5 flex-1 bg-slate-300" aria-hidden />
+              <span className="h-0.5 min-w-[1rem] flex-1 bg-slate-300" aria-hidden />
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12">
               {sectionProducts.map((product) => (

@@ -5,8 +5,8 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
 export default function FooterSocial() {
   return (
-    <footer className="border-t border-slate-200 py-10">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-center gap-4 px-6">
+    <footer className="min-w-0 border-t border-slate-200 py-10">
+      <div className="mx-auto flex w-full min-w-0 max-w-5xl items-center justify-center gap-4 px-4 sm:px-6">
         <a
           href={instagramUrl}
           target="_blank"
