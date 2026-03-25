@@ -41,6 +41,8 @@ type ProductFormProps = {
   product: Product | null;
   onSave: (payload: ProductFormState, imageIds: string[]) => Promise<void>;
   onCancel: () => void;
+  /** Keeps admin parent `formProduct.images` in sync after upload/reorder/delete */
+  onProductImagesChange?: (images: ProductImage[]) => void;
   onImageNotFound?: () => void;
   isBusy: boolean;
 };
@@ -49,6 +51,7 @@ export default function ProductForm({
   product,
   onSave,
   onCancel,
+  onProductImagesChange,
   onImageNotFound,
   isBusy,
 }: ProductFormProps) {
@@ -73,9 +76,16 @@ export default function ProductForm({
   );
   const [images, setImages] = useState<ProductImage[]>(product?.images ?? []);
 
+  // Sync from server only when switching product or after save (updated_at changes).
+  // Do NOT depend on product.images reference alone — it can reset after upload and wipe
+  // locally added images before the parent state is updated.
   useEffect(() => {
-    if (product?.images) setImages(product.images);
-  }, [product?.id, product?.images]);
+    if (!product?.id) {
+      setImages([]);
+      return;
+    }
+    setImages(product.images ?? []);
+  }, [product?.id, product?.updated_at]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -284,7 +294,10 @@ export default function ProductForm({
       <ImageManager
         productId={product?.id ?? null}
         images={images}
-        onImagesChange={setImages}
+        onImagesChange={(next) => {
+          setImages(next);
+          onProductImagesChange?.(next);
+        }}
         onImageNotFound={onImageNotFound}
         disabled={isBusy}
       />

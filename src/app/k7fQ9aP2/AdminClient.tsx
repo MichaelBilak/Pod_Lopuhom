@@ -149,6 +149,11 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
               product={formProduct === "add" ? null : formProduct}
               onSave={handleSave}
               onCancel={() => setFormProduct(null)}
+              onProductImagesChange={(imgs) => {
+                setFormProduct((prev) =>
+                  prev && prev !== "add" ? { ...prev, images: imgs } : prev
+                );
+              }}
               onImageNotFound={
                 formProduct !== "add" && formProduct?.id
                   ? () => refetchProduct(formProduct.id)

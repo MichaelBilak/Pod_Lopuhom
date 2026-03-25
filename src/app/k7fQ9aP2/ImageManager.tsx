@@ -4,6 +4,59 @@ import { useCallback, useRef, useState } from "react";
 import type { ProductImage } from "@/lib/supabase-products";
 import ImagePositionEditor from "./ImagePositionEditor";
 
+/** API may return snake_case or camelCase depending on serialization */
+function normalizeProductImage(raw: unknown): ProductImage | null {
+  if (!raw || typeof raw !== "object") return null;
+  const o = raw as Record<string, unknown>;
+  const id = typeof o.id === "string" ? o.id : null;
+  const product_id =
+    typeof o.product_id === "string"
+      ? o.product_id
+      : typeof o.productId === "string"
+        ? o.productId
+        : null;
+  const image_url =
+    typeof o.image_url === "string"
+      ? o.image_url
+      : typeof o.imageUrl === "string"
+        ? o.imageUrl
+        : null;
+  const alt_text =
+    o.alt_text === null || typeof o.alt_text === "string"
+      ? (o.alt_text as string | null)
+      : typeof o.altText === "string" || o.altText === null
+        ? (o.altText as string | null)
+        : null;
+  const sort_order =
+    typeof o.sort_order === "number"
+      ? o.sort_order
+      : typeof o.sortOrder === "number"
+        ? o.sortOrder
+        : 0;
+  const object_position =
+    o.object_position === null || typeof o.object_position === "string"
+      ? (o.object_position as string | null)
+      : o.objectPosition === null || typeof o.objectPosition === "string"
+        ? (o.objectPosition as string | null)
+        : null;
+  const created_at =
+    typeof o.created_at === "string"
+      ? o.created_at
+      : typeof o.createdAt === "string"
+        ? o.createdAt
+        : new Date().toISOString();
+  if (!id || !product_id || !image_url) return null;
+  return {
+    id,
+    product_id,
+    image_url,
+    alt_text,
+    sort_order,
+    object_position,
+    created_at,
+  };
+}
+
 type ImageManagerProps = {
   productId: string | null;
   images: ProductImage[];
@@ -75,7 +128,7 @@ export default function ImageManager({
                 : "Не удалось добавить изображение к товару."
             );
           }
-          const image = addData.image as ProductImage | undefined;
+          const image = normalizeProductImage(addData.image);
           if (!image) throw new Error("Некорректный ответ сервера при добавлении фото.");
           nextImages = [...nextImages, image];
         }
