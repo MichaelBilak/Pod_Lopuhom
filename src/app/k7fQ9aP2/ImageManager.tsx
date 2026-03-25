@@ -20,6 +20,7 @@ export default function ImageManager({
   disabled,
 }: ImageManagerProps) {
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [adjustImageId, setAdjustImageId] = useState<string | null>(null);
   const [positionError, setPositionError] = useState<string | null>(null);
@@ -28,7 +29,12 @@ export default function ImageManager({
 
   const uploadFiles = useCallback(
     async (files: FileList | null) => {
-      if (!files?.length || !productId) return;
+      if (!productId) {
+        setUploadError("Сначала сохраните товар, затем загрузите изображения.");
+        return;
+      }
+      if (!files?.length) return;
+      setUploadError(null);
       setUploading(true);
       try {
         const formData = new FormData();
@@ -39,10 +45,19 @@ export default function ImageManager({
           method: "POST",
           body: formData,
         });
-        if (!res.ok) throw new Error("Upload failed");
-        const { urls } = await res.json();
-        const startOrder = images.length;
-        let nextImages = [...images];
+        const uploadData = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(
+            typeof uploadData?.message === "string"
+              ? uploadData.message
+              : "Ошибка загрузки файла."
+          );
+        }
+        const urls = uploadData.urls as string[] | undefined;
+        if (!urls?.length) throw new Error("Сервер не вернул URL изображений.");
+
+        const startOrder = imagesRef.current.length;
+        let nextImages = [...imagesRef.current];
         for (let i = 0; i < urls.length; i++) {
           const addRes = await fetch(`/api/admin/products/${productId}/images`, {
             method: "POST",
@@ -52,18 +67,27 @@ export default function ImageManager({
               sortOrder: startOrder + i,
             }),
           });
-          if (!addRes.ok) throw new Error("Failed to add image");
-          const { image } = await addRes.json();
+          const addData = await addRes.json().catch(() => ({}));
+          if (!addRes.ok) {
+            throw new Error(
+              typeof addData?.message === "string"
+                ? addData.message
+                : "Не удалось добавить изображение к товару."
+            );
+          }
+          const image = addData.image as ProductImage | undefined;
+          if (!image) throw new Error("Некорректный ответ сервера при добавлении фото.");
           nextImages = [...nextImages, image];
         }
         onImagesChange(nextImages);
       } catch (e) {
         console.error(e);
+        setUploadError(e instanceof Error ? e.message : "Не удалось загрузить изображения.");
       } finally {
         setUploading(false);
       }
     },
-    [productId, images, onImagesChange]
+    [productId, onImagesChange]
   );
 
   const removeImage = useCallback(
@@ -140,6 +164,16 @@ export default function ImageManager({
 
   const handleDragStart = (index: number) => setDragIndex(index);
   const handleDragOver = (e: React.DragEvent) => e.preventDefault();
+  const handleDropzoneDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+  const handleDropzoneDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (disabled || uploading || !productId) return;
+    void uploadFiles(e.dataTransfer.files);
+  };
   const handleDrop = (e: React.DragEvent, toIndex: number) => {
     e.preventDefault();
     if (dragIndex === null || dragIndex === toIndex) return;
@@ -176,21 +210,45 @@ export default function ImageManager({
           )}
         </div>
       )}
+      {uploadError && (
+        <div
+          className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+          role="alert"
+        >
+          <p>{uploadError}</p>
+          <button
+            type="button"
+            onClick={() => setUploadError(null)}
+            className="mt-2 text-xs font-medium text-red-800 underline hover:no-underline"
+          >
+            Закрыть
+          </button>
+        </div>
+      )}
       {productId ? (
         <>
-          <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-6 transition hover:border-slate-300 hover:bg-slate-50">
+          {/* file input must stay visible to the layout (opacity overlay), not display:none — otherwise some browsers ignore label/area clicks */}
+          <div
+            className="relative flex min-h-[5.5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-6 transition hover:border-slate-300 hover:bg-slate-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60"
+            onDragOver={handleDropzoneDragOver}
+            onDrop={handleDropzoneDrop}
+          >
             <input
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
               multiple
-              className="hidden"
+              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
               disabled={disabled || uploading}
-              onChange={(e) => uploadFiles(e.target.files)}
+              onChange={(e) => {
+                void uploadFiles(e.target.files);
+                e.target.value = "";
+              }}
+              aria-label="Upload product images"
             />
-            <span className="text-sm text-slate-500">
+            <span className="pointer-events-none relative z-0 px-3 text-center text-sm text-slate-500">
               {uploading ? "Uploading…" : "Click or drop images"}
             </span>
-          </label>
+          </div>
           {images.length > 0 && (
             <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
               {images.map((img, index) => (
