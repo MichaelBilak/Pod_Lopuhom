@@ -44,8 +44,7 @@ export async function fetchProductsForPublic(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("is_active", true)
-    .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false });
+    .order("sort_order", { ascending: true });
 
   if (productsError) throw productsError;
   if (!products?.length) return [];
@@ -92,7 +91,6 @@ export async function fetchNewProductsForHome(limit = 8): Promise<Product[]> {
     .eq("is_active", true)
     .eq("is_new", true)
     .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false })
     .limit(limit);
 
   if (productsError) throw productsError;
