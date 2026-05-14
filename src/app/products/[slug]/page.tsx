@@ -60,7 +60,9 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <p className="mt-3 text-sm text-slate-600 [overflow-wrap:anywhere]">
                 {locale === "ru" && product.description_ru
                   ? product.description_ru
-                  : product.description}
+                  : locale === "it" && product.description_it
+                    ? product.description_it
+                    : product.description}
               </p>
               <p className="mt-4 text-sm text-slate-600">
                 {t.product.materials}: {product.materials ?? ""}

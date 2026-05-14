@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import {
   reorderProductImages,
   addProductImage,
@@ -30,8 +31,9 @@ export async function POST(req: Request, { params }: { params: Params }) {
   const altText = typeof body?.altText === "string" ? body.altText.trim() || null : null;
   try {
     const image = await addProductImage(productId, imageUrl, altText, sortOrder);
+    revalidateTag("products");
     return NextResponse.json({ image }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Failed to add image." },
       { status: 500 }
@@ -61,8 +63,9 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   }
   try {
     await reorderProductImages(productId, imageIds);
+    revalidateTag("products");
     return NextResponse.json({ ok: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Failed to reorder images." },
       { status: 500 }

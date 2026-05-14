@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { uploadBuffer } from "@/lib/cloudinary";
+import { uploadProductImage } from "@/lib/supabase-storage";
+import { hasSupabaseServiceRole } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
@@ -12,6 +13,15 @@ const ALLOWED_MIMES = new Set([
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export async function POST(req: Request) {
+  if (!hasSupabaseServiceRole()) {
+    return NextResponse.json(
+      {
+        message:
+          "Server is missing SUPABASE_SERVICE_ROLE_KEY. Add it to .env (Supabase Dashboard → Settings → API → service_role secret) and restart.",
+      },
+      { status: 500 }
+    );
+  }
   try {
     const formData = await req.formData();
     const files = formData.getAll("files") as File[];
@@ -45,24 +55,25 @@ export async function POST(req: Request) {
       }
     }
 
-    const urls: string[] = [];
-    for (const file of toUpload) {
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      const mime = (file.type || "image/jpeg").toLowerCase().split(";")[0]?.trim() || "image/jpeg";
-      const { secure_url } = await uploadBuffer(buffer, {
-        folder: "mama-products",
-        mime,
-      });
-      urls.push(secure_url);
-    }
+    const urls = await Promise.all(
+      toUpload.map(async (file) => {
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        const mime =
+          (file.type || "image/jpeg").toLowerCase().split(";")[0]?.trim() ||
+          "image/jpeg";
+        const { url } = await uploadProductImage(buffer, mime);
+        return url;
+      })
+    );
 
     return NextResponse.json({ urls });
   } catch (error) {
     console.error("Upload error:", error);
-    return NextResponse.json(
-      { message: "Upload failed." },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Upload failed. Check that the 'products' Storage bucket exists in Supabase.";
+    return NextResponse.json({ message }, { status: 500 });
   }
 }

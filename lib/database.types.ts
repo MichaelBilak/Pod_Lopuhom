@@ -16,6 +16,7 @@ export interface Database {
           slug: string;
           description: string | null;
           description_ru: string | null;
+          description_it: string | null;
           price: number | null;
           discount: number;
           materials: string | null;
@@ -33,6 +34,7 @@ export interface Database {
           slug: string;
           description?: string | null;
           description_ru?: string | null;
+          description_it?: string | null;
           price?: number | null;
           discount?: number;
           materials?: string | null;
@@ -50,6 +52,7 @@ export interface Database {
           slug?: string;
           description?: string | null;
           description_ru?: string | null;
+          description_it?: string | null;
           price?: number | null;
           discount?: number;
           materials?: string | null;

@@ -110,29 +110,34 @@ export default function ImageManager({
         if (!urls?.length) throw new Error("Сервер не вернул URL изображений.");
 
         const startOrder = imagesRef.current.length;
-        let nextImages = [...imagesRef.current];
-        for (let i = 0; i < urls.length; i++) {
-          const addRes = await fetch(`/api/admin/products/${productId}/images`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              imageUrl: urls[i],
-              sortOrder: startOrder + i,
-            }),
-          });
-          const addData = await addRes.json().catch(() => ({}));
-          if (!addRes.ok) {
-            throw new Error(
-              typeof addData?.message === "string"
-                ? addData.message
-                : "Не удалось добавить изображение к товару."
+        const addedImages = await Promise.all(
+          urls.map(async (url, i) => {
+            const addRes = await fetch(
+              `/api/admin/products/${productId}/images`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  imageUrl: url,
+                  sortOrder: startOrder + i,
+                }),
+              }
             );
-          }
-          const image = normalizeProductImage(addData.image);
-          if (!image) throw new Error("Некорректный ответ сервера при добавлении фото.");
-          nextImages = [...nextImages, image];
-        }
-        onImagesChange(nextImages);
+            const addData = await addRes.json().catch(() => ({}));
+            if (!addRes.ok) {
+              throw new Error(
+                typeof addData?.message === "string"
+                  ? addData.message
+                  : "Не удалось добавить изображение к товару."
+              );
+            }
+            const image = normalizeProductImage(addData.image);
+            if (!image)
+              throw new Error("Некорректный ответ сервера при добавлении фото.");
+            return image;
+          })
+        );
+        onImagesChange([...imagesRef.current, ...addedImages]);
       } catch (e) {
         console.error(e);
         setUploadError(e instanceof Error ? e.message : "Не удалось загрузить изображения.");
@@ -146,32 +151,43 @@ export default function ImageManager({
   const removeImage = useCallback(
     async (imageId: string) => {
       if (!productId) return;
-      const res = await fetch(
-        `/api/admin/products/${productId}/images/${imageId}`,
-        { method: "DELETE" }
-      );
-      if (!res.ok) return;
-      onImagesChange(images.filter((img) => img.id !== imageId));
+      const previous = imagesRef.current;
+      onImagesChange(previous.filter((img) => img.id !== imageId));
+      try {
+        const res = await fetch(
+          `/api/admin/products/${productId}/images/${imageId}`,
+          { method: "DELETE" }
+        );
+        if (!res.ok) onImagesChange(previous);
+      } catch {
+        onImagesChange(previous);
+      }
     },
-    [productId, images, onImagesChange]
+    [productId, onImagesChange]
   );
 
   const moveImage = useCallback(
     async (fromIndex: number, toIndex: number) => {
-      if (!productId || toIndex < 0 || toIndex >= images.length) return;
-      const reordered = [...images];
+      if (!productId) return;
+      const previous = imagesRef.current;
+      if (toIndex < 0 || toIndex >= previous.length) return;
+      const reordered = [...previous];
       const [removed] = reordered.splice(fromIndex, 1);
       reordered.splice(toIndex, 0, removed);
-      const imageIds = reordered.map((img) => img.id);
-      const res = await fetch(`/api/admin/products/${productId}/images`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageIds }),
-      });
-      if (!res.ok) return;
       onImagesChange(reordered);
+      const imageIds = reordered.map((img) => img.id);
+      try {
+        const res = await fetch(`/api/admin/products/${productId}/images`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imageIds }),
+        });
+        if (!res.ok) onImagesChange(previous);
+      } catch {
+        onImagesChange(previous);
+      }
     },
-    [productId, images, onImagesChange]
+    [productId, onImagesChange]
   );
 
   const updatePosition = useCallback(

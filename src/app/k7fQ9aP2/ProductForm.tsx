@@ -12,6 +12,7 @@ export type ProductFormState = {
   slug: string;
   description: string;
   description_ru: string;
+  description_it: string;
   price: string;
   discount: string;
   materials: string;
@@ -27,6 +28,7 @@ const emptyForm: ProductFormState = {
   slug: "",
   description: "",
   description_ru: "",
+  description_it: "",
   price: "",
   discount: "0",
   materials: "",
@@ -63,6 +65,7 @@ export default function ProductForm({
           slug: product.slug,
           description: product.description ?? "",
           description_ru: product.description_ru ?? "",
+          description_it: product.description_it ?? "",
           price: product.price != null ? String(product.price) : "",
           discount: String(product.discount ?? 0),
           materials: product.materials ?? "",
@@ -169,6 +172,20 @@ export default function ProductForm({
             }
             rows={3}
             placeholder="Описание (RU)"
+            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium text-slate-600">
+            Описание для итальянской версии сайта
+          </span>
+          <textarea
+            value={form.description_it}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, description_it: e.target.value }))
+            }
+            rows={3}
+            placeholder="Descrizione (IT)"
             className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
           />
         </label>

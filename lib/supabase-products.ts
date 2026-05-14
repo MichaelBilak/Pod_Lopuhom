@@ -23,6 +23,7 @@ export type Product = {
   slug: string;
   description: string | null;
   description_ru?: string | null;
+  description_it?: string | null;
   price: number | null;
   discount: number;
   materials: string | null;
@@ -43,7 +44,8 @@ export async function fetchProductsForPublic(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("is_active", true)
-    .order("sort_order", { ascending: true });
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false });
 
   if (productsError) throw productsError;
   if (!products?.length) return [];
@@ -90,6 +92,7 @@ export async function fetchNewProductsForHome(limit = 8): Promise<Product[]> {
     .eq("is_active", true)
     .eq("is_new", true)
     .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false })
     .limit(limit);
 
   if (productsError) throw productsError;
@@ -249,6 +252,7 @@ export type ProductInsert = {
   slug: string;
   description?: string | null;
   description_ru?: string | null;
+  description_it?: string | null;
   price?: number | null;
   discount?: number;
   materials?: string | null;
@@ -266,6 +270,7 @@ export async function createProduct(input: ProductInsert): Promise<Product> {
     slug: input.slug,
     description: input.description ?? null,
     description_ru: input.description_ru ?? null,
+    description_it: input.description_it ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
     materials: input.materials ?? null,
@@ -297,6 +302,7 @@ export async function updateProduct(
     slug: input.slug,
     description: input.description ?? null,
     description_ru: input.description_ru ?? null,
+    description_it: input.description_it ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
     materials: input.materials ?? null,
@@ -388,6 +394,18 @@ export async function updateProductImageOrder(
     .update({ sort_order: sortOrder } as never)
     .eq("id", imageId);
   if (error) throw error;
+}
+
+/** Reassigns sort_order on products based on their position in `idsInOrder`. */
+export async function reorderProducts(idsInOrder: string[]): Promise<void> {
+  const supabase = getSupabaseAdmin();
+  for (let i = 0; i < idsInOrder.length; i++) {
+    const { error } = await supabase
+      .from("products")
+      .update({ sort_order: i } as never)
+      .eq("id", idsInOrder[i]);
+    if (error) throw error;
+  }
 }
 
 export async function reorderProductImages(

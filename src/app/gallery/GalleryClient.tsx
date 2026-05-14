@@ -23,19 +23,6 @@ const getCategoryFromProduct = (product: Product) => {
   return product.category ?? "Rings";
 };
 
-const getProductNumber = (product: Product) => {
-  const candidates = [
-    product.title,
-    product.slug,
-    productMainImageUrl(product) ?? "",
-  ];
-  for (const value of candidates) {
-    const match = value.match(/(\d+)/);
-    if (match) return Number(match[1]);
-  }
-  return Number.MAX_SAFE_INTEGER;
-};
-
 export default function GalleryClient({
   products,
   categories,
@@ -135,12 +122,6 @@ export default function GalleryClient({
     });
   }, [products, selected]);
 
-  const sortedProducts = useMemo(() => {
-    return [...filteredProducts].sort(
-      (a, b) => getProductNumber(a) - getProductNumber(b)
-    );
-  }, [filteredProducts]);
-
   const categoryOrder = useMemo(
     () => categories.filter((c) => c.id !== "All").map((c) => c.id),
     [categories]
@@ -148,17 +129,20 @@ export default function GalleryClient({
 
   const sections = useMemo(() => {
     if (selected === "All") {
-      return categoryOrder.map((categoryId) => {
-        const label = categories.find((c) => c.id === categoryId)?.label ?? categoryId;
-        const items = products
-          .filter((p) => getCategoryFromProduct(p) === categoryId)
-          .sort((a, b) => getProductNumber(a) - getProductNumber(b));
-        return { categoryId, label, products: items };
-      }).filter((s) => s.products.length > 0);
+      return categoryOrder
+        .map((categoryId) => {
+          const label =
+            categories.find((c) => c.id === categoryId)?.label ?? categoryId;
+          const items = products.filter(
+            (p) => getCategoryFromProduct(p) === categoryId
+          );
+          return { categoryId, label, products: items };
+        })
+        .filter((s) => s.products.length > 0);
     }
     const label = categories.find((c) => c.id === selected)?.label ?? selected;
-    return [{ categoryId: selected, label, products: sortedProducts }];
-  }, [selected, products, categoryOrder, categories, sortedProducts]);
+    return [{ categoryId: selected, label, products: filteredProducts }];
+  }, [selected, products, categoryOrder, categories, filteredProducts]);
 
   const renderCategoryMenu = (innerClassName: string) => (
     <div className="category-tabs-scroll w-full min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-1 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:px-0 sm:pb-0">
@@ -224,30 +208,38 @@ export default function GalleryClient({
         "text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.3em] sm:text-base"
       )}
 
-      <section id="gallery" className="min-w-0 space-y-14">
+      <section id="gallery" className="min-w-0 space-y-24 sm:space-y-28">
         {sections.map(({ categoryId, label, products: sectionProducts }) => (
-          <div key={categoryId} className="space-y-6">
-            <div className="flex min-w-0 items-center gap-4 sm:gap-6">
-              <span className="h-1 min-w-[2.75rem] flex-1 bg-slate-300" aria-hidden />
-              <h2 className="min-w-0 max-w-[min(100%,32rem)] shrink text-center text-sm font-semibold uppercase tracking-[0.22em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
+          <div key={categoryId} className="space-y-[45px]">
+            <div className="-mx-10 flex min-w-0 items-center gap-2 sm:-mx-16 sm:gap-3">
+              <span
+                className="h-[5px] min-w-[4rem] flex-1 border-y border-slate-500"
+                aria-hidden
+              />
+              <h2 className="min-w-0 max-w-[min(100%,18rem)] shrink whitespace-nowrap text-center text-sm font-semibold uppercase tracking-[0.22em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
                 {label}
               </h2>
-              <span className="h-1 min-w-[2.75rem] flex-1 bg-slate-300" aria-hidden />
+              <span
+                className="h-[5px] min-w-[4rem] flex-1 border-y border-slate-500"
+                aria-hidden
+              />
             </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12">
+            <div className="grid grid-cols-1 gap-x-[38px] gap-y-6 sm:grid-cols-2 sm:gap-x-[63px] sm:gap-y-10 lg:grid-cols-3 lg:gap-x-[75px] lg:gap-y-12">
               {sectionProducts.map((product, productIndex) => {
                 const mainImageUrl = productMainImageUrl(product);
+                const priceText = productDisplayPrice(product);
+                const isPriceOnRequest = priceText.toLowerCase() === "price on request";
                 return (
                   <article
                     key={product.id}
-                    className="group overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)]"
+                    className="group overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)]"
                   >
                     <Link
                       href={withLang(`/products/${product.slug}`, locale)}
-                      className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                      className="block h-full w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                       aria-label={`Open ${product.title} details`}
                     >
-                      <div className="relative w-full overflow-hidden rounded-t-2xl bg-slate-50/60 aspect-[16/15] sm:aspect-auto sm:h-72 lg:h-80">
+                      <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[16/15] sm:aspect-auto sm:h-72 lg:h-80">
                         {mainImageUrl ? (
                           <Image
                             src={mainImageUrl}
@@ -267,17 +259,22 @@ export default function GalleryClient({
                             aria-label={product.title}
                           />
                         )}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
-                        <span className="pointer-events-none absolute bottom-3 right-3 opacity-0 transition duration-300 group-hover:opacity-60 text-white/90 text-[10px] uppercase tracking-widest">
-                          →
-                        </span>
-                      </div>
-                      <div className="flex flex-1 flex-col gap-1 px-2 pt-2 pb-2 sm:gap-2 sm:px-4 sm:pt-4 sm:pb-4">
-                        <div className="flex min-w-0 items-end justify-between gap-2">
-                          <span className="min-w-0 shrink whitespace-nowrap text-sm font-semibold text-slate-900 sm:text-xs">
-                            {productDisplayPrice(product)}
+                        <div
+                          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/85 via-black/50 to-transparent"
+                          aria-hidden
+                        />
+                        <div className="absolute inset-x-0 bottom-0 flex min-w-0 items-end justify-between gap-2 px-3 pb-3 sm:px-4 sm:pb-4">
+                          <span
+                            className={[
+                              "min-w-0 shrink whitespace-nowrap font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
+                              isPriceOnRequest
+                                ? "text-[11px] sm:text-[10px]"
+                                : "text-[17px] sm:text-[14px]",
+                            ].join(" ")}
+                          >
+                            {priceText}
                           </span>
-                          <span className="shrink-0 whitespace-nowrap text-[8px] uppercase tracking-[0.12em] text-slate-400 group-hover:text-slate-600 sm:text-[10px] sm:tracking-[0.2em]">
+                          <span className="shrink-0 whitespace-nowrap text-[8px] uppercase tracking-[0.12em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-[10px] sm:tracking-[0.2em]">
                             {viewDetailsLabel}
                           </span>
                         </div>

@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifyAdminSession } from "@/lib/auth";
-import { fetchProductsAdmin } from "@/lib/supabase-products";
+import {
+  fetchProductsAdmin,
+  type Product,
+} from "@/lib/supabase-products";
 import AdminClient from "./AdminClient";
 
 export const metadata = {
@@ -97,7 +100,25 @@ export default async function AdminPage({ searchParams }: PageProps) {
     );
   }
 
-  const products = await fetchProductsAdmin();
+  let products: Product[] = [];
+  let loadError: string | null = null;
+  try {
+    products = await fetchProductsAdmin();
+  } catch (err) {
+    const raw =
+      err instanceof Error
+        ? err.message
+        : typeof err === "string"
+          ? err
+          : JSON.stringify(err);
+    if (raw.includes("ECONNRESET") || raw.includes("fetch failed")) {
+      loadError =
+        "Не удалось подключиться к Supabase (сетевой сбой). Обновите страницу — обычно помогает с первой попытки.";
+    } else {
+      loadError = `Не удалось загрузить товары: ${raw}`;
+    }
+    console.error("Admin: failed to load products:", err);
+  }
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -128,6 +149,17 @@ export default async function AdminPage({ searchParams }: PageProps) {
             </form>
           </div>
         </div>
+        {loadError && (
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <p className="min-w-0 flex-1">{loadError}</p>
+            <Link
+              href="/k7fQ9aP2"
+              className="rounded-lg border border-red-300 bg-white px-3 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-100"
+            >
+              Повторить
+            </Link>
+          </div>
+        )}
         <AdminClient initialProducts={products} />
       </div>
     </main>

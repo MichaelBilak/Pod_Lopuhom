@@ -37,19 +37,21 @@ export default function NewProductsScroll({
   ) => {
     const duplicate = copyTag !== "orig";
     const mainImageUrl = productMainImageUrl(product);
+    const priceText = productDisplayPrice(product);
+    const isPriceOnRequest = priceText.toLowerCase() === "price on request";
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="group w-[min(298px,calc(100vw-2rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.04)] sm:w-[298px]"
+        className="group w-[min(298px,calc(100vw-2rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
         aria-hidden={duplicate}
       >
         <Link
           href={withLang(`/products/${product.slug}`, locale)}
-          className="flex h-full w-full flex-col rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+          className="block h-full w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
           aria-label={`Open ${product.title} details`}
           tabIndex={duplicate ? -1 : undefined}
         >
-          <div className="relative h-[250px] w-full overflow-hidden rounded-t-2xl bg-slate-50/60">
+          <div className="relative h-[320px] w-full overflow-hidden rounded-2xl bg-slate-50/60">
             {mainImageUrl ? (
               <Image
                 src={mainImageUrl}
@@ -69,17 +71,20 @@ export default function NewProductsScroll({
                 aria-label={product.title}
               />
             )}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
-            <span className="pointer-events-none absolute bottom-3 right-3 opacity-0 transition duration-300 group-hover:opacity-60 text-white/90 text-[10px] uppercase tracking-widest">
-              →
-            </span>
-          </div>
-          <div className="flex min-w-0 flex-1 flex-col gap-2 px-3 pt-4 pb-3 sm:px-4 sm:pb-4">
-            <div className="flex min-w-0 items-end justify-between gap-2">
-              <span className="min-w-0 truncate text-sm font-semibold text-slate-900">
-                {productDisplayPrice(product)}
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/85 via-black/50 to-transparent"
+              aria-hidden
+            />
+            <div className="absolute inset-x-0 bottom-0 flex min-w-0 items-end justify-between gap-2 px-3 pb-3 sm:px-4 sm:pb-4">
+              <span
+                className={[
+                  "min-w-0 truncate font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
+                  isPriceOnRequest ? "text-[11px]" : "text-[17px]",
+                ].join(" ")}
+              >
+                {priceText}
               </span>
-              <span className="shrink-0 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-600">
+              <span className="shrink-0 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
                 {viewDetails}
               </span>
             </div>

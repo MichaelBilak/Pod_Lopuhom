@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import {
   deleteProductImage,
   getProductImage,
   productImageExists,
   updateProductImagePosition,
 } from "@/lib/supabase-products";
-import { deleteByUrl } from "@/lib/cloudinary";
+import {
+  deleteSupabaseStorageObjectByUrl,
+  isSupabaseStorageUrl,
+} from "@/lib/supabase-storage";
+import { deleteByUrl as deleteCloudinaryByUrl } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 
@@ -13,11 +18,26 @@ type Params = Promise<{ id: string; imageId: string }>;
 
 const OBJECT_POSITION_REGEX = /^\d+(\.\d+)?% \d+(\.\d+)?%$/;
 
+async function deleteImageBinaryByUrl(url: string): Promise<void> {
+  try {
+    if (isSupabaseStorageUrl(url)) {
+      await deleteSupabaseStorageObjectByUrl(url);
+      return;
+    }
+    if (url.includes("cloudinary.com")) {
+      await deleteCloudinaryByUrl(url);
+    }
+  } catch (err) {
+    // Storage delete is best-effort; DB row is already removed.
+    console.warn("Image binary delete failed:", err);
+  }
+}
+
 export async function PATCH(
   req: Request,
   { params }: { params: Params }
 ) {
-  const { id: productId, imageId } = await params;
+  const { imageId } = await params;
   let body: { objectPosition?: string };
   try {
     body = await req.json();
@@ -27,12 +47,11 @@ export async function PATCH(
   const raw = typeof body?.objectPosition === "string" ? body.objectPosition.trim() : "";
   const objectPosition = raw && OBJECT_POSITION_REGEX.test(raw) ? raw : "50% 50%";
   try {
-    // Update by imageId only (no product_id filter) to avoid mismatches
     const saved = await updateProductImagePosition(imageId, objectPosition);
     if (saved !== null) {
+      revalidateTag("products");
       return NextResponse.json({ ok: true, objectPosition: saved });
     }
-    // Update failed: check if image row exists (by id only, so it works without object_position column)
     const imageExists = await productImageExists(imageId);
     if (!imageExists) {
       return NextResponse.json(
@@ -75,9 +94,12 @@ export async function DELETE(
         { status: 404 }
       );
     }
-    await deleteByUrl(image.image_url);
+    revalidateTag("products");
+    // Fire-and-forget binary cleanup so the client response isn't blocked.
+    void deleteImageBinaryByUrl(image.image_url);
     return NextResponse.json({ ok: true });
   } catch (error) {
+    console.error("Delete image error:", error);
     return NextResponse.json(
       { message: "Failed to delete image." },
       { status: 500 }

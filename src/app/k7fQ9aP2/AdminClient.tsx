@@ -15,10 +15,46 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
   const [formProduct, setFormProduct] = useState<Product | null | "add">(null);
   const [message, setMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const editPanelRef = useRef<HTMLElement | null>(null);
+  const lastFormKeyRef = useRef<string | null>(null);
+  const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const flashProduct = (id: string) => {
+    setHighlightedId(id);
+    if (highlightTimeoutRef.current) clearTimeout(highlightTimeoutRef.current);
+    highlightTimeoutRef.current = setTimeout(() => {
+      setHighlightedId(null);
+      highlightTimeoutRef.current = null;
+    }, 2200);
+  };
 
   useEffect(() => {
-    if (formProduct !== null && editPanelRef.current) {
+    return () => {
+      if (highlightTimeoutRef.current) clearTimeout(highlightTimeoutRef.current);
+    };
+  }, []);
+
+  // Scroll into view only on a real "open" transition (click Add or Edit, or
+  // switch from one product to another). Don't scroll when the same product
+  // is re-set after save / image upload / reorder — keeps the user where they
+  // were on the page.
+  useEffect(() => {
+    const currentKey =
+      formProduct === null
+        ? null
+        : formProduct === "add"
+          ? "add"
+          : formProduct.id;
+    if (currentKey === null) {
+      lastFormKeyRef.current = null;
+      return;
+    }
+    const previousKey = lastFormKeyRef.current;
+    lastFormKeyRef.current = currentKey;
+    if (previousKey === currentKey) return;
+    if (previousKey === "add") return; // just created the product — stay in flow
+    if (editPanelRef.current) {
       editPanelRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [formProduct]);
@@ -36,6 +72,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         slug: payload.slug,
         description: payload.description || null,
         description_ru: payload.description_ru || null,
+        description_it: payload.description_it || null,
         price: payload.price ? num(payload.price) : null,
         discount: payload.discount ? num(payload.discount) : 0,
         materials: payload.materials || null,
@@ -57,8 +94,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         const product = data.product as Product;
         setProducts((prev) => [...prev, product]);
         setFormProduct(product);
+        flashProduct(product.id);
         setMessage("Product created. You can add images above.");
       } else {
+        const previous = formProduct;
         const res = await fetch(`/api/admin/products/${formProduct.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -71,7 +110,13 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
           prev.map((p) => (p.id === product.id ? product : p))
         );
         setFormProduct(product);
-        setMessage("Product updated.");
+        flashProduct(product.id);
+        const categoryChanged = previous.category !== product.category;
+        setMessage(
+          categoryChanged
+            ? `Product moved to «${product.category ?? "Uncategorized"}».`
+            : "Product updated."
+        );
       }
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Something went wrong.");
@@ -95,31 +140,65 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
     }
   };
 
+  const handleReorder = async (orderedIds: string[]) => {
+    const previousProducts = products;
+    const byId = new Map(previousProducts.map((p) => [p.id, p] as const));
+    const next: Product[] = [];
+    for (const id of orderedIds) {
+      const p = byId.get(id);
+      if (p) {
+        next.push({ ...p, sort_order: next.length });
+        byId.delete(id);
+      }
+    }
+    for (const p of byId.values()) next.push(p);
+    setProducts(next);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/admin/products/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: next.map((p) => p.id) }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.message ?? "Reorder failed");
+      }
+    } catch (e) {
+      setProducts(previousProducts);
+      setMessage(e instanceof Error ? e.message : "Reorder failed.");
+    }
+  };
+
   const handleDelete = async (product: Product) => {
     const ok = window.confirm(
       `Delete "${product.title}"? This will remove the product and all its images.`
     );
     if (!ok) return;
     setMessage(null);
-    setIsBusy(true);
+    const previousProducts = products;
+    const previousFormProduct = formProduct;
+    setProducts((prev) => prev.filter((p) => p.id !== product.id));
+    if (
+      formProduct &&
+      formProduct !== "add" &&
+      formProduct.id === product.id
+    ) {
+      setFormProduct(null);
+    }
     try {
       const res = await fetch(`/api/admin/products/${product.id}`, {
         method: "DELETE",
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message ?? "Delete failed");
-      setProducts((prev) => prev.filter((p) => p.id !== product.id));
-      if (
-        formProduct &&
-        formProduct !== "add" &&
-        formProduct.id === product.id
-      )
-        setFormProduct(null);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.message ?? "Delete failed");
+      }
       setMessage("Product deleted.");
     } catch (e) {
+      setProducts(previousProducts);
+      setFormProduct(previousFormProduct);
       setMessage(e instanceof Error ? e.message : "Delete failed.");
-    } finally {
-      setIsBusy(false);
     }
   };
 
@@ -167,9 +246,11 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
 
       <ProductList
         products={products}
+        highlightedId={highlightedId}
         onAdd={() => setFormProduct("add")}
         onEdit={(p) => setFormProduct(p)}
         onDelete={handleDelete}
+        onReorder={handleReorder}
       />
     </div>
   );

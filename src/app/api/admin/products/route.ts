@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
 import {
   createProduct,
   fetchProductsAdmin,
@@ -44,6 +45,7 @@ function buildProductInsert(payload: Record<string, unknown>): ProductInsert | n
     slug,
     description: parseNullableString(payload.description),
     description_ru: parseNullableString(payload.description_ru),
+    description_it: parseNullableString(payload.description_it),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     materials: parseNullableString(payload.materials),
@@ -91,6 +93,7 @@ export async function POST(req: NextRequest) {
       await addProductImage(product.id, imageUrls[i], null, i);
     }
     const full = await fetchProductById(product.id);
+    revalidateTag("products");
     return NextResponse.json({ product: full ?? product }, { status: 201 });
   } catch (error: unknown) {
     const code = (error as { code?: string })?.code;
