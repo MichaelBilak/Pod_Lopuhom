@@ -169,7 +169,7 @@ button:focus-visible {
 }
 
 .new-products-marquee .new-products-track {
-  animation: newProductsMarquee 18s linear infinite;
+  animation: newProductsMarquee 30s linear infinite;
   will-change: transform;
 }
 

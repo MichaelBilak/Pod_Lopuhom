@@ -110,16 +110,16 @@ export default function Nav() {
             <Image
               src="/images/products/Logo.%20pod_lopuhom.jpeg"
               alt=""
-              width={40}
-              height={40}
-              sizes="40px"
-              className="h-10 w-10 rounded-full object-cover"
+              width={48}
+              height={48}
+              sizes="48px"
+              className="h-12 w-12 rounded-full object-cover"
               priority
             />
           </Link>
           <Link
             href={buildHref("/")}
-            className="mt-1 max-w-full min-w-0 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:absolute sm:left-1/2 sm:mt-0 sm:-translate-x-1/2 sm:text-xs sm:tracking-[0.26em]"
+            className="mt-1 max-w-full min-w-0 text-[20px] font-semibold uppercase tracking-[0.2em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:absolute sm:left-1/2 sm:mt-0 sm:-translate-x-1/2 sm:text-[21px] sm:tracking-[0.24em]"
             aria-label="Pod Lopuhom home"
           >
             <span className="inline-block max-w-full break-words [overflow-wrap:anywhere]">

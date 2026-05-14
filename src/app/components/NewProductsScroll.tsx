@@ -92,12 +92,9 @@ export default function NewProductsScroll({
   return (
     <section className="min-w-0 space-y-8">
       <div className="text-center">
-        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:tracking-[0.28em]">
+        <p className="text-[16px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:tracking-[0.28em]">
           {newLabel}
         </p>
-        <h2 className="mt-1.5 text-xl font-medium tracking-tight text-slate-800 sm:text-2xl">
-          {newTitle}
-        </h2>
       </div>
       <div className="relative -mx-4 min-w-0 px-4 sm:-mx-6 sm:px-6">
         <div
