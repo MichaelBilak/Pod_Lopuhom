@@ -51,6 +51,49 @@ export default function NewProductsScroll({
     };
   }, [products.length]);
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.scrollWidth <= el.clientWidth) return;
+
+    const speedPxPerSecond = 14;
+    let paused = false;
+    let frameId = 0;
+    let lastTimestamp = performance.now();
+
+    const pause = () => {
+      paused = true;
+    };
+    const resume = () => {
+      paused = false;
+      lastTimestamp = performance.now();
+    };
+
+    const step = (timestamp: number) => {
+      const elapsed = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      if (!paused) {
+        el.scrollLeft += (elapsed * speedPxPerSecond) / 1000;
+        const isAtEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+        if (isAtEnd) el.scrollLeft = 0;
+      }
+
+      frameId = window.requestAnimationFrame(step);
+    };
+
+    frameId = window.requestAnimationFrame(step);
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
+    };
+  }, [products.length]);
+
   if (products.length === 0) return null;
 
   return (

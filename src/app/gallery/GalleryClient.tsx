@@ -227,12 +227,12 @@ export default function GalleryClient({
       <section id="gallery" className="min-w-0 space-y-14">
         {sections.map(({ categoryId, label, products: sectionProducts }) => (
           <div key={categoryId} className="space-y-6">
-            <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-              <span className="h-0.5 min-w-[1rem] flex-1 bg-slate-300" aria-hidden />
-              <h2 className="min-w-0 max-w-[min(100%,28rem)] shrink text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-600 [overflow-wrap:anywhere] sm:text-sm sm:tracking-[0.24em]">
+            <div className="flex min-w-0 items-center gap-4 sm:gap-6">
+              <span className="h-1 min-w-[2.75rem] flex-1 bg-slate-300" aria-hidden />
+              <h2 className="min-w-0 max-w-[min(100%,32rem)] shrink text-center text-sm font-semibold uppercase tracking-[0.22em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
                 {label}
               </h2>
-              <span className="h-0.5 min-w-[1rem] flex-1 bg-slate-300" aria-hidden />
+              <span className="h-1 min-w-[2.75rem] flex-1 bg-slate-300" aria-hidden />
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3 lg:gap-12">
               {sectionProducts.map((product, productIndex) => {
