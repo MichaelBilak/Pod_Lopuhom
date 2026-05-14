@@ -102,7 +102,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
             );
           })}
         </div>
-        <div className="relative order-1 h-[50vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
+        <div className="relative order-1 min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 aspect-[4/5] max-h-[75vh] sm:order-2 sm:aspect-square sm:max-h-none">
           <Image
             src={activeImage}
             alt={title}
