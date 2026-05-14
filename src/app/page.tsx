@@ -2,7 +2,7 @@ import Link from "next/link";
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
-import { fetchNewProducts } from "@/lib/products";
+import { fetchNewProducts } from "@/lib/products-server";
 import {
   getLocaleFromSearchParams,
   getTranslations,
@@ -13,7 +13,7 @@ export const metadata = {
   title: "Pod Lopuhom | Gallery",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 const heroImages = [
   "/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg",
@@ -53,15 +53,15 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div className="min-w-0 space-y-4">
           <section className="hero-panel text-center">
             <div className="hero-backdrop" aria-hidden="true">
-              {randomizedHeroImages.map((src) => (
+              {randomizedHeroImages.map((src, index) => (
                 <img
                   key={src}
                   className="hero-slide"
                   src={src}
                   alt=""
                   decoding="async"
-                  loading="eager"
-                  fetchPriority="high"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "low"}
                 />
               ))}
               <span className="hero-wash" />

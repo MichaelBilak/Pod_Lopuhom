@@ -1,9 +1,9 @@
-export type Locale = "en" | "ru";
+export type Locale = "en" | "ru" | "it";
 
 export const defaultLocale: Locale = "en";
 
 export const getLocale = (value?: string | null): Locale =>
-  value === "ru" ? "ru" : "en";
+  value === "ru" ? "ru" : value === "it" ? "it" : "en";
 
 export const getLocaleFromSearchParams = (
   searchParams?: { lang?: string | string[] | null }
@@ -35,6 +35,7 @@ export const translations = {
     language: {
       en: "EN",
       ru: "RU",
+      it: "IT",
     },
     categories: {
       all: "All",
@@ -108,6 +109,7 @@ export const translations = {
     language: {
       en: "EN",
       ru: "RU",
+      it: "IT",
     },
     categories: {
       all: "Все",
@@ -170,6 +172,80 @@ export const translations = {
       instagram: "Instagram",
       whatsapp: "WhatsApp",
       close: "Закрыть",
+    },
+  },
+  it: {
+    nav: {
+      gallery: "Galleria",
+      about: "Chi sono",
+      orderDelivery: "Ordine e consegna",
+    },
+    language: {
+      en: "EN",
+      ru: "RU",
+      it: "IT",
+    },
+    categories: {
+      all: "Tutti",
+      rings: "Anelli",
+      necklaces: "Collane",
+      earrings: "Orecchini",
+      sets: "Set",
+    },
+    home: {
+      title: "Benvenuti nelle mie creazioni!",
+      subtitle: "Scegli il gioiello che ti piace e scrivimi.",
+      newLabel: "Novita",
+      newTitle: "Ultimi pezzi",
+      viewDetails: "Vedi dettagli",
+    },
+    gallery: {
+      title: "Galleria",
+      viewDetails: "Vedi dettagli",
+    },
+    product: {
+      back: "← Indietro",
+      materials: "Materiali",
+      price: "Prezzo",
+      requestWhatsapp: "Richiedi su WhatsApp",
+      requestInstagram: "Richiedi su Instagram",
+    },
+    order: {
+      title: "Ordine e consegna",
+      subtitle: "Spediamo gioielli in tutto il mondo.",
+      deliveryIsrael: "Consegna in Israele tramite Israel Post",
+      deliveryHaifa: "Ritiro e consegna ad Haifa direttamente alla porta",
+      deliveryWorldwide: "Consegna internazionale",
+      free: "Gratis",
+      orderCta: "Per effettuare un ordine, scrivimi:",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+    },
+    about: {
+      title: "Chi sono",
+      paragraph1:
+        "Ciao! Mi chiamo Olga. Sono un'artigiana di gioielli fatti a mano, lavoro con resina epossidica per gioielli.",
+      paragraph2:
+        "In ogni pezzo cerco di conservare cio che la natura ci dona solo per poco tempo. Nei miei lavori ci sono veri fiori, piccoli rami e foglie, essiccati con cura e custoditi con attenzione.",
+      paragraph3:
+        "I fiori appassiscono, i momenti passano, ma a volte vogliamo trattenere emozioni e ricordi un po piu a lungo, portarli con noi e custodirli vicino.",
+      paragraph4:
+        "I miei gioielli sono per chi sa notare i piccoli dettagli e desidera portare con se un piccolo frammento di natura.",
+      paragraph5: "",
+    },
+    cta: {
+      helperText: "Per effettuare un ordine, scrivimi direttamente.",
+      whatsapp: "Scrivimi su WhatsApp",
+      telegram: "Scrivimi su Telegram",
+      instagram: "Instagram",
+    },
+    messages: {
+      order: "Ciao! Vorrei ordinare:",
+    },
+    common: {
+      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+      close: "Chiudi",
     },
   },
 } as const;

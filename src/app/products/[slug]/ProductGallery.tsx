@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 
 type ImageWithPosition = { url: string; objectPosition: string };
@@ -11,6 +13,9 @@ type ProductGalleryProps = {
 };
 
 export default function ProductGallery({ title, images }: ProductGalleryProps) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const normalized = useMemo((): ImageWithPosition[] => {
     if (!images.length) return [];
@@ -24,9 +29,21 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
     return images as ImageWithPosition[];
   }, [images]);
   const safeImages = normalized.filter((i) => i.url);
-  const active = safeImages[activeIndex] ?? safeImages[0];
+  const queryImage = searchParams?.get("image");
+  const queryIndex = Number.parseInt(queryImage ?? "", 10) - 1;
+  const clampedQueryIndex =
+    Number.isFinite(queryIndex) && queryIndex >= 0 && queryIndex < safeImages.length
+      ? queryIndex
+      : 0;
+  const resolvedActiveIndex =
+    activeIndex >= 0 && activeIndex < safeImages.length ? activeIndex : 0;
+  const active = safeImages[resolvedActiveIndex] ?? safeImages[0];
   const activeImage = active?.url ?? "";
   const objectPosition = active?.objectPosition ?? "50% 50%";
+
+  useEffect(() => {
+    setActiveIndex(clampedQueryIndex);
+  }, [clampedQueryIndex]);
 
   if (!safeImages.length) {
     return (
@@ -46,40 +63,54 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
       <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:gap-4">
         <div className="order-2 flex flex-row flex-wrap gap-2 sm:order-1 sm:flex-col sm:gap-3">
           {safeImages.map((item, index) => {
-            const isActive = index === activeIndex;
             return (
               <button
                 key={item.url}
                 type="button"
-                onClick={() => setActiveIndex(index)}
+                onClick={() => {
+                  setActiveIndex(index);
+                  const params = new URLSearchParams(searchParams?.toString());
+                  if (index === 0) {
+                    params.delete("image");
+                  } else {
+                    params.set("image", String(index + 1));
+                  }
+                  const query = params.toString();
+                  router.replace(`${pathname}${query ? `?${query}` : ""}`, {
+                    scroll: false,
+                  });
+                }}
                 className={[
                   "flex h-14 w-14 flex-none items-center justify-center overflow-hidden rounded-xl border bg-slate-50 transition sm:h-16 sm:w-16",
-                  isActive
+                  index === resolvedActiveIndex
                     ? "border-slate-900 ring-2 ring-inset ring-slate-900"
                     : "border-slate-200 hover:border-slate-300",
                 ].join(" ")}
                 aria-label={`View ${title} image ${index + 1}`}
               >
-                <img
+                <Image
                   src={item.url}
                   alt=""
+                  width={64}
+                  height={64}
+                  sizes="64px"
                   className="gallery-image h-full w-full object-cover"
                   style={{ objectPosition: item.objectPosition }}
-                  loading="eager"
+                  loading="lazy"
                 />
               </button>
             );
           })}
         </div>
-        <div className="order-1 h-[50vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
-          <img
+        <div className="relative order-1 h-[50vh] min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:order-2 sm:h-auto sm:min-h-0 sm:aspect-square">
+          <Image
             src={activeImage}
             alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
             className="gallery-image h-full w-full origin-center object-cover"
             style={{ objectPosition }}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
+            priority
           />
         </div>
       </div>

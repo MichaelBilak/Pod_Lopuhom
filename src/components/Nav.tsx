@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 
@@ -25,10 +26,12 @@ export default function Nav() {
 
   const langSwitcher = (
     <div className="flex items-center gap-2">
-      {(["en", "ru"] as Locale[]).map((option) => (
+      {(["en", "ru", "it"] as Locale[]).map((option) => (
         <Link
           key={option}
           href={buildLangHref(option)}
+          scroll={false}
+          replace
           className={[
             "rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
             option === locale
@@ -56,12 +59,14 @@ export default function Nav() {
           className="inline-flex min-w-0 shrink-0 items-center justify-center gap-3 text-base font-semibold uppercase tracking-[0.18em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:justify-start sm:text-lg"
           aria-label="Pod Lopuhom home"
         >
-          <img
+          <Image
             src="/images/products/Logo.%20pod_lopuhom.jpeg"
             alt=""
+            width={40}
+            height={40}
+            sizes="40px"
             className="h-10 w-10 rounded-full object-cover"
-            loading="eager"
-            fetchPriority="high"
+            priority
           />
         </Link>
         <Link

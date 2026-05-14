@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
 import {
-  fetchProductBySlug,
   productDisplayPrice,
   productImagesWithPosition,
 } from "@/lib/products";
+import { fetchProductBySlug } from "@/lib/products-server";
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
 import ProductGallery from "./ProductGallery";
@@ -13,7 +13,7 @@ import {
   getTranslations,
 } from "@/src/lib/i18n";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const runtime = "nodejs";
 
 const instagramUrl =

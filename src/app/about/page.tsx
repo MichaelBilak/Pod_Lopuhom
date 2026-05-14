@@ -1,5 +1,6 @@
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
+import Image from "next/image";
 import {
   getLocaleFromSearchParams,
   getTranslations,
@@ -29,12 +30,14 @@ export default async function AboutPage({ searchParams }: PageProps) {
           </h1>
           <div className="grid min-w-0 items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
             <div className="about-photo-wrap min-w-0">
-              <img
+              <Image
                 src="/images/about/about.jpg"
                 alt="Olga BiIak portrait"
+                width={900}
+                height={1100}
+                sizes="(max-width: 768px) 100vw, 45vw"
                 className="h-full w-full object-cover"
-                loading="eager"
-                fetchPriority="high"
+                priority
               />
             </div>
             <div className="min-w-0 p-2 text-base leading-relaxed text-slate-700 md:p-4">

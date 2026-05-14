@@ -20,12 +20,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/images/products/Logo._pod_lopuhom-removebg-preview.png" type="image/png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="bg-white text-ink">
         {children}

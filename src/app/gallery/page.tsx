@@ -1,6 +1,6 @@
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
-import { fetchProducts } from "@/lib/products";
+import { fetchProducts } from "@/lib/products-server";
 import GalleryClient from "./GalleryClient";
 import {
   getLocaleFromSearchParams,
@@ -11,7 +11,7 @@ export const metadata = {
   title: "Pod Lopuhom | Gallery",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const runtime = "nodejs";
 
 type PageProps = {

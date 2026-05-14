@@ -34,12 +34,12 @@ export async function middleware(req: NextRequest) {
   // Public pages: persist locale in cookie and redirect if missing lang but cookie set
   const langParam = url.searchParams.get("lang");
   const localeCookie = req.cookies.get(LOCALE_COOKIE)?.value;
-  if (langParam === "ru" || langParam === "en") {
+  if (langParam === "ru" || langParam === "en" || langParam === "it") {
     const res = NextResponse.next();
     res.cookies.set(LOCALE_COOKIE, langParam, { path: "/", maxAge: 60 * 60 * 24 * 365 });
     return res;
   }
-  if (localeCookie === "ru" || localeCookie === "en") {
+  if (localeCookie === "ru" || localeCookie === "en" || localeCookie === "it") {
     url.searchParams.set("lang", localeCookie);
     return NextResponse.redirect(url);
   }
