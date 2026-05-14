@@ -269,7 +269,7 @@ export default function GalleryClient({
                               "min-w-0 shrink whitespace-nowrap font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
                               isPriceOnRequest
                                 ? "text-[11px] sm:text-[10px]"
-                                : "text-[17px] sm:text-[14px]",
+                                : "text-[26px] sm:text-[21px]",
                             ].join(" ")}
                           >
                             {priceText}

@@ -79,7 +79,7 @@ export default function NewProductsScroll({
               <span
                 className={[
                   "min-w-0 truncate font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
-                  isPriceOnRequest ? "text-[11px]" : "text-[17px]",
+                  isPriceOnRequest ? "text-[11px]" : "text-[26px]",
                 ].join(" ")}
               >
                 {priceText}
