@@ -168,6 +168,30 @@ button:focus-visible {
   background: rgba(148, 163, 184, 0.35);
 }
 
+.new-products-marquee .new-products-track {
+  animation: newProductsMarquee 18s linear infinite;
+  will-change: transform;
+}
+
+.new-products-marquee:hover .new-products-track {
+  animation-play-state: paused;
+}
+
+@keyframes newProductsMarquee {
+  from {
+    transform: translate3d(-33.333333%, 0, 0);
+  }
+  to {
+    transform: translate3d(-66.666667%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .new-products-marquee .new-products-track {
+    animation: none;
+  }
+}
+
 /* Category tab rows: horizontal scroll on small screens */
 .category-tabs-scroll {
   scrollbar-width: thin;
