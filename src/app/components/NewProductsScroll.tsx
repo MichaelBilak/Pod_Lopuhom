@@ -57,7 +57,7 @@ export default function NewProductsScroll({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (el.scrollWidth <= el.clientWidth) return;
 
-    const speedPxPerSecond = 14;
+    const speedPxPerSecond = 100;
     let paused = false;
     let frameId = 0;
     let lastTimestamp = performance.now();
