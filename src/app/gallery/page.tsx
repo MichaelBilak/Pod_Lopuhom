@@ -11,7 +11,7 @@ export const metadata = {
   title: "Pod Lopuhom | Gallery",
 };
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 type PageProps = {
