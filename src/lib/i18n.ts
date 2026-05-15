@@ -99,6 +99,15 @@ export const translations = {
       whatsapp: "WhatsApp",
       close: "Close",
     },
+    footer: {
+      tagline: "Handmade jewelry with real flowers, branches, and leaves preserved in epoxy resin.",
+      exploreTitle: "Explore",
+      shopTitle: "Shop",
+      contactTitle: "Get in touch",
+      contactHint: "Write to me directly — usually I reply the same day.",
+      rights: "All rights reserved.",
+      madeIn: "Handmade in Israel",
+    },
   },
   ru: {
     nav: {
@@ -173,6 +182,15 @@ export const translations = {
       whatsapp: "WhatsApp",
       close: "Закрыть",
     },
+    footer: {
+      tagline: "Украшения ручной работы — живые цветы, веточки и листья в ювелирной эпоксидной смоле.",
+      exploreTitle: "Разделы",
+      shopTitle: "Категории",
+      contactTitle: "Связаться",
+      contactHint: "Пишите напрямую — обычно отвечаю в тот же день.",
+      rights: "Все права защищены.",
+      madeIn: "Сделано вручную в Израиле",
+    },
   },
   it: {
     nav: {
@@ -246,6 +264,15 @@ export const translations = {
       instagram: "Instagram",
       whatsapp: "WhatsApp",
       close: "Chiudi",
+    },
+    footer: {
+      tagline: "Gioielli fatti a mano: fiori, rami e foglie reali sigillati nella resina epossidica.",
+      exploreTitle: "Esplora",
+      shopTitle: "Categorie",
+      contactTitle: "Contatti",
+      contactHint: "Scrivimi direttamente — di solito rispondo in giornata.",
+      rights: "Tutti i diritti riservati.",
+      madeIn: "Fatto a mano in Israele",
     },
   },
 } as const;

@@ -145,15 +145,15 @@ export default function GalleryClient({
   }, [selected, products, categoryOrder, categories, filteredProducts]);
 
   const renderCategoryMenu = (innerClassName: string) => (
-    <div className="category-tabs-scroll w-full min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-1 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:px-0 sm:pb-0">
+    <div className="category-tabs-scroll -mx-4 w-[calc(100%+2rem)] min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:w-full sm:overflow-visible sm:px-0 sm:pb-0">
       <div
         className={[
-          "inline-flex min-w-max flex-nowrap items-center justify-center gap-x-2 gap-y-2 sm:gap-x-7",
+          "inline-flex min-w-max flex-nowrap items-center justify-center gap-x-3 gap-y-2 sm:gap-x-7",
           innerClassName,
         ].join(" ")}
       >
         {categories.map((category, index) => (
-          <div key={category.id} className="flex shrink-0 items-center gap-1.5 sm:gap-0">
+          <div key={category.id} className="flex shrink-0 items-center gap-2 sm:gap-0">
             <button
               type="button"
               onClick={() => {
@@ -170,7 +170,7 @@ export default function GalleryClient({
                 });
               }}
               className={[
-                "shrink-0 whitespace-nowrap border-b border-transparent pb-2 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+                "inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap border-b border-transparent pb-1.5 pt-1.5 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:pb-2 sm:pt-0",
                 selected === category.id ? "border-slate-400 text-slate-900" : "",
               ].join(" ")}
             >
@@ -208,23 +208,23 @@ export default function GalleryClient({
         "text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.3em] sm:text-base"
       )}
 
-      <section id="gallery" className="min-w-0 space-y-24 sm:space-y-28">
+      <section id="gallery" className="min-w-0 space-y-16 sm:space-y-24 lg:space-y-28">
         {sections.map(({ categoryId, label, products: sectionProducts }) => (
-          <div key={categoryId} className="space-y-[45px]">
-            <div className="-mx-10 flex min-w-0 items-center gap-2 sm:-mx-16 sm:gap-3">
+          <div key={categoryId} className="space-y-8 sm:space-y-[45px]">
+            <div className="-mx-2 flex min-w-0 items-center gap-2 sm:-mx-10 sm:gap-3 lg:-mx-16">
               <span
-                className="h-[5px] min-w-[4rem] flex-1 border-y border-slate-500"
+                className="h-[5px] min-w-[2rem] flex-1 border-y border-slate-500 sm:min-w-[4rem]"
                 aria-hidden
               />
-              <h2 className="min-w-0 max-w-[min(100%,18rem)] shrink whitespace-nowrap text-center text-sm font-semibold uppercase tracking-[0.22em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
+              <h2 className="min-w-0 max-w-[min(100%,18rem)] shrink whitespace-nowrap text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
                 {label}
               </h2>
               <span
-                className="h-[5px] min-w-[4rem] flex-1 border-y border-slate-500"
+                className="h-[5px] min-w-[2rem] flex-1 border-y border-slate-500 sm:min-w-[4rem]"
                 aria-hidden
               />
             </div>
-            <div className="grid grid-cols-1 gap-x-[38px] gap-y-6 sm:grid-cols-2 sm:gap-x-[63px] sm:gap-y-10 lg:grid-cols-3 lg:gap-x-[75px] lg:gap-y-12">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 md:gap-x-[40px] lg:grid-cols-3 lg:gap-x-[60px] lg:gap-y-12">
               {sectionProducts.map((product, productIndex) => {
                 const mainImageUrl = productMainImageUrl(product);
                 const priceText = productDisplayPrice(product);
@@ -239,7 +239,7 @@ export default function GalleryClient({
                       className="block h-full w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                       aria-label={`Open ${product.title} details`}
                     >
-                      <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[16/15] sm:aspect-auto sm:h-72 lg:h-80">
+                      <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[4/5] sm:aspect-auto sm:h-72 lg:h-80">
                         {mainImageUrl ? (
                           <Image
                             src={mainImageUrl}

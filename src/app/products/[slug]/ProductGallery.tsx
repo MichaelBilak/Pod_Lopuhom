@@ -47,8 +47,8 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
 
   if (!safeImages.length) {
     return (
-      <div className="mx-auto w-full min-w-0 max-w-md lg:max-w-xl">
-        <div className="min-h-[50vh] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 sm:min-h-0 sm:aspect-square">
+      <div className="mx-auto w-full min-w-0 max-w-md md:max-w-none lg:max-w-xl">
+        <div className="aspect-[4/5] overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 md:aspect-square">
           <ProductImagePlaceholder
             className="h-full w-full rounded-3xl"
             aria-label={title}
@@ -59,9 +59,9 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
   }
 
   return (
-    <div className="mx-auto w-full min-w-0 max-w-md lg:max-w-xl">
-      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:gap-4">
-        <div className="order-2 flex flex-row flex-wrap gap-2 sm:order-1 sm:flex-col sm:gap-3">
+    <div className="mx-auto w-full min-w-0 max-w-md md:max-w-none lg:max-w-xl">
+      <div className="flex min-w-0 flex-col gap-3 md:flex-row md:gap-4">
+        <div className="order-2 -mx-1 flex flex-row flex-nowrap gap-2 overflow-x-auto overscroll-x-contain px-1 pb-1 [-webkit-overflow-scrolling:touch] md:order-1 md:mx-0 md:flex-col md:gap-3 md:overflow-visible md:px-0 md:pb-0">
           {safeImages.map((item, index) => {
             return (
               <button
@@ -81,7 +81,7 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
                   });
                 }}
                 className={[
-                  "flex h-14 w-14 flex-none items-center justify-center overflow-hidden rounded-xl border bg-slate-50 transition sm:h-16 sm:w-16",
+                  "flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-xl border bg-slate-50 transition",
                   index === resolvedActiveIndex
                     ? "border-slate-900 ring-2 ring-inset ring-slate-900"
                     : "border-slate-200 hover:border-slate-300",
@@ -102,12 +102,12 @@ export default function ProductGallery({ title, images }: ProductGalleryProps) {
             );
           })}
         </div>
-        <div className="relative order-1 min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 aspect-[4/5] max-h-[75vh] sm:order-2 sm:aspect-square sm:max-h-none">
+        <div className="relative order-1 min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 aspect-[4/5] max-h-[70vh] md:order-2 md:aspect-square md:max-h-none">
           <Image
             src={activeImage}
             alt={title}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 55vw, 40vw"
             className="gallery-image h-full w-full origin-center object-cover"
             style={{ objectPosition }}
             priority

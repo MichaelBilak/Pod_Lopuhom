@@ -27,24 +27,24 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full min-w-0 max-w-4xl space-y-10 px-4 pb-20 pt-12 sm:px-6">
+      <main className="mx-auto w-full min-w-0 max-w-4xl space-y-8 px-4 pb-16 pt-8 sm:space-y-10 sm:px-6 sm:pb-20 sm:pt-12">
         <section className="min-w-0 space-y-4 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-4xl sm:tracking-normal">
+          <h1 className="text-[clamp(1.5rem,5.6vw,2.25rem)] font-semibold tracking-tight text-slate-900 sm:tracking-normal">
             {t.order.title}
           </h1>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
-          <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
-            <div className="space-y-4 text-sm uppercase tracking-[0.2em] text-slate-700">
-              <div className="grid gap-3 border-b border-slate-200 pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>{t.order.deliveryIsrael}</span>
-                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
+          <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:p-6">
+            <div className="space-y-4 text-[13px] uppercase tracking-[0.18em] text-slate-700 sm:text-sm sm:tracking-[0.2em]">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-b border-slate-200 pb-4">
+                <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{t.order.deliveryIsrael}</span>
+                <span className="shrink-0 text-right text-base font-semibold text-slate-900">
                   25 ILS
                 </span>
               </div>
-              <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
-                <span>{t.order.deliveryHaifa}</span>
-                <span className="text-right text-base font-semibold text-slate-900 sm:min-w-[96px]">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{t.order.deliveryHaifa}</span>
+                <span className="shrink-0 text-right text-base font-semibold text-slate-900">
                   {t.order.free}
                 </span>
               </div>
@@ -52,16 +52,16 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
           </div>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-center">
-          <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
-            <p className="text-sm uppercase tracking-[0.2em] text-slate-600">
+          <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:p-6">
+            <p className="text-[13px] uppercase tracking-[0.18em] text-slate-600 sm:text-sm sm:tracking-[0.2em]">
               {t.order.orderCta}
             </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-5 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
               >
                 {t.order.whatsapp}
               </a>
@@ -69,7 +69,7 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
                 href={instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-300 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
               >
                 {t.order.instagram}
               </a>

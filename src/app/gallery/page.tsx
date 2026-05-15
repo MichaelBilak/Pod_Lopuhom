@@ -37,9 +37,9 @@ export default async function GalleryPage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full min-w-0 max-w-6xl space-y-14 px-4 pb-24 pt-12 sm:px-6">
-        <section className="min-w-0 space-y-7 text-center">
-          <h1 className="text-2xl font-medium tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+      <main className="mx-auto w-full min-w-0 max-w-6xl space-y-10 px-4 pb-20 pt-8 sm:space-y-14 sm:px-6 sm:pb-24 sm:pt-12">
+        <section className="min-w-0 space-y-6 text-center sm:space-y-7">
+          <h1 className="text-[clamp(1.5rem,5.6vw,1.875rem)] font-medium tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             {t.gallery.title}
           </h1>
           <GalleryClient

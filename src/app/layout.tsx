@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import type { Viewport } from "next";
 import ViewportOverflowDebug from "@/src/components/ViewportOverflowDebug";
 
 export const metadata = {
@@ -9,6 +10,14 @@ export const metadata = {
     shortcut: "/images/products/Logo._pod_lopuhom-removebg-preview.png",
     apple: "/images/products/Logo._pod_lopuhom-removebg-preview.png",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({

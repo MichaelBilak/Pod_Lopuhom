@@ -42,7 +42,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="group w-[min(298px,calc(100vw-2rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
+        className="group w-[min(260px,calc(100vw-2.5rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -51,13 +51,13 @@ export default function NewProductsScroll({
           aria-label={`Open ${product.title} details`}
           tabIndex={duplicate ? -1 : undefined}
         >
-          <div className="relative h-[320px] w-full overflow-hidden rounded-2xl bg-slate-50/60">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-auto sm:h-[320px]">
             {mainImageUrl ? (
               <Image
                 src={mainImageUrl}
                 alt={product.title}
                 fill
-                sizes="(max-width: 640px) calc(100vw - 2rem), 298px"
+                sizes="(max-width: 640px) calc(100vw - 2.5rem), 298px"
                 className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                 style={{
                   objectPosition: productMainImageObjectPosition(product),
@@ -79,12 +79,12 @@ export default function NewProductsScroll({
               <span
                 className={[
                   "min-w-0 truncate font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
-                  isPriceOnRequest ? "text-[11px]" : "text-[26px]",
+                  isPriceOnRequest ? "text-[11px]" : "text-[22px] sm:text-[26px]",
                 ].join(" ")}
               >
                 {priceText}
               </span>
-              <span className="shrink-0 whitespace-nowrap text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+              <span className="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.16em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-xs sm:tracking-[0.2em]">
                 {viewDetails}
               </span>
             </div>
@@ -95,9 +95,9 @@ export default function NewProductsScroll({
   };
 
   return (
-    <section className="min-w-0 space-y-8">
+    <section className="min-w-0 space-y-6 sm:space-y-8">
       <div className="text-center">
-        <p className="text-[16px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:tracking-[0.28em]">
+        <p className="text-[14px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:text-[16px] sm:tracking-[0.28em]">
           {newLabel}
         </p>
       </div>
@@ -108,19 +108,19 @@ export default function NewProductsScroll({
           aria-label="Latest pieces"
         >
           <div className="new-products-track flex w-max">
-            <div className="flex gap-4 pr-4 sm:gap-5 sm:pr-5" aria-hidden>
+            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5" aria-hidden>
               {products.map((product, index) => renderCard(product, index, "pre"))}
             </div>
-            <div className="flex gap-4 pr-4 sm:gap-5 sm:pr-5">
+            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5">
               {products.map((product, index) => renderCard(product, index, "orig"))}
             </div>
-            <div className="flex gap-4 pr-4 sm:gap-5 sm:pr-5" aria-hidden>
+            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5" aria-hidden>
               {products.map((product, index) => renderCard(product, index, "post"))}
             </div>
           </div>
         </div>
         <div
-          className="pointer-events-none absolute right-0 top-1 bottom-3 w-24 bg-gradient-to-l from-white via-white/80 to-transparent"
+          className="pointer-events-none absolute right-0 top-1 bottom-3 w-12 bg-gradient-to-l from-white via-white/80 to-transparent sm:w-24"
           aria-hidden
         />
       </div>
