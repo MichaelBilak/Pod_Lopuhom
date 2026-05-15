@@ -9,6 +9,120 @@ import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+const localeOptions: Locale[] = ["en", "ru", "it"];
+
+type LangDropdownProps = {
+  locale: Locale;
+  labels: Record<Locale, string>;
+  buildLangHref: (next: Locale) => string;
+};
+
+function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (!target || !wrapRef.current) return;
+      if (!wrapRef.current.contains(target)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("touchstart", onPointer, { passive: true });
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [locale]);
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="Change language"
+        onClick={() => setOpen((value) => !value)}
+        className={[
+          "inline-flex min-h-[36px] min-w-[60px] items-center justify-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+          open
+            ? "border-slate-900 bg-white text-slate-900"
+            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900",
+        ].join(" ")}
+      >
+        <span>{labels[locale]}</span>
+        <svg
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          className={[
+            "h-3 w-3 transition-transform duration-200",
+            open ? "rotate-180" : "rotate-0",
+          ].join(" ")}
+        >
+          <path
+            fill="currentColor"
+            d="M5.5 7.5a.75.75 0 0 1 1.06 0L10 10.94l3.44-3.44a.75.75 0 1 1 1.06 1.06l-3.97 3.97a.75.75 0 0 1-1.06 0L5.5 8.56a.75.75 0 0 1 0-1.06Z"
+          />
+        </svg>
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          aria-label="Language"
+          className="absolute right-0 top-full z-50 mt-2 w-[120px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]"
+        >
+          <ul className="py-1.5">
+            {localeOptions.map((option) => {
+              const isActive = option === locale;
+              return (
+                <li key={option} role="none">
+                  <Link
+                    role="menuitem"
+                    href={buildLangHref(option)}
+                    scroll={false}
+                    replace
+                    onClick={() => setOpen(false)}
+                    className={[
+                      "flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] transition",
+                      isActive
+                        ? "bg-slate-50 text-slate-900"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                    ].join(" ")}
+                  >
+                    <span>{labels[option]}</span>
+                    {isActive ? (
+                      <svg
+                        viewBox="0 0 20 20"
+                        aria-hidden="true"
+                        className="h-3 w-3 text-slate-900"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M16.704 5.293a1 1 0 0 1 .003 1.414l-7.07 7.116a1 1 0 0 1-1.418.003L3.293 8.9a1 1 0 1 1 1.414-1.414l3.214 3.214 6.366-6.41a1 1 0 0 1 1.417.003Z"
+                        />
+                      </svg>
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function Nav() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -69,16 +183,16 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const langSwitcher = (
-    <div className="flex items-center gap-1.5 sm:gap-2">
-      {(["en", "ru", "it"] as Locale[]).map((option) => (
+  const desktopLangPills = (
+    <div className="flex items-center gap-2">
+      {localeOptions.map((option) => (
         <Link
           key={option}
           href={buildLangHref(option)}
           scroll={false}
           replace
           className={[
-            "inline-flex min-h-[28px] items-center justify-center rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] transition sm:text-[9px] sm:tracking-[0.2em]",
+            "inline-flex min-h-[28px] items-center justify-center rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
             option === locale
               ? "border-slate-900 text-slate-900"
               : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
@@ -88,6 +202,14 @@ export default function Nav() {
         </Link>
       ))}
     </div>
+  );
+
+  const mobileLangSwitcher = (
+    <LangDropdown
+      locale={locale}
+      labels={t.language}
+      buildLangHref={buildLangHref}
+    />
   );
 
   return (
@@ -131,7 +253,7 @@ export default function Nav() {
             >
               Pod&nbsp;Lopuhom
             </Link>
-            <div className="shrink-0">{langSwitcher}</div>
+            <div className="shrink-0">{mobileLangSwitcher}</div>
           </div>
           <nav
             aria-label="Primary"
@@ -198,7 +320,7 @@ export default function Nav() {
                 {link.label}
               </Link>
             ))}
-            {langSwitcher}
+            {desktopLangPills}
           </nav>
         </div>
       </header>
