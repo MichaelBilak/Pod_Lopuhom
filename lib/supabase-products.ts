@@ -26,7 +26,6 @@ export type Product = {
   description_it?: string | null;
   price: number | null;
   discount: number;
-  materials: string | null;
   category: string | null;
   price_on_request: boolean;
   is_active: boolean;
@@ -253,7 +252,6 @@ export type ProductInsert = {
   description_it?: string | null;
   price?: number | null;
   discount?: number;
-  materials?: string | null;
   category?: string | null;
   price_on_request?: boolean;
   is_active?: boolean;
@@ -271,7 +269,6 @@ export async function createProduct(input: ProductInsert): Promise<Product> {
     description_it: input.description_it ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
-    materials: input.materials ?? null,
     category: input.category ?? null,
     price_on_request: input.price_on_request ?? false,
     is_active: input.is_active ?? true,
@@ -303,7 +300,6 @@ export async function updateProduct(
     description_it: input.description_it ?? null,
     price: input.price ?? null,
     discount: input.discount ?? 0,
-    materials: input.materials ?? null,
     category: input.category ?? null,
     price_on_request: input.price_on_request ?? false,
     is_active: input.is_active ?? true,
@@ -333,7 +329,8 @@ export async function addProductImage(
   productId: string,
   imageUrl: string,
   altText?: string | null,
-  sortOrder?: number
+  sortOrder?: number,
+  objectPosition?: string | null
 ): Promise<ProductImage> {
   const supabase = getSupabaseAdmin();
   const payload: ProductImageTableInsert = {
@@ -341,6 +338,7 @@ export async function addProductImage(
     image_url: imageUrl,
     alt_text: altText ?? null,
     sort_order: sortOrder ?? 0,
+    object_position: objectPosition ?? null,
   };
   const { data, error } = await supabase
     .from("product_images")

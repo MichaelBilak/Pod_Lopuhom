@@ -61,6 +61,9 @@ export const translations = {
       price: "Price",
       requestWhatsapp: "Request via WhatsApp",
       requestInstagram: "Request via Instagram",
+      buyNow: "Buy now — pay with card",
+      buyLoading: "Redirecting to checkout...",
+      buyError: "Could not start checkout. Please try again.",
     },
     order: {
       title: "Order & Delivery",
@@ -93,6 +96,18 @@ export const translations = {
     },
     messages: {
       order: "Hi! I want to order:",
+    },
+    orderSuccess: {
+      title: "Thank you for your order!",
+      subtitle: "Your payment was received. I will reach out shortly to confirm shipping details.",
+      orderNumber: "Order reference",
+      amount: "Amount paid",
+      email: "Confirmation sent to",
+      backHome: "Back to home",
+      pendingTitle: "Payment is being processed",
+      pendingSubtitle: "Your bank is still confirming the payment. You will receive an email as soon as it is complete.",
+      notFoundTitle: "Order not found",
+      notFoundSubtitle: "We could not find this checkout session. If you have already paid, please contact us.",
     },
     common: {
       instagram: "Instagram",
@@ -144,6 +159,9 @@ export const translations = {
       price: "Цена",
       requestWhatsapp: "Запросить через WhatsApp",
       requestInstagram: "Запросить через Instagram",
+      buyNow: "Купить — оплата картой",
+      buyLoading: "Переходим к оплате...",
+      buyError: "Не удалось открыть оплату. Попробуйте ещё раз.",
     },
     order: {
       title: "Заказ и доставка",
@@ -176,6 +194,18 @@ export const translations = {
     },
     messages: {
       order: "Здравствуйте! Хочу заказать:",
+    },
+    orderSuccess: {
+      title: "Спасибо за заказ!",
+      subtitle: "Оплата получена. Я свяжусь с вами в ближайшее время, чтобы уточнить детали доставки.",
+      orderNumber: "Номер заказа",
+      amount: "Оплачено",
+      email: "Подтверждение отправлено на",
+      backHome: "На главную",
+      pendingTitle: "Платёж обрабатывается",
+      pendingSubtitle: "Банк ещё подтверждает оплату. Вы получите письмо, как только всё пройдёт.",
+      notFoundTitle: "Заказ не найден",
+      notFoundSubtitle: "Не удалось найти эту сессию оплаты. Если вы уже оплатили — напишите нам.",
     },
     common: {
       instagram: "Instagram",
@@ -227,6 +257,9 @@ export const translations = {
       price: "Prezzo",
       requestWhatsapp: "Richiedi su WhatsApp",
       requestInstagram: "Richiedi su Instagram",
+      buyNow: "Acquista — paga con carta",
+      buyLoading: "Reindirizzamento al pagamento...",
+      buyError: "Impossibile avviare il pagamento. Riprova.",
     },
     order: {
       title: "Ordine e consegna",
@@ -259,6 +292,18 @@ export const translations = {
     },
     messages: {
       order: "Ciao! Vorrei ordinare:",
+    },
+    orderSuccess: {
+      title: "Grazie per il tuo ordine!",
+      subtitle: "Il pagamento è stato ricevuto. Ti contatterò a breve per confermare la spedizione.",
+      orderNumber: "Riferimento ordine",
+      amount: "Importo pagato",
+      email: "Conferma inviata a",
+      backHome: "Torna alla home",
+      pendingTitle: "Pagamento in elaborazione",
+      pendingSubtitle: "La tua banca sta confermando il pagamento. Riceverai un'email non appena sarà completo.",
+      notFoundTitle: "Ordine non trovato",
+      notFoundSubtitle: "Non abbiamo trovato questa sessione di pagamento. Se hai già pagato, contattaci.",
     },
     common: {
       instagram: "Instagram",

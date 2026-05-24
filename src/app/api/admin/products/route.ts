@@ -48,13 +48,53 @@ function buildProductInsert(payload: Record<string, unknown>): ProductInsert | n
     description_it: parseNullableString(payload.description_it),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
-    materials: parseNullableString(payload.materials),
     category: parseCategory(payload.category),
     price_on_request: parseBool(payload.price_on_request),
     is_active: parseBool(payload.is_active),
     is_new: parseBool(payload.is_new),
     sort_order: parseNum(payload.sort_order) ?? 0,
   };
+}
+
+type CreateImageInput = {
+  imageUrl: string;
+  altText: string | null;
+  objectPosition: string | null;
+};
+
+function parseCreateImages(payload: Record<string, unknown>): CreateImageInput[] {
+  if (!Array.isArray(payload.images)) return [];
+  return payload.images
+    .map((raw) => {
+      if (typeof raw === "string") {
+        const imageUrl = raw.trim();
+        if (!imageUrl) return null;
+        return { imageUrl, altText: null, objectPosition: null } satisfies CreateImageInput;
+      }
+      if (!raw || typeof raw !== "object") return null;
+      const obj = raw as Record<string, unknown>;
+      const imageUrl =
+        typeof obj.imageUrl === "string"
+          ? obj.imageUrl.trim()
+          : typeof obj.image_url === "string"
+            ? obj.image_url.trim()
+            : "";
+      if (!imageUrl) return null;
+      const altText =
+        typeof obj.altText === "string"
+          ? obj.altText.trim() || null
+          : typeof obj.alt_text === "string"
+            ? obj.alt_text.trim() || null
+            : null;
+      const objectPosition =
+        typeof obj.objectPosition === "string"
+          ? obj.objectPosition.trim() || null
+          : typeof obj.object_position === "string"
+            ? obj.object_position.trim() || null
+            : null;
+      return { imageUrl, altText, objectPosition } satisfies CreateImageInput;
+    })
+    .filter((item): item is CreateImageInput => item !== null);
 }
 
 export async function GET() {
@@ -86,11 +126,16 @@ export async function POST(req: NextRequest) {
 
   try {
     const product = await createProduct(input);
-    const imageUrls = Array.isArray(payload.images)
-      ? payload.images.filter((u): u is string => typeof u === "string" && u.trim().length > 0)
-      : [];
-    for (let i = 0; i < imageUrls.length; i++) {
-      await addProductImage(product.id, imageUrls[i], null, i);
+    const images = parseCreateImages(payload);
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      await addProductImage(
+        product.id,
+        image.imageUrl,
+        image.altText,
+        i,
+        image.objectPosition
+      );
     }
     const full = await fetchProductById(product.id);
     revalidateTag("products");

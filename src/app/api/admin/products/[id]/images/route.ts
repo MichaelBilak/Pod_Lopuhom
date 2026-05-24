@@ -11,7 +11,12 @@ type Params = Promise<{ id: string }>;
 
 export async function POST(req: Request, { params }: { params: Params }) {
   const { id: productId } = await params;
-  let body: { imageUrl?: string; altText?: string; sortOrder?: number };
+  let body: {
+    imageUrl?: string;
+    altText?: string;
+    sortOrder?: number;
+    objectPosition?: string;
+  };
   try {
     body = await req.json();
   } catch {
@@ -29,8 +34,18 @@ export async function POST(req: Request, { params }: { params: Params }) {
   }
   const sortOrder = typeof body?.sortOrder === "number" ? body.sortOrder : 0;
   const altText = typeof body?.altText === "string" ? body.altText.trim() || null : null;
+  const objectPosition =
+    typeof body?.objectPosition === "string"
+      ? body.objectPosition.trim() || null
+      : null;
   try {
-    const image = await addProductImage(productId, imageUrl, altText, sortOrder);
+    const image = await addProductImage(
+      productId,
+      imageUrl,
+      altText,
+      sortOrder,
+      objectPosition
+    );
     revalidateTag("products");
     return NextResponse.json({ image }, { status: 201 });
   } catch {

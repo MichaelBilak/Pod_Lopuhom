@@ -15,7 +15,6 @@ export type ProductFormState = {
   description_it: string;
   price: string;
   discount: string;
-  materials: string;
   category: string;
   price_on_request: boolean;
   is_active: boolean;
@@ -31,7 +30,6 @@ const emptyForm: ProductFormState = {
   description_it: "",
   price: "",
   discount: "0",
-  materials: "",
   category: "Rings",
   price_on_request: false,
   is_active: true,
@@ -39,10 +37,26 @@ const emptyForm: ProductFormState = {
   sort_order: "0",
 };
 
+const toFormState = (product: Product): ProductFormState => ({
+  title: product.title,
+  slug: product.slug,
+  description: product.description ?? "",
+  description_ru: product.description_ru ?? "",
+  description_it: product.description_it ?? "",
+  price: product.price != null ? String(product.price) : "",
+  discount: String(product.discount ?? 0),
+  category: product.category ?? "Rings",
+  price_on_request: product.price_on_request,
+  is_active: product.is_active,
+  is_new: product.is_new ?? false,
+  sort_order: String(product.sort_order ?? 0),
+});
+
 type ProductFormProps = {
   product: Product | null;
-  onSave: (payload: ProductFormState, imageIds: string[]) => Promise<void>;
+  onSave: (payload: ProductFormState, images: ProductImage[]) => Promise<void>;
   onCancel: () => void;
+  onDirtyChange?: (isDirty: boolean) => void;
   /** Keeps admin parent `formProduct.images` in sync after upload/reorder/delete */
   onProductImagesChange?: (images: ProductImage[]) => void;
   onImageNotFound?: () => void;
@@ -53,31 +67,25 @@ export default function ProductForm({
   product,
   onSave,
   onCancel,
+  onDirtyChange,
   onProductImagesChange,
   onImageNotFound,
   isBusy,
 }: ProductFormProps) {
   const isEdit = Boolean(product?.id);
   const [form, setForm] = useState<ProductFormState>(
-    product
-      ? {
-          title: product.title,
-          slug: product.slug,
-          description: product.description ?? "",
-          description_ru: product.description_ru ?? "",
-          description_it: product.description_it ?? "",
-          price: product.price != null ? String(product.price) : "",
-          discount: String(product.discount ?? 0),
-          materials: product.materials ?? "",
-          category: product.category ?? "Rings",
-          price_on_request: product.price_on_request,
-          is_active: product.is_active,
-          is_new: product.is_new ?? false,
-          sort_order: String(product.sort_order ?? 0),
-        }
-      : emptyForm
+    product ? toFormState(product) : { ...emptyForm }
   );
   const [images, setImages] = useState<ProductImage[]>(product?.images ?? []);
+
+  // Keep form values in sync when switching between products (or opening "new").
+  useEffect(() => {
+    if (!product?.id) {
+      setForm({ ...emptyForm });
+      return;
+    }
+    setForm(toFormState(product));
+  }, [product?.id, product?.updated_at]);
 
   // Sync from server only when switching product or after save (updated_at changes).
   // Do NOT depend on product.images reference alone — it can reset after upload and wipe
@@ -90,10 +98,27 @@ export default function ProductForm({
     setImages(product.images ?? []);
   }, [product?.id, product?.updated_at]);
 
+  useEffect(() => {
+    const initialForm = product ? toFormState(product) : emptyForm;
+    const initialImages = (product?.images ?? []).map((img) => ({
+      id: img.id,
+      image_url: img.image_url,
+      object_position: img.object_position ?? null,
+    }));
+    const currentImages = images.map((img) => ({
+      id: img.id,
+      image_url: img.image_url,
+      object_position: img.object_position ?? null,
+    }));
+    const isDirty =
+      JSON.stringify(form) !== JSON.stringify(initialForm) ||
+      JSON.stringify(currentImages) !== JSON.stringify(initialImages);
+    onDirtyChange?.(isDirty);
+  }, [form, images, product, onDirtyChange]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const imageIds = images.map((img) => img.id);
-    await onSave(form, imageIds);
+    await onSave(form, images);
   };
 
   const deriveSlug = (title: string) =>
@@ -191,7 +216,7 @@ export default function ProductForm({
         </label>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <label className="block">
           <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
             Price
@@ -217,19 +242,6 @@ export default function ProductForm({
             value={form.discount}
             onChange={(e) =>
               setForm((prev) => ({ ...prev, discount: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-          />
-        </label>
-        <label className="block">
-          <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Materials
-          </span>
-          <input
-            type="text"
-            value={form.materials}
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, materials: e.target.value }))
             }
             className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
           />

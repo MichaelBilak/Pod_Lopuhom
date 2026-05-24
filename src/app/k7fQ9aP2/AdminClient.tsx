@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import type { Product } from "@/lib/supabase-products";
+import type { Product, ProductImage } from "@/lib/supabase-products";
 import type { ProductFormState } from "./ProductForm";
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
@@ -13,6 +13,7 @@ type AdminClientProps = {
 export default function AdminClient({ initialProducts }: AdminClientProps) {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [formProduct, setFormProduct] = useState<Product | null | "add">(null);
+  const [isFormDirty, setIsFormDirty] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
@@ -59,9 +60,32 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
     }
   }, [formProduct]);
 
+  const canDiscardChanges = () => {
+    if (!isFormDirty) return true;
+    return window.confirm(
+      "You have unsaved changes. Discard them and continue?"
+    );
+  };
+
+  const openAddForm = () => {
+    if (!canDiscardChanges()) return;
+    setFormProduct("add");
+  };
+
+  const openEditForm = (product: Product) => {
+    if (!canDiscardChanges()) return;
+    setFormProduct(product);
+  };
+
+  const closeForm = () => {
+    if (!canDiscardChanges()) return;
+    setFormProduct(null);
+    setIsFormDirty(false);
+  };
+
   const handleSave = async (
     payload: ProductFormState,
-    imageIds: string[]
+    images: ProductImage[]
   ) => {
     setMessage(null);
     setIsBusy(true);
@@ -75,7 +99,6 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         description_it: payload.description_it || null,
         price: payload.price ? num(payload.price) : null,
         discount: payload.discount ? num(payload.discount) : 0,
-        materials: payload.materials || null,
         category: payload.category,
         price_on_request: payload.price_on_request,
         is_active: payload.is_active,
@@ -87,7 +110,14 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         const res = await fetch("/api/admin/products", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+          body: JSON.stringify({
+            ...body,
+            images: images.map((img) => ({
+              imageUrl: img.image_url,
+              altText: img.alt_text,
+              objectPosition: img.object_position ?? null,
+            })),
+          }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.message ?? "Create failed");
@@ -101,7 +131,10 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         const res = await fetch(`/api/admin/products/${formProduct.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...body, imageIds }),
+          body: JSON.stringify({
+            ...body,
+            imageIds: images.map((img) => img.id),
+          }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.message ?? "Update failed");
@@ -185,6 +218,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
       formProduct.id === product.id
     ) {
       setFormProduct(null);
+      setIsFormDirty(false);
     }
     try {
       const res = await fetch(`/api/admin/products/${product.id}`, {
@@ -227,7 +261,8 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
             <ProductForm
               product={formProduct === "add" ? null : formProduct}
               onSave={handleSave}
-              onCancel={() => setFormProduct(null)}
+              onCancel={closeForm}
+              onDirtyChange={setIsFormDirty}
               onProductImagesChange={(imgs) => {
                 setFormProduct((prev) =>
                   prev && prev !== "add" ? { ...prev, images: imgs } : prev
@@ -247,8 +282,8 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
       <ProductList
         products={products}
         highlightedId={highlightedId}
-        onAdd={() => setFormProduct("add")}
-        onEdit={(p) => setFormProduct(p)}
+        onAdd={openAddForm}
+        onEdit={openEditForm}
         onDelete={handleDelete}
         onReorder={handleReorder}
       />

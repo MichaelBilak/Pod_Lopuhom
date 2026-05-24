@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
+import BuyButton from "./BuyButton";
 import {
   productDisplayPrice,
   productImagesWithPosition,
@@ -41,6 +42,11 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const whatsappMessage = encodeURIComponent(
     `${t.messages.order} ${product.title} (${productDisplayPrice(product)}).`
   );
+  const isPurchasable =
+    !product.price_on_request &&
+    product.price != null &&
+    Number.isFinite(Number(product.price)) &&
+    Number(product.price) > 0;
 
   return (
     <>
@@ -57,29 +63,36 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <h1 className="text-[clamp(1.5rem,5vw,1.875rem)] font-semibold tracking-tight text-slate-900 [overflow-wrap:anywhere] sm:tracking-normal">
                 {product.title}
               </h1>
-              <p className="mt-3 text-sm text-slate-600 [overflow-wrap:anywhere] sm:text-[15px]">
+              <p className="mt-3 whitespace-pre-line text-sm text-slate-600 [overflow-wrap:anywhere] sm:text-[15px]">
                 {locale === "ru" && product.description_ru
                   ? product.description_ru
                   : locale === "it" && product.description_it
                     ? product.description_it
                     : product.description}
               </p>
-              <p className="mt-4 text-sm text-slate-600">
-                {t.product.materials}: {product.materials ?? ""}
-              </p>
               <p className="mt-4 text-2xl font-semibold text-slate-900">
                 {productDisplayPrice(product)}
               </p>
-              <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-6 flex min-w-0 flex-col flex-wrap gap-3 sm:flex-row sm:items-start">
+                {isPurchasable ? (
+                  <BuyButton
+                    slug={product.slug}
+                    locale={locale}
+                    idleLabel={t.product.buyNow}
+                    loadingLabel={t.product.buyLoading}
+                    errorLabel={t.product.buyError}
+                    closeLabel={t.common.close}
+                  />
+                ) : null}
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
-                  className="inline-flex min-h-[44px] min-w-0 items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+                  className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 sm:flex-initial"
                 >
                   {t.product.requestWhatsapp}
                 </a>
                 <a
                   href={instagramUrl}
-                  className="inline-flex min-h-[44px] min-w-0 items-center justify-center rounded-full border border-slate-200 px-5 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-300"
+                  className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 sm:flex-initial"
                 >
                   {t.product.requestInstagram}
                 </a>

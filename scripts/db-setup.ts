@@ -25,7 +25,6 @@ create table if not exists products (
   title text not null,
   category text not null default 'Rings',
   is_new boolean not null default false,
-  materials text,
   price text,
   description text,
   images jsonb not null default '[]'::jsonb,

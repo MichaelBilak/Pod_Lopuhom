@@ -12,7 +12,6 @@ create table if not exists products (
   description text,
   price numeric,
   discount numeric default 0,
-  materials text,
   category text,
   price_on_request boolean default false,
   is_active boolean default true,
@@ -30,6 +29,7 @@ alter table products add column if not exists sort_order integer default 0;
 alter table products add column if not exists is_new boolean default false;
 alter table products add column if not exists description_ru text;
 alter table products add column if not exists description_it text;
+alter table products drop column if exists materials;
 
 -- If price was created as text (old schema), convert to numeric (optional; remove if it fails)
 do $$
@@ -79,3 +79,25 @@ create trigger products_updated_at
   before update on products
   for each row
   execute procedure set_products_updated_at();
+
+-- Orders table: written by the Stripe webhook on checkout.session.completed.
+create table if not exists orders (
+  id uuid primary key default gen_random_uuid(),
+  stripe_session_id text unique not null,
+  stripe_payment_intent_id text,
+  product_id uuid references products(id) on delete set null,
+  product_slug text,
+  quantity integer not null default 1,
+  amount_total integer not null,
+  currency text not null default 'eur',
+  customer_email text,
+  customer_name text,
+  customer_phone text,
+  shipping_address jsonb,
+  status text not null default 'paid',
+  created_at timestamptz default now()
+);
+
+create index if not exists idx_orders_created_at on orders(created_at desc);
+create index if not exists idx_orders_product_id on orders(product_id);
+create index if not exists idx_orders_status on orders(status);

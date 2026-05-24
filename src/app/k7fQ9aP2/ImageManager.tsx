@@ -80,12 +80,11 @@ export default function ImageManager({
   const imagesRef = useRef(images);
   imagesRef.current = images;
 
+  const withReindexedSortOrder = (nextImages: ProductImage[]) =>
+    nextImages.map((img, index) => ({ ...img, sort_order: index }));
+
   const uploadFiles = useCallback(
     async (files: FileList | null) => {
-      if (!productId) {
-        setUploadError("Сначала сохраните товар, затем загрузите изображения.");
-        return;
-      }
       if (!files?.length) return;
       setUploadError(null);
       setUploading(true);
@@ -110,19 +109,30 @@ export default function ImageManager({
         if (!urls?.length) throw new Error("Сервер не вернул URL изображений.");
 
         const startOrder = imagesRef.current.length;
+        if (!productId) {
+          const tempImages: ProductImage[] = urls.map((url, i) => ({
+            id: `temp-${Date.now()}-${i}-${Math.random().toString(36).slice(2, 8)}`,
+            product_id: "temp",
+            image_url: url,
+            alt_text: null,
+            sort_order: startOrder + i,
+            object_position: "50% 50%",
+            created_at: new Date().toISOString(),
+          }));
+          onImagesChange(withReindexedSortOrder([...imagesRef.current, ...tempImages]));
+          return;
+        }
+
         const addedImages = await Promise.all(
           urls.map(async (url, i) => {
-            const addRes = await fetch(
-              `/api/admin/products/${productId}/images`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  imageUrl: url,
-                  sortOrder: startOrder + i,
-                }),
-              }
-            );
+            const addRes = await fetch(`/api/admin/products/${productId}/images`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                imageUrl: url,
+                sortOrder: startOrder + i,
+              }),
+            });
             const addData = await addRes.json().catch(() => ({}));
             if (!addRes.ok) {
               throw new Error(
@@ -132,12 +142,13 @@ export default function ImageManager({
               );
             }
             const image = normalizeProductImage(addData.image);
-            if (!image)
+            if (!image) {
               throw new Error("Некорректный ответ сервера при добавлении фото.");
+            }
             return image;
           })
         );
-        onImagesChange([...imagesRef.current, ...addedImages]);
+        onImagesChange(withReindexedSortOrder([...imagesRef.current, ...addedImages]));
       } catch (e) {
         console.error(e);
         setUploadError(e instanceof Error ? e.message : "Не удалось загрузить изображения.");
@@ -150,9 +161,10 @@ export default function ImageManager({
 
   const removeImage = useCallback(
     async (imageId: string) => {
-      if (!productId) return;
       const previous = imagesRef.current;
-      onImagesChange(previous.filter((img) => img.id !== imageId));
+      const next = withReindexedSortOrder(previous.filter((img) => img.id !== imageId));
+      onImagesChange(next);
+      if (!productId) return;
       try {
         const res = await fetch(
           `/api/admin/products/${productId}/images/${imageId}`,
@@ -168,13 +180,14 @@ export default function ImageManager({
 
   const moveImage = useCallback(
     async (fromIndex: number, toIndex: number) => {
-      if (!productId) return;
       const previous = imagesRef.current;
       if (toIndex < 0 || toIndex >= previous.length) return;
       const reordered = [...previous];
       const [removed] = reordered.splice(fromIndex, 1);
       reordered.splice(toIndex, 0, removed);
-      onImagesChange(reordered);
+      const reindexed = withReindexedSortOrder(reordered);
+      onImagesChange(reindexed);
+      if (!productId) return;
       const imageIds = reordered.map((img) => img.id);
       try {
         const res = await fetch(`/api/admin/products/${productId}/images`, {
@@ -192,7 +205,14 @@ export default function ImageManager({
 
   const updatePosition = useCallback(
     async (imageId: string, objectPosition: string) => {
-      if (!productId) return;
+      if (!productId) {
+        onImagesChange(
+          imagesRef.current.map((img) =>
+            img.id === imageId ? { ...img, object_position: objectPosition } : img
+          )
+        );
+        return;
+      }
       setPositionError(null);
       const res = await fetch(
         `/api/admin/products/${productId}/images/${imageId}`,
@@ -240,7 +260,7 @@ export default function ImageManager({
   const handleDropzoneDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (disabled || uploading || !productId) return;
+    if (disabled || uploading) return;
     void uploadFiles(e.dataTransfer.files);
   };
   const handleDrop = (e: React.DragEvent, toIndex: number) => {
@@ -294,109 +314,101 @@ export default function ImageManager({
           </button>
         </div>
       )}
-      {productId ? (
-        <>
-          {/* file input must stay visible to the layout (opacity overlay), not display:none — otherwise some browsers ignore label/area clicks */}
-          <div
-            className="relative flex min-h-[5.5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-6 transition hover:border-slate-300 hover:bg-slate-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60"
-            onDragOver={handleDropzoneDragOver}
-            onDrop={handleDropzoneDrop}
-          >
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
-              multiple
-              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
-              disabled={disabled || uploading}
-              onChange={(e) => {
-                void uploadFiles(e.target.files);
-                e.target.value = "";
-              }}
-              aria-label="Upload product images"
-            />
-            <span className="pointer-events-none relative z-0 px-3 text-center text-sm text-slate-500">
-              {uploading ? "Uploading…" : "Click or drop images"}
-            </span>
-          </div>
-          {images.length > 0 && (
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-              {images.map((img, index) => (
-                <li
-                  key={img.id}
-                  draggable
-                  onDragStart={() => handleDragStart(index)}
-                  onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, index)}
-                  className="group relative overflow-hidden rounded-lg border border-slate-200 bg-white"
+      {/* file input must stay visible to the layout (opacity overlay), not display:none — otherwise some browsers ignore label/area clicks */}
+      <div
+        className="relative flex min-h-[5.5rem] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-6 transition hover:border-slate-300 hover:bg-slate-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60"
+        onDragOver={handleDropzoneDragOver}
+        onDrop={handleDropzoneDrop}
+      >
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+          multiple
+          className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
+          disabled={disabled || uploading}
+          onChange={(e) => {
+            void uploadFiles(e.target.files);
+            e.target.value = "";
+          }}
+          aria-label="Upload product images"
+        />
+        <span className="pointer-events-none relative z-0 px-3 text-center text-sm text-slate-500">
+          {uploading ? "Uploading…" : "Click or drop images"}
+        </span>
+      </div>
+      {images.length > 0 && (
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+          {images.map((img, index) => (
+            <li
+              key={img.id}
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
+              className="group relative overflow-hidden rounded-lg border border-slate-200 bg-white"
+            >
+              <img
+                src={img.image_url}
+                alt={img.alt_text ?? ""}
+                className="h-28 w-full object-cover"
+                style={{
+                  objectPosition: img.object_position ?? "50% 50%",
+                }}
+              />
+              <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-1 bg-black/50 opacity-0 transition group-hover:opacity-100">
+                <button
+                  type="button"
+                  onClick={() => moveImage(index, Math.max(0, index - 1))}
+                  disabled={index === 0}
+                  className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800 disabled:opacity-50"
                 >
-                  <img
-                    src={img.image_url}
-                    alt={img.alt_text ?? ""}
-                    className="h-28 w-full object-cover"
-                    style={{
-                      objectPosition: img.object_position ?? "50% 50%",
-                    }}
-                  />
-                  <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-1 bg-black/50 opacity-0 transition group-hover:opacity-100">
-                    <button
-                      type="button"
-                      onClick={() => moveImage(index, Math.max(0, index - 1))}
-                      disabled={index === 0}
-                      className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800 disabled:opacity-50"
-                    >
-                      ←
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        moveImage(index, Math.min(images.length - 1, index + 1))
-                      }
-                      disabled={index === images.length - 1}
-                      className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800 disabled:opacity-50"
-                    >
-                      →
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPositionError(null);
-                        setAdjustImageId(img.id);
-                      }}
-                      className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800"
-                      title="Adjust position / crop focus"
-                    >
-                      Adjust
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => removeImage(img.id)}
-                      className="rounded bg-red-500/90 px-2 py-1 text-xs font-medium text-white"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                  {adjustImageId === img.id && (
-                    <ImagePositionEditor
-                      imageUrl={img.image_url}
-                      objectPosition={img.object_position}
-                      onSave={(objectPosition) => updatePosition(img.id, objectPosition)}
-                      onClose={() => setAdjustImageId(null)}
-                    />
-                  )}
-                  {index === 0 && (
-                    <span className="absolute left-1 top-1 rounded bg-slate-900 px-1.5 py-0.5 text-[10px] font-medium text-white">
-                      Main
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      ) : (
-        <p className="text-xs text-slate-400">
-          Save the product first to upload images.
-        </p>
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    moveImage(index, Math.min(images.length - 1, index + 1))
+                  }
+                  disabled={index === images.length - 1}
+                  className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800 disabled:opacity-50"
+                >
+                  →
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPositionError(null);
+                    setAdjustImageId(img.id);
+                  }}
+                  className="rounded bg-white/90 px-2 py-1 text-xs font-medium text-slate-800"
+                  title="Adjust position / crop focus"
+                >
+                  Adjust
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeImage(img.id)}
+                  className="rounded bg-red-500/90 px-2 py-1 text-xs font-medium text-white"
+                >
+                  Delete
+                </button>
+              </div>
+              {adjustImageId === img.id && (
+                <ImagePositionEditor
+                  imageUrl={img.image_url}
+                  objectPosition={img.object_position}
+                  onSave={(objectPosition) => updatePosition(img.id, objectPosition)}
+                  onClose={() => setAdjustImageId(null)}
+                />
+              )}
+              {index === 0 && (
+                <span className="absolute left-1 top-1 rounded bg-slate-900 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                  Main
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

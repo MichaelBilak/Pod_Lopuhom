@@ -69,7 +69,6 @@ function buildProductUpdate(payload: Record<string, unknown>): ProductUpdate | n
     description_it: parseNullableString(payload.description_it),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
-    materials: parseNullableString(payload.materials),
     category: parseCategory(payload.category),
     price_on_request: parseBool(payload.price_on_request),
     is_active: parseBool(payload.is_active),

@@ -19,7 +19,6 @@ export interface Database {
           description_it: string | null;
           price: number | null;
           discount: number;
-          materials: string | null;
           category: string | null;
           price_on_request: boolean;
           is_active: boolean;
@@ -37,7 +36,6 @@ export interface Database {
           description_it?: string | null;
           price?: number | null;
           discount?: number;
-          materials?: string | null;
           category?: string | null;
           price_on_request?: boolean;
           is_active?: boolean;
@@ -55,7 +53,6 @@ export interface Database {
           description_it?: string | null;
           price?: number | null;
           discount?: number;
-          materials?: string | null;
           category?: string | null;
           price_on_request?: boolean;
           is_active?: boolean;

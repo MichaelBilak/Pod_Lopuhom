@@ -133,7 +133,7 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
           <h3 className="mt-2 truncate text-sm font-semibold text-slate-900">
             {form.title || "Product title"}
           </h3>
-          <p className="mt-0.5 line-clamp-2 text-xs text-slate-600">
+          <p className="mt-0.5 whitespace-pre-line text-xs text-slate-600">
             {form.description || "No description."}
           </p>
           <p className="mt-1 text-sm font-semibold text-slate-900">{priceText || "—"}</p>

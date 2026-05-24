@@ -65,7 +65,6 @@ async function main() {
         title: seed.title,
         slug: seed.slug,
         description: seed.description,
-        materials: seed.materials,
         price: null,
         price_on_request: true,
         category: categoryFromSlug(seed.slug),
