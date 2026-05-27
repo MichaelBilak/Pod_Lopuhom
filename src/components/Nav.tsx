@@ -147,7 +147,7 @@ export default function Nav() {
   };
   const isHome = pathname === "/";
   const brandTitleClass =
-    "text-[8.67px] tracking-[0.18em] sm:text-[11.33px] sm:tracking-[0.22em]";
+    "text-[13px] tracking-[0.18em] sm:text-[17px] sm:tracking-[0.22em]";
   const brandTitleDesktopClass = "text-[14px] tracking-[0.24em]";
 
   useIsomorphicLayoutEffect(() => {
