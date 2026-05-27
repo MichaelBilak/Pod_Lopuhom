@@ -77,8 +77,8 @@ export default async function HomePage({ searchParams }: PageProps) {
               </div>
             </div>
           </section>
-          <div className="category-tabs-scroll -mx-4 flex w-full min-w-0 justify-center overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
-            <div className="inline-flex min-w-max flex-nowrap items-center gap-3 text-center sm:gap-6">
+          <div className="category-tabs-scroll -mx-4 min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
+            <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
               {[
                 { id: "Rings", label: t.categories.rings },
                 { id: "Necklaces", label: t.categories.necklaces },

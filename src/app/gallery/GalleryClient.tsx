@@ -145,10 +145,10 @@ export default function GalleryClient({
   }, [selected, products, categoryOrder, categories, filteredProducts]);
 
   const renderCategoryMenu = (innerClassName: string) => (
-    <div className="category-tabs-scroll -mx-4 w-[calc(100%+2rem)] min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:w-full sm:overflow-visible sm:px-0 sm:pb-0">
+    <div className="category-tabs-scroll -mx-4 min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
       <div
         className={[
-          "inline-flex min-w-max flex-nowrap items-center justify-center gap-x-3 gap-y-2 sm:gap-x-7",
+          "flex w-max min-w-full flex-nowrap items-center justify-center gap-x-3 gap-y-2 sm:gap-x-7",
           innerClassName,
         ].join(" ")}
       >
@@ -224,7 +224,7 @@ export default function GalleryClient({
                 aria-hidden
               />
             </div>
-            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 md:gap-x-[40px] lg:grid-cols-3 lg:gap-x-[60px] lg:gap-y-12">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-8 sm:gap-y-10 md:gap-x-[40px] lg:grid-cols-3 lg:gap-x-[60px] lg:gap-y-12">
               {sectionProducts.map((product, productIndex) => {
                 const mainImageUrl = productMainImageUrl(product);
                 const priceText = productDisplayPrice(product);
@@ -245,7 +245,7 @@ export default function GalleryClient({
                             src={mainImageUrl}
                             alt={product.title}
                             fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            sizes="(max-width: 1024px) 50vw, 33vw"
                             className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                             style={{
                               objectPosition: productMainImageObjectPosition(product),
@@ -268,8 +268,8 @@ export default function GalleryClient({
                             className={[
                               "min-w-0 shrink whitespace-nowrap font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
                               isPriceOnRequest
-                                ? "text-[11px] sm:text-[10px]"
-                                : "text-[26px] sm:text-[21px]",
+                                ? "text-[10px] sm:text-[10px]"
+                                : "text-[18px] sm:text-[21px]",
                             ].join(" ")}
                           >
                             {priceText}
