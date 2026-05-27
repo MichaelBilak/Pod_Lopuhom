@@ -146,12 +146,9 @@ export default function Nav() {
     return `${pathname}${query ? `?${query}` : ""}`;
   };
   const isHome = pathname === "/";
-  const brandTitleClass = isHome
-    ? "text-[13px] tracking-[0.18em] sm:text-[17px] sm:tracking-[0.22em]"
-    : "text-[9.75px] tracking-[0.12em] sm:text-[12.75px] sm:tracking-[0.14em]";
-  const brandTitleDesktopClass = isHome
-    ? "text-[21px] tracking-[0.24em]"
-    : "text-[15.75px] tracking-[0.14em]";
+  const brandTitleClass =
+    "text-[8.67px] tracking-[0.18em] sm:text-[11.33px] sm:tracking-[0.22em]";
+  const brandTitleDesktopClass = "text-[14px] tracking-[0.24em]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
@@ -268,33 +265,21 @@ export default function Nav() {
             </div>
           ) : (
             <div className="flex w-full min-w-0 items-center justify-between gap-3 px-3 pt-3 sm:px-5 sm:pt-4">
-              <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
-                <Link
-                  href={buildHref("/")}
-                  className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-                  aria-label="Pod Lopuhom home"
-                >
-                  <Image
-                    src="/images/products/Logo.%20pod_lopuhom.jpeg"
-                    alt=""
-                    width={48}
-                    height={48}
-                    sizes="48px"
-                    className="h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
-                    priority
-                  />
-                </Link>
-                <Link
-                  href={buildHref("/")}
-                  className={[
-                    "min-w-0 truncate text-left font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-                    brandTitleClass,
-                  ].join(" ")}
-                  aria-label="Pod Lopuhom home"
-                >
-                  Pod&nbsp;Lopuhom
-                </Link>
-              </div>
+              <Link
+                href={buildHref("/")}
+                className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                aria-label="Pod Lopuhom home"
+              >
+                <Image
+                  src="/images/products/Logo.%20pod_lopuhom.jpeg"
+                  alt=""
+                  width={48}
+                  height={48}
+                  sizes="48px"
+                  className="h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
+                  priority
+                />
+              </Link>
               <div className="shrink-0">{mobileLangSwitcher}</div>
             </div>
           )}
@@ -321,66 +306,36 @@ export default function Nav() {
           </nav>
         </div>
 
-        {/* Desktop (lg+): 3-zone centered layout */}
-        <div className="relative hidden w-full min-w-0 items-center justify-between gap-3 px-6 py-5 text-left lg:flex">
-          {isHome ? (
-            <>
-              <Link
-                href={buildHref("/")}
-                className="inline-flex min-w-0 shrink-0 items-center gap-3 text-lg font-semibold uppercase tracking-[0.18em] text-slate-900 transition hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-                aria-label="Pod Lopuhom home"
-              >
-                <Image
-                  src="/images/products/Logo.%20pod_lopuhom.jpeg"
-                  alt=""
-                  width={48}
-                  height={48}
-                  sizes="48px"
-                  className="h-12 w-12 rounded-full object-cover"
-                  priority
-                />
-              </Link>
-              <Link
-                href={buildHref("/")}
-                className={[
-                  "absolute left-1/2 max-w-[44%] -translate-x-1/2 truncate font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-                  brandTitleDesktopClass,
-                ].join(" ")}
-                aria-label="Pod Lopuhom home"
-              >
-                Pod&nbsp;Lopuhom
-              </Link>
-            </>
-          ) : (
-            <Link
-              href={buildHref("/")}
-              className="inline-flex min-w-0 shrink-0 items-center gap-2.5 font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
-              aria-label="Pod Lopuhom home"
-            >
-              <Image
-                src="/images/products/Logo.%20pod_lopuhom.jpeg"
-                alt=""
-                width={48}
-                height={48}
-                sizes="48px"
-                className="h-12 w-12 rounded-full object-cover"
-                priority
-              />
-              <span className={["truncate", brandTitleDesktopClass].join(" ")}>
-                Pod&nbsp;Lopuhom
-              </span>
-            </Link>
-          )}
+        {/* Desktop (lg+): brand left, nav center, language right */}
+        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-5 text-left lg:grid">
+          <Link
+            href={buildHref("/")}
+            className="inline-flex min-w-0 shrink-0 items-center gap-2.5 justify-self-start font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
+            aria-label="Pod Lopuhom home"
+          >
+            <Image
+              src="/images/products/Logo.%20pod_lopuhom.jpeg"
+              alt=""
+              width={48}
+              height={48}
+              sizes="48px"
+              className="h-12 w-12 rounded-full object-cover"
+              priority
+            />
+            <span className={["truncate", brandTitleDesktopClass].join(" ")}>
+              Pod&nbsp;Lopuhom
+            </span>
+          </Link>
           <nav
             aria-label="Primary"
-            className="flex min-w-0 max-w-full flex-wrap items-center justify-end gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.26em] text-slate-600"
+            className="flex min-w-0 items-center justify-self-center gap-x-7 text-xs font-semibold uppercase tracking-[0.26em] text-slate-600"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={buildHref(link.href)}
                 className={[
-                  "relative transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+                  "relative whitespace-nowrap transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
                   "after:absolute after:-bottom-2 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition",
                   "hover:after:scale-x-100",
                   pathname === link.href ? "text-slate-900 after:scale-x-100" : "",
@@ -389,8 +344,8 @@ export default function Nav() {
                 {link.label}
               </Link>
             ))}
-            {desktopLangPills}
           </nav>
+          <div className="justify-self-end shrink-0">{desktopLangPills}</div>
         </div>
       </header>
     </>
