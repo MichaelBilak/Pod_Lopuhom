@@ -91,7 +91,7 @@ export default function ImagePositionEditor({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={handleDone}>
       <div
-        className="relative max-h-[90vh] w-full max-w-md rounded-2xl border border-slate-200 bg-white p-4 shadow-xl"
+        className="relative max-h-[90vh] max-h-[90svh] max-h-[90dvh] w-full max-w-md rounded-2xl border border-slate-200 bg-white p-4 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between">

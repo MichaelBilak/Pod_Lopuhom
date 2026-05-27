@@ -112,7 +112,7 @@ export default function GalleryClient({
         showTimerRef.current = null;
       }
     };
-  }, [showStickyMenu]);
+  }, [isMainNavVisible, showStickyMenu]);
 
   const filteredProducts = useMemo(() => {
     if (selected === "All") return products;
@@ -192,7 +192,7 @@ export default function GalleryClient({
     <>
       <div
         className={[
-          "fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur transition duration-300 ease-out",
+          "gallery-sticky-shell fixed inset-x-0 top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur transition duration-300 ease-out",
           showStickyMenu
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0 pointer-events-none",

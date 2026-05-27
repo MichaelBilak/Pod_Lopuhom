@@ -14,7 +14,10 @@
 html {
   font-family: "Century Gothic", "CenturyGothic", "AppleGothic", "Futura",
     "Trebuchet MS", sans-serif;
+  overflow-x: hidden;
   overflow-x: clip;
+  height: 100%;
+  min-height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -24,8 +27,39 @@ body {
     "Trebuchet MS", sans-serif;
   line-height: 1.65;
   min-width: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Old iOS Safari fallback: keeps full-height layouts stable with dynamic browser chrome. */
+@supports (-webkit-touch-callout: none) {
+  html,
+  body {
+    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Tailwind screen-size fallbacks for mobile Safari variants. */
+.h-screen {
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.max-h-screen {
+  max-height: 100vh;
+  max-height: 100svh;
+  max-height: 100dvh;
 }
 
 a,
@@ -133,6 +167,7 @@ select {
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   z-index: 1;
 }
@@ -198,18 +233,49 @@ button:focus-visible {
   animation-play-state: paused;
 }
 
+.new-products-marquee:focus-within .new-products-track {
+  animation-play-state: paused;
+}
+
 @keyframes newProductsMarquee {
   from {
-    transform: translate3d(-33.333333%, 0, 0);
+    transform: translateX(-33.333333%);
   }
   to {
-    transform: translate3d(-66.666667%, 0, 0);
+    transform: translateX(-66.666667%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .new-products-marquee .new-products-track {
     animation: none;
+    transform: none;
+  }
+}
+
+/* On touch/iOS, prefer manual horizontal scroll over autoplay to avoid Safari animation stalls. */
+@media (hover: none), (pointer: coarse) {
+  .new-products-marquee {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .new-products-marquee::-webkit-scrollbar {
+    display: none;
+  }
+  .new-products-marquee .new-products-track {
+    animation: none;
+    transform: none;
+    width: max-content;
+  }
+  .new-products-marquee .new-products-copy[data-copy="pre"],
+  .new-products-marquee .new-products-copy[data-copy="post"] {
+    display: none;
+  }
+  .new-products-marquee .new-products-copy[data-copy="orig"] > article {
+    scroll-snap-align: start;
   }
 }
 
@@ -236,6 +302,33 @@ button:focus-visible {
 .safe-px {
   padding-left: max(1rem, env(safe-area-inset-left, 0px));
   padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+/* Fixed/sticky surfaces in Safari: keep layers stable and respect landscape safe-area insets. */
+.site-nav-shell,
+.gallery-sticky-shell {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.site-nav-shell,
+.gallery-sticky-shell,
+.admin-sticky-shell {
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .site-nav-shell {
+    background: #ffffff;
+  }
+  .gallery-sticky-shell {
+    background: rgba(255, 255, 255, 0.98);
+  }
+  .admin-sticky-shell {
+    background: rgba(241, 245, 249, 0.98);
+  }
 }
 
 /* Touch-friendly tap targets (>=44px) for interactive elements that look tiny */

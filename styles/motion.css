@@ -39,11 +39,13 @@
   transition: background-color var(--motion-medium) var(--motion-ease),
     box-shadow var(--motion-medium) var(--motion-ease),
     backdrop-filter var(--motion-medium) var(--motion-ease);
+  -webkit-backdrop-filter: blur(0);
   backdrop-filter: blur(0);
 }
 
 .motion-nav-shell.is-scrolled {
   background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
 }
@@ -225,6 +227,8 @@ section.reveal {
 .modal-panel .modal-shell {
   width: min(680px, 100%);
   max-height: 90vh;
+  max-height: 90svh;
+  max-height: 90dvh;
   overflow: hidden;
   border-radius: 28px;
   background: #ffffff;

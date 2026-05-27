@@ -298,7 +298,7 @@ export default function ProductList({
         <div>
           {grouped.map(([category, list]) => (
             <section key={category}>
-              <div className="sticky top-0 z-10 flex items-center justify-between gap-2 border-y border-slate-200 bg-slate-100/95 px-5 py-2 backdrop-blur">
+              <div className="admin-sticky-shell sticky top-0 z-10 flex items-center justify-between gap-2 border-y border-slate-200 bg-slate-100/95 px-5 py-2 backdrop-blur">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700">
                   {category}
                 </span>

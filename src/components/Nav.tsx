@@ -223,7 +223,7 @@ export default function Nav() {
         id="main-nav"
         ref={headerRef}
         className={[
-          "fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 bg-white/80 backdrop-blur transition-transform duration-300 ease-out",
+          "site-nav-shell fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 bg-white/80 backdrop-blur transition-transform duration-300 ease-out",
           "pt-[env(safe-area-inset-top)]",
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}

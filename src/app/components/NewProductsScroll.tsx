@@ -108,13 +108,24 @@ export default function NewProductsScroll({
           aria-label="Latest pieces"
         >
           <div className="new-products-track flex w-max">
-            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5" aria-hidden>
+            <div
+              className="new-products-copy flex gap-3 pr-3 sm:gap-5 sm:pr-5"
+              data-copy="pre"
+              aria-hidden
+            >
               {products.map((product, index) => renderCard(product, index, "pre"))}
             </div>
-            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5">
+            <div
+              className="new-products-copy flex gap-3 pr-3 sm:gap-5 sm:pr-5"
+              data-copy="orig"
+            >
               {products.map((product, index) => renderCard(product, index, "orig"))}
             </div>
-            <div className="flex gap-3 pr-3 sm:gap-5 sm:pr-5" aria-hidden>
+            <div
+              className="new-products-copy flex gap-3 pr-3 sm:gap-5 sm:pr-5"
+              data-copy="post"
+              aria-hidden
+            >
               {products.map((product, index) => renderCard(product, index, "post"))}
             </div>
           </div>
