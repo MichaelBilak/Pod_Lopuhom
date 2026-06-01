@@ -165,8 +165,10 @@ export default function Nav() {
 
   useEffect(() => {
     const threshold = 8;
+    let ticking = false;
+    let frameId = 0;
 
-    const handleScroll = () => {
+    const updateVisibility = () => {
       const currentY = window.scrollY;
       const delta = currentY - lastScrollY.current;
       const isScrollingUp = delta < -threshold;
@@ -180,11 +182,21 @@ export default function Nav() {
       }
 
       lastScrollY.current = currentY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      frameId = window.requestAnimationFrame(updateVisibility);
     };
 
     lastScrollY.current = window.scrollY;
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.cancelAnimationFrame(frameId);
+    };
   }, []);
 
   const desktopLangPills = (

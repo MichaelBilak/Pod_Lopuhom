@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { getLocale, withLang } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
 import {
@@ -20,168 +20,37 @@ type NewProductsScrollProps = {
   viewDetails: string;
 };
 
-const LOOP_SECONDS = 30;
-const RESUME_AFTER_TOUCH_MS = 500;
-
 export default function NewProductsScroll({
   products,
   newLabel,
-  newTitle,
   viewDetails,
 }: NewProductsScrollProps) {
   const searchParams = useSearchParams();
   const locale = getLocale(searchParams?.get("lang"));
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const marquee = marqueeRef.current;
-    const track = trackRef.current;
-    if (!marquee || !track) return;
+    if (!marquee) return;
 
-    const origCopy = track.querySelector<HTMLElement>('[data-copy="orig"]');
-    if (!origCopy) return;
+    const pause = () => marquee.classList.add("is-paused");
+    const resume = () => marquee.classList.remove("is-paused");
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-    let segmentWidth = origCopy.offsetWidth;
-    let offset = 0;
-    let paused = false;
-    let interacting = false;
-    let rafId = 0;
-    let lastTime = 0;
-    let resumeTimer = 0;
-    let touchStartX = 0;
-    let touchStartOffset = 0;
-
-    const applyTransform = () => {
-      track.style.transform = `translate3d(${offset}px, 0, 0)`;
-    };
-
-    const normalizeOffset = () => {
-      if (segmentWidth <= 0) return;
-      while (offset <= -segmentWidth * 2) {
-        offset += segmentWidth;
-      }
-      while (offset > 0) {
-        offset -= segmentWidth;
-      }
-    };
-
-    const centerOffset = () => {
-      offset = -segmentWidth;
-      normalizeOffset();
-      applyTransform();
-    };
-
-    const pause = () => {
-      paused = true;
-    };
-
-    const scheduleResume = () => {
-      window.clearTimeout(resumeTimer);
-      resumeTimer = window.setTimeout(() => {
-        interacting = false;
-        paused = false;
-        normalizeOffset();
-        applyTransform();
-        lastTime = 0;
-      }, RESUME_AFTER_TOUCH_MS);
-    };
-
-    const onTouchStart = (event: TouchEvent) => {
-      if (event.touches.length !== 1) return;
-      interacting = true;
-      paused = true;
-      window.clearTimeout(resumeTimer);
-      touchStartX = event.touches[0].clientX;
-      touchStartOffset = offset;
-    };
-
-    const onTouchMove = (event: TouchEvent) => {
-      if (!interacting || event.touches.length !== 1) return;
-      const deltaX = event.touches[0].clientX - touchStartX;
-      offset = touchStartOffset + deltaX;
-      applyTransform();
-    };
-
-    const onTouchEnd = () => {
-      if (!interacting) return;
-      normalizeOffset();
-      applyTransform();
-      scheduleResume();
-    };
-
-    const tick = (time: number) => {
-      if (!lastTime) lastTime = time;
-      const dt = (time - lastTime) / 1000;
-      lastTime = time;
-
-      if (!paused && !interacting && !reducedMotion && segmentWidth > 0) {
-        const speed = segmentWidth / LOOP_SECONDS;
-        offset -= speed * dt;
-        if (offset <= -segmentWidth * 2) {
-          offset += segmentWidth;
-        }
-        applyTransform();
-      }
-
-      rafId = window.requestAnimationFrame(tick);
-    };
-
-    track.style.willChange = "transform";
-    centerOffset();
-
-    const resizeObserver = new ResizeObserver(() => {
-      const nextWidth = origCopy.offsetWidth;
-      if (nextWidth > 0 && nextWidth !== segmentWidth) {
-        segmentWidth = nextWidth;
-        if (!interacting) {
-          centerOffset();
-        }
-      }
-    });
-    resizeObserver.observe(origCopy);
-
-    marquee.addEventListener("touchstart", onTouchStart, { passive: true });
-    marquee.addEventListener("touchmove", onTouchMove, { passive: true });
-    marquee.addEventListener("touchend", onTouchEnd, { passive: true });
-    marquee.addEventListener("touchcancel", onTouchEnd, { passive: true });
-
-    const onMouseEnter = () => {
-      paused = true;
-    };
-    const onMouseLeave = () => {
-      paused = false;
-      lastTime = 0;
-    };
-
-    if (!isTouchDevice) {
-      marquee.addEventListener("mouseenter", onMouseEnter);
-      marquee.addEventListener("mouseleave", onMouseLeave);
-    }
-
-    rafId = window.requestAnimationFrame(tick);
+    marquee.addEventListener("touchstart", pause, { passive: true });
+    marquee.addEventListener("touchend", resume, { passive: true });
+    marquee.addEventListener("touchcancel", resume, { passive: true });
+    marquee.addEventListener("mouseenter", pause);
+    marquee.addEventListener("mouseleave", resume);
 
     return () => {
-      window.cancelAnimationFrame(rafId);
-      window.clearTimeout(resumeTimer);
-      resizeObserver.disconnect();
-      track.style.willChange = "";
-      track.style.transform = "";
-      marquee.removeEventListener("touchstart", onTouchStart);
-      marquee.removeEventListener("touchmove", onTouchMove);
-      marquee.removeEventListener("touchend", onTouchEnd);
-      marquee.removeEventListener("touchcancel", onTouchEnd);
-      if (!isTouchDevice) {
-        marquee.removeEventListener("mouseenter", onMouseEnter);
-        marquee.removeEventListener("mouseleave", onMouseLeave);
-      }
+      marquee.classList.remove("is-paused");
+      marquee.removeEventListener("touchstart", pause);
+      marquee.removeEventListener("touchend", resume);
+      marquee.removeEventListener("touchcancel", resume);
+      marquee.removeEventListener("mouseenter", pause);
+      marquee.removeEventListener("mouseleave", resume);
     };
-  }, [products]);
+  }, []);
 
   if (products.length === 0) return null;
 
@@ -263,7 +132,7 @@ export default function NewProductsScroll({
           role="region"
           aria-label="Latest pieces"
         >
-          <div ref={trackRef} className="new-products-track flex w-max">
+          <div className="new-products-track flex w-max">
             <div
               className="new-products-copy flex gap-3 pr-3 sm:gap-5 sm:pr-5"
               data-copy="pre"

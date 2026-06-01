@@ -73,7 +73,10 @@ export default function GalleryClient({
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+    let frameId = 0;
+
+    const updateStickyMenu = () => {
       const currentY = window.scrollY;
       const delta = currentY - lastScrollY.current;
       const isScrollingUp = delta < -8;
@@ -85,7 +88,7 @@ export default function GalleryClient({
           window.clearTimeout(showTimerRef.current);
           showTimerRef.current = null;
         }
-        if (showStickyMenu) setShowStickyMenu(false);
+        setShowStickyMenu(false);
       } else if (isScrollingUp) {
         if (showTimerRef.current === null) {
           showTimerRef.current = window.setTimeout(() => {
@@ -93,7 +96,7 @@ export default function GalleryClient({
             showTimerRef.current = null;
           }, 140);
         }
-      } else if (isScrollingDown && showStickyMenu) {
+      } else if (isScrollingDown) {
         if (showTimerRef.current !== null) {
           window.clearTimeout(showTimerRef.current);
           showTimerRef.current = null;
@@ -102,18 +105,26 @@ export default function GalleryClient({
       }
 
       lastScrollY.current = currentY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      frameId = window.requestAnimationFrame(updateStickyMenu);
     };
 
     lastScrollY.current = window.scrollY;
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.cancelAnimationFrame(frameId);
       if (showTimerRef.current !== null) {
         window.clearTimeout(showTimerRef.current);
         showTimerRef.current = null;
       }
     };
-  }, [isMainNavVisible, showStickyMenu]);
+  }, [isMainNavVisible]);
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {

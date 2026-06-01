@@ -1,12 +1,12 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 const STORAGE_KEY = "pod-lopuhom-splash-v1";
-const HOLD_MS = 2800;
-const EXIT_MS = 900;
+const HOLD_MS = 2600;
+const EXIT_MS = 700;
 
-function finishSplash(splash: HTMLElement) {
+function markSplashSeen() {
   try {
     sessionStorage.setItem(STORAGE_KEY, "1");
   } catch {
@@ -14,11 +14,15 @@ function finishSplash(splash: HTMLElement) {
   }
   document.documentElement.classList.add("splash-seen");
   document.body.style.overflow = "";
-  window.setTimeout(() => splash.remove(), EXIT_MS + 50);
 }
 
 export default function FirstVisitSplash() {
+  const startedRef = useRef(false);
+
   useLayoutEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+
     const splash = document.getElementById("initial-splash");
     if (!splash) return;
 
@@ -26,13 +30,14 @@ export default function FirstVisitSplash() {
     try {
       shouldShow = !sessionStorage.getItem(STORAGE_KEY);
     } catch {
-      document.documentElement.classList.add("splash-seen");
+      markSplashSeen();
+      splash.remove();
       return;
     }
 
     if (!shouldShow) {
+      markSplashSeen();
       splash.remove();
-      document.documentElement.classList.add("splash-seen");
       return;
     }
 
@@ -40,21 +45,23 @@ export default function FirstVisitSplash() {
     document.body.style.overflow = "hidden";
 
     if (reducedMotion) {
-      finishSplash(splash);
+      markSplashSeen();
+      splash.remove();
       return;
     }
 
     const exitTimer = window.setTimeout(() => {
       splash.classList.add("splash-screen--exit");
+      markSplashSeen();
     }, HOLD_MS);
 
-    const doneTimer = window.setTimeout(() => {
-      finishSplash(splash);
+    const removeTimer = window.setTimeout(() => {
+      splash.remove();
     }, HOLD_MS + EXIT_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
-      window.clearTimeout(doneTimer);
+      window.clearTimeout(removeTimer);
       document.body.style.overflow = "";
     };
   }, []);
