@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { useLayoutEffect, useRef } from "react";
 import { getLocale, withLang } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
 import {
@@ -19,6 +20,8 @@ type NewProductsScrollProps = {
   viewDetails: string;
 };
 
+const LOOP_SECONDS = 30;
+
 export default function NewProductsScroll({
   products,
   newLabel,
@@ -27,6 +30,108 @@ export default function NewProductsScroll({
 }: NewProductsScrollProps) {
   const searchParams = useSearchParams();
   const locale = getLocale(searchParams?.get("lang"));
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const marquee = marqueeRef.current;
+    const track = trackRef.current;
+    if (!marquee || !track) return;
+
+    const origCopy = track.querySelector<HTMLElement>('[data-copy="orig"]');
+    if (!origCopy) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let segmentWidth = origCopy.offsetWidth;
+    let paused = false;
+    let rafId = 0;
+    let lastTime = 0;
+    let scrollEndTimer = 0;
+
+    const centerScroll = () => {
+      marquee.scrollLeft = segmentWidth;
+    };
+
+    const normalizeScroll = () => {
+      if (segmentWidth <= 0) return;
+      const min = segmentWidth * 0.5;
+      const max = segmentWidth * 2.5;
+      if (marquee.scrollLeft >= max) {
+        marquee.scrollLeft -= segmentWidth;
+      } else if (marquee.scrollLeft < min) {
+        marquee.scrollLeft += segmentWidth;
+      }
+    };
+
+    const pause = () => {
+      paused = true;
+    };
+
+    const resume = () => {
+      normalizeScroll();
+      paused = false;
+      lastTime = 0;
+    };
+
+    const onScroll = () => {
+      if (!paused) return;
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(() => {
+        normalizeScroll();
+      }, 120);
+    };
+
+    const tick = (time: number) => {
+      if (!lastTime) lastTime = time;
+      const dt = (time - lastTime) / 1000;
+      lastTime = time;
+
+      if (!paused && !reducedMotion && segmentWidth > 0) {
+        const speed = segmentWidth / LOOP_SECONDS;
+        marquee.scrollLeft += speed * dt;
+        if (marquee.scrollLeft >= segmentWidth * 2) {
+          marquee.scrollLeft -= segmentWidth;
+        }
+      }
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    centerScroll();
+
+    const resizeObserver = new ResizeObserver(() => {
+      const nextWidth = origCopy.offsetWidth;
+      if (nextWidth > 0 && nextWidth !== segmentWidth) {
+        segmentWidth = nextWidth;
+        centerScroll();
+      }
+    });
+    resizeObserver.observe(origCopy);
+
+    marquee.addEventListener("pointerdown", pause);
+    marquee.addEventListener("pointerup", resume);
+    marquee.addEventListener("pointercancel", resume);
+    marquee.addEventListener("mouseenter", pause);
+    marquee.addEventListener("mouseleave", resume);
+    marquee.addEventListener("scroll", onScroll, { passive: true });
+
+    rafId = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.clearTimeout(scrollEndTimer);
+      resizeObserver.disconnect();
+      marquee.removeEventListener("pointerdown", pause);
+      marquee.removeEventListener("pointerup", resume);
+      marquee.removeEventListener("pointercancel", resume);
+      marquee.removeEventListener("mouseenter", pause);
+      marquee.removeEventListener("mouseleave", resume);
+      marquee.removeEventListener("scroll", onScroll);
+    };
+  }, [products]);
 
   if (products.length === 0) return null;
 
@@ -103,11 +208,12 @@ export default function NewProductsScroll({
       </div>
       <div className="relative -mx-4 min-w-0 px-4 sm:-mx-6 sm:px-6">
         <div
-          className="new-products-marquee overflow-hidden pb-3 pt-1"
+          ref={marqueeRef}
+          className="new-products-marquee pb-3 pt-1"
           role="region"
           aria-label="Latest pieces"
         >
-          <div className="new-products-track flex w-max">
+          <div ref={trackRef} className="new-products-track flex w-max">
             <div
               className="new-products-copy flex gap-3 pr-3 sm:gap-5 sm:pr-5"
               data-copy="pre"
