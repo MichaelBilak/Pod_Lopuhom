@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
@@ -110,12 +111,15 @@ export default async function HomePage({ searchParams }: PageProps) {
           </nav>
         </div>
         {newProducts.length > 0 ? (
-          <NewProductsScroll
-            products={newProducts}
-            newLabel={t.home.newLabel}
-            newTitle={t.home.newTitle}
-            viewDetails={t.home.viewDetails}
-          />
+          <Suspense fallback={null}>
+            <NewProductsScroll
+              products={newProducts}
+              locale={locale}
+              newLabel={t.home.newLabel}
+              newTitle={t.home.newTitle}
+              viewDetails={t.home.viewDetails}
+            />
+          </Suspense>
         ) : null}
       </main>
       <FooterSocial />

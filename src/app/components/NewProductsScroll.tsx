@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { getLocale, withLang } from "@/src/lib/i18n";
+import { withLang, type Locale } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
 import {
   productDisplayPrice,
@@ -15,6 +14,7 @@ import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 
 type NewProductsScrollProps = {
   products: Product[];
+  locale: Locale;
   newLabel: string;
   newTitle: string;
   viewDetails: string;
@@ -22,11 +22,10 @@ type NewProductsScrollProps = {
 
 export default function NewProductsScroll({
   products,
+  locale,
   newLabel,
   viewDetails,
 }: NewProductsScrollProps) {
-  const searchParams = useSearchParams();
-  const locale = getLocale(searchParams?.get("lang"));
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

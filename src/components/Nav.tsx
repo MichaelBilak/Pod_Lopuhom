@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
+import { buildQueryHref } from "../lib/search-params";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -123,8 +124,25 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
   );
 }
 
+function NavFallback() {
+  return (
+    <div
+      className="h-[104px] sm:h-[120px] lg:h-[88px]"
+      aria-hidden
+    />
+  );
+}
+
 export default function Nav() {
-  const pathname = usePathname();
+  return (
+    <Suspense fallback={<NavFallback />}>
+      <NavBar />
+    </Suspense>
+  );
+}
+
+function NavBar() {
+  const pathname = usePathname() ?? "/";
   const searchParams = useSearchParams();
   const locale = getLocale(searchParams?.get("lang"));
   const t = getTranslations(locale);
@@ -139,12 +157,8 @@ export default function Nav() {
   ];
 
   const buildHref = (href: string) => withLang(href, locale);
-  const buildLangHref = (nextLocale: Locale) => {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.set("lang", nextLocale);
-    const query = params.toString();
-    return `${pathname}${query ? `?${query}` : ""}`;
-  };
+  const buildLangHref = (nextLocale: Locale) =>
+    buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
     "text-[13px] tracking-[0.18em] sm:text-[17px] sm:tracking-[0.22em]";

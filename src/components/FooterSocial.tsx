@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { getLocale, getTranslations, withLang } from "../lib/i18n";
 
@@ -34,6 +35,14 @@ function WhatsappIcon({ className = "h-5 w-5" }: { className?: string }) {
 }
 
 export default function FooterSocial() {
+  return (
+    <Suspense fallback={null}>
+      <FooterSocialContent />
+    </Suspense>
+  );
+}
+
+function FooterSocialContent() {
   const searchParams = useSearchParams();
   const locale = getLocale(searchParams?.get("lang"));
   const t = getTranslations(locale);

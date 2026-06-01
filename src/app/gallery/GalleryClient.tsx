@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getLocale, withLang } from "@/src/lib/i18n";
+import { copySearchParams } from "@/src/lib/search-params";
 import type { Product } from "@/lib/products";
 import {
   productMainImageUrl,
@@ -28,10 +29,7 @@ function buildCategoryHref(
   searchParams: ReturnType<typeof useSearchParams>,
   categoryId: string
 ) {
-  const params = new URLSearchParams();
-  searchParams?.forEach((value, key) => {
-    params.set(key, value);
-  });
+  const params = copySearchParams(searchParams);
   params.set("category", categoryId);
   const query = params.toString();
   return `${pathname}${query ? `?${query}` : ""}`;
