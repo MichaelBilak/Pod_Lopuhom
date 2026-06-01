@@ -4,7 +4,6 @@ import { useLayoutEffect, useRef } from "react";
 
 const STORAGE_KEY = "pod-lopuhom-splash-v1";
 const HOLD_MS = 2600;
-const EXIT_MS = 700;
 
 function markSplashSeen() {
   try {
@@ -16,6 +15,11 @@ function markSplashSeen() {
   document.body.style.overflow = "";
 }
 
+function hideSplashElement(splash: HTMLElement) {
+  splash.classList.add("splash-screen--exit");
+  splash.setAttribute("aria-hidden", "true");
+}
+
 export default function FirstVisitSplash() {
   const startedRef = useRef(false);
 
@@ -24,20 +28,23 @@ export default function FirstVisitSplash() {
     startedRef.current = true;
 
     const splash = document.getElementById("initial-splash");
-    if (!splash) return;
+    if (!splash) {
+      markSplashSeen();
+      return;
+    }
 
     let shouldShow = false;
     try {
       shouldShow = !sessionStorage.getItem(STORAGE_KEY);
     } catch {
       markSplashSeen();
-      splash.remove();
+      hideSplashElement(splash);
       return;
     }
 
     if (!shouldShow) {
       markSplashSeen();
-      splash.remove();
+      hideSplashElement(splash);
       return;
     }
 
@@ -46,22 +53,17 @@ export default function FirstVisitSplash() {
 
     if (reducedMotion) {
       markSplashSeen();
-      splash.remove();
+      hideSplashElement(splash);
       return;
     }
 
     const exitTimer = window.setTimeout(() => {
-      splash.classList.add("splash-screen--exit");
+      hideSplashElement(splash);
       markSplashSeen();
     }, HOLD_MS);
 
-    const removeTimer = window.setTimeout(() => {
-      splash.remove();
-    }, HOLD_MS + EXIT_MS);
-
     return () => {
       window.clearTimeout(exitTimer);
-      window.clearTimeout(removeTimer);
       document.body.style.overflow = "";
     };
   }, []);

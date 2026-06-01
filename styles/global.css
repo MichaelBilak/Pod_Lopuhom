@@ -380,6 +380,12 @@ html.splash-seen #site-root {
 }
 
 html.splash-seen #initial-splash {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#initial-splash.splash-screen--exit {
   pointer-events: none;
 }
 
