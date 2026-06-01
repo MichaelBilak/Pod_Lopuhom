@@ -262,6 +262,8 @@ button:focus-visible {
 .new-products-marquee .new-products-track {
   animation: newProductsMarquee 30s linear infinite;
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .new-products-marquee:hover .new-products-track {
@@ -274,10 +276,10 @@ button:focus-visible {
 
 @keyframes newProductsMarquee {
   from {
-    transform: translateX(-33.333333%);
+    transform: translate3d(-33.333333%, 0, 0);
   }
   to {
-    transform: translateX(-66.666667%);
+    transform: translate3d(-66.666667%, 0, 0);
   }
 }
 
@@ -285,32 +287,6 @@ button:focus-visible {
   .new-products-marquee .new-products-track {
     animation: none;
     transform: none;
-  }
-}
-
-/* On touch/iOS, prefer manual horizontal scroll over autoplay to avoid Safari animation stalls. */
-@media (hover: none), (pointer: coarse) {
-  .new-products-marquee {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-  }
-  .new-products-marquee::-webkit-scrollbar {
-    display: none;
-  }
-  .new-products-marquee .new-products-track {
-    animation: none;
-    transform: none;
-    width: max-content;
-  }
-  .new-products-marquee .new-products-copy[data-copy="pre"],
-  .new-products-marquee .new-products-copy[data-copy="post"] {
-    display: none;
-  }
-  .new-products-marquee .new-products-copy[data-copy="orig"] > article {
-    scroll-snap-align: start;
   }
 }
 
