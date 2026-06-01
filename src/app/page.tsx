@@ -72,29 +72,42 @@ export default async function HomePage({ searchParams }: PageProps) {
               </div>
             </div>
           </section>
-          <div className="category-tabs-scroll -mx-4 min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
-            <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
-              {[
-                { id: "Rings", label: t.categories.rings },
-                { id: "Necklaces", label: t.categories.necklaces },
-                { id: "Earrings", label: t.categories.earrings },
-                { id: "Sets", label: t.categories.sets },
-              ].map((item) => (
-                <Link
-                  key={item.id}
-                  href={withLang(
-                    `/gallery?category=${encodeURIComponent(item.id)}`,
-                    locale
-                  )}
-                  className="inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap px-2 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-600 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-2 sm:text-sm sm:tracking-[0.24em] md:text-base md:tracking-[0.28em]"
-                >
-                  <span className="border-b border-transparent pb-1.5 transition hover:border-slate-400 sm:pb-2">
-                    {item.label}
-                  </span>
-                </Link>
-              ))}
+          <nav
+            aria-label="Shop categories"
+            className="home-category-menu -mx-4 min-w-0 sm:mx-0"
+          >
+            <div
+              className="mx-4 h-[5px] border-y border-slate-500 sm:mx-0"
+              aria-hidden
+            />
+            <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth px-4 py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:px-0 sm:py-4">
+              <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
+                {[
+                  { id: "Rings", label: t.categories.rings },
+                  { id: "Necklaces", label: t.categories.necklaces },
+                  { id: "Earrings", label: t.categories.earrings },
+                  { id: "Sets", label: t.categories.sets },
+                ].map((item) => (
+                  <Link
+                    key={item.id}
+                    href={withLang(
+                      `/gallery?category=${encodeURIComponent(item.id)}`,
+                      locale
+                    )}
+                    className="inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-700 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-1 sm:text-sm sm:tracking-[0.24em] md:text-base md:tracking-[0.28em]"
+                  >
+                    <span className="border-b border-transparent pb-1 transition hover:border-slate-500 sm:pb-1.5">
+                      {item.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+            <div
+              className="mx-4 h-[5px] border-y border-slate-500 sm:mx-0"
+              aria-hidden
+            />
+          </nav>
         </div>
         {newProducts.length > 0 ? (
           <NewProductsScroll

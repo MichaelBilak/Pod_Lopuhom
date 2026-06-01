@@ -56,19 +56,19 @@ export function productDisplayPrice(p: Product): string {
 
 /** First image URL (main image by sort_order) */
 export function productMainImageUrl(p: Product): string | undefined {
-  return p.images[0]?.image_url;
+  return p.images?.[0]?.image_url;
 }
 
 /** All image URLs in order */
 export function productImageUrls(p: Product): string[] {
-  return p.images.map((i) => i.image_url);
+  return (p.images ?? []).map((i) => i.image_url);
 }
 
 /** Object position for main (first) image, for use in style.objectPosition */
 const OBJECT_POSITION_RE = /^\d+(\.\d+)?% \d+(\.\d+)?%$/;
 
 export function productMainImageObjectPosition(p: Product): string {
-  const pos = p.images[0]?.object_position;
+  const pos = p.images?.[0]?.object_position;
   return pos && OBJECT_POSITION_RE.test(pos) ? pos : "50% 50%";
 }
 
@@ -76,7 +76,7 @@ export function productMainImageObjectPosition(p: Product): string {
 export function productImagesWithPosition(
   p: Product
 ): { url: string; objectPosition: string }[] {
-  return p.images.map((i) => ({
+  return (p.images ?? []).map((i) => ({
     url: i.image_url,
     objectPosition: i.object_position && OBJECT_POSITION_RE.test(i.object_position)
       ? i.object_position

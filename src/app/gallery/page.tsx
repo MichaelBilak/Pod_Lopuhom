@@ -1,6 +1,7 @@
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
 import { fetchProducts } from "@/lib/products-server";
+import { Suspense } from "react";
 import GalleryClient from "./GalleryClient";
 import {
   getLocaleFromSearchParams,
@@ -41,11 +42,17 @@ export default async function GalleryPage({ searchParams }: PageProps) {
           <h1 className="text-[clamp(1.5rem,5.6vw,1.875rem)] font-medium tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             {t.gallery.title}
           </h1>
-          <GalleryClient
-            products={products}
-            categories={categories}
-            viewDetailsLabel={t.home.viewDetails}
-          />
+          <Suspense
+            fallback={
+              <div className="min-h-[280px] animate-pulse rounded-2xl bg-slate-100/80" />
+            }
+          >
+            <GalleryClient
+              products={products}
+              categories={categories}
+              viewDetailsLabel={t.home.viewDetails}
+            />
+          </Suspense>
         </section>
       </main>
       <FooterSocial />

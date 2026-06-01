@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getLocale, withLang } from "@/src/lib/i18n";
@@ -23,36 +23,42 @@ const getCategoryFromProduct = (product: Product) => {
   return product.category ?? "Rings";
 };
 
+function buildCategoryHref(
+  pathname: string,
+  searchParams: ReturnType<typeof useSearchParams>,
+  categoryId: string
+) {
+  const params = new URLSearchParams();
+  searchParams?.forEach((value, key) => {
+    params.set(key, value);
+  });
+  params.set("category", categoryId);
+  const query = params.toString();
+  return `${pathname}${query ? `?${query}` : ""}`;
+}
+
 export default function GalleryClient({
   products,
   categories,
   viewDetailsLabel,
 }: GalleryClientProps) {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname() ?? "/gallery";
   const locale = getLocale(searchParams?.get("lang"));
-  const initialCategory = searchParams?.get("category");
-  const categoryIds = categories.map((category) => category.id);
-  const defaultCategory = categoryIds[0] ?? "Rings";
-  const [selected, setSelected] = useState<string>(
-    initialCategory && categoryIds.includes(initialCategory)
-      ? initialCategory
-      : defaultCategory
-  );
+
+  const defaultCategory = categories[0]?.id ?? "Rings";
+  const selected = useMemo(() => {
+    const fromUrl = searchParams?.get("category");
+    if (fromUrl && categories.some((category) => category.id === fromUrl)) {
+      return fromUrl;
+    }
+    return defaultCategory;
+  }, [searchParams, categories, defaultCategory]);
+
   const [showStickyMenu, setShowStickyMenu] = useState(false);
   const [isMainNavVisible, setIsMainNavVisible] = useState(true);
   const lastScrollY = useRef(0);
   const showTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const currentCategory = searchParams?.get("category");
-    const nextSelected =
-      currentCategory && categoryIds.includes(currentCategory)
-        ? currentCategory
-        : defaultCategory;
-    setSelected(nextSelected);
-  }, [searchParams, categoryIds, defaultCategory]);
 
   useEffect(() => {
     const navElement = document.getElementById("main-nav");
@@ -148,24 +154,17 @@ export default function GalleryClient({
       >
         {categories.map((category, index) => (
           <div key={category.id} className="flex shrink-0 items-center gap-2 sm:gap-0">
-            <button
-              type="button"
-              onClick={() => {
-                setSelected(category.id);
-                const params = new URLSearchParams(searchParams?.toString());
-                params.set("category", category.id);
-                const query = params.toString();
-                router.replace(`${pathname}${query ? `?${query}` : ""}`, {
-                  scroll: false,
-                });
-              }}
+            <Link
+              href={buildCategoryHref(pathname, searchParams, category.id)}
+              scroll={false}
+              replace
               className={[
                 "inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap border-b border-transparent pb-1.5 pt-1.5 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:pb-2 sm:pt-0",
                 selected === category.id ? "border-slate-400 text-slate-900" : "",
               ].join(" ")}
             >
               {category.label}
-            </button>
+            </Link>
             {index < categories.length - 1 && (
               <span
                 className="h-3 w-px shrink-0 bg-slate-200/50 sm:hidden"
@@ -218,7 +217,8 @@ export default function GalleryClient({
               {sectionProducts.map((product, productIndex) => {
                 const mainImageUrl = productMainImageUrl(product);
                 const priceText = productDisplayPrice(product);
-                const isPriceOnRequest = priceText.toLowerCase() === "price on request";
+                const isPriceOnRequest =
+                  priceText.toLowerCase() === "price on request";
                 return (
                   <article
                     key={product.id}
@@ -238,7 +238,8 @@ export default function GalleryClient({
                             sizes="(max-width: 1024px) 50vw, 33vw"
                             className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                             style={{
-                              objectPosition: productMainImageObjectPosition(product),
+                              objectPosition:
+                                productMainImageObjectPosition(product),
                             }}
                             loading={productIndex < 3 ? "eager" : "lazy"}
                             priority={productIndex === 0}
