@@ -260,45 +260,18 @@ button:focus-visible {
 }
 
 .new-products-marquee {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  touch-action: pan-x;
-}
-
-.new-products-marquee::-webkit-scrollbar {
-  display: none;
+  overflow: hidden;
+  touch-action: none;
 }
 
 .new-products-marquee .new-products-track {
   width: max-content;
+  backface-visibility: hidden;
 }
 
-.new-products-marquee .new-products-copy > article {
-  scroll-snap-align: start;
-}
-
-@media (min-width: 640px) {
-  .new-products-marquee {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
-  }
-
-  .new-products-marquee::-webkit-scrollbar {
-    display: block;
-    height: 4px;
-  }
-
-  .new-products-marquee::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .new-products-marquee::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.2);
-    border-radius: 2px;
-  }
+.new-products-marquee a {
+  -webkit-user-select: auto;
+  user-select: auto;
 }
 
 /* Category tab rows: horizontal scroll on small screens */

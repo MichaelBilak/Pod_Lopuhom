@@ -21,6 +21,7 @@ type NewProductsScrollProps = {
 };
 
 const LOOP_SECONDS = 30;
+const RESUME_AFTER_TOUCH_MS = 500;
 
 export default function NewProductsScroll({
   products,
@@ -44,44 +45,74 @@ export default function NewProductsScroll({
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
     let segmentWidth = origCopy.offsetWidth;
+    let offset = 0;
     let paused = false;
+    let interacting = false;
     let rafId = 0;
     let lastTime = 0;
-    let scrollEndTimer = 0;
+    let resumeTimer = 0;
+    let touchStartX = 0;
+    let touchStartOffset = 0;
 
-    const centerScroll = () => {
-      marquee.scrollLeft = segmentWidth;
+    const applyTransform = () => {
+      track.style.transform = `translate3d(${offset}px, 0, 0)`;
     };
 
-    const normalizeScroll = () => {
+    const normalizeOffset = () => {
       if (segmentWidth <= 0) return;
-      const min = segmentWidth * 0.5;
-      const max = segmentWidth * 2.5;
-      if (marquee.scrollLeft >= max) {
-        marquee.scrollLeft -= segmentWidth;
-      } else if (marquee.scrollLeft < min) {
-        marquee.scrollLeft += segmentWidth;
+      while (offset <= -segmentWidth * 2) {
+        offset += segmentWidth;
       }
+      while (offset > 0) {
+        offset -= segmentWidth;
+      }
+    };
+
+    const centerOffset = () => {
+      offset = -segmentWidth;
+      normalizeOffset();
+      applyTransform();
     };
 
     const pause = () => {
       paused = true;
     };
 
-    const resume = () => {
-      normalizeScroll();
-      paused = false;
-      lastTime = 0;
+    const scheduleResume = () => {
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        interacting = false;
+        paused = false;
+        normalizeOffset();
+        applyTransform();
+        lastTime = 0;
+      }, RESUME_AFTER_TOUCH_MS);
     };
 
-    const onScroll = () => {
-      if (!paused) return;
-      window.clearTimeout(scrollEndTimer);
-      scrollEndTimer = window.setTimeout(() => {
-        normalizeScroll();
-      }, 120);
+    const onTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) return;
+      interacting = true;
+      paused = true;
+      window.clearTimeout(resumeTimer);
+      touchStartX = event.touches[0].clientX;
+      touchStartOffset = offset;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (!interacting || event.touches.length !== 1) return;
+      const deltaX = event.touches[0].clientX - touchStartX;
+      offset = touchStartOffset + deltaX;
+      applyTransform();
+    };
+
+    const onTouchEnd = () => {
+      if (!interacting) return;
+      normalizeOffset();
+      applyTransform();
+      scheduleResume();
     };
 
     const tick = (time: number) => {
@@ -89,47 +120,66 @@ export default function NewProductsScroll({
       const dt = (time - lastTime) / 1000;
       lastTime = time;
 
-      if (!paused && !reducedMotion && segmentWidth > 0) {
+      if (!paused && !interacting && !reducedMotion && segmentWidth > 0) {
         const speed = segmentWidth / LOOP_SECONDS;
-        marquee.scrollLeft += speed * dt;
-        if (marquee.scrollLeft >= segmentWidth * 2) {
-          marquee.scrollLeft -= segmentWidth;
+        offset -= speed * dt;
+        if (offset <= -segmentWidth * 2) {
+          offset += segmentWidth;
         }
+        applyTransform();
       }
 
       rafId = window.requestAnimationFrame(tick);
     };
 
-    centerScroll();
+    track.style.willChange = "transform";
+    centerOffset();
 
     const resizeObserver = new ResizeObserver(() => {
       const nextWidth = origCopy.offsetWidth;
       if (nextWidth > 0 && nextWidth !== segmentWidth) {
         segmentWidth = nextWidth;
-        centerScroll();
+        if (!interacting) {
+          centerOffset();
+        }
       }
     });
     resizeObserver.observe(origCopy);
 
-    marquee.addEventListener("pointerdown", pause);
-    marquee.addEventListener("pointerup", resume);
-    marquee.addEventListener("pointercancel", resume);
-    marquee.addEventListener("mouseenter", pause);
-    marquee.addEventListener("mouseleave", resume);
-    marquee.addEventListener("scroll", onScroll, { passive: true });
+    marquee.addEventListener("touchstart", onTouchStart, { passive: true });
+    marquee.addEventListener("touchmove", onTouchMove, { passive: true });
+    marquee.addEventListener("touchend", onTouchEnd, { passive: true });
+    marquee.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+    const onMouseEnter = () => {
+      paused = true;
+    };
+    const onMouseLeave = () => {
+      paused = false;
+      lastTime = 0;
+    };
+
+    if (!isTouchDevice) {
+      marquee.addEventListener("mouseenter", onMouseEnter);
+      marquee.addEventListener("mouseleave", onMouseLeave);
+    }
 
     rafId = window.requestAnimationFrame(tick);
 
     return () => {
       window.cancelAnimationFrame(rafId);
-      window.clearTimeout(scrollEndTimer);
+      window.clearTimeout(resumeTimer);
       resizeObserver.disconnect();
-      marquee.removeEventListener("pointerdown", pause);
-      marquee.removeEventListener("pointerup", resume);
-      marquee.removeEventListener("pointercancel", resume);
-      marquee.removeEventListener("mouseenter", pause);
-      marquee.removeEventListener("mouseleave", resume);
-      marquee.removeEventListener("scroll", onScroll);
+      track.style.willChange = "";
+      track.style.transform = "";
+      marquee.removeEventListener("touchstart", onTouchStart);
+      marquee.removeEventListener("touchmove", onTouchMove);
+      marquee.removeEventListener("touchend", onTouchEnd);
+      marquee.removeEventListener("touchcancel", onTouchEnd);
+      if (!isTouchDevice) {
+        marquee.removeEventListener("mouseenter", onMouseEnter);
+        marquee.removeEventListener("mouseleave", onMouseLeave);
+      }
     };
   }, [products]);
 
