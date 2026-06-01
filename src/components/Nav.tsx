@@ -9,7 +9,7 @@ import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-const localeOptions: Locale[] = ["en", "ru", "it"];
+const localeOptions: Locale[] = ["it", "en", "ru"];
 
 type LangDropdownProps = {
   locale: Locale;

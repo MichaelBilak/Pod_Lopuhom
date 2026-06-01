@@ -34,10 +34,11 @@ export default function GalleryClient({
   const locale = getLocale(searchParams?.get("lang"));
   const initialCategory = searchParams?.get("category");
   const categoryIds = categories.map((category) => category.id);
+  const defaultCategory = categoryIds[0] ?? "Rings";
   const [selected, setSelected] = useState<string>(
     initialCategory && categoryIds.includes(initialCategory)
       ? initialCategory
-      : "All"
+      : defaultCategory
   );
   const [showStickyMenu, setShowStickyMenu] = useState(false);
   const [isMainNavVisible, setIsMainNavVisible] = useState(true);
@@ -49,9 +50,9 @@ export default function GalleryClient({
     const nextSelected =
       currentCategory && categoryIds.includes(currentCategory)
         ? currentCategory
-        : "All";
+        : defaultCategory;
     setSelected(nextSelected);
-  }, [searchParams, categoryIds]);
+  }, [searchParams, categoryIds, defaultCategory]);
 
   useEffect(() => {
     const navElement = document.getElementById("main-nav");
@@ -115,34 +116,16 @@ export default function GalleryClient({
   }, [isMainNavVisible, showStickyMenu]);
 
   const filteredProducts = useMemo(() => {
-    if (selected === "All") return products;
     return products.filter((product) => {
       const category = getCategoryFromProduct(product);
       return category === selected;
     });
   }, [products, selected]);
 
-  const categoryOrder = useMemo(
-    () => categories.filter((c) => c.id !== "All").map((c) => c.id),
-    [categories]
-  );
-
   const sections = useMemo(() => {
-    if (selected === "All") {
-      return categoryOrder
-        .map((categoryId) => {
-          const label =
-            categories.find((c) => c.id === categoryId)?.label ?? categoryId;
-          const items = products.filter(
-            (p) => getCategoryFromProduct(p) === categoryId
-          );
-          return { categoryId, label, products: items };
-        })
-        .filter((s) => s.products.length > 0);
-    }
     const label = categories.find((c) => c.id === selected)?.label ?? selected;
     return [{ categoryId: selected, label, products: filteredProducts }];
-  }, [selected, products, categoryOrder, categories, filteredProducts]);
+  }, [selected, categories, filteredProducts]);
 
   const renderCategoryMenu = (innerClassName: string) => (
     <div className="category-tabs-scroll -mx-4 min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-1 [-webkit-overflow-scrolling:touch] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0">
@@ -159,11 +142,7 @@ export default function GalleryClient({
               onClick={() => {
                 setSelected(category.id);
                 const params = new URLSearchParams(searchParams?.toString());
-                if (category.id === "All") {
-                  params.delete("category");
-                } else {
-                  params.set("category", category.id);
-                }
+                params.set("category", category.id);
                 const query = params.toString();
                 router.replace(`${pathname}${query ? `?${query}` : ""}`, {
                   scroll: false,

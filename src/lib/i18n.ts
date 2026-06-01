@@ -38,15 +38,13 @@ export const translations = {
       it: "IT",
     },
     categories: {
-      all: "All",
       rings: "Rings",
       necklaces: "Necklaces",
       earrings: "Earrings",
       sets: "Sets",
     },
     home: {
-      title: "Welcome to my creation!",
-      subtitle: "Choose the piece you like and feel free to message me.",
+      title: "Jewellery that carries the beauty of nature",
       newLabel: "New",
       newTitle: "Latest pieces",
       viewDetails: "View details",
@@ -78,14 +76,13 @@ export const translations = {
     },
     about: {
       title: "About me",
-      paragraph1:
-        "Hello! I’m Olga. I am a handmade jewelry artist, working with jewelry epoxy resin.",
+      paragraph1: "Hello! My name is Olga.",
       paragraph2:
-        "In each piece, I try to preserve what nature gives us only for a short while. Inside my work are real flowers, small branches, and leaves — carefully dried and thoughtfully saved.",
+        "I create my jewellery using epoxy resin. In every piece, I try to preserve tiny fragments of nature - those gifts the world offers for just a moment before they quietly fade away. Real flowers, delicate little branches and leaves, gathered at their most fragile moment, carefully dried and preserved like small secrets of nature.",
       paragraph3:
-        "Flowers fade, moments pass, and yet sometimes we want to hold on to feelings and memories just a little longer, to carry them with us and keep them close.",
+        "Flowers fade, moments dissolve into time… yet emotions and memories can remain, if we learn to hold them gently.",
       paragraph4:
-        "My jewelry is for those who notice the little details and would love to wear a small piece of nature with them.",
+        "My jewellery is made for dreamers, for those who are enchanted by the quiet beauty of nature and can see poetry in the smallest details.",
       paragraph5: "",
     },
     cta: {
@@ -136,15 +133,13 @@ export const translations = {
       it: "IT",
     },
     categories: {
-      all: "Все",
       rings: "Кольца",
       necklaces: "Ожерелья",
       earrings: "Серьги",
       sets: "Наборы",
     },
     home: {
-      title: "Добро пожаловать в мои творения!",
-      subtitle: "Выберите понравившееся изделие и напишите мне.",
+      title: "Украшения, в которых таится красота природы",
       newLabel: "Новинки",
       newTitle: "Новые изделия",
       viewDetails: "Подробнее",
@@ -184,7 +179,7 @@ export const translations = {
       paragraph4:
         "Цветы увядают, моменты проходят, а чувства и воспоминания иногда хочется удержать чуть дольше, нести с собой и бережно хранить.",
       paragraph5:
-        "Мои украшения — для всех, кто любит замечать мелочи и хотел бы носить с собой частичку природы.",
+        "Мои украшения — для всех романтиков, тех, кого притягивает красота природы и кто любит замечать детали в вещах.",
     },
     cta: {
       helperText: "Чтобы сделать заказ, напишите мне напрямую.",
@@ -234,15 +229,13 @@ export const translations = {
       it: "IT",
     },
     categories: {
-      all: "Tutti",
       rings: "Anelli",
       necklaces: "Collane",
       earrings: "Orecchini",
       sets: "Set",
     },
     home: {
-      title: "Benvenuti nelle mie creazioni!",
-      subtitle: "Scegli il gioiello che ti piace e scrivimi.",
+      title: "Gioielli che custodiscono la bellezza della natura",
       newLabel: "Novita",
       newTitle: "Ultimi pezzi",
       viewDetails: "Vedi dettagli",
@@ -274,14 +267,13 @@ export const translations = {
     },
     about: {
       title: "Chi sono",
-      paragraph1:
-        "Ciao! Mi chiamo Olga. Sono un'artigiana di gioielli fatti a mano, lavoro con resina epossidica per gioielli.",
+      paragraph1: "Ciao! Mi chiamo Olga.",
       paragraph2:
-        "In ogni pezzo cerco di conservare cio che la natura ci dona solo per poco tempo. Nei miei lavori ci sono veri fiori, piccoli rami e foglie, essiccati con cura e custoditi con attenzione.",
+        "Creo gioielli fatti a mano in resina epossidica. In ogni creazione cerco di custodire piccoli frammenti di natura, quei doni che il mondo ci offre solo per un attimo e poi lascia svanire. Fiori veri, minuscoli rami e foglie raccolti nel loro momento più delicato, essiccati e conservati con cura, come piccoli segreti della natura.",
       paragraph3:
-        "I fiori appassiscono, i momenti passano, ma a volte vogliamo trattenere emozioni e ricordi un po piu a lungo, portarli con noi e custodirli vicino.",
+        "I fiori appassiscono, i momenti si dissolvono nel tempo… ma emozioni e ricordi possono restare, se impariamo a trattenerli con dolcezza.",
       paragraph4:
-        "I miei gioielli sono per chi sa notare i piccoli dettagli e desidera portare con se un piccolo frammento di natura.",
+        "I miei gioielli nascono per i sognatori, per chi si lascia incantare dalla bellezza silenziosa della natura e sa vedere la poesia nei dettagli più piccoli.",
       paragraph5: "",
     },
     cta: {

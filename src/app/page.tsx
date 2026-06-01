@@ -68,12 +68,7 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
             <div className="relative z-10 space-y-5 sm:space-y-6">
               <div className="space-y-4 sm:space-y-6">
-                <h1 className="text-[clamp(1.4rem,6vw,1.875rem)] font-semibold tracking-tight text-slate-900 sm:text-3xl md:text-5xl md:tracking-normal">
-                  {t.home.title}
-                </h1>
-                <p className="mx-auto max-w-xl text-[15px] text-slate-700 [overflow-wrap:anywhere] sm:text-base">
-                  {t.home.subtitle}
-                </p>
+                <h1 className="hero-tagline">{t.home.title}</h1>
               </div>
             </div>
           </section>

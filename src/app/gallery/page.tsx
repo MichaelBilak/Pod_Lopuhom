@@ -27,7 +27,6 @@ export default async function GalleryPage({ searchParams }: PageProps) {
   const t = getTranslations(locale);
   const products = await fetchProducts();
   const categories = [
-    { id: "All", label: t.categories.all },
     { id: "Rings", label: t.categories.rings },
     { id: "Necklaces", label: t.categories.necklaces },
     { id: "Earrings", label: t.categories.earrings },
