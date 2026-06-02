@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
+import ProductImage from "@/src/components/ProductImage";
 import { withLang, type Locale } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
 import {
@@ -76,7 +76,7 @@ export default function NewProductsScroll({
         >
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-auto sm:h-[320px]">
             {mainImageUrl ? (
-              <Image
+              <ProductImage
                 src={mainImageUrl}
                 alt={product.title}
                 fill
@@ -85,7 +85,7 @@ export default function NewProductsScroll({
                 style={{
                   objectPosition: productMainImageObjectPosition(product),
                 }}
-                loading={duplicate ? "lazy" : index < 2 ? "eager" : "lazy"}
+                loading={duplicate ? "lazy" : "eager"}
                 priority={!duplicate && index === 0}
               />
             ) : (

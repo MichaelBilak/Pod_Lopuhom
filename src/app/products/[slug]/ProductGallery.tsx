@@ -1,9 +1,9 @@
 "use client";
 
 import { Suspense, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import ProductImage from "@/src/components/ProductImage";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 import { buildQueryHref } from "@/src/lib/search-params";
 
@@ -77,7 +77,7 @@ function ProductGalleryContent({ title, images }: ProductGalleryProps) {
               ].join(" ")}
               aria-label={`View ${title} image ${index + 1}`}
             >
-              <Image
+              <ProductImage
                 src={item.url}
                 alt=""
                 width={64}
@@ -85,13 +85,13 @@ function ProductGalleryContent({ title, images }: ProductGalleryProps) {
                 sizes="64px"
                 className="gallery-image h-full w-full object-cover"
                 style={{ objectPosition: item.objectPosition }}
-                loading="lazy"
+                loading="eager"
               />
             </Link>
           ))}
         </div>
         <div className="relative order-1 min-w-0 flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 aspect-[4/5] max-h-[70vh] max-h-[70svh] max-h-[70dvh] md:order-2 md:aspect-square md:max-h-none">
-          <Image
+          <ProductImage
             src={activeImage}
             alt={title}
             fill

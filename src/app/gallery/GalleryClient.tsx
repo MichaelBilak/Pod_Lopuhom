@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { getLocale, withLang } from "@/src/lib/i18n";
 import { copySearchParams } from "@/src/lib/search-params";
 import type { Product } from "@/lib/products";
@@ -12,6 +11,7 @@ import {
   productDisplayPrice,
   productMainImageObjectPosition,
 } from "@/lib/products";
+import ProductImage from "@/src/components/ProductImage";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 
 type GalleryClientProps = {
@@ -229,7 +229,7 @@ export default function GalleryClient({
                     >
                       <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[4/5] sm:aspect-auto sm:h-72 lg:h-80">
                         {mainImageUrl ? (
-                          <Image
+                          <ProductImage
                             src={mainImageUrl}
                             alt={product.title}
                             fill
@@ -239,7 +239,7 @@ export default function GalleryClient({
                               objectPosition:
                                 productMainImageObjectPosition(product),
                             }}
-                            loading={productIndex < 3 ? "eager" : "lazy"}
+                            loading={productIndex < 6 ? "eager" : "lazy"}
                             priority={productIndex === 0}
                           />
                         ) : (

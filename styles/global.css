@@ -370,14 +370,7 @@ button:focus-visible {
 }
 
 /* First-visit splash: static #initial-splash in layout, controlled by html.splash-seen */
-#site-root {
-  opacity: 0;
-}
-
-html.splash-seen #site-root {
-  opacity: 1;
-  transition: opacity 500ms ease;
-}
+/* Keep #site-root visible so lazy-loaded images can fetch while splash overlay covers the screen. */
 
 html.splash-seen #initial-splash {
   display: none !important;
