@@ -85,7 +85,8 @@ function ProductGalleryContent({ title, images }: ProductGalleryProps) {
                 sizes="64px"
                 className="gallery-image h-full w-full object-cover"
                 style={{ objectPosition: item.objectPosition }}
-                loading="eager"
+                loading={index === resolvedActiveIndex ? "eager" : "lazy"}
+                quality={60}
               />
             </Link>
           ))}

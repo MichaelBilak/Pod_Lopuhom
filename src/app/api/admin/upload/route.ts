@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { optimizeProductImage } from "@/lib/image-optimize";
 import { uploadProductImage } from "@/lib/supabase-storage";
 import { hasSupabaseServiceRole } from "@/lib/supabase";
 
@@ -58,11 +59,15 @@ export async function POST(req: Request) {
     const urls = await Promise.all(
       toUpload.map(async (file) => {
         const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
+        const inputBuffer = Buffer.from(bytes);
         const mime =
           (file.type || "image/jpeg").toLowerCase().split(";")[0]?.trim() ||
           "image/jpeg";
-        const { url } = await uploadProductImage(buffer, mime);
+        const optimized = await optimizeProductImage(inputBuffer, mime);
+        const { url } = await uploadProductImage(
+          optimized.buffer,
+          optimized.mime
+        );
         return url;
       })
     );

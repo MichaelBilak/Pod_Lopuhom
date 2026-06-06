@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { resolveProductImageSrc } from "@/lib/image-url";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 
 type ProductImageProps = {
@@ -15,11 +16,8 @@ type ProductImageProps = {
   style?: React.CSSProperties;
   priority?: boolean;
   loading?: "eager" | "lazy";
+  quality?: number;
 };
-
-function isRemoteImage(src: string) {
-  return src.startsWith("http://") || src.startsWith("https://");
-}
 
 export default function ProductImage({
   src,
@@ -32,8 +30,13 @@ export default function ProductImage({
   style,
   priority,
   loading,
+  quality,
 }: ProductImageProps) {
   const [failed, setFailed] = useState(false);
+  const resolved = useMemo(
+    () => resolveProductImageSrc(src, { width, fill }),
+    [src, width, fill]
+  );
 
   if (!src || failed) {
     return (
@@ -46,7 +49,7 @@ export default function ProductImage({
 
   return (
     <Image
-      src={src}
+      src={resolved.src}
       alt={alt}
       fill={fill}
       width={fill ? undefined : width}
@@ -56,7 +59,8 @@ export default function ProductImage({
       style={style}
       priority={priority}
       loading={loading}
-      unoptimized={isRemoteImage(src)}
+      quality={quality}
+      unoptimized={resolved.unoptimized}
       onError={() => setFailed(true)}
     />
   );

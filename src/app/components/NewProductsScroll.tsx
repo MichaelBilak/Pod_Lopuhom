@@ -85,8 +85,8 @@ export default function NewProductsScroll({
                 style={{
                   objectPosition: productMainImageObjectPosition(product),
                 }}
-                loading={duplicate ? "lazy" : "eager"}
-                priority={!duplicate && index === 0}
+                loading={duplicate || index > 1 ? "lazy" : "eager"}
+                priority={!duplicate && index <= 1}
               />
             ) : (
               <ProductImagePlaceholder
