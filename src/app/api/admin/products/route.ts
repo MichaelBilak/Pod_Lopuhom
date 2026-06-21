@@ -7,6 +7,7 @@ import {
   fetchProductById,
   type ProductInsert,
 } from "@/lib/supabase-products";
+import { parseCollectionInput } from "@/src/lib/collections";
 
 export const runtime = "nodejs";
 
@@ -49,6 +50,7 @@ function buildProductInsert(payload: Record<string, unknown>): ProductInsert | n
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     category: parseCategory(payload.category),
+    collection: parseCollectionInput(payload.collection),
     price_on_request: parseBool(payload.price_on_request),
     is_active: parseBool(payload.is_active),
     is_new: parseBool(payload.is_new),

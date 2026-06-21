@@ -4,6 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  COLLECTIONS,
+  collectionImagePath,
+  type CollectionId,
+} from "@/src/lib/collections";
 import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 import { buildQueryHref } from "../lib/search-params";
 
@@ -11,6 +16,9 @@ const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const localeOptions: Locale[] = ["it", "en", "ru"];
+
+const navLinkClass =
+  "relative whitespace-nowrap py-1 font-normal uppercase tracking-[0.22em] transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 after:absolute after:-bottom-0.5 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition hover:after:scale-x-100 lg:after:-bottom-2";
 
 type LangDropdownProps = {
   locale: Locale;
@@ -55,7 +63,7 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
         aria-label="Change language"
         onClick={() => setOpen((value) => !value)}
         className={[
-          "inline-flex min-h-[36px] min-w-[60px] items-center justify-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+          "inline-flex min-h-[36px] min-w-[60px] items-center justify-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-normal uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
           open
             ? "border-slate-900 bg-white text-slate-900"
             : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900",
@@ -94,7 +102,7 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
                     replace
                     onClick={() => setOpen(false)}
                     className={[
-                      "flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] transition",
+                      "flex items-center justify-between px-4 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition",
                       isActive
                         ? "bg-slate-50 text-slate-900"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
@@ -118,6 +126,162 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
               );
             })}
           </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+type GalleryDropdownProps = {
+  label: string;
+  buildHref: (href: string) => string;
+  isActive: boolean;
+  compact?: boolean;
+};
+
+const galleryNavClass =
+  "relative whitespace-nowrap py-1 font-normal uppercase tracking-[0.22em] transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 after:absolute after:-bottom-0.5 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition lg:after:-bottom-2";
+
+function GalleryDropdown({
+  label,
+  buildHref,
+  isActive,
+  compact = false,
+}: GalleryDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const openTimerRef = useRef<number | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+
+  const clearTimers = () => {
+    if (openTimerRef.current !== null) {
+      window.clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const prefersHoverMenu = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const scheduleOpen = () => {
+    if (!prefersHoverMenu()) return;
+    clearTimers();
+    openTimerRef.current = window.setTimeout(() => setOpen(true), 320);
+  };
+
+  const scheduleClose = () => {
+    if (!prefersHoverMenu()) return;
+    clearTimers();
+    closeTimerRef.current = window.setTimeout(() => setOpen(false), 180);
+  };
+
+  useEffect(() => () => clearTimers(), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointer = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (!target || !wrapRef.current) return;
+      if (!wrapRef.current.contains(target)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("touchstart", onPointer, { passive: true });
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const collectionHref = (collection: CollectionId) =>
+    buildHref(
+      `/gallery?collection=${encodeURIComponent(collection)}&category=Rings`
+    );
+
+  const handleToggleClick = () => {
+    clearTimers();
+    setOpen((value) => !value);
+  };
+
+  return (
+    <div
+      ref={wrapRef}
+      className="relative shrink-0"
+      onMouseEnter={scheduleOpen}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={handleToggleClick}
+        className={[
+          galleryNavClass,
+          compact ? "text-[11px] text-slate-600 sm:text-xs" : "text-xs text-slate-600",
+          isActive || open ? "text-slate-900 after:scale-x-100" : "",
+        ].join(" ")}
+      >
+        <span className="inline-flex items-center gap-1">
+          {label}
+          <svg
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+            className={[
+              "h-3 w-3 transition-transform duration-200",
+              open ? "rotate-180" : "rotate-0",
+            ].join(" ")}
+          >
+            <path
+              fill="currentColor"
+              d="M5.5 7.5a.75.75 0 0 1 1.06 0L10 10.94l3.44-3.44a.75.75 0 1 1 1.06 1.06l-3.97 3.97a.75.75 0 0 1-1.06 0L5.5 8.56a.75.75 0 0 1 0-1.06Z"
+            />
+          </svg>
+        </span>
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          aria-label={label}
+          className={[
+            "absolute z-50 overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]",
+            compact
+              ? "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),18rem)] -translate-x-1/2"
+              : "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
+          ].join(" ")}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            {COLLECTIONS.map((collection) => (
+              <Link
+                key={collection}
+                role="menuitem"
+                href={collectionHref(collection)}
+                onClick={() => setOpen(false)}
+                className="group overflow-hidden rounded-xl border border-slate-200 transition hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                  <Image
+                    src={collectionImagePath(collection)}
+                    alt=""
+                    fill
+                    sizes="160px"
+                    className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">
+                  {collection}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
@@ -150,8 +314,8 @@ function NavBar() {
   const [headerHeight, setHeaderHeight] = useState(0);
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLElement>(null);
-  const navLinks = [
-    { label: t.nav.gallery, href: "/gallery" },
+  const isGalleryActive = pathname === "/gallery";
+  const secondaryLinks = [
     { label: t.nav.about, href: "/about" },
     { label: t.nav.orderDelivery, href: "/order-delivery" },
   ];
@@ -161,8 +325,7 @@ function NavBar() {
     buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
-    "text-[13px] tracking-[0.18em] sm:text-[17px] sm:tracking-[0.22em]";
-  const brandTitleDesktopClass = "text-[14px] tracking-[0.24em]";
+    "font-brand text-[15px] sm:text-[18px]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
@@ -222,7 +385,7 @@ function NavBar() {
           scroll={false}
           replace
           className={[
-            "inline-flex min-h-[28px] items-center justify-center rounded-full border px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.2em] transition",
+            "inline-flex min-h-[28px] items-center justify-center rounded-full border px-2 py-1 text-[9px] font-normal uppercase tracking-[0.2em] transition",
             option === locale
               ? "border-slate-900 text-slate-900"
               : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
@@ -242,6 +405,30 @@ function NavBar() {
     />
   );
 
+  const renderNavLinks = (compact: boolean) => (
+    <>
+      <GalleryDropdown
+        label={t.nav.gallery}
+        buildHref={buildHref}
+        isActive={isGalleryActive}
+        compact={compact}
+      />
+      {secondaryLinks.map((link) => (
+        <Link
+          key={link.href}
+          href={buildHref(link.href)}
+          className={[
+            navLinkClass,
+            compact ? "text-[11px] text-slate-600 sm:text-xs" : "text-xs text-slate-600",
+            pathname === link.href ? "text-slate-900 after:scale-x-100" : "",
+          ].join(" ")}
+        >
+          {link.label}
+        </Link>
+      ))}
+    </>
+  );
+
   return (
     <>
       <div
@@ -258,7 +445,6 @@ function NavBar() {
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
-        {/* Phones + tablets (<lg): two-row compact layout */}
         <div className="lg:hidden">
           {isHome ? (
             <div className="grid w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-3 pt-3 sm:px-5 sm:pt-4">
@@ -280,7 +466,7 @@ function NavBar() {
               <Link
                 href={buildHref("/")}
                 className={[
-                  "min-w-0 max-w-[min(100vw-8.5rem,16rem)] truncate text-center font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[min(100vw-10rem,18rem)]",
+                  "min-w-0 max-w-[min(100vw-8.5rem,16rem)] truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[min(100vw-10rem,18rem)]",
                   brandTitleClass,
                 ].join(" ")}
                 aria-label="Pod Lopuhom home"
@@ -313,30 +499,16 @@ function NavBar() {
             aria-label="Primary"
             className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-3 py-3 [-webkit-overflow-scrolling:touch] sm:px-5 sm:py-4"
           >
-            <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-600 sm:gap-7 sm:text-xs sm:tracking-[0.24em]">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={buildHref(link.href)}
-                  className={[
-                    "relative whitespace-nowrap py-1 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-                    "after:absolute after:-bottom-0.5 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition",
-                    "hover:after:scale-x-100",
-                    pathname === link.href ? "text-slate-900 after:scale-x-100" : "",
-                  ].join(" ")}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-5 sm:gap-7">
+              {renderNavLinks(true)}
             </div>
           </nav>
         </div>
 
-        {/* Desktop (lg+): brand left, nav center, language right */}
         <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-5 text-left lg:grid">
           <Link
             href={buildHref("/")}
-            className="inline-flex min-w-0 shrink-0 items-center gap-2.5 justify-self-start font-semibold uppercase text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
+            className="inline-flex min-w-0 shrink-0 items-center gap-2.5 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
             aria-label="Pod Lopuhom home"
           >
             <Image
@@ -348,28 +520,15 @@ function NavBar() {
               className="h-12 w-12 rounded-full object-cover"
               priority
             />
-            <span className={["truncate", brandTitleDesktopClass].join(" ")}>
+            <span className={["truncate", brandTitleClass].join(" ")}>
               Pod&nbsp;Lopuhom
             </span>
           </Link>
           <nav
             aria-label="Primary"
-            className="flex min-w-0 items-center justify-self-center gap-x-7 text-xs font-semibold uppercase tracking-[0.26em] text-slate-600"
+            className="flex min-w-0 items-center justify-self-center gap-x-7"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={buildHref(link.href)}
-                className={[
-                  "relative whitespace-nowrap transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
-                  "after:absolute after:-bottom-2 after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-slate-900 after:transition",
-                  "hover:after:scale-x-100",
-                  pathname === link.href ? "text-slate-900 after:scale-x-100" : "",
-                ].join(" ")}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {renderNavLinks(false)}
           </nav>
           <div className="justify-self-end shrink-0">{desktopLangPills}</div>
         </div>

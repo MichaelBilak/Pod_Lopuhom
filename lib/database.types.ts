@@ -20,6 +20,7 @@ export interface Database {
           price: number | null;
           discount: number;
           category: string | null;
+          collection: string | null;
           price_on_request: boolean;
           is_active: boolean;
           sort_order: number;
@@ -37,6 +38,7 @@ export interface Database {
           price?: number | null;
           discount?: number;
           category?: string | null;
+          collection?: string | null;
           price_on_request?: boolean;
           is_active?: boolean;
           sort_order?: number;
@@ -54,6 +56,7 @@ export interface Database {
           price?: number | null;
           discount?: number;
           category?: string | null;
+          collection?: string | null;
           price_on_request?: boolean;
           is_active?: boolean;
           sort_order?: number;

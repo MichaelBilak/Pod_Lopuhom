@@ -3,6 +3,7 @@ import Nav from "@/src/components/Nav";
 import { fetchProducts } from "@/lib/products-server";
 import { Suspense } from "react";
 import GalleryClient from "./GalleryClient";
+import GalleryPreloads from "./GalleryPreloads";
 import {
   getLocaleFromSearchParams,
   getTranslations,
@@ -19,6 +20,7 @@ type PageProps = {
   searchParams?: Promise<{
     lang?: string;
     category?: string;
+    collection?: string;
   }>;
 };
 
@@ -36,6 +38,11 @@ export default async function GalleryPage({ searchParams }: PageProps) {
 
   return (
     <>
+      <GalleryPreloads
+        products={products}
+        category={resolvedSearchParams.category}
+        collection={resolvedSearchParams.collection}
+      />
       <Nav />
       <main className="mx-auto w-full min-w-0 max-w-6xl space-y-10 px-4 pb-20 pt-8 sm:space-y-14 sm:px-6 sm:pb-24 sm:pt-12">
         <section className="min-w-0 space-y-6 text-center sm:space-y-7">

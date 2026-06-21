@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  COLLECTIONS,
+  type CollectionId,
+} from "@/src/lib/collections";
 import {
   DndContext,
   PointerSensor,
@@ -30,6 +34,57 @@ type ProductListProps = {
 const CATEGORY_ORDER = ["Rings", "Necklaces", "Earrings", "Sets"] as const;
 const UNCATEGORIZED = "Uncategorized";
 
+type CollectionFilter = "all" | CollectionId;
+
+type CollectionGroup = {
+  collection: CollectionId;
+  categories: Array<{ category: string; products: Product[] }>;
+};
+
+function categoryOrder(name: string) {
+  const idx = (CATEGORY_ORDER as readonly string[]).indexOf(name);
+  if (idx !== -1) return idx;
+  if (name === UNCATEGORIZED) return Number.MAX_SAFE_INTEGER;
+  return CATEGORY_ORDER.length;
+}
+
+function groupProducts(products: Product[]): CollectionGroup[] {
+  const byCollection = new Map<string, Map<string, Product[]>>();
+
+  for (const product of products) {
+    const collection =
+      product.collection && product.collection.trim().length > 0
+        ? product.collection
+        : "Herbarium";
+    const category =
+      product.category && product.category.trim().length > 0
+        ? product.category
+        : UNCATEGORIZED;
+
+    if (!byCollection.has(collection)) {
+      byCollection.set(collection, new Map());
+    }
+    const categories = byCollection.get(collection)!;
+    if (!categories.has(category)) {
+      categories.set(category, []);
+    }
+    categories.get(category)!.push(product);
+  }
+
+  return COLLECTIONS.map((collection) => {
+    const categories = byCollection.get(collection);
+    if (!categories) {
+      return { collection, categories: [] };
+    }
+    return {
+      collection,
+      categories: Array.from(categories.entries())
+        .sort(([a], [b]) => categoryOrder(a) - categoryOrder(b))
+        .map(([category, list]) => ({ category, products: list })),
+    };
+  }).filter((group) => group.categories.length > 0);
+}
+
 function formatPrice(p: Product): string {
   if (p.price_on_request) return "On request";
   if (p.price != null) {
@@ -42,21 +97,15 @@ function formatPrice(p: Product): string {
   return "—";
 }
 
-function groupByCategory(products: Product[]): Array<[string, Product[]]> {
-  const buckets = new Map<string, Product[]>();
-  for (const p of products) {
-    const key = p.category && p.category.trim().length > 0 ? p.category : UNCATEGORIZED;
-    const arr = buckets.get(key);
-    if (arr) arr.push(p);
-    else buckets.set(key, [p]);
-  }
-  const orderIndex = (name: string) => {
-    const idx = (CATEGORY_ORDER as readonly string[]).indexOf(name);
-    if (idx !== -1) return idx;
-    if (name === UNCATEGORIZED) return Number.MAX_SAFE_INTEGER;
-    return CATEGORY_ORDER.length;
-  };
-  return Array.from(buckets.entries()).sort(([a], [b]) => orderIndex(a) - orderIndex(b));
+function collectionBadgeClass(collection: string) {
+  return collection === "Folia"
+    ? "bg-emerald-100 text-emerald-800"
+    : "bg-sky-100 text-sky-800";
+}
+
+function productCollection(product: Product): CollectionId {
+  const value = product.collection?.trim();
+  return value === "Folia" ? "Folia" : "Herbarium";
 }
 
 type SortableRowProps = {
@@ -149,6 +198,14 @@ function SortableRow({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-medium text-slate-900">{product.title}</span>
+          <span
+            className={[
+              "rounded px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide",
+              collectionBadgeClass(productCollection(product)),
+            ].join(" ")}
+          >
+            {productCollection(product)}
+          </span>
           {!product.is_active && (
             <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800">
               Hidden
@@ -242,7 +299,21 @@ export default function ProductList({
   onDelete,
   onReorder,
 }: ProductListProps) {
-  const grouped = useMemo(() => groupByCategory(products), [products]);
+  const [collectionFilter, setCollectionFilter] = useState<CollectionFilter>("all");
+  const grouped = useMemo(() => groupProducts(products), [products]);
+  const filteredGroups = useMemo(() => {
+    if (collectionFilter === "all") return grouped;
+    return grouped.filter((group) => group.collection === collectionFilter);
+  }, [grouped, collectionFilter]);
+
+  const collectionCounts = useMemo(() => {
+    const counts: Record<CollectionId, number> = { Herbarium: 0, Folia: 0 };
+    for (const product of products) {
+      counts[productCollection(product)] += 1;
+    }
+    return counts;
+  }, [products]);
+
   const rowRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
 
   const registerRef = (id: string, el: HTMLDivElement | null) => {
@@ -266,15 +337,23 @@ export default function ProductList({
     if (oldIndex < 0 || newIndex < 0) return;
     const reordered = arrayMove(categoryProducts, oldIndex, newIndex);
     const newGlobalOrder: string[] = [];
-    for (const [, list] of grouped) {
-      if (list === categoryProducts) {
-        for (const p of reordered) newGlobalOrder.push(p.id);
-      } else {
-        for (const p of list) newGlobalOrder.push(p.id);
+    for (const group of grouped) {
+      for (const section of group.categories) {
+        if (section.products === categoryProducts) {
+          for (const p of reordered) newGlobalOrder.push(p.id);
+        } else {
+          for (const p of section.products) newGlobalOrder.push(p.id);
+        }
       }
     }
     onReorder(newGlobalOrder);
   };
+
+  const filterOptions: Array<{ id: CollectionFilter; label: string; count: number }> = [
+    { id: "all", label: "All", count: products.length },
+    { id: "Herbarium", label: "Herbarium", count: collectionCounts.Herbarium },
+    { id: "Folia", label: "Folia", count: collectionCounts.Folia },
+  ];
 
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
@@ -290,31 +369,59 @@ export default function ProductList({
           Add product
         </button>
       </div>
+      {products.length > 0 ? (
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 bg-white px-5 py-3">
+          {filterOptions.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => setCollectionFilter(option.id)}
+              className={[
+                "rounded-full border px-3 py-1.5 text-xs font-medium transition",
+                collectionFilter === option.id
+                  ? "border-slate-900 bg-slate-900 text-white"
+                  : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900",
+              ].join(" ")}
+            >
+              {option.label} ({option.count})
+            </button>
+          ))}
+        </div>
+      ) : null}
       {products.length === 0 ? (
         <div className="px-5 py-12 text-center text-sm text-slate-500">
           No products yet. Click &quot;Add product&quot; to create one.
         </div>
       ) : (
         <div>
-          {grouped.map(([category, list]) => (
-            <section key={category}>
-              <div className="admin-sticky-shell sticky top-0 z-10 flex items-center justify-between gap-2 border-y border-slate-200 bg-slate-100/95 px-5 py-2 backdrop-blur">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700">
-                  {category}
-                </span>
-                <span className="text-[11px] font-medium text-slate-500">
-                  {list.length}
+          {filteredGroups.map((group) => (
+            <section key={group.collection}>
+              <div className="border-y border-[#74939f]/30 bg-[#74939f]/10 px-5 py-3">
+                <span className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-800">
+                  {group.collection}
                 </span>
               </div>
-              <SortableCategorySection
-                list={list}
-                highlightedId={highlightedId}
-                draggable={Boolean(onReorder)}
-                onEdit={onEdit}
-                onDelete={onDelete}
-                registerRef={registerRef}
-                onDragEnd={(e) => handleDragEnd(e, list)}
-              />
+              {group.categories.map(({ category, products: list }) => (
+                <div key={`${group.collection}-${category}`}>
+                  <div className="admin-sticky-shell sticky top-0 z-10 flex items-center justify-between gap-2 border-b border-slate-200 bg-slate-100/95 px-5 py-2 backdrop-blur">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700">
+                      {category}
+                    </span>
+                    <span className="text-[11px] font-medium text-slate-500">
+                      {list.length}
+                    </span>
+                  </div>
+                  <SortableCategorySection
+                    list={list}
+                    highlightedId={highlightedId}
+                    draggable={Boolean(onReorder)}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    registerRef={registerRef}
+                    onDragEnd={(e) => handleDragEnd(e, list)}
+                  />
+                </div>
+              ))}
             </section>
           ))}
         </div>

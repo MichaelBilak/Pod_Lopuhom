@@ -36,6 +36,10 @@ alter table products
   add column if not exists category text not null default 'Rings';
 alter table products
   add column if not exists is_new boolean not null default false;
+alter table products
+  add column if not exists collection text default 'Herbarium';
+
+update products set collection = 'Herbarium' where collection is null;
 
 create or replace function set_updated_at()
 returns trigger as $$

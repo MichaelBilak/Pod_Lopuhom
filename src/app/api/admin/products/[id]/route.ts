@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { revalidateTag } from "next/cache";
+import { parseCollectionInput } from "@/src/lib/collections";
 import {
   updateProduct,
   deleteProduct,
@@ -70,6 +71,7 @@ function buildProductUpdate(payload: Record<string, unknown>): ProductUpdate | n
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     category: parseCategory(payload.category),
+    collection: parseCollectionInput(payload.collection),
     price_on_request: parseBool(payload.price_on_request),
     is_active: parseBool(payload.is_active),
     is_new: parseBool(payload.is_new),

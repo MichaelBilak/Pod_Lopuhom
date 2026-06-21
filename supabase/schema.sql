@@ -13,6 +13,7 @@ create table if not exists products (
   price numeric,
   discount numeric default 0,
   category text,
+  collection text default 'Herbarium',
   price_on_request boolean default false,
   is_active boolean default true,
   sort_order integer default 0,
@@ -29,6 +30,7 @@ alter table products add column if not exists sort_order integer default 0;
 alter table products add column if not exists is_new boolean default false;
 alter table products add column if not exists description_ru text;
 alter table products add column if not exists description_it text;
+alter table products add column if not exists collection text default 'Herbarium';
 alter table products drop column if exists materials;
 
 -- If price was created as text (old schema), convert to numeric (optional; remove if it fails)
@@ -44,6 +46,8 @@ begin
 exception when others then
   null; -- leave price as text if conversion fails
 end $$;
+
+update products set collection = 'Herbarium' where collection is null;
 
 -- Product images table
 create table if not exists product_images (

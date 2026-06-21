@@ -11,11 +11,14 @@ type ProductImageProps = {
   fill?: boolean;
   width?: number;
   height?: number;
+  displayWidth?: number;
+  pixelRatio?: number;
   sizes?: string;
   className?: string;
   style?: React.CSSProperties;
   priority?: boolean;
   loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
   quality?: number;
 };
 
@@ -25,17 +28,27 @@ export default function ProductImage({
   fill,
   width,
   height,
+  displayWidth,
+  pixelRatio,
   sizes,
   className = "",
   style,
   priority,
   loading,
+  fetchPriority,
   quality,
 }: ProductImageProps) {
   const [failed, setFailed] = useState(false);
   const resolved = useMemo(
-    () => resolveProductImageSrc(src, { width, fill }),
-    [src, width, fill]
+    () =>
+      resolveProductImageSrc(src, {
+        width,
+        fill,
+        displayWidth,
+        quality,
+        pixelRatio,
+      }),
+    [src, width, fill, displayWidth, quality, pixelRatio]
   );
 
   if (!src || failed) {
@@ -59,6 +72,7 @@ export default function ProductImage({
       style={style}
       priority={priority}
       loading={loading}
+      fetchPriority={fetchPriority}
       quality={quality}
       unoptimized={resolved.unoptimized}
       onError={() => setFailed(true)}

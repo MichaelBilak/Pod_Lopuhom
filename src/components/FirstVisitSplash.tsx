@@ -11,11 +11,11 @@ function markSplashSeen() {
   } catch {
     /* ignore */
   }
-  document.documentElement.classList.add("splash-seen");
   document.body.style.overflow = "";
 }
 
 function hideSplashElement(splash: HTMLElement) {
+  splash.classList.remove("splash-screen--visible");
   splash.classList.add("splash-screen--exit");
   splash.setAttribute("aria-hidden", "true");
 }
@@ -49,6 +49,7 @@ export default function FirstVisitSplash() {
     }
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    splash.classList.add("splash-screen--visible");
     document.body.style.overflow = "hidden";
 
     if (reducedMotion) {

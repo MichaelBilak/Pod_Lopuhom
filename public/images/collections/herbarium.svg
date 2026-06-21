@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Herbarium collection">
+  <defs>
+    <linearGradient id="herb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8f0ec"/>
+      <stop offset="100%" stop-color="#74939F"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#herb-bg)"/>
+  <text x="200" y="160" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="#1e293b">Herbarium</text>
+</svg>

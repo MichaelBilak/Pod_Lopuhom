@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { DEFAULT_COLLECTION } from "@/src/lib/collections";
+import {
+  instagramUrl,
+  whatsappDisplay,
+  whatsappUrl,
+} from "@/src/lib/contact";
 import { getLocale, getTranslations, withLang } from "../lib/i18n";
-
-const instagramUrl =
-  "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
-const whatsappNumber = "972533794428";
-const whatsappUrl = `https://wa.me/${whatsappNumber}`;
-const whatsappDisplay = "+972 53 379 4428";
 
 function InstagramIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -49,7 +49,7 @@ function FooterSocialContent() {
   const year = new Date().getFullYear();
 
   const exploreLinks = [
-    { label: t.nav.gallery, href: "/gallery" },
+    { label: t.nav.gallery, href: `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}&category=Rings` },
     { label: t.nav.about, href: "/about" },
     { label: t.nav.orderDelivery, href: "/order-delivery" },
   ];
@@ -64,9 +64,7 @@ function FooterSocialContent() {
   return (
     <footer className="relative mt-12 min-w-0 border-t border-slate-200 bg-slate-50/70 text-slate-700 sm:mt-16">
       <div className="mx-auto w-full min-w-0 max-w-6xl px-4 pt-12 pb-6 sm:px-6 sm:pt-14 sm:pb-8">
-        {/* Top: brand + columns */}
         <div className="grid min-w-0 gap-y-10 gap-x-8 sm:grid-cols-2 sm:gap-y-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
-          {/* Brand */}
           <div className="min-w-0 space-y-4 sm:col-span-2 md:col-span-1">
             <Link
               href={withLang("/", locale)}
@@ -81,7 +79,7 @@ function FooterSocialContent() {
                 sizes="48px"
                 className="h-11 w-11 rounded-full object-cover"
               />
-              <span className="text-base font-semibold uppercase tracking-[0.22em] text-slate-900">
+              <span className="font-brand text-lg text-slate-900">
                 Pod&nbsp;Lopuhom
               </span>
             </Link>
@@ -110,9 +108,8 @@ function FooterSocialContent() {
             </div>
           </div>
 
-          {/* Explore */}
           <nav aria-label="Footer explore" className="min-w-0">
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-900">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-slate-900">
               {t.footer.exploreTitle}
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
@@ -129,9 +126,8 @@ function FooterSocialContent() {
             </ul>
           </nav>
 
-          {/* Shop / Categories */}
           <nav aria-label="Footer shop" className="min-w-0">
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-900">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-slate-900">
               {t.footer.shopTitle}
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
@@ -139,7 +135,7 @@ function FooterSocialContent() {
                 <li key={category.id}>
                   <Link
                     href={withLang(
-                      `/gallery?category=${encodeURIComponent(category.id)}`,
+                      `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}&category=${encodeURIComponent(category.id)}`,
                       locale
                     )}
                     className="inline-flex transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -151,9 +147,8 @@ function FooterSocialContent() {
             </ul>
           </nav>
 
-          {/* Contact */}
           <div className="min-w-0 sm:col-span-2 md:col-span-1">
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-900">
+            <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-slate-900">
               {t.footer.contactTitle}
             </h3>
             <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-slate-600">
@@ -167,7 +162,7 @@ function FooterSocialContent() {
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 >
-                  <WhatsappIcon className="h-4 w-4 text-slate-500 transition group-hover:text-slate-900" />
+                  <WhatsappIcon className="h-4 w-4 text-slate-500" />
                   <span>{whatsappDisplay}</span>
                 </a>
               </li>
@@ -186,12 +181,10 @@ function FooterSocialContent() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="mt-10 h-px w-full bg-slate-200 sm:mt-14" />
 
-        {/* Bottom strip */}
         <div className="mt-6 text-center text-[11px] uppercase tracking-[0.2em] text-slate-500 sm:text-[12px] sm:tracking-[0.22em]">
-          <p>
+          <p suppressHydrationWarning>
             © {year} Pod&nbsp;Lopuhom. {t.footer.rights}
           </p>
         </div>

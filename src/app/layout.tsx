@@ -1,9 +1,23 @@
 import "@/styles/global.css";
 import type { Viewport } from "next";
+import { Caveat, Reenie_Beanie } from "next/font/google";
 import FirstVisitSplash from "@/src/components/FirstVisitSplash";
 import ViewportOverflowDebug from "@/src/components/ViewportOverflowDebug";
 
-const SPLASH_SEEN_SCRIPT = `(function(){try{if(sessionStorage.getItem("pod-lopuhom-splash-v1")){document.documentElement.classList.add("splash-seen");}}catch(e){}})();`;
+const reenieBeanie = Reenie_Beanie({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-tagline",
+  display: "swap",
+});
+
+/** Reenie Beanie has no Cyrillic; Caveat covers RU with a similar handwritten feel. */
+const caveat = Caveat({
+  subsets: ["latin", "cyrillic"],
+  weight: "400",
+  variable: "--font-tagline-cyrillic",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Pod Lopuhom",
@@ -29,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${reenieBeanie.variable} ${caveat.variable}`}>
       <head>
         <link rel="icon" href="/images/products/Logo._pod_lopuhom-removebg-preview.png" type="image/png" />
         <link
@@ -37,13 +51,13 @@ export default function RootLayout({
           as="image"
           href="/images/products/Logo.%20pod_lopuhom.jpeg"
         />
-        <script dangerouslySetInnerHTML={{ __html: SPLASH_SEEN_SCRIPT }} />
       </head>
-      <body className="bg-white text-ink">
+      <body className="bg-white text-ink" suppressHydrationWarning>
         <div
           id="initial-splash"
-          className="splash-screen splash-screen--visible"
+          className="splash-screen"
           role="presentation"
+          aria-hidden="true"
         >
           <div className="splash-screen__glow" aria-hidden />
           <div className="splash-screen__inner">
@@ -59,10 +73,10 @@ export default function RootLayout({
                 decoding="async"
               />
             </div>
-            <p className="splash-screen__brand">Pod&nbsp;Lopuhom</p>
+            <p className="splash-screen__brand font-brand">Pod&nbsp;Lopuhom</p>
             <span className="splash-screen__rule" aria-hidden />
-            <p className="splash-screen__tagline">
-              Jewellery that carries the beauty of nature
+            <p className="splash-screen__tagline font-tagline">
+              Handcrafted resin creations inspired by nature
             </p>
           </div>
         </div>

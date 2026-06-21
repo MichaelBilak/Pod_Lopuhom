@@ -27,6 +27,7 @@ export type Product = {
   price: number | null;
   discount: number;
   category: string | null;
+  collection: string | null;
   price_on_request: boolean;
   is_active: boolean;
   is_new: boolean;
@@ -253,6 +254,7 @@ export type ProductInsert = {
   price?: number | null;
   discount?: number;
   category?: string | null;
+  collection?: string | null;
   price_on_request?: boolean;
   is_active?: boolean;
   is_new?: boolean;
@@ -270,6 +272,7 @@ export async function createProduct(input: ProductInsert): Promise<Product> {
     price: input.price ?? null,
     discount: input.discount ?? 0,
     category: input.category ?? null,
+    collection: input.collection ?? "Herbarium",
     price_on_request: input.price_on_request ?? false,
     is_active: input.is_active ?? true,
     is_new: input.is_new ?? false,
@@ -301,6 +304,7 @@ export async function updateProduct(
     price: input.price ?? null,
     discount: input.discount ?? 0,
     category: input.category ?? null,
+    collection: input.collection ?? "Herbarium",
     price_on_request: input.price_on_request ?? false,
     is_active: input.is_active ?? true,
     is_new: input.is_new ?? false,

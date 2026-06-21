@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import {
+  parseCollection,
+  type CollectionId,
+} from "@/src/lib/collections";
 import { getLocale, withLang } from "@/src/lib/i18n";
 import { copySearchParams } from "@/src/lib/search-params";
 import type { Product } from "@/lib/products";
@@ -11,6 +15,12 @@ import {
   productDisplayPrice,
   productMainImageObjectPosition,
 } from "@/lib/products";
+import {
+  filterGalleryProductsByCollection,
+  galleryProductImageSrc,
+} from "@/lib/gallery-images";
+import { prefetchGalleryImages } from "@/lib/gallery-prefetch";
+import { useGalleryImageProfile } from "@/src/hooks/useGalleryImageProfile";
 import ProductImage from "@/src/components/ProductImage";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
 
@@ -24,12 +34,18 @@ const getCategoryFromProduct = (product: Product) => {
   return product.category ?? "Rings";
 };
 
+const getCollectionFromProduct = (product: Product): CollectionId => {
+  return parseCollection(product.collection);
+};
+
 function buildCategoryHref(
   pathname: string,
   searchParams: ReturnType<typeof useSearchParams>,
-  categoryId: string
+  categoryId: string,
+  collectionId: CollectionId
 ) {
   const params = copySearchParams(searchParams);
+  params.set("collection", collectionId);
   params.set("category", categoryId);
   const query = params.toString();
   return `${pathname}${query ? `?${query}` : ""}`;
@@ -43,6 +59,12 @@ export default function GalleryClient({
   const searchParams = useSearchParams();
   const pathname = usePathname() ?? "/gallery";
   const locale = getLocale(searchParams?.get("lang"));
+  const { isMobile, profile } = useGalleryImageProfile();
+
+  const selectedCollection = useMemo(
+    () => parseCollection(searchParams?.get("collection")),
+    [searchParams]
+  );
 
   const defaultCategory = categories[0]?.id ?? "Rings";
   const selected = useMemo(() => {
@@ -133,9 +155,20 @@ export default function GalleryClient({
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const category = getCategoryFromProduct(product);
-      return category === selected;
+      const collection = getCollectionFromProduct(product);
+      return category === selected && collection === selectedCollection;
     });
-  }, [products, selected]);
+  }, [products, selected, selectedCollection]);
+
+  useEffect(() => {
+    const urls = filterGalleryProductsByCollection(products, selectedCollection)
+      .map((product) => productMainImageUrl(product))
+      .filter((url): url is string => Boolean(url))
+      .map((url) => galleryProductImageSrc(url, profile));
+
+    const controller = prefetchGalleryImages(urls, { isMobile });
+    return () => controller.abort();
+  }, [products, selectedCollection, profile, isMobile]);
 
   const sections = useMemo(() => {
     const label = categories.find((c) => c.id === selected)?.label ?? selected;
@@ -153,11 +186,16 @@ export default function GalleryClient({
         {categories.map((category, index) => (
           <div key={category.id} className="flex shrink-0 items-center gap-2 sm:gap-0">
             <Link
-              href={buildCategoryHref(pathname, searchParams, category.id)}
+              href={buildCategoryHref(
+                pathname,
+                searchParams,
+                category.id,
+                selectedCollection
+              )}
               scroll={false}
               replace
               className={[
-                "inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap border-b border-transparent pb-1.5 pt-1.5 transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:pb-2 sm:pt-0",
+                "inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap border-b border-transparent pb-1.5 pt-1.5 font-normal uppercase tracking-[0.22em] transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:pb-2 sm:pt-0",
                 selected === category.id ? "border-slate-400 text-slate-900" : "",
               ].join(" ")}
             >
@@ -187,29 +225,26 @@ export default function GalleryClient({
       >
         <div className="mx-auto w-full min-w-0 max-w-6xl px-4 py-3 sm:px-6">
           {renderCategoryMenu(
-            "text-xs font-semibold uppercase tracking-[0.08em] text-slate-600 sm:text-sm sm:tracking-[0.28em]"
+            "text-xs font-normal uppercase tracking-[0.08em] text-slate-600 sm:text-sm sm:tracking-[0.28em]"
           )}
         </div>
       </div>
+      <p className="text-center text-[11px] font-normal uppercase tracking-[0.28em] text-slate-500 sm:text-xs">
+        {selectedCollection}
+      </p>
       {renderCategoryMenu(
-        "text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.3em] sm:text-base"
+        "text-xs font-normal uppercase tracking-[0.08em] text-slate-500 sm:gap-8 sm:text-sm sm:tracking-[0.3em] sm:text-base"
       )}
 
       <section id="gallery" className="min-w-0 space-y-16 sm:space-y-24 lg:space-y-28">
         {sections.map(({ categoryId, label, products: sectionProducts }) => (
           <div key={categoryId} className="space-y-8 sm:space-y-[45px]">
             <div className="-mx-2 flex min-w-0 items-center gap-2 sm:-mx-10 sm:gap-3 lg:-mx-16">
-              <span
-                className="h-[5px] min-w-[2rem] flex-1 border-y border-slate-500 sm:min-w-[4rem]"
-                aria-hidden
-              />
-              <h2 className="min-w-0 max-w-[min(100%,18rem)] shrink whitespace-nowrap text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
+              <span className="home-category-band min-w-[2rem] flex-1 sm:min-w-[4rem]" aria-hidden />
+              <h2 className="min-w-0 max-w-[min(100%,18rem)] shrink whitespace-nowrap text-center text-[13px] font-normal uppercase tracking-[0.2em] text-slate-600 [overflow-wrap:anywhere] sm:text-base sm:tracking-[0.28em]">
                 {label}
               </h2>
-              <span
-                className="h-[5px] min-w-[2rem] flex-1 border-y border-slate-500 sm:min-w-[4rem]"
-                aria-hidden
-              />
+              <span className="home-category-band min-w-[2rem] flex-1 sm:min-w-[4rem]" aria-hidden />
             </div>
             <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-8 sm:gap-y-10 md:gap-x-[40px] lg:grid-cols-3 lg:gap-x-[60px] lg:gap-y-12">
               {sectionProducts.map((product, productIndex) => {
@@ -233,14 +268,28 @@ export default function GalleryClient({
                             src={mainImageUrl}
                             alt={product.title}
                             fill
-                            sizes="(max-width: 1024px) 50vw, 33vw"
-                            className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
+                            displayWidth={profile.displayWidth}
+                            pixelRatio={profile.pixelRatio}
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                            className="gallery-image h-full w-full origin-center object-cover object-center sm:transition sm:duration-500 sm:ease-out sm:group-hover:scale-[1.02]"
                             style={{
                               objectPosition:
                                 productMainImageObjectPosition(product),
                             }}
-                            loading={productIndex < 6 ? "eager" : "lazy"}
-                            priority={productIndex === 0}
+                            loading={
+                              productIndex < profile.eagerCount
+                                ? "eager"
+                                : isMobile
+                                  ? "lazy"
+                                  : "eager"
+                            }
+                            fetchPriority={
+                              productIndex < Math.min(2, profile.eagerCount)
+                                ? "high"
+                                : "auto"
+                            }
+                            priority={productIndex < profile.eagerCount}
+                            quality={profile.quality}
                           />
                         ) : (
                           <ProductImagePlaceholder

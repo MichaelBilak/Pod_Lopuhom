@@ -100,6 +100,7 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         price: payload.price ? num(payload.price) : null,
         discount: payload.discount ? num(payload.discount) : 0,
         category: payload.category,
+        collection: payload.collection,
         price_on_request: payload.price_on_request,
         is_active: payload.is_active,
         is_new: payload.is_new,
@@ -145,10 +146,14 @@ export default function AdminClient({ initialProducts }: AdminClientProps) {
         setFormProduct(product);
         flashProduct(product.id);
         const categoryChanged = previous.category !== product.category;
+        const collectionChanged =
+          (previous.collection ?? "Herbarium") !== (product.collection ?? "Herbarium");
         setMessage(
-          categoryChanged
-            ? `Product moved to «${product.category ?? "Uncategorized"}».`
-            : "Product updated."
+          collectionChanged
+            ? `Product moved to collection «${product.collection ?? "Herbarium"}».`
+            : categoryChanged
+              ? `Product moved to category «${product.category ?? "Uncategorized"}».`
+              : "Product updated."
         );
       }
     } catch (e) {

@@ -13,13 +13,10 @@ import {
   getLocaleFromSearchParams,
   getTranslations,
 } from "@/src/lib/i18n";
+import { instagramUrl, whatsappUrl } from "@/src/lib/contact";
 
 export const revalidate = 300;
 export const runtime = "nodejs";
-
-const instagramUrl =
-  "https://www.instagram.com/pod_lopuhom?igsh=MWhmNHAwMjR2bWx0NA==";
-const whatsappNumber = "972533794428";
 
 type PageProps = {
   params: Promise<{
@@ -85,7 +82,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                   />
                 ) : null}
                 <a
-                  href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+                  href={`${whatsappUrl}?text=${whatsappMessage}`}
                   className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 sm:flex-initial"
                 >
                   {t.product.requestWhatsapp}

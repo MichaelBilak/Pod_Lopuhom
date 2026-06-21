@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { COLLECTIONS } from "@/src/lib/collections";
 import ImageManager from "./ImageManager";
 import ProductPreview from "./ProductPreview";
 import type { Product, ProductImage } from "@/lib/supabase-products";
@@ -16,6 +17,7 @@ export type ProductFormState = {
   price: string;
   discount: string;
   category: string;
+  collection: string;
   price_on_request: boolean;
   is_active: boolean;
   is_new: boolean;
@@ -31,6 +33,7 @@ const emptyForm: ProductFormState = {
   price: "",
   discount: "0",
   category: "Rings",
+  collection: "Herbarium",
   price_on_request: false,
   is_active: true,
   is_new: false,
@@ -46,6 +49,7 @@ const toFormState = (product: Product): ProductFormState => ({
   price: product.price != null ? String(product.price) : "",
   discount: String(product.discount ?? 0),
   category: product.category ?? "Rings",
+  collection: product.collection ?? "Herbarium",
   price_on_request: product.price_on_request,
   is_active: product.is_active,
   is_new: product.is_new ?? false,
@@ -168,6 +172,50 @@ export default function ProductForm({
         </label>
       </div>
 
+      <div className="space-y-3 rounded-xl border border-[#74939f]/40 bg-[#74939f]/5 p-4">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-600">
+          Коллекция и категория в галерее
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              Collection
+            </span>
+            <select
+              value={form.collection}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, collection: e.target.value }))
+              }
+              className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+            >
+              {COLLECTIONS.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              Category
+            </span>
+            <select
+              value={form.category}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, category: e.target.value }))
+              }
+              className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+
       <div className="space-y-4 rounded-xl border border-slate-200 bg-slate-50/50 p-4">
         <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
           Описание
@@ -216,7 +264,7 @@ export default function ProductForm({
         </label>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
             Price
@@ -245,24 +293,6 @@ export default function ProductForm({
             }
             className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
           />
-        </label>
-        <label className="block">
-          <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Category
-          </span>
-          <select
-            value={form.category}
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, category: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-          >
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
         </label>
       </div>
 
