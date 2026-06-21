@@ -3,7 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
+import { createPortal } from "react-dom";
 import {
   COLLECTIONS,
   collectionImagePath,
@@ -149,7 +157,13 @@ function GalleryDropdown({
   compact = false,
 }: GalleryDropdownProps) {
   const [open, setOpen] = useState(false);
+  const [menuStyle, setMenuStyle] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
 
@@ -182,12 +196,40 @@ function GalleryDropdown({
 
   useEffect(() => () => clearTimers(), []);
 
+  useLayoutEffect(() => {
+    if (!open || !compact) {
+      setMenuStyle(null);
+      return;
+    }
+
+    const updateMenuPosition = () => {
+      if (!wrapRef.current) return;
+      const rect = wrapRef.current.getBoundingClientRect();
+      const width = Math.min(window.innerWidth - 32, 288);
+      setMenuStyle({
+        top: rect.bottom + 8,
+        left: Math.max(16, (window.innerWidth - width) / 2),
+        width,
+      });
+    };
+
+    updateMenuPosition();
+    window.addEventListener("scroll", updateMenuPosition, { passive: true });
+    window.addEventListener("resize", updateMenuPosition);
+    return () => {
+      window.removeEventListener("scroll", updateMenuPosition);
+      window.removeEventListener("resize", updateMenuPosition);
+    };
+  }, [open, compact]);
+
   useEffect(() => {
     if (!open) return;
     const onPointer = (event: MouseEvent | TouchEvent) => {
       const target = event.target as Node | null;
-      if (!target || !wrapRef.current) return;
-      if (!wrapRef.current.contains(target)) setOpen(false);
+      if (!target) return;
+      if (wrapRef.current?.contains(target)) return;
+      if (menuRef.current?.contains(target)) return;
+      setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
@@ -211,6 +253,47 @@ function GalleryDropdown({
     clearTimers();
     setOpen((value) => !value);
   };
+
+  const menuPanelClass =
+    "overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]";
+
+  const renderMenuPanel = (
+    className: string,
+    style?: CSSProperties
+  ) => (
+    <div
+      ref={menuRef}
+      role="menu"
+      aria-label={label}
+      className={className}
+      style={style}
+    >
+      <div className="grid grid-cols-2 gap-2">
+        {COLLECTIONS.map((collection) => (
+          <Link
+            key={collection}
+            role="menuitem"
+            href={collectionHref(collection)}
+            onClick={() => setOpen(false)}
+            className="group overflow-hidden rounded-xl border border-slate-200 transition hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+              <Image
+                src={collectionImagePath(collection)}
+                alt=""
+                fill
+                sizes="160px"
+                className="object-cover transition duration-300 group-hover:scale-[1.03]"
+              />
+            </div>
+            <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">
+              {collection}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -247,43 +330,33 @@ function GalleryDropdown({
           </svg>
         </span>
       </button>
-      {open ? (
-        <div
-          role="menu"
-          aria-label={label}
-          className={[
-            "absolute z-50 overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]",
-            compact
-              ? "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),18rem)] -translate-x-1/2"
-              : "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
-          ].join(" ")}
-        >
-          <div className="grid grid-cols-2 gap-2">
-            {COLLECTIONS.map((collection) => (
-              <Link
-                key={collection}
-                role="menuitem"
-                href={collectionHref(collection)}
+      {open && !compact
+        ? renderMenuPanel(
+            [
+              "absolute z-50",
+              menuPanelClass,
+              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
+            ].join(" ")
+          )
+        : null}
+      {open && compact && menuStyle && typeof document !== "undefined"
+        ? createPortal(
+            <>
+              <button
+                type="button"
+                aria-label="Close gallery menu"
+                className="fixed inset-0 z-[60] bg-slate-900/10"
                 onClick={() => setOpen(false)}
-                className="group overflow-hidden rounded-xl border border-slate-200 transition hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                  <Image
-                    src={collectionImagePath(collection)}
-                    alt=""
-                    fill
-                    sizes="160px"
-                    className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                  />
-                </div>
-                <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">
-                  {collection}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      ) : null}
+              />
+              {renderMenuPanel(`${menuPanelClass} fixed z-[70]`, {
+                top: menuStyle.top,
+                left: menuStyle.left,
+                width: menuStyle.width,
+              })}
+            </>,
+            document.body
+          )
+        : null}
     </div>
   );
 }
