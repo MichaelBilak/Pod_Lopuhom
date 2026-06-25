@@ -47,7 +47,7 @@ export default function HomeCollectionPromo({
                 className="collection-split__image h-full w-full object-center transition duration-300 group-hover:scale-[1.03]"
                 style={{ objectPosition: "50% 100%" }}
               />
-              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
+              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Herbarium</span>
               </span>
             </Link>
@@ -70,7 +70,7 @@ export default function HomeCollectionPromo({
                   objectPosition: collectionImageObjectPosition("Folia"),
                 }}
               />
-              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
+              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Folia</span>
               </span>
             </Link>

@@ -431,6 +431,10 @@ select {
   margin-bottom: 1rem;
 }
 
+.home-page .page-main-tight > .hero-panel + .home-category-menu {
+  margin-top: -2.5rem;
+}
+
 .home-page.page-main {
   gap: 3rem;
 }
@@ -438,15 +442,7 @@ select {
 .home-page .page-main-tight {
   display: flex;
   flex-direction: column;
-  gap: 0;
-}
-
-.home-page .page-main-tight > * + * {
-  margin-top: 2.5rem;
-}
-
-.home-page .page-main-tight > .hero-panel + * {
-  margin-top: 0;
+  gap: 2.5rem;
 }
 
 .home-page .new-products-section {
@@ -458,12 +454,12 @@ select {
     gap: 6rem;
   }
 
-  .home-page .page-main-tight > * + * {
-    margin-top: 3.5rem;
+  .home-page .page-main-tight {
+    gap: 3.5rem;
   }
 
-  .home-page .page-main-tight > .hero-panel + * {
-    margin-top: 0;
+  .home-page .page-main-tight > .hero-panel + .home-category-menu {
+    margin-top: -3.5rem;
   }
 }
 
@@ -525,13 +521,8 @@ select {
   background: #fff;
 }
 
-@media (min-width: 1024px) {
-  .collection-split__grid {
-    aspect-ratio: 3 / 2;
-    width: 100%;
-    min-height: 0;
-    max-height: none;
-  }
+.collection-split__text-scrim {
+  display: none;
 }
 
 .collection-split__label {
@@ -544,42 +535,39 @@ select {
 .collection-split__label-text {
   position: relative;
   display: inline-block;
-  padding-inline: 0.3em;
-  padding-block: 0.1em;
-  line-height: 1.15;
+  padding: 0.3em 0.5em;
+  line-height: 1.2;
+  color: #fff;
 }
 
 .collection-split__label-text::before {
   content: "";
   position: absolute;
+  inset: -0.28em -0.42em;
   z-index: -1;
-  inset: 0 -0.15em;
-  border-radius: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(15 23 42 / 0.34) 10%,
-    rgb(15 23 42 / 0.5) 50%,
-    rgb(15 23 42 / 0.34) 90%,
+  border-radius: 0.2em;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(15 23 42 / 0.44) 0%,
+    rgb(15 23 42 / 0.3) 42%,
+    rgb(15 23 42 / 0.12) 68%,
     transparent 100%
   );
+}
+
+@media (min-width: 1024px) {
+  .collection-split__grid {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+  }
 }
 
 @media (min-width: 1024px) {
   .collection-split__label {
     font-size: clamp(1.375rem, 2.8vw, 2rem);
     letter-spacing: 0.3em;
-  }
-
-  .collection-split__label-text::before {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(15 23 42 / 0.38) 10%,
-      rgb(15 23 42 / 0.55) 50%,
-      rgb(15 23 42 / 0.38) 90%,
-      transparent 100%
-    );
   }
 }
 
