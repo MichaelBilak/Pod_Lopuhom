@@ -482,25 +482,22 @@ select {
   box-shadow: none;
 }
 
-.collection-split::before,
-.collection-split::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(0.625rem, 3.5vw, 1.25rem);
-  z-index: 2;
+.collection-split__edge-fade,
+.collection-split__half-fade {
   pointer-events: none;
-}
-
-.collection-split::before {
-  left: 0;
-  background: linear-gradient(to right, rgb(255 255 255 / 1) 0%, transparent 70%);
-}
-
-.collection-split::after {
-  right: 0;
-  background: linear-gradient(to left, rgb(255 255 255 / 1) 0%, transparent 70%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  --collection-fade-size: clamp(0.625rem, 3.5vw, 1.25rem);
+  background:
+    linear-gradient(to right, rgb(255 255 255 / 1) 0%, transparent 70%) 0 0 /
+      var(--collection-fade-size) 100% no-repeat,
+    linear-gradient(to left, rgb(255 255 255 / 1) 0%, transparent 70%) 100% 0 /
+      var(--collection-fade-size) 100% no-repeat,
+    linear-gradient(to bottom, rgb(255 255 255 / 1) 0%, transparent 70%) 0 0 /
+      100% var(--collection-fade-size) no-repeat,
+    linear-gradient(to top, rgb(255 255 255 / 1) 0%, transparent 70%) 0 100% /
+      100% var(--collection-fade-size) no-repeat;
 }
 
 .collection-split__grid {
@@ -552,7 +549,7 @@ select {
 }
 
 .collection-split__label {
-  z-index: 2;
+  z-index: 3;
   font-size: clamp(0.8125rem, 3.8vw, 1.0625rem);
   letter-spacing: 0.24em;
   text-shadow:
