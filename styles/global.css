@@ -482,19 +482,19 @@ select {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: clamp(2rem, 10vw, 4rem);
+  width: clamp(0.625rem, 3.5vw, 1.25rem);
   z-index: 2;
   pointer-events: none;
 }
 
 .collection-split::before {
   left: 0;
-  background: linear-gradient(to right, rgb(255 255 255 / 1), transparent);
+  background: linear-gradient(to right, rgb(255 255 255 / 1) 0%, transparent 70%);
 }
 
 .collection-split::after {
   right: 0;
-  background: linear-gradient(to left, rgb(255 255 255 / 1), transparent);
+  background: linear-gradient(to left, rgb(255 255 255 / 1) 0%, transparent 70%);
 }
 
 .collection-split__grid {
@@ -520,22 +520,22 @@ select {
   right: 0;
   top: 50%;
   z-index: 1;
-  height: clamp(2.5rem, 14vw, 3.5rem);
+  height: clamp(1.75rem, 8vw, 2.25rem);
   transform: translateY(-50%);
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgb(15 23 42 / 0.32) 18%,
-    rgb(15 23 42 / 0.42) 50%,
-    rgb(15 23 42 / 0.32) 82%,
+    rgb(15 23 42 / 0.26) 30%,
+    rgb(15 23 42 / 0.32) 50%,
+    rgb(15 23 42 / 0.26) 70%,
     transparent 100%
   );
 }
 
 @media (min-width: 1024px) {
   .collection-split__grid {
-    aspect-ratio: 5 / 1.7;
-    min-height: clamp(10.2rem, 18.7vw, 15.3rem);
+    aspect-ratio: 1.7 / 5;
+    min-height: 0;
   }
 
   .collection-split__text-scrim {
