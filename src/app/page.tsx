@@ -35,17 +35,15 @@ export default async function HomePage({ searchParams }: PageProps) {
       <main className="page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
         <div className="page-main-tight flex min-w-0 flex-col gap-5 sm:gap-4">
           <section className="hero-panel text-center">
-            <div className="relative z-10 space-y-5 sm:space-y-6">
-              <div className="space-y-4 sm:space-y-6">
-                <h1
-                  className={[
-                    "hero-tagline font-tagline",
-                    locale === "ru" ? "font-tagline--cyrillic" : "",
-                  ].join(" ")}
-                >
-                  {t.home.title}
-                </h1>
-              </div>
+            <div className="hero-panel__content relative z-10">
+              <h1
+                className={[
+                  "hero-tagline font-tagline",
+                  locale === "ru" ? "font-tagline--cyrillic" : "",
+                ].join(" ")}
+              >
+                {t.home.title}
+              </h1>
             </div>
           </section>
           <nav
@@ -78,7 +76,10 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
             <div className="home-category-band" aria-hidden />
           </nav>
-          <HomeCollectionPromo locale={locale} />
+          <HomeCollectionPromo
+            locale={locale}
+            collectionsLabel={t.home.collectionsLabel}
+          />
         </div>
         {newProducts.length > 0 ? (
           <Suspense fallback={null}>

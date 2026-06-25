@@ -134,7 +134,7 @@ function ProductCard({
         className="block h-full w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
         aria-label={`Open ${product.title} details`}
       >
-        <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[5/4]">
+        <div className="relative w-full overflow-hidden rounded-2xl bg-slate-50/60 aspect-[4/5] sm:aspect-square">
           {mainImageUrl ? (
             <ProductImage
               src={mainImageUrl}

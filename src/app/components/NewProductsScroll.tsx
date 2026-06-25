@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductImage from "@/src/components/ProductImage";
 import { withLang, type Locale } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
@@ -27,6 +27,7 @@ export default function NewProductsScroll({
   viewDetails,
 }: NewProductsScrollProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(true);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -35,11 +36,19 @@ export default function NewProductsScroll({
     const pause = () => marquee.classList.add("is-paused");
     const resume = () => marquee.classList.remove("is-paused");
 
+    const updateScrollHint = () => {
+      const atEnd =
+        marquee.scrollLeft + marquee.clientWidth >= marquee.scrollWidth - 12;
+      setShowScrollHint(!atEnd);
+    };
+
     marquee.addEventListener("touchstart", pause, { passive: true });
     marquee.addEventListener("touchend", resume, { passive: true });
     marquee.addEventListener("touchcancel", resume, { passive: true });
     marquee.addEventListener("mouseenter", pause);
     marquee.addEventListener("mouseleave", resume);
+    marquee.addEventListener("scroll", updateScrollHint, { passive: true });
+    updateScrollHint();
 
     return () => {
       marquee.classList.remove("is-paused");
@@ -48,8 +57,9 @@ export default function NewProductsScroll({
       marquee.removeEventListener("touchcancel", resume);
       marquee.removeEventListener("mouseenter", pause);
       marquee.removeEventListener("mouseleave", resume);
+      marquee.removeEventListener("scroll", updateScrollHint);
     };
-  }, []);
+  }, [products.length]);
 
   if (products.length === 0) return null;
 
@@ -65,7 +75,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="new-products-card group w-[clamp(11rem,76vw,16.5rem)] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[320px]"
+        className="new-products-card group w-[clamp(9.5rem,42vw,12rem)] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[320px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -74,7 +84,7 @@ export default function NewProductsScroll({
           aria-label={`Open ${product.title} details`}
           tabIndex={duplicate ? -1 : undefined}
         >
-          <div className="relative aspect-[5/4] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-auto sm:h-[298px]">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-square">
             {mainImageUrl ? (
               <ProductImage
                 src={mainImageUrl}
@@ -153,6 +163,29 @@ export default function NewProductsScroll({
               {products.map((product, index) => renderCard(product, index, "post"))}
             </div>
           </div>
+        </div>
+        <div
+          className={[
+            "new-products-scroll-hint pointer-events-none absolute right-0 top-1 bottom-3 z-10 flex w-12 items-center justify-end pr-0.5 transition-opacity duration-300 sm:hidden",
+            showScrollHint ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+          aria-hidden
+        >
+          <div className="absolute inset-0 bg-gradient-to-l from-white via-white/90 to-transparent" />
+          <svg
+            viewBox="0 0 20 20"
+            className="relative h-4 w-4 text-slate-400"
+            aria-hidden
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              d="M8 5l5 5-5 5"
+            />
+          </svg>
         </div>
         <div
           className="pointer-events-none absolute right-0 top-1 bottom-3 hidden w-12 bg-gradient-to-l from-white via-white/80 to-transparent sm:block sm:w-24"

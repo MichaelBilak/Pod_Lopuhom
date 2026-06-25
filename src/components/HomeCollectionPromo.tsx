@@ -1,25 +1,93 @@
-import CollectionTile from "@/src/components/CollectionTile";
-import { COLLECTIONS } from "@/src/lib/collections";
-import type { Locale } from "@/src/lib/i18n";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  COLLECTIONS,
+  collectionImageObjectPosition,
+  collectionImagePath,
+  type CollectionId,
+} from "@/src/lib/collections";
+import { withLang, type Locale } from "@/src/lib/i18n";
 
 type HomeCollectionPromoProps = {
   locale: Locale;
+  collectionsLabel: string;
 };
 
-export default function HomeCollectionPromo({ locale }: HomeCollectionPromoProps) {
+function collectionHref(collection: CollectionId, locale: Locale) {
+  return withLang(
+    `/gallery?collection=${encodeURIComponent(collection)}`,
+    locale
+  );
+}
+
+export default function HomeCollectionPromo({
+  locale,
+  collectionsLabel,
+}: HomeCollectionPromoProps) {
   return (
     <section
-      aria-label="Collections"
-      className="home-collection-promo grid min-w-0 grid-cols-2 gap-3 sm:gap-5"
+      aria-label={collectionsLabel}
+      className="home-collection-promo flex min-w-0 flex-col gap-3 sm:gap-4"
     >
-      {COLLECTIONS.map((collection) => (
-        <CollectionTile
-          key={collection}
-          collection={collection}
-          locale={locale}
-          variant="home"
-        />
-      ))}
+      <p className="collection-split__label-heading text-center text-[14px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:text-[16px] sm:tracking-[0.28em]">
+        {collectionsLabel}
+      </p>
+      <div className="collection-split-bleed edge-bleed-x min-w-0">
+        <div className="collection-split relative overflow-hidden rounded-2xl">
+          <div className="collection-split__grid grid grid-cols-[1fr_1px_1fr]">
+            <Link
+              href={collectionHref("Herbarium", locale)}
+              className="collection-split__half group relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              aria-label="Herbarium collection"
+            >
+              <Image
+                src={collectionImagePath("Herbarium")}
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 50vw, 480px"
+                className="collection-split__image h-full w-full object-contain object-center saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.02] lg:object-cover"
+                style={{
+                  objectPosition: collectionImageObjectPosition("Herbarium"),
+                }}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"
+                aria-hidden
+              />
+              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
+                Herbarium
+              </span>
+            </Link>
+            <div
+              className="collection-split__divider bg-white/90"
+              aria-hidden
+            />
+            <Link
+              href={collectionHref("Folia", locale)}
+              className="collection-split__half group relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              aria-label="Folia collection"
+            >
+              <Image
+                src={collectionImagePath("Folia")}
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 50vw, 480px"
+                className="collection-split__image h-full w-full object-contain object-center saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.02] lg:object-cover"
+                style={{
+                  objectPosition: collectionImageObjectPosition("Folia"),
+                }}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"
+                aria-hidden
+              />
+              <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
+                Folia
+              </span>
+            </Link>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

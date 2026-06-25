@@ -65,7 +65,7 @@ export default function MobileNavDrawer({
 
   const navItemClass = (active: boolean) =>
     [
-      "mobile-nav-drawer__link flex min-h-[48px] w-full items-center justify-between border-b border-slate-100 px-1 py-3 text-left text-xs font-normal uppercase tracking-[0.22em] transition-colors",
+      "mobile-nav-drawer__link flex min-h-[44px] w-full items-center justify-between border-b border-slate-200/50 px-1 py-2.5 text-left text-xs font-normal uppercase tracking-[0.22em] transition-colors",
       active ? "text-slate-900" : "text-slate-600 hover:text-slate-900",
     ].join(" ");
 
@@ -80,13 +80,16 @@ export default function MobileNavDrawer({
       <nav
         id="mobile-nav-drawer"
         aria-label="Primary"
-        className="mobile-nav-drawer__panel fixed inset-x-0 bottom-0 overflow-y-auto bg-white shadow-[0_-12px_40px_rgba(15,23,42,0.12)]"
+        className="mobile-nav-drawer__panel fixed inset-x-0 overflow-y-auto rounded-b-2xl border-b border-slate-200/50 bg-white/88 shadow-[0_12px_40px_rgba(15,23,42,0.12)] backdrop-blur-md"
         style={{
           top: headerOffset > 0 ? `${headerOffset}px` : undefined,
-          paddingBottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))",
+          maxHeight:
+            headerOffset > 0
+              ? `min(calc(100dvh - ${headerOffset}px), 28rem)`
+              : "min(100dvh, 28rem)",
         }}
       >
-        <div className="mx-auto w-full max-w-lg px-5 pt-4 sm:px-6">
+        <div className="mx-auto w-full max-w-lg px-5 pb-3 pt-2 sm:px-6">
           <div className="flex flex-col">
             <button
               type="button"
@@ -110,7 +113,7 @@ export default function MobileNavDrawer({
               </svg>
             </button>
             {galleryExpanded ? (
-              <div className="mobile-nav-drawer__collections grid grid-cols-2 gap-3 pb-4 pt-1">
+              <div className="mobile-nav-drawer__collections grid grid-cols-2 gap-3 pb-3 pt-1">
                 {COLLECTIONS.map((collection) => (
                   <CollectionTile
                     key={collection}

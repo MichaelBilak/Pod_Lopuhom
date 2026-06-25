@@ -49,6 +49,7 @@ export const translations = {
     },
     home: {
       title: "Handcrafted resin creations inspired by nature",
+      collectionsLabel: "Collections",
       newLabel: "New",
       newTitle: "Latest pieces",
       viewDetails: "View details",
@@ -152,6 +153,7 @@ export const translations = {
     },
     home: {
       title: "Украшения ручной работы, вдохновленные природой",
+      collectionsLabel: "Коллекции",
       newLabel: "Новинки",
       newTitle: "Новые изделия",
       viewDetails: "Подробнее",
@@ -256,6 +258,7 @@ export const translations = {
     },
     home: {
       title: "Gioielli che racchiudono la bellezza della natura",
+      collectionsLabel: "Collezioni",
       newLabel: "Novita",
       newTitle: "Ultimi pezzi",
       viewDetails: "Vedi dettagli",

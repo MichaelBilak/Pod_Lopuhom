@@ -31,6 +31,7 @@ export default function CollectionTile({
     <Link
       href={href}
       onClick={onNavigate}
+      data-collection={collection}
       className={[
         "collection-tile group block overflow-hidden rounded-xl border border-slate-200/80 transition hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
         variant === "home" ? "collection-tile--home rounded-2xl" : "",
@@ -58,7 +59,12 @@ export default function CollectionTile({
               : "(max-width: 640px) 42vw, 176px"
           }
           className="collection-tile__image h-full w-full object-cover saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.03]"
-          style={{ objectPosition: collectionImageObjectPosition(collection) }}
+          style={{
+            objectPosition:
+              variant === "drawer" && collection === "Herbarium"
+                ? "50% 0%"
+                : collectionImageObjectPosition(collection),
+          }}
         />
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"
