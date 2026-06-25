@@ -335,7 +335,7 @@ function GalleryDropdown({
             [
               "absolute z-50",
               menuPanelClass,
-              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100vw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
+              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100dvw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
             ].join(" ")
           )
         : null}
@@ -514,7 +514,7 @@ function NavBar() {
         ref={headerRef}
         className={[
           "site-nav-shell fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 bg-white/80 backdrop-blur transition-transform duration-300 ease-out",
-          "pt-[env(safe-area-inset-top)]",
+          "pt-[env(safe-area-inset-top,0px)]",
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
@@ -539,7 +539,7 @@ function NavBar() {
               <Link
                 href={buildHref("/")}
                 className={[
-                  "min-w-0 max-w-[min(100vw-8.5rem,16rem)] truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[min(100vw-10rem,18rem)]",
+                  "min-w-0 max-w-[min(100dvw-8.5rem,16rem)] truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[min(100dvw-10rem,18rem)]",
                   brandTitleClass,
                 ].join(" ")}
                 aria-label="Pod Lopuhom home"

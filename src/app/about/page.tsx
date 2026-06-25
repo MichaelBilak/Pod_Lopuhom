@@ -23,7 +23,7 @@ export default async function AboutPage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full min-w-0 max-w-5xl space-y-12 px-4 pb-20 pt-8 sm:space-y-16 sm:px-6 sm:pb-28 sm:pt-12">
+      <main className="page-x page-pb-20 mx-auto w-full min-w-0 max-w-5xl space-y-12 pt-8 sm:space-y-16 sm:page-pb-28 sm:pt-12">
         <section className="min-w-0 space-y-6 sm:space-y-8">
           <h1 className="text-center text-[clamp(1.5rem,5.6vw,1.875rem)] font-normal tracking-tight text-slate-900 [overflow-wrap:anywhere] sm:text-3xl md:text-4xl">
             {t.about.title}

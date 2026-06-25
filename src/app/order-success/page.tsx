@@ -66,7 +66,7 @@ export default async function OrderSuccessPage({ searchParams }: PageProps) {
     <>
       <Nav />
       <main className="min-h-screen bg-white text-ink">
-        <section className="mx-auto w-full min-w-0 max-w-2xl px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
+        <section className="page-x page-pb-16 mx-auto w-full min-w-0 max-w-2xl pt-12 sm:page-pb-20 sm:pt-16">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:p-8">
             {status === "paid" ? (
               <>

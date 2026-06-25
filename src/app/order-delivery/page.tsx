@@ -47,7 +47,7 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full min-w-0 max-w-4xl space-y-8 px-4 pb-16 pt-8 sm:space-y-10 sm:px-6 sm:pb-20 sm:pt-12">
+      <main className="page-x page-pb-16 mx-auto w-full min-w-0 max-w-4xl space-y-8 pt-8 sm:space-y-10 sm:page-pb-20 sm:pt-12">
         <section className="min-w-0 space-y-4 text-center">
           <h1 className="text-[clamp(1.5rem,5.6vw,2.25rem)] font-normal tracking-tight text-slate-900 sm:tracking-normal">
             {t.order.title}

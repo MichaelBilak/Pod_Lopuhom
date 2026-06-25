@@ -65,7 +65,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="group w-[min(260px,calc(100vw-2.5rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
+        className="group w-[min(260px,calc(100dvw-2.5rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -80,7 +80,7 @@ export default function NewProductsScroll({
                 src={mainImageUrl}
                 alt={product.title}
                 fill
-                sizes="(max-width: 640px) calc(100vw - 2.5rem), 298px"
+                sizes="(max-width: 640px) calc(100dvw - 2.5rem), 298px"
                 className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                 style={{
                   objectPosition: productMainImageObjectPosition(product),
@@ -124,7 +124,7 @@ export default function NewProductsScroll({
           {newLabel}
         </p>
       </div>
-      <div className="relative -mx-4 min-w-0 px-4 sm:-mx-6 sm:px-6">
+      <div className="relative edge-bleed-x min-w-0 sm:no-edge-bleed">
         <div
           ref={marqueeRef}
           className="new-products-marquee pb-3 pt-1"

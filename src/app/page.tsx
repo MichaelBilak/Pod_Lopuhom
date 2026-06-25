@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
-import HeroBackdrop from "@/src/app/components/HeroBackdrop";
 import { fetchNewProducts } from "@/lib/products-server";
 import { DEFAULT_COLLECTION } from "@/src/lib/collections";
 import {
@@ -17,15 +16,6 @@ export const metadata = {
 };
 
 export const dynamic = "force-dynamic";
-
-const heroImages = [
-  "/images/hero%20img/07f7770a-2ca1-441e-916d-74066ce348be.jpg",
-  "/images/hero%20img/IMG_2028.JPG",
-  "/images/hero%20img/IMG_3292.JPG",
-  "/images/hero%20img/IMG_6353%20(2).JPG",
-  "/images/hero%20img/IMG_6912.jpg",
-  "/images/hero%20img/IMG_9258.JPG",
-];
 
 type PageProps = {
   searchParams?: Promise<{
@@ -42,10 +32,9 @@ export default async function HomePage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full min-w-0 max-w-6xl space-y-14 px-4 pb-20 pt-8 sm:space-y-20 sm:px-6 sm:pb-28 sm:pt-12">
+      <main className="page-x page-pb-20 mx-auto w-full min-w-0 max-w-6xl space-y-14 pt-8 sm:space-y-20 sm:page-pb-28 sm:pt-12">
         <div className="min-w-0 space-y-5 sm:space-y-4">
           <section className="hero-panel text-center">
-            <HeroBackdrop images={heroImages} />
             <div className="relative z-10 space-y-5 sm:space-y-6">
               <div className="space-y-4 sm:space-y-6">
                 <h1
@@ -61,10 +50,10 @@ export default async function HomePage({ searchParams }: PageProps) {
           </section>
           <nav
             aria-label="Shop categories"
-            className="home-category-menu -mx-4 min-w-0 sm:mx-0"
+            className="home-category-menu edge-bleed-x min-w-0 sm:no-edge-bleed"
           >
-            <div className="home-category-band mx-4 sm:mx-0" aria-hidden />
-            <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth px-4 py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:px-0 sm:py-4">
+            <div className="home-category-band" aria-hidden />
+            <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:py-4">
               <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
                 {[
                   { id: "Rings", label: t.categories.rings },
@@ -87,7 +76,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                 ))}
               </div>
             </div>
-            <div className="home-category-band mx-4 sm:mx-0" aria-hidden />
+            <div className="home-category-band" aria-hidden />
           </nav>
         </div>
         {newProducts.length > 0 ? (

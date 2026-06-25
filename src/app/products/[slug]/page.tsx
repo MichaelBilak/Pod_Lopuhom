@@ -49,7 +49,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     <>
       <Nav />
       <main className="min-h-screen bg-white text-ink">
-        <section className="mx-auto w-full min-w-0 max-w-5xl px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-12">
+        <section className="page-x page-pb-16 mx-auto w-full min-w-0 max-w-5xl pt-8 sm:page-pb-20 sm:pt-12">
           <BackButton label={t.product.back} />
           <div className="mt-6 grid min-w-0 gap-6 sm:mt-8 sm:gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
             <ProductGallery

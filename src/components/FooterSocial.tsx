@@ -63,7 +63,7 @@ function FooterSocialContent() {
 
   return (
     <footer className="relative mt-12 min-w-0 border-t border-slate-200 bg-slate-50/70 text-slate-700 sm:mt-16">
-      <div className="mx-auto w-full min-w-0 max-w-6xl px-4 pt-12 pb-6 sm:px-6 sm:pt-14 sm:pb-8">
+      <div className="page-x mx-auto w-full min-w-0 max-w-6xl pt-12 pb-6 sm:pt-14 sm:pb-8">
         <div className="grid min-w-0 gap-y-10 gap-x-8 sm:grid-cols-2 sm:gap-y-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="min-w-0 space-y-4 sm:col-span-2 md:col-span-1">
             <Link
