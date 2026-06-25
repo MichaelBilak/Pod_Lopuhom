@@ -151,9 +151,6 @@ function FooterSocialContent() {
             <h3 className="text-[11px] font-normal uppercase tracking-[0.28em] text-slate-900">
               {t.footer.contactTitle}
             </h3>
-            <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-slate-600">
-              {t.footer.contactHint}
-            </p>
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
               <li>
                 <a
