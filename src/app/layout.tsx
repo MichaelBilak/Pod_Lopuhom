@@ -1,21 +1,14 @@
 import "@/styles/global.css";
 import type { Viewport } from "next";
-import { Caveat, Reenie_Beanie } from "next/font/google";
+import { Caveat } from "next/font/google";
 import FirstVisitSplash from "@/src/components/FirstVisitSplash";
 import ViewportOverflowDebug from "@/src/components/ViewportOverflowDebug";
 
-const reenieBeanie = Reenie_Beanie({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-tagline",
-  display: "swap",
-});
-
-/** Reenie Beanie has no Cyrillic; Caveat covers RU with a similar handwritten feel. */
+/** Handwritten tagline — Latin + Cyrillic (EN / RU / IT hero). */
 const caveat = Caveat({
   subsets: ["latin", "cyrillic"],
-  weight: "400",
-  variable: "--font-tagline-cyrillic",
+  weight: ["400", "500"],
+  variable: "--font-tagline",
   display: "swap",
 });
 
@@ -43,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${reenieBeanie.variable} ${caveat.variable}`}>
+    <html lang="en" suppressHydrationWarning className={caveat.variable}>
       <head>
         <meta
           name="viewport"

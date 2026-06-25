@@ -36,12 +36,7 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div className="page-main-tight flex min-w-0 flex-col">
           <section className="hero-panel text-center">
             <div className="hero-panel__content relative z-10">
-              <h1
-                className={[
-                  "hero-tagline font-tagline",
-                  locale === "ru" ? "font-tagline--cyrillic" : "",
-                ].join(" ")}
-              >
+                <h1 className="hero-tagline font-tagline">
                 {t.home.title}
               </h1>
             </div>
