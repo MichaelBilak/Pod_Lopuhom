@@ -584,25 +584,31 @@ select {
   padding: 0.3em 0.5em;
   line-height: 1.2;
   color: #fff;
+  isolation: isolate;
 }
 
 .collection-split__label-text::before {
   content: "";
   position: absolute;
-  inset: -1.05em -0.5em;
+  left: 50%;
+  top: 50%;
   z-index: -1;
+  width: calc(100% + 0.4em);
+  height: calc(100% + 1.75em);
+  transform: translate(-50%, -50%);
   pointer-events: none;
+  border-radius: 50%;
   background: radial-gradient(
-    ellipse 100% 100% at 50% 50%,
-    rgb(15 23 42 / 0.74) 0%,
-    rgb(15 23 42 / 0.7) 8%,
-    rgb(15 23 42 / 0.56) 18%,
-    rgb(15 23 42 / 0.36) 32%,
-    rgb(15 23 42 / 0.18) 46%,
-    rgb(15 23 42 / 0.07) 58%,
-    rgb(15 23 42 / 0.02) 68%,
-    transparent 78%
+    ellipse 70% 64% at 50% 50%,
+    rgb(15 23 42 / 0.56) 0%,
+    rgb(15 23 42 / 0.4) 22%,
+    rgb(15 23 42 / 0.24) 42%,
+    rgb(15 23 42 / 0.12) 58%,
+    rgb(15 23 42 / 0.05) 72%,
+    rgb(15 23 42 / 0.015) 84%,
+    transparent 100%
   );
+  filter: blur(10px);
 }
 
 @media (max-width: 430px) {
@@ -634,18 +640,19 @@ select {
   }
 
   .collection-split__label-text::before {
-    inset: -1.1em -0.45em;
+    width: calc(100% + 0.35em);
+    height: calc(100% + 1.85em);
     background: radial-gradient(
-      ellipse 100% 100% at 50% 50%,
-      rgb(15 23 42 / 0.8) 0%,
-      rgb(15 23 42 / 0.74) 7%,
-      rgb(15 23 42 / 0.58) 16%,
-      rgb(15 23 42 / 0.38) 30%,
-      rgb(15 23 42 / 0.2) 44%,
-      rgb(15 23 42 / 0.08) 56%,
-      rgb(15 23 42 / 0.02) 66%,
-      transparent 76%
+      ellipse 68% 62% at 50% 50%,
+      rgb(15 23 42 / 0.62) 0%,
+      rgb(15 23 42 / 0.44) 20%,
+      rgb(15 23 42 / 0.26) 40%,
+      rgb(15 23 42 / 0.13) 56%,
+      rgb(15 23 42 / 0.05) 70%,
+      rgb(15 23 42 / 0.015) 84%,
+      transparent 100%
     );
+    filter: blur(12px);
   }
 }
 
