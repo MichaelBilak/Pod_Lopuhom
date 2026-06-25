@@ -498,7 +498,7 @@ select {
 }
 
 .collection-split__grid {
-  aspect-ratio: 5 / 1.7;
+  aspect-ratio: 8 / 3;
   min-height: 0;
 }
 
@@ -515,8 +515,26 @@ select {
   background: #0f172a;
 }
 
-.collection-split__label {
+.collection-split__label-scrim {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   z-index: 1;
+  width: min(92%, 12rem);
+  height: clamp(2rem, 28%, 3.25rem);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 0.375rem;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(15 23 42 / 0.42) 0%,
+    rgb(15 23 42 / 0.22) 55%,
+    transparent 100%
+  );
+}
+
+.collection-split__label {
+  z-index: 2;
   font-size: clamp(0.8125rem, 3.8vw, 1.0625rem);
   letter-spacing: 0.24em;
   text-shadow:
