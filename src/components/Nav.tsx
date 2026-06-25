@@ -531,10 +531,10 @@ function NavBar() {
       >
         <div className="lg:hidden pb-3">
           {isHome ? (
-            <div className="grid w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 pt-3 sm:pt-4">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-3 sm:pt-4">
               <Link
                 href={buildHref("/")}
-                className="inline-flex shrink-0 items-center justify-self-start rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                className="inline-flex min-w-0 shrink items-center gap-2 text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-2.5"
                 aria-label="Pod Lopuhom home"
               >
                 <Image
@@ -543,21 +543,14 @@ function NavBar() {
                   width={48}
                   height={48}
                   sizes="48px"
-                  className="h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
+                  className="h-10 w-10 shrink-0 rounded-full object-cover sm:h-12 sm:w-12"
                   priority
                 />
+                <span className={["min-w-0 truncate", brandTitleClass].join(" ")}>
+                  Pod&nbsp;Lopuhom
+                </span>
               </Link>
-              <Link
-                href={buildHref("/")}
-                className={[
-                  "min-w-0 max-w-full truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[18rem]",
-                  brandTitleClass,
-                ].join(" ")}
-                aria-label="Pod Lopuhom home"
-              >
-                Pod&nbsp;Lopuhom
-              </Link>
-              <div className="justify-self-end">{mobileHeaderActions}</div>
+              {mobileHeaderActions}
             </div>
           ) : (
             <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-3 sm:pt-4">
