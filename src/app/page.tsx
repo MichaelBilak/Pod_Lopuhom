@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
+import HomeCollectionPromo from "@/src/components/HomeCollectionPromo";
 import Nav from "@/src/components/Nav";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
 import { fetchNewProducts } from "@/lib/products-server";
@@ -77,6 +78,7 @@ export default async function HomePage({ searchParams }: PageProps) {
             </div>
             <div className="home-category-band" aria-hidden />
           </nav>
+          <HomeCollectionPromo locale={locale} />
         </div>
         {newProducts.length > 0 ? (
           <Suspense fallback={null}>

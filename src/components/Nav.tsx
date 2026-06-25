@@ -12,12 +12,9 @@ import {
   type CSSProperties,
 } from "react";
 import { createPortal } from "react-dom";
-import {
-  COLLECTIONS,
-  collectionImagePath,
-  collectionImageObjectPosition,
-  type CollectionId,
-} from "@/src/lib/collections";
+import CollectionTile from "@/src/components/CollectionTile";
+import MobileNavDrawer from "@/src/components/MobileNavDrawer";
+import { COLLECTIONS } from "@/src/lib/collections";
 import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
 import { buildQueryHref } from "../lib/search-params";
 
@@ -143,9 +140,8 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
 
 type GalleryDropdownProps = {
   label: string;
-  buildHref: (href: string) => string;
+  locale: Locale;
   isActive: boolean;
-  compact?: boolean;
 };
 
 const galleryNavClass =
@@ -153,9 +149,8 @@ const galleryNavClass =
 
 function GalleryDropdown({
   label,
-  buildHref,
+  locale,
   isActive,
-  compact = false,
 }: GalleryDropdownProps) {
   const [open, setOpen] = useState(false);
   const [menuStyle, setMenuStyle] = useState<{
@@ -206,17 +201,9 @@ function GalleryDropdown({
     const updateMenuPosition = () => {
       if (!wrapRef.current) return;
       const rect = wrapRef.current.getBoundingClientRect();
-      const width = compact
-        ? Math.min(window.innerWidth - 32, 288)
-        : Math.min(352, window.innerWidth - 32);
-
-      let left: number;
-      if (compact) {
-        left = Math.max(16, (window.innerWidth - width) / 2);
-      } else {
-        left = rect.left + rect.width / 2 - width / 2;
-        left = Math.max(16, Math.min(left, window.innerWidth - width - 16));
-      }
+      const width = Math.min(352, window.innerWidth - 32);
+      let left = rect.left + rect.width / 2 - width / 2;
+      left = Math.max(16, Math.min(left, window.innerWidth - width - 16));
 
       setMenuStyle({
         top: rect.bottom + 8,
@@ -232,7 +219,7 @@ function GalleryDropdown({
       window.removeEventListener("scroll", updateMenuPosition);
       window.removeEventListener("resize", updateMenuPosition);
     };
-  }, [open, compact]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -256,17 +243,6 @@ function GalleryDropdown({
     };
   }, [open]);
 
-  const collectionHref = (collection: CollectionId) =>
-    buildHref(`/gallery?collection=${encodeURIComponent(collection)}`);
-
-  const handleToggleClick = () => {
-    clearTimers();
-    setOpen((value) => !value);
-  };
-
-  const menuPanelClass =
-    "overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]";
-
   const renderMenuPanel = (
     className: string,
     style?: CSSProperties
@@ -280,32 +256,25 @@ function GalleryDropdown({
     >
       <div className="grid grid-cols-2 gap-2">
         {COLLECTIONS.map((collection) => (
-          <Link
+          <CollectionTile
             key={collection}
-            role="menuitem"
-            href={collectionHref(collection)}
-            onClick={() => setOpen(false)}
-            className="group overflow-hidden rounded-xl border border-slate-200 transition hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-              <Image
-                src={collectionImagePath(collection)}
-                alt=""
-                width={400}
-                height={300}
-                sizes="(max-width: 640px) 160px, 352px"
-                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-                style={{ objectPosition: collectionImageObjectPosition(collection) }}
-              />
-            </div>
-            <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">
-              {collection}
-            </p>
-          </Link>
+            collection={collection}
+            locale={locale}
+            variant="dropdown"
+            onNavigate={() => setOpen(false)}
+          />
         ))}
       </div>
     </div>
   );
+
+  const handleToggleClick = () => {
+    clearTimers();
+    setOpen((value) => !value);
+  };
+
+  const menuPanelClass =
+    "overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_16px_40px_rgba(15,23,42,0.12)] ring-1 ring-black/[0.02]";
 
   return (
     <div
@@ -321,7 +290,7 @@ function GalleryDropdown({
         onClick={handleToggleClick}
         className={[
           galleryNavClass,
-          compact ? "text-[11px] text-slate-600 sm:text-xs" : "text-xs text-slate-600",
+          "text-xs text-slate-600",
           isActive || open ? "text-slate-900 after:scale-x-100" : "",
         ].join(" ")}
       >
@@ -344,29 +313,19 @@ function GalleryDropdown({
       </button>
       {open && menuStyle && typeof document !== "undefined"
         ? createPortal(
-            <>
-              {compact ? (
-                <button
-                  type="button"
-                  aria-label="Close gallery menu"
-                  className="fixed inset-0 z-[60] bg-slate-900/10"
-                  onClick={() => setOpen(false)}
-                />
-              ) : null}
-              <div
-                onMouseEnter={() => {
-                  clearTimers();
-                  setOpen(true);
-                }}
-                onMouseLeave={scheduleClose}
-              >
-                {renderMenuPanel(`${menuPanelClass} fixed z-[70]`, {
-                  top: menuStyle.top,
-                  left: menuStyle.left,
-                  width: menuStyle.width,
-                })}
-              </div>
-            </>,
+            <div
+              onMouseEnter={() => {
+                clearTimers();
+                setOpen(true);
+              }}
+              onMouseLeave={scheduleClose}
+            >
+              {renderMenuPanel(`${menuPanelClass} fixed z-[70]`, {
+                top: menuStyle.top,
+                left: menuStyle.left,
+                width: menuStyle.width,
+              })}
+            </div>,
             document.body
           )
         : null}
@@ -377,7 +336,7 @@ function GalleryDropdown({
 function NavFallback() {
   return (
     <div
-      className="h-[104px] sm:h-[120px] lg:h-[88px]"
+      className="h-[72px] sm:h-[80px] lg:h-[88px]"
       aria-hidden
     />
   );
@@ -397,10 +356,13 @@ function NavBar() {
   const locale = getLocale(searchParams?.get("lang"));
   const t = getTranslations(locale);
   const [isVisible, setIsVisible] = useState(true);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLElement>(null);
   const isGalleryActive = pathname === "/gallery";
+  const isAboutActive = pathname === "/about";
+  const isOrderActive = pathname === "/order-delivery";
   const secondaryLinks = [
     { label: t.nav.about, href: "/about" },
     { label: t.nav.orderDelivery, href: "/order-delivery" },
@@ -425,6 +387,10 @@ function NavBar() {
     resizeObserver.observe(header);
     return () => resizeObserver.disconnect();
   }, []);
+
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const threshold = 8;
@@ -491,13 +457,46 @@ function NavBar() {
     />
   );
 
-  const renderNavLinks = (compact: boolean) => (
+  const mobileHeaderActions = (
+    <div className="flex shrink-0 items-center gap-2">
+      {mobileLangSwitcher}
+      <button
+        type="button"
+        aria-expanded={mobileNavOpen}
+        aria-controls="mobile-nav-drawer"
+        aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+        onClick={() => setMobileNavOpen((value) => !value)}
+        className="mobile-nav-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+          {mobileNavOpen ? (
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="1.5"
+              d="M6 6l12 12M18 6L6 18"
+            />
+          ) : (
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="1.5"
+              d="M4 7h16M4 12h16M4 17h16"
+            />
+          )}
+        </svg>
+      </button>
+    </div>
+  );
+
+  const renderNavLinks = () => (
     <>
       <GalleryDropdown
         label={t.nav.gallery}
-        buildHref={buildHref}
+        locale={locale}
         isActive={isGalleryActive}
-        compact={compact}
       />
       {secondaryLinks.map((link) => (
         <Link
@@ -505,7 +504,7 @@ function NavBar() {
           href={buildHref(link.href)}
           className={[
             navLinkClass,
-            compact ? "text-[11px] text-slate-600 sm:text-xs" : "text-xs text-slate-600",
+            "text-xs text-slate-600",
             pathname === link.href ? "text-slate-900 after:scale-x-100" : "",
           ].join(" ")}
         >
@@ -530,7 +529,7 @@ function NavBar() {
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
-        <div className="lg:hidden">
+        <div className="lg:hidden pb-3">
           {isHome ? (
             <div className="grid w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 pt-3 sm:pt-4">
               <Link
@@ -558,10 +557,10 @@ function NavBar() {
               >
                 Pod&nbsp;Lopuhom
               </Link>
-              <div className="justify-self-end shrink-0">{mobileLangSwitcher}</div>
+              <div className="justify-self-end">{mobileHeaderActions}</div>
             </div>
           ) : (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-3 sm:pt-4">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-3 sm:pt-4">
               <Link
                 href={buildHref("/")}
                 className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -577,17 +576,22 @@ function NavBar() {
                   priority
                 />
               </Link>
-              <div className="shrink-0">{mobileLangSwitcher}</div>
+              {mobileHeaderActions}
             </div>
           )}
-          <nav
-            aria-label="Primary"
-            className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:py-4"
-          >
-            <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-5 sm:gap-7">
-              {renderNavLinks(true)}
-            </div>
-          </nav>
+          <MobileNavDrawer
+            open={mobileNavOpen}
+            onClose={() => setMobileNavOpen(false)}
+            locale={locale}
+            galleryLabel={t.nav.gallery}
+            aboutLabel={t.nav.about}
+            orderLabel={t.nav.orderDelivery}
+            buildHref={buildHref}
+            headerOffset={headerHeight}
+            isGalleryActive={isGalleryActive}
+            isAboutActive={isAboutActive}
+            isOrderActive={isOrderActive}
+          />
         </div>
 
         <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-5 text-left lg:grid">
@@ -613,7 +617,7 @@ function NavBar() {
             aria-label="Primary"
             className="flex min-w-0 items-center justify-self-center gap-x-7"
           >
-            {renderNavLinks(false)}
+            {renderNavLinks()}
           </nav>
           <div className="justify-self-end shrink-0">{desktopLangPills}</div>
         </div>
