@@ -197,7 +197,7 @@ function GalleryDropdown({
   useEffect(() => () => clearTimers(), []);
 
   useLayoutEffect(() => {
-    if (!open || !compact) {
+    if (!open) {
       setMenuStyle(null);
       return;
     }
@@ -205,10 +205,21 @@ function GalleryDropdown({
     const updateMenuPosition = () => {
       if (!wrapRef.current) return;
       const rect = wrapRef.current.getBoundingClientRect();
-      const width = Math.min(window.innerWidth - 32, 288);
+      const width = compact
+        ? Math.min(window.innerWidth - 32, 288)
+        : Math.min(352, window.innerWidth - 32);
+
+      let left: number;
+      if (compact) {
+        left = Math.max(16, (window.innerWidth - width) / 2);
+      } else {
+        left = rect.left + rect.width / 2 - width / 2;
+        left = Math.max(16, Math.min(left, window.innerWidth - width - 16));
+      }
+
       setMenuStyle({
         top: rect.bottom + 8,
-        left: Math.max(16, (window.innerWidth - width) / 2),
+        left,
         width,
       });
     };
@@ -279,9 +290,10 @@ function GalleryDropdown({
               <Image
                 src={collectionImagePath(collection)}
                 alt=""
-                fill
+                width={400}
+                height={300}
                 sizes="160px"
-                className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
               />
             </div>
             <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">
@@ -328,29 +340,30 @@ function GalleryDropdown({
           </svg>
         </span>
       </button>
-      {open && !compact
-        ? renderMenuPanel(
-            [
-              "absolute z-50",
-              menuPanelClass,
-              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100%-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
-            ].join(" ")
-          )
-        : null}
-      {open && compact && menuStyle && typeof document !== "undefined"
+      {open && menuStyle && typeof document !== "undefined"
         ? createPortal(
             <>
-              <button
-                type="button"
-                aria-label="Close gallery menu"
-                className="fixed inset-0 z-[60] bg-slate-900/10"
-                onClick={() => setOpen(false)}
-              />
-              {renderMenuPanel(`${menuPanelClass} fixed z-[70]`, {
-                top: menuStyle.top,
-                left: menuStyle.left,
-                width: menuStyle.width,
-              })}
+              {compact ? (
+                <button
+                  type="button"
+                  aria-label="Close gallery menu"
+                  className="fixed inset-0 z-[60] bg-slate-900/10"
+                  onClick={() => setOpen(false)}
+                />
+              ) : null}
+              <div
+                onMouseEnter={() => {
+                  clearTimers();
+                  setOpen(true);
+                }}
+                onMouseLeave={scheduleClose}
+              >
+                {renderMenuPanel(`${menuPanelClass} fixed z-[70]`, {
+                  top: menuStyle.top,
+                  left: menuStyle.left,
+                  width: menuStyle.width,
+                })}
+              </div>
             </>,
             document.body
           )
