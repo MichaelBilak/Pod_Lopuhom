@@ -49,7 +49,6 @@ export default function HomeCollectionPromo({
                   style={{ objectPosition: "50% 100%" }}
                 />
               </div>
-              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Herbarium</span>
               </span>
@@ -75,7 +74,6 @@ export default function HomeCollectionPromo({
                   }}
                 />
               </div>
-              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Folia</span>
               </span>

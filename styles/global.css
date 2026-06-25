@@ -569,27 +569,6 @@ select {
   background: #fff;
 }
 
-.collection-split__text-scrim {
-  pointer-events: none;
-  position: absolute;
-  left: -8%;
-  right: -8%;
-  top: 50%;
-  z-index: 1;
-  height: clamp(4rem, 28vw, 6.5rem);
-  transform: translateY(-50%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(15 23 42 / 0.1) 5%,
-    rgb(15 23 42 / 0.22) 18%,
-    rgb(15 23 42 / 0.34) 50%,
-    rgb(15 23 42 / 0.22) 82%,
-    rgb(15 23 42 / 0.1) 95%,
-    transparent 100%
-  );
-}
-
 .collection-split__label {
   z-index: 3;
   font-size: clamp(0.8125rem, 3.8vw, 1.0625rem);
@@ -608,7 +587,24 @@ select {
 }
 
 .collection-split__label-text::before {
-  content: none;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: -1;
+  height: 2.15em;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(15 23 42 / 0.12) 7%,
+    rgb(15 23 42 / 0.48) 20%,
+    rgb(15 23 42 / 0.58) 50%,
+    rgb(15 23 42 / 0.48) 80%,
+    rgb(15 23 42 / 0.12) 93%,
+    transparent 100%
+  );
 }
 
 @media (max-width: 430px) {
@@ -639,16 +635,16 @@ select {
     letter-spacing: 0.18em;
   }
 
-  .collection-split__text-scrim {
-    height: clamp(3.5rem, 32vw, 5.5rem);
+  .collection-split__label-text::before {
+    height: 2em;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgb(15 23 42 / 0.14) 4%,
-      rgb(15 23 42 / 0.28) 16%,
-      rgb(15 23 42 / 0.42) 50%,
-      rgb(15 23 42 / 0.28) 84%,
-      rgb(15 23 42 / 0.14) 96%,
+      rgb(15 23 42 / 0.16) 5%,
+      rgb(15 23 42 / 0.52) 18%,
+      rgb(15 23 42 / 0.64) 50%,
+      rgb(15 23 42 / 0.52) 82%,
+      rgb(15 23 42 / 0.16) 95%,
       transparent 100%
     );
   }
