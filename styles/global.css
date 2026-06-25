@@ -472,7 +472,7 @@ select {
 }
 
 .collection-split {
-  background: #0f172a;
+  background: #fff;
   box-shadow: none;
 }
 
@@ -503,27 +503,17 @@ select {
 }
 
 .collection-split__image {
-  object-fit: contain;
-}
-
-@media (min-width: 1024px) {
-  .collection-split__grid {
-    aspect-ratio: 5 / 1.7;
-    min-height: clamp(10.2rem, 18.7vw, 15.3rem);
-  }
-
-  .collection-split__image {
-    object-fit: cover;
-  }
+  object-fit: cover;
 }
 
 .collection-split__half {
   position: relative;
   min-height: 0;
-  background: #0f172a;
+  background: #fff;
 }
 
 .collection-split__text-scrim {
+  display: none;
   pointer-events: none;
   position: absolute;
   left: 0;
@@ -540,6 +530,17 @@ select {
     rgb(15 23 42 / 0.32) 82%,
     transparent 100%
   );
+}
+
+@media (min-width: 1024px) {
+  .collection-split__grid {
+    aspect-ratio: 5 / 1.7;
+    min-height: clamp(10.2rem, 18.7vw, 15.3rem);
+  }
+
+  .collection-split__text-scrim {
+    display: block;
+  }
 }
 
 .collection-split__label {
