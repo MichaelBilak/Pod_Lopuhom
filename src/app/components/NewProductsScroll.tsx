@@ -65,7 +65,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="new-products-card group shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
+        className="new-products-card group shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[320px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -74,13 +74,13 @@ export default function NewProductsScroll({
           aria-label={`Open ${product.title} details`}
           tabIndex={duplicate ? -1 : undefined}
         >
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-auto sm:h-[320px]">
+          <div className="relative aspect-[5/4] w-full overflow-hidden rounded-2xl bg-slate-50/60 sm:aspect-auto sm:h-[298px]">
             {mainImageUrl ? (
               <ProductImage
                 src={mainImageUrl}
                 alt={product.title}
                 fill
-                sizes="(max-width: 430px) 72vw, (max-width: 640px) 260px, 298px"
+                sizes="(max-width: 430px) 72vw, (max-width: 640px) 280px, 320px"
                 className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                 style={{
                   objectPosition: productMainImageObjectPosition(product),

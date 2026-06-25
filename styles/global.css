@@ -176,7 +176,7 @@ select {
   pointer-events: none;
   background-image: url("/images/hero/hero-market.jpg");
   background-size: cover;
-  background-position: center 42%;
+  background-position: 28% 38%;
   background-repeat: no-repeat;
   opacity: 0.62;
   -webkit-mask-image: var(--hero-mask-y), var(--hero-mask-x);
@@ -218,7 +218,7 @@ select {
   }
 
   .hero-panel::before {
-    background-position: center 40%;
+    background-position: 26% 36%;
   }
 }
 
@@ -290,7 +290,7 @@ select {
 
   .hero-panel::before {
     opacity: 0.56;
-    background-position: center 38%;
+    background-position: 24% 34%;
   }
 
   .hero-tagline {
@@ -348,7 +348,7 @@ select {
   }
 
   .new-products-card {
-    width: clamp(10.5rem, 71.5%, 15.5rem);
+    width: clamp(13.125rem, 89.4%, 19.375rem);
   }
 }
 

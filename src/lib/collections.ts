@@ -15,4 +15,4 @@ export const parseCollectionInput = (value: unknown): CollectionId => {
 };
 
 export const collectionImagePath = (collection: CollectionId) =>
-  `/images/collections/${collection.toLowerCase()}.svg`;
+  `/images/collections/${collection.toLowerCase()}.jpg`;

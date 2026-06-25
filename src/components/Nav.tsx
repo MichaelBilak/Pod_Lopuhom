@@ -71,7 +71,7 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
         aria-label="Change language"
         onClick={() => setOpen((value) => !value)}
         className={[
-          "inline-flex min-h-[36px] min-w-[60px] items-center justify-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-normal uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+          "inline-flex min-h-[40px] min-w-[68px] items-center justify-center gap-1 rounded-full border px-3.5 py-2 text-xs font-normal uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
           open
             ? "border-slate-900 bg-white text-slate-900"
             : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900",
@@ -110,7 +110,7 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
                     replace
                     onClick={() => setOpen(false)}
                     className={[
-                      "flex items-center justify-between px-4 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition",
+                      "flex items-center justify-between px-4 py-2.5 text-xs font-normal uppercase tracking-[0.22em] transition",
                       isActive
                         ? "bg-slate-50 text-slate-900"
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
@@ -292,7 +292,7 @@ function GalleryDropdown({
                 alt=""
                 width={400}
                 height={300}
-                sizes="160px"
+                sizes="(max-width: 640px) 160px, 352px"
                 className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
               />
             </div>
@@ -409,7 +409,7 @@ function NavBar() {
     buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
-    "font-brand text-[15px] sm:text-[18px]";
+    "font-brand text-[17px] sm:text-[21px] lg:text-[24px]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
@@ -469,7 +469,7 @@ function NavBar() {
           scroll={false}
           replace
           className={[
-            "inline-flex min-h-[28px] items-center justify-center rounded-full border px-2 py-1 text-[9px] font-normal uppercase tracking-[0.2em] transition",
+            "inline-flex min-h-[32px] items-center justify-center rounded-full border px-2.5 py-1.5 text-[10px] font-normal uppercase tracking-[0.2em] transition sm:text-[11px]",
             option === locale
               ? "border-slate-900 text-slate-900"
               : "border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700",
