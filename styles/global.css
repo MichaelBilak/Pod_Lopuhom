@@ -534,8 +534,9 @@ select {
 
 @media (min-width: 1024px) {
   .collection-split__grid {
-    aspect-ratio: 1.7 / 5;
+    aspect-ratio: 3 / 2;
     min-height: 0;
+    max-height: clamp(11rem, 20vw, 15rem);
   }
 
   .collection-split__text-scrim {
