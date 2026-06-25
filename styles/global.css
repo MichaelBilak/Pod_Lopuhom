@@ -463,7 +463,11 @@ select {
 }
 
 @media (min-width: 1024px) {
-  .collection-split-bleed {
+  .home-collection-promo {
+    align-items: center;
+  }
+
+  .collection-split-bleed.edge-bleed-x {
     width: 70%;
     max-width: 70%;
     margin-left: auto;
