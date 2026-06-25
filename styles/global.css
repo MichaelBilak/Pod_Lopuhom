@@ -556,8 +556,8 @@ select {
   inset: 0;
   z-index: 0;
   object-fit: cover;
-  opacity: 0.9;
-  filter: brightness(1.22) saturate(1.02);
+  opacity: 0.72;
+  filter: brightness(1.18) saturate(1);
 }
 
 .collection-split__half {
@@ -621,8 +621,8 @@ select {
   }
 
   .collection-split__image {
-    opacity: 0.94;
-    filter: brightness(1.14) saturate(1);
+    opacity: 0.76;
+    filter: brightness(1.12) saturate(0.98);
   }
 
   .collection-split__media::after {
