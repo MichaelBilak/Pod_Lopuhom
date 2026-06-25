@@ -482,8 +482,7 @@ select {
   box-shadow: none;
 }
 
-.collection-split__edge-fade,
-.collection-split__half-fade {
+.collection-split__edge-fade {
   pointer-events: none;
   position: absolute;
   inset: 0;
@@ -500,6 +499,19 @@ select {
       100% var(--collection-fade-size) no-repeat;
 }
 
+.collection-split__half-fade {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  --collection-fade-size: clamp(0.625rem, 3.5vw, 1.25rem);
+  background:
+    linear-gradient(to bottom, rgb(255 255 255 / 1) 0%, transparent 70%) 0 0 /
+      100% var(--collection-fade-size) no-repeat,
+    linear-gradient(to top, rgb(255 255 255 / 1) 0%, transparent 70%) 0 100% /
+      100% var(--collection-fade-size) no-repeat;
+}
+
 .collection-split__grid {
   aspect-ratio: 4 / 3;
   min-height: 0;
@@ -507,6 +519,7 @@ select {
 
 .collection-split__image {
   object-fit: cover;
+  opacity: 0.85;
   filter: brightness(1.1);
 }
 
