@@ -49,7 +49,7 @@ function FooterSocialContent() {
   const year = new Date().getFullYear();
 
   const exploreLinks = [
-    { label: t.nav.gallery, href: `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}&category=Rings` },
+    { label: t.nav.gallery, href: `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}` },
     { label: t.nav.about, href: "/about" },
     { label: t.nav.orderDelivery, href: "/order-delivery" },
   ];
@@ -63,7 +63,7 @@ function FooterSocialContent() {
 
   return (
     <footer className="relative mt-12 min-w-0 border-t border-slate-200 bg-slate-50/70 text-slate-700 sm:mt-16">
-      <div className="page-x mx-auto w-full min-w-0 max-w-6xl pt-12 pb-6 sm:pt-14 sm:pb-8">
+      <div className="page-x page-shell mx-auto w-full min-w-0 pt-12 pb-6 sm:pt-14 sm:pb-8">
         <div className="grid min-w-0 gap-y-10 gap-x-8 sm:grid-cols-2 sm:gap-y-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="min-w-0 space-y-4 sm:col-span-2 md:col-span-1">
             <Link
@@ -135,7 +135,7 @@ function FooterSocialContent() {
                 <li key={category.id}>
                   <Link
                     href={withLang(
-                      `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}&category=${encodeURIComponent(category.id)}`,
+                      `/gallery?category=${encodeURIComponent(category.id)}`,
                       locale
                     )}
                     className="inline-flex transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"

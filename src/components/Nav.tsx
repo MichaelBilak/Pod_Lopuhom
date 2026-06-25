@@ -245,9 +245,7 @@ function GalleryDropdown({
   }, [open]);
 
   const collectionHref = (collection: CollectionId) =>
-    buildHref(
-      `/gallery?collection=${encodeURIComponent(collection)}&category=Rings`
-    );
+    buildHref(`/gallery?collection=${encodeURIComponent(collection)}`);
 
   const handleToggleClick = () => {
     clearTimers();

@@ -1,10 +1,11 @@
 import {
-  filterGalleryProducts,
+  filterGalleryProductsForView,
   galleryProductImageSrc,
   GALLERY_IMAGE_UNIVERSAL,
   GALLERY_LOADING_DESKTOP,
   GALLERY_LOADING_MOBILE,
   resolveGalleryCategory,
+  resolveGalleryViewMode,
 } from "@/lib/gallery-images";
 import type { Product } from "@/lib/products";
 
@@ -28,8 +29,10 @@ export default function GalleryPreloads({
   collection,
 }: GalleryPreloadsProps) {
   const selectedCategory = resolveGalleryCategory(category);
-  const filtered = filterGalleryProducts(
+  const viewMode = resolveGalleryViewMode(category, collection);
+  const filtered = filterGalleryProductsForView(
     products,
+    viewMode,
     selectedCategory,
     collection
   );

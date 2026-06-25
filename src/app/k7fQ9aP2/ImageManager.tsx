@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { ProductImage } from "@/lib/supabase-products";
+import { adminProductImageSrc } from "@/lib/admin-images";
 import ImagePositionEditor from "./ImagePositionEditor";
 
 /** API may return snake_case or camelCase depending on serialization */
@@ -348,12 +349,14 @@ export default function ImageManager({
               className="group relative overflow-hidden rounded-lg border border-slate-200 bg-white"
             >
               <img
-                src={img.image_url}
+                src={adminProductImageSrc(img.image_url, "grid")}
                 alt={img.alt_text ?? ""}
                 className="h-28 w-full object-cover"
                 style={{
                   objectPosition: img.object_position ?? "50% 50%",
                 }}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
               />
               <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-1 bg-black/50 opacity-0 transition group-hover:opacity-100">
                 <button

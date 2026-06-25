@@ -21,6 +21,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Product } from "@/lib/supabase-products";
+import { adminProductImageSrc } from "@/lib/admin-images";
 
 type ProductListProps = {
   products: Product[];
@@ -185,9 +186,11 @@ function SortableRow({
       <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
         {product.images[0] ? (
           <img
-            src={product.images[0].image_url}
+            src={adminProductImageSrc(product.images[0].image_url, "thumb")}
             alt={product.title}
             className="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-[10px] text-slate-400">

@@ -71,6 +71,36 @@ export function filterGalleryProducts(
   });
 }
 
+export function filterGalleryProductsByCategory(
+  products: Product[],
+  category: string
+): Product[] {
+  return products.filter((product) => (product.category ?? "Rings") === category);
+}
+
+export type GalleryViewMode = "category" | "collection";
+
+export function resolveGalleryViewMode(
+  category: string | null | undefined,
+  collection: string | null | undefined
+): GalleryViewMode {
+  const hasCollection = Boolean(collection);
+  if (hasCollection) return "collection";
+  return "category";
+}
+
+export function filterGalleryProductsForView(
+  products: Product[],
+  viewMode: GalleryViewMode,
+  category: string,
+  collection: string | null | undefined
+): Product[] {
+  if (viewMode === "collection") {
+    return filterGalleryProductsByCollection(products, collection);
+  }
+  return filterGalleryProductsByCategory(products, category);
+}
+
 export function filterGalleryProductsByCollection(
   products: Product[],
   collection: string | null | undefined

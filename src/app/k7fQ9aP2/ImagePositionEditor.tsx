@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useRef, useState, useEffect, useMemo } from "react";
+import { adminProductImageSrc } from "@/lib/admin-images";
 
 function parsePosition(pos: string | null): { x: number; y: number } {
   if (!pos || typeof pos !== "string") return { x: 50, y: 50 };
@@ -41,6 +42,10 @@ export default function ImagePositionEditor({
   onClose,
 }: ImagePositionEditorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const displayUrl = useMemo(
+    () => adminProductImageSrc(imageUrl, "editor"),
+    [imageUrl]
+  );
   const [position, setPosition] = useState(() => parsePosition(objectPosition));
   const positionRef = useRef(position);
   /** Updated on every move so handleUp reads the final position (setState is async). */
@@ -123,11 +128,12 @@ export default function ImagePositionEditor({
           }}
         >
           <img
-            src={imageUrl}
+            src={displayUrl}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-center"
             style={{ objectPosition: positionStr }}
             draggable={false}
+            decoding="async"
           />
           <div
             role="button"

@@ -3,6 +3,7 @@
 import {
   productDisplayPrice,
 } from "@/lib/products";
+import { adminProductImageSrc } from "@/lib/admin-images";
 import type { ProductFormState } from "./ProductForm";
 import type { ProductImage } from "@/lib/supabase-products";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
@@ -50,7 +51,8 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
   const priceText = productDisplayPrice(product as Parameters<typeof productDisplayPrice>[0]);
 
   const imagesWithPosition = images.map((img) => ({
-    url: img.image_url,
+    url: adminProductImageSrc(img.image_url, "preview"),
+    thumbUrl: adminProductImageSrc(img.image_url, "thumb"),
     objectPosition: img.object_position && /^\d+(\.\d+)?% \d+(\.\d+)?%$/.test(img.object_position)
       ? img.object_position
       : "50% 50%",
@@ -71,10 +73,11 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
           <div className="relative h-40 w-full overflow-hidden rounded-t-2xl bg-slate-50/60">
             {mainUrl ? (
               <img
-                src={mainUrl}
+                src={adminProductImageSrc(mainUrl, "preview")}
                 alt=""
                 className="h-full w-full object-cover"
                 style={{ objectPosition }}
+                decoding="async"
               />
             ) : (
               <ProductImagePlaceholder className="h-full w-full" aria-hidden />
@@ -107,10 +110,12 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
                       className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
                     >
                       <img
-                        src={img.url}
+                        src={img.thumbUrl}
                         alt=""
                         className="h-full w-full object-cover"
                         style={{ objectPosition: img.objectPosition }}
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   ))}
@@ -121,6 +126,7 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
                     alt=""
                     className="h-full w-full object-cover"
                     style={{ objectPosition: imagesWithPosition[0].objectPosition }}
+                    decoding="async"
                   />
                 </div>
               </>

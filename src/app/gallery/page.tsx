@@ -44,7 +44,7 @@ export default async function GalleryPage({ searchParams }: PageProps) {
         collection={resolvedSearchParams.collection}
       />
       <Nav />
-      <main className="page-x page-pb-20 page-main mx-auto w-full min-w-0 max-w-6xl sm:page-pb-24">
+      <main className="page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-24">
         <section className="min-w-0 space-y-6 text-center sm:space-y-7">
           <h1 className="text-[clamp(1.5rem,5.6vw,1.875rem)] font-medium tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             {t.gallery.title}

@@ -148,39 +148,46 @@ select {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: #74939f;
+  background: rgb(116 147 159 / 0.38);
   -webkit-mask-image:
     linear-gradient(
       to bottom,
       transparent 0%,
-      #000 28%,
-      #000 72%,
+      #000 18%,
+      #000 82%,
       transparent 100%
     ),
     linear-gradient(
       to right,
       transparent 0%,
-      #000 22%,
-      #000 78%,
+      #000 12%,
+      #000 88%,
       transparent 100%
     );
   mask-image:
     linear-gradient(
       to bottom,
       transparent 0%,
-      #000 28%,
-      #000 72%,
+      #000 18%,
+      #000 82%,
       transparent 100%
     ),
     linear-gradient(
       to right,
       transparent 0%,
-      #000 22%,
-      #000 78%,
+      #000 12%,
+      #000 88%,
       transparent 100%
     );
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
+}
+
+@media (min-width: 1024px) {
+  .hero-panel {
+    padding: 4.5rem 2.5rem;
+    min-height: 11rem;
+  }
 }
 
 @media (max-width: 639px) {
@@ -338,7 +345,6 @@ select {
   padding-inline: 0.125rem;
   font-weight: 400;
   font-size: clamp(1rem, 4.8vw, 2.9rem);
-  font-size: clamp(1rem, 6.2cqi, 2.9rem);
   line-height: 1.35;
   letter-spacing: 0.02em;
   color: #fff;
@@ -353,20 +359,25 @@ select {
     white-space: nowrap;
     text-wrap: nowrap;
     overflow-wrap: normal;
+    font-size: clamp(1.5rem, 3.8cqi, 3.5rem);
   }
 }
 
 @media (min-width: 640px) {
   .hero-tagline {
-    font-size: clamp(1.5rem, 4.6vw, 3rem);
-    font-size: clamp(1.5rem, 6.4cqi, 3rem);
+    font-size: clamp(1.5rem, 4.2vw, 3.25rem);
   }
 }
 
 @media (min-width: 1024px) {
   .hero-tagline {
-    font-size: clamp(1.7rem, 3.7vw, 3.1rem);
-    font-size: clamp(1.7rem, 5.5cqi, 3.1rem);
+    font-size: clamp(1.85rem, 2.9vw, 4rem);
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-tagline {
+    font-size: clamp(2rem, 2.5vw, 4.5rem);
   }
 }
 
@@ -553,6 +564,24 @@ button:focus-visible {
   padding-left: max(1rem, env(safe-area-inset-left, 0px));
   padding-right: max(1rem, constant(safe-area-inset-right));
   padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+/* Wider on large desktops so the layout does not look zoomed-out on 2K/4K. */
+.page-shell {
+  width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+  max-width: 72rem;
+}
+@media (min-width: 1280px) {
+  .page-shell {
+    max-width: min(80rem, 94vw);
+  }
+}
+@media (min-width: 1536px) {
+  .page-shell {
+    max-width: min(90rem, 92vw);
+  }
 }
 @media (min-width: 640px) {
   .page-x {
