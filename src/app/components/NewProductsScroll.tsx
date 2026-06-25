@@ -111,13 +111,15 @@ export default function NewProductsScroll({
             <div className="absolute inset-x-0 bottom-0 flex min-w-0 items-end justify-between gap-2 px-3 pb-3 sm:px-4 sm:pb-4">
               <span
                 className={[
-                  "min-w-0 truncate font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
-                  isPriceOnRequest ? "text-[11px]" : "text-[20px] sm:text-[26px]",
+                  "min-w-0 shrink whitespace-nowrap font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
+                  isPriceOnRequest
+                    ? "text-[10px] sm:text-[10px]"
+                    : "text-[18px] sm:text-[21px]",
                 ].join(" ")}
               >
                 {priceText}
               </span>
-              <span className="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.16em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-xs sm:tracking-[0.2em]">
+              <span className="shrink-0 whitespace-nowrap text-[8px] uppercase tracking-[0.12em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-[10px] sm:tracking-[0.2em]">
                 {viewDetails}
               </span>
             </div>
