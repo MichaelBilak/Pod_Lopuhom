@@ -167,21 +167,21 @@ function ProductCard({
             />
           )}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/85 via-black/50 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/85 via-black/50 to-transparent sm:h-16"
             aria-hidden
           />
-          <div className="absolute inset-x-0 bottom-0 flex min-w-0 items-end justify-between gap-2 px-3 pb-3 sm:px-4 sm:pb-4">
+          <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col items-start gap-0.5 px-2.5 pb-2.5 sm:flex-row sm:items-end sm:justify-between sm:gap-2 sm:px-4 sm:pb-4">
             <span
               className={[
-                "min-w-0 shrink whitespace-nowrap font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
+                "font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
                 isPriceOnRequest
-                  ? "text-[10px] sm:text-[10px]"
-                  : "text-[18px] sm:text-[21px]",
+                  ? "text-[9px] leading-tight sm:text-[10px]"
+                  : "text-[15px] leading-none sm:text-[21px]",
               ].join(" ")}
             >
               {priceText}
             </span>
-            <span className="shrink-0 whitespace-nowrap text-[8px] uppercase tracking-[0.12em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-[10px] sm:tracking-[0.2em]">
+            <span className="text-[7px] uppercase leading-none tracking-[0.1em] text-white/80 transition-colors group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] sm:text-[10px] sm:tracking-[0.2em]">
               {viewDetailsLabel}
             </span>
           </div>
@@ -218,11 +218,6 @@ export default function GalleryClient({
     () => parseCollection(collectionParam),
     [collectionParam]
   );
-
-  const pageSubtitle = useMemo(() => {
-    if (viewMode === "collection") return selectedCollection;
-    return categories.find((c) => c.id === selectedCategory)?.label ?? selectedCategory;
-  }, [viewMode, selectedCollection, selectedCategory, categories]);
 
   const sections = useMemo(() => {
     if (viewMode === "collection") {
@@ -448,10 +443,6 @@ export default function GalleryClient({
               )}
         </div>
       </div>
-
-      <p className="text-center text-[11px] font-normal uppercase tracking-[0.28em] text-slate-500 sm:text-xs">
-        {pageSubtitle}
-      </p>
 
       {viewMode === "category"
         ? renderCategoryMenu(

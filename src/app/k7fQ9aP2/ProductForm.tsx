@@ -6,7 +6,7 @@ import ImageManager from "./ImageManager";
 import ProductPreview from "./ProductPreview";
 import type { Product, ProductImage } from "@/lib/supabase-products";
 
-const CATEGORIES = ["Rings", "Necklaces", "Earrings", "Sets"];
+const CATEGORIES = ["Necklaces", "Rings", "Earrings", "Sets"];
 
 export type ProductFormState = {
   title: string;

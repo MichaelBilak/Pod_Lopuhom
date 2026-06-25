@@ -55,8 +55,8 @@ function FooterSocialContent() {
   ];
 
   const categoryLinks = [
-    { label: t.categories.rings, id: "Rings" },
     { label: t.categories.necklaces, id: "Necklaces" },
+    { label: t.categories.rings, id: "Rings" },
     { label: t.categories.earrings, id: "Earrings" },
     { label: t.categories.sets, id: "Sets" },
   ];

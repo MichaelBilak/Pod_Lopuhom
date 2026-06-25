@@ -31,7 +31,7 @@ const parseNullableString = (v: unknown) => {
   return s || null;
 };
 
-const CATEGORIES = ["Rings", "Necklaces", "Earrings", "Sets"];
+const CATEGORIES = ["Necklaces", "Rings", "Earrings", "Sets"];
 const parseCategory = (v: unknown) => {
   const s = parseString(v);
   return CATEGORIES.includes(s) ? s : "Rings";

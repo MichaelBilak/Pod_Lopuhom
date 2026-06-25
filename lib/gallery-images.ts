@@ -2,7 +2,7 @@ import { parseCollection } from "@/src/lib/collections";
 import { resolveProductImageSrc } from "@/lib/image-url";
 import { productMainImageUrl, type Product } from "@/lib/products";
 
-export const GALLERY_CATEGORIES = ["Rings", "Necklaces", "Earrings", "Sets"] as const;
+export const GALLERY_CATEGORIES = ["Necklaces", "Rings", "Earrings", "Sets"] as const;
 
 export type GalleryImageProfile = {
   displayWidth: number;

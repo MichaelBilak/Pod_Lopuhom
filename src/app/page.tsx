@@ -49,8 +49,8 @@ export default async function HomePage({ searchParams }: PageProps) {
             <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:py-4">
               <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
                 {[
-                  { id: "Rings", label: t.categories.rings },
                   { id: "Necklaces", label: t.categories.necklaces },
+                  { id: "Rings", label: t.categories.rings },
                   { id: "Earrings", label: t.categories.earrings },
                   { id: "Sets", label: t.categories.sets },
                 ].map((item) => (

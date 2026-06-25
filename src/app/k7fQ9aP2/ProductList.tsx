@@ -32,7 +32,7 @@ type ProductListProps = {
   onReorder?: (orderedIds: string[]) => void;
 };
 
-const CATEGORY_ORDER = ["Rings", "Necklaces", "Earrings", "Sets"] as const;
+const CATEGORY_ORDER = ["Necklaces", "Rings", "Earrings", "Sets"] as const;
 const UNCATEGORIZED = "Uncategorized";
 
 type CollectionFilter = "all" | CollectionId;
