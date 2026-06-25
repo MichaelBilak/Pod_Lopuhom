@@ -32,8 +32,8 @@ export default async function HomePage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
-        <div className="page-main-tight flex min-w-0 flex-col gap-5 sm:gap-4">
+      <main className="home-page page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
+        <div className="page-main-tight flex min-w-0 flex-col">
           <section className="hero-panel text-center">
             <div className="hero-panel__content relative z-10">
               <h1

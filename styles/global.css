@@ -176,9 +176,9 @@ select {
   pointer-events: none;
   background-image: url("/images/hero/hero-market.jpg");
   background-size: cover;
-  background-position: 28% 38%;
+  background-position: 18% 30%;
   background-repeat: no-repeat;
-  opacity: 0.88;
+  opacity: 0.2;
   -webkit-mask-image: var(--hero-mask-y), var(--hero-mask-x);
   mask-image: var(--hero-mask-y), var(--hero-mask-x);
   -webkit-mask-composite: source-in;
@@ -196,7 +196,7 @@ select {
   }
 
   .hero-panel::before {
-    background-position: 26% 36%;
+    background-position: 16% 28%;
   }
 }
 
@@ -278,8 +278,8 @@ select {
   }
 
   .hero-panel::before {
-    opacity: 0.84;
-    background-position: 24% 34%;
+    opacity: 0.2;
+    background-position: 14% 26%;
   }
 
   .hero-tagline {
@@ -363,7 +363,7 @@ select {
   line-height: 1.35;
   letter-spacing: 0.02em;
   color: #0f172a;
-  text-shadow: none;
+  text-shadow: 0 1px 2px rgb(255 255 255 / 0.85);
   white-space: normal;
   text-wrap: balance;
   overflow-wrap: anywhere;
@@ -427,7 +427,35 @@ select {
 }
 
 .home-collection-promo {
-  margin-top: 0.25rem;
+  margin-top: 1rem;
+}
+
+.home-page .home-category-menu {
+  margin-block: 1rem;
+}
+
+.home-page.page-main {
+  gap: 3rem;
+}
+
+.home-page .page-main-tight {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.home-page .new-products-section {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .home-page.page-main {
+    gap: 6rem;
+  }
+
+  .home-page .page-main-tight {
+    gap: 3.5rem;
+  }
 }
 
 .collection-split-bleed {
@@ -454,19 +482,19 @@ select {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: clamp(1.25rem, 6vw, 2.5rem);
+  width: clamp(2rem, 10vw, 4rem);
   z-index: 2;
   pointer-events: none;
 }
 
 .collection-split::before {
   left: 0;
-  background: linear-gradient(to right, rgb(255 255 255 / 0.92), transparent);
+  background: linear-gradient(to right, rgb(255 255 255 / 1), transparent);
 }
 
 .collection-split::after {
   right: 0;
-  background: linear-gradient(to left, rgb(255 255 255 / 0.92), transparent);
+  background: linear-gradient(to left, rgb(255 255 255 / 1), transparent);
 }
 
 .collection-split__grid {
@@ -487,36 +515,13 @@ select {
   background: #0f172a;
 }
 
-.collection-split__overlay {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgb(15 23 42 / 0.35) 0%,
-    rgb(15 23 42 / 0.55) 45%,
-    rgb(15 23 42 / 0.72) 100%
-  );
-}
-
-@media (min-width: 1024px) {
-  .collection-split__overlay {
-    background: linear-gradient(
-      180deg,
-      rgb(15 23 42 / 0.42) 0%,
-      rgb(15 23 42 / 0.62) 40%,
-      rgb(15 23 42 / 0.82) 100%
-    );
-  }
-}
-
 .collection-split__label {
   z-index: 1;
   font-size: clamp(0.8125rem, 3.8vw, 1.0625rem);
   letter-spacing: 0.24em;
   text-shadow:
-    0 1px 2px rgb(15 23 42 / 0.65),
-    0 4px 14px rgb(15 23 42 / 0.45);
+    0 1px 3px rgb(15 23 42 / 0.75),
+    0 2px 10px rgb(15 23 42 / 0.55);
 }
 
 @media (min-width: 1024px) {
