@@ -174,14 +174,8 @@ select {
 }
 
 .home-category-band {
-  height: 5px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--brand-band) 35%,
-    var(--brand-band) 65%,
-    transparent 100%
-  );
+  height: 1px;
+  background-color: var(--brand-band);
 }
 
 .hero-backdrop {
