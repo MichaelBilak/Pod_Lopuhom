@@ -15,6 +15,7 @@ import { createPortal } from "react-dom";
 import {
   COLLECTIONS,
   collectionImagePath,
+  collectionImageObjectPosition,
   type CollectionId,
 } from "@/src/lib/collections";
 import { getLocale, getTranslations, withLang, type Locale } from "../lib/i18n";
@@ -294,6 +295,7 @@ function GalleryDropdown({
                 height={300}
                 sizes="(max-width: 640px) 160px, 352px"
                 className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+                style={{ objectPosition: collectionImageObjectPosition(collection) }}
               />
             </div>
             <p className="px-2 py-2 text-center text-[11px] font-normal uppercase tracking-[0.18em] text-slate-700">

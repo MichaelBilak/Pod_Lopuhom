@@ -294,10 +294,10 @@ select {
   }
 
   .hero-tagline {
-    font-size: clamp(0.8125rem, 3.47vw, 1rem);
-    font-size: clamp(0.8125rem, 4.5cqi, 1rem);
-    line-height: 1.45;
-    letter-spacing: 0.012em;
+    font-size: clamp(0.9375rem, 4.2vw, 1.125rem);
+    font-size: clamp(0.9375rem, 5cqi, 1.125rem);
+    line-height: 1.4;
+    letter-spacing: 0.015em;
   }
 
   .home-category-menu .category-tabs-scroll {
@@ -305,8 +305,8 @@ select {
   }
 
   .home-category-menu .home-category-link {
-    font-size: 0.625rem;
-    letter-spacing: 0.16em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
     padding-inline: 0.25rem;
   }
 
@@ -339,16 +339,12 @@ select {
   }
 
   .new-products-section {
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .new-products-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-  }
-
-  .new-products-card {
-    width: clamp(13.125rem, 89.4%, 19.375rem);
+    font-size: 0.8125rem;
+    letter-spacing: 0.2em;
   }
 }
 
@@ -524,14 +520,54 @@ button:focus-visible {
 
 .new-products-marquee {
   overflow: hidden;
-  touch-action: manipulation;
+  touch-action: pan-x;
+}
+
+@media (max-width: 639px) {
+  .new-products-marquee {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .new-products-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .new-products-marquee .new-products-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .new-products-copy[data-copy="pre"],
+  .new-products-copy[data-copy="post"] {
+    display: none;
+  }
+
+  .new-products-card {
+    scroll-snap-align: start;
+  }
+
+  .new-products-copy {
+    gap: 0.75rem;
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
 }
 
 .new-products-marquee .new-products-track {
   width: max-content;
-  animation: newProductsMarquee 32s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
+}
+
+@media (min-width: 640px) {
+  .new-products-marquee .new-products-track {
+    animation: newProductsMarquee 32s linear infinite;
+  }
 }
 
 .new-products-marquee:is(:hover, :focus-within, .is-paused) .new-products-track {

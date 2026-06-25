@@ -65,7 +65,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="new-products-card group shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[320px]"
+        className="new-products-card group w-[clamp(11rem,76vw,16.5rem)] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[320px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -102,7 +102,7 @@ export default function NewProductsScroll({
               <span
                 className={[
                   "min-w-0 truncate font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
-                  isPriceOnRequest ? "text-[11px]" : "text-[22px] sm:text-[26px]",
+                  isPriceOnRequest ? "text-[11px]" : "text-[20px] sm:text-[26px]",
                 ].join(" ")}
               >
                 {priceText}
@@ -124,10 +124,10 @@ export default function NewProductsScroll({
           {newLabel}
         </p>
       </div>
-      <div className="relative min-w-0 overflow-x-clip">
+      <div className="relative min-w-0 edge-bleed-x sm:no-edge-bleed">
         <div
           ref={marqueeRef}
-          className="new-products-marquee pb-3 pt-1"
+          className="new-products-marquee new-products-scroll pb-3 pt-1 sm:overflow-hidden"
           role="region"
           aria-label="Latest pieces"
         >
@@ -155,7 +155,7 @@ export default function NewProductsScroll({
           </div>
         </div>
         <div
-          className="pointer-events-none absolute right-0 top-1 bottom-3 w-12 bg-gradient-to-l from-white via-white/80 to-transparent sm:w-24"
+          className="pointer-events-none absolute right-0 top-1 bottom-3 hidden w-12 bg-gradient-to-l from-white via-white/80 to-transparent sm:block sm:w-24"
           aria-hidden
         />
       </div>

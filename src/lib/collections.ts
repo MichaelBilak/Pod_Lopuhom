@@ -16,3 +16,8 @@ export const parseCollectionInput = (value: unknown): CollectionId => {
 
 export const collectionImagePath = (collection: CollectionId) =>
   `/images/collections/${collection.toLowerCase()}.jpg`;
+
+export const collectionImageObjectPosition = (collection: CollectionId) => {
+  if (collection === "Herbarium") return "50% 28%";
+  return "50% 50%";
+};
