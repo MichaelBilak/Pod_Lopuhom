@@ -86,26 +86,6 @@ function FooterSocialContent() {
             <p className="max-w-sm text-[13px] leading-relaxed text-slate-600 [overflow-wrap:anywhere]">
               {t.footer.tagline}
             </p>
-            <div className="flex items-center gap-3 pt-1">
-              <a
-                href={instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-              >
-                <InstagramIcon className="h-[18px] w-[18px]" />
-              </a>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-              >
-                <WhatsappIcon className="h-[18px] w-[18px]" />
-              </a>
-            </div>
           </div>
 
           <nav aria-label="Footer explore" className="min-w-0">
