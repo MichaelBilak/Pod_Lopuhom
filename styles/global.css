@@ -589,21 +589,18 @@ select {
 .collection-split__label-text::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
+  inset: -0.8em -0.35em;
   z-index: -1;
-  height: 2.15em;
-  transform: translateY(-50%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgb(15 23 42 / 0.12) 7%,
-    rgb(15 23 42 / 0.48) 20%,
-    rgb(15 23 42 / 0.58) 50%,
-    rgb(15 23 42 / 0.48) 80%,
-    rgb(15 23 42 / 0.12) 93%,
-    transparent 100%
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(15 23 42 / 0.66) 0%,
+    rgb(15 23 42 / 0.52) 16%,
+    rgb(15 23 42 / 0.34) 34%,
+    rgb(15 23 42 / 0.18) 52%,
+    rgb(15 23 42 / 0.08) 68%,
+    rgb(15 23 42 / 0.02) 82%,
+    transparent 94%
   );
 }
 
@@ -636,16 +633,16 @@ select {
   }
 
   .collection-split__label-text::before {
-    height: 2em;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(15 23 42 / 0.16) 5%,
-      rgb(15 23 42 / 0.52) 18%,
-      rgb(15 23 42 / 0.64) 50%,
-      rgb(15 23 42 / 0.52) 82%,
-      rgb(15 23 42 / 0.16) 95%,
-      transparent 100%
+    inset: -0.85em -0.3em;
+    background: radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      rgb(15 23 42 / 0.74) 0%,
+      rgb(15 23 42 / 0.58) 14%,
+      rgb(15 23 42 / 0.38) 32%,
+      rgb(15 23 42 / 0.2) 50%,
+      rgb(15 23 42 / 0.09) 66%,
+      rgb(15 23 42 / 0.03) 80%,
+      transparent 92%
     );
   }
 }
