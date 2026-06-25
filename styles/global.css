@@ -140,6 +140,32 @@ select {
   background: transparent;
   padding: 3rem 1.5rem;
   box-shadow: none;
+  --hero-mask-x: linear-gradient(
+    to right,
+    transparent 0%,
+    rgb(0 0 0 / 0.12) 6%,
+    rgb(0 0 0 / 0.45) 14%,
+    rgb(0 0 0 / 0.82) 24%,
+    #000 34%,
+    #000 66%,
+    rgb(0 0 0 / 0.82) 76%,
+    rgb(0 0 0 / 0.45) 86%,
+    rgb(0 0 0 / 0.12) 94%,
+    transparent 100%
+  );
+  --hero-mask-y: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(0 0 0 / 0.12) 6%,
+    rgb(0 0 0 / 0.45) 14%,
+    rgb(0 0 0 / 0.82) 24%,
+    #000 34%,
+    #000 66%,
+    rgb(0 0 0 / 0.82) 76%,
+    rgb(0 0 0 / 0.45) 86%,
+    rgb(0 0 0 / 0.12) 94%,
+    transparent 100%
+  );
 }
 
 .hero-panel::before {
@@ -148,37 +174,39 @@ select {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: rgb(116 147 159 / 0.38);
-  -webkit-mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      #000 18%,
-      #000 82%,
+  background-image: url("/images/hero/hero-market.jpg");
+  background-size: cover;
+  background-position: center 42%;
+  background-repeat: no-repeat;
+  opacity: 0.62;
+  -webkit-mask-image: var(--hero-mask-y), var(--hero-mask-x);
+  mask-image: var(--hero-mask-y), var(--hero-mask-x);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 82% 72% at 50% 50%,
+      rgb(15 23 42 / 0.42) 0%,
+      rgb(15 23 42 / 0.18) 52%,
       transparent 100%
     ),
     linear-gradient(
-      to right,
-      transparent 0%,
-      #000 12%,
-      #000 88%,
-      transparent 100%
+      180deg,
+      rgb(255 255 255 / 0.08) 0%,
+      transparent 38%,
+      transparent 62%,
+      rgb(255 255 255 / 0.08) 100%
     );
-  mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      #000 18%,
-      #000 82%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to right,
-      transparent 0%,
-      #000 12%,
-      #000 88%,
-      transparent 100%
-    );
+  -webkit-mask-image: var(--hero-mask-y), var(--hero-mask-x);
+  mask-image: var(--hero-mask-y), var(--hero-mask-x);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
@@ -186,7 +214,11 @@ select {
 @media (min-width: 1024px) {
   .hero-panel {
     padding: 4.5rem 2.5rem;
-    min-height: 11rem;
+    min-height: 14rem;
+  }
+
+  .hero-panel::before {
+    background-position: center 40%;
   }
 }
 
@@ -228,39 +260,37 @@ select {
     padding: clamp(1.125rem, 4.8vw, 1.5rem) clamp(0.75rem, 3.2vw, 1rem);
     border-radius: var(--ix-radius);
     min-height: clamp(6.5rem, 28vw, 8.75rem);
+    --hero-mask-x: linear-gradient(
+      to right,
+      transparent 0%,
+      rgb(0 0 0 / 0.1) 4%,
+      rgb(0 0 0 / 0.35) 10%,
+      rgb(0 0 0 / 0.72) 18%,
+      #000 28%,
+      #000 72%,
+      rgb(0 0 0 / 0.72) 82%,
+      rgb(0 0 0 / 0.35) 90%,
+      rgb(0 0 0 / 0.1) 96%,
+      transparent 100%
+    );
+    --hero-mask-y: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 0.1) 4%,
+      rgb(0 0 0 / 0.35) 10%,
+      rgb(0 0 0 / 0.72) 18%,
+      #000 28%,
+      #000 72%,
+      rgb(0 0 0 / 0.72) 82%,
+      rgb(0 0 0 / 0.35) 90%,
+      rgb(0 0 0 / 0.1) 96%,
+      transparent 100%
+    );
   }
 
   .hero-panel::before {
-    -webkit-mask-image:
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 16%,
-        #000 84%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to right,
-        transparent 0%,
-        #000 5%,
-        #000 95%,
-        transparent 100%
-      );
-    mask-image:
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 16%,
-        #000 84%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to right,
-        transparent 0%,
-        #000 5%,
-        #000 95%,
-        transparent 100%
-      );
+    opacity: 0.56;
+    background-position: center 38%;
   }
 
   .hero-tagline {
@@ -348,6 +378,10 @@ select {
   line-height: 1.35;
   letter-spacing: 0.02em;
   color: #fff;
+  text-shadow:
+    0 1px 2px rgb(15 23 42 / 0.72),
+    0 4px 16px rgb(15 23 42 / 0.5),
+    0 0 36px rgb(15 23 42 / 0.38);
   white-space: normal;
   text-wrap: balance;
   overflow-wrap: anywhere;
