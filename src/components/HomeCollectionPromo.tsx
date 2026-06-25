@@ -32,7 +32,7 @@ export default function HomeCollectionPromo({
         {collectionsLabel}
       </p>
       <div className="collection-split-bleed edge-bleed-x min-w-0">
-        <div className="collection-split relative overflow-hidden rounded-2xl">
+        <div className="collection-split relative overflow-hidden rounded-none">
           <div className="collection-split__grid grid grid-cols-[1fr_1px_1fr]">
             <Link
               href={collectionHref("Herbarium", locale)}
