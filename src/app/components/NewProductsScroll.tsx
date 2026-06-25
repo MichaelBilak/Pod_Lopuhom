@@ -65,7 +65,7 @@ export default function NewProductsScroll({
     return (
       <article
         key={`${copyTag}-${product.id}-${index}`}
-        className="group w-[min(260px,calc(100dvw-2.5rem))] shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
+        className="new-products-card group shrink-0 overflow-hidden rounded-2xl border border-slate-100/90 bg-white transition-[box-shadow] duration-200 hover:shadow-[0_2px_12px_rgba(15,23,42,0.08)] sm:w-[298px]"
         aria-hidden={duplicate}
       >
         <Link
@@ -80,7 +80,7 @@ export default function NewProductsScroll({
                 src={mainImageUrl}
                 alt={product.title}
                 fill
-                sizes="(max-width: 640px) calc(100dvw - 2.5rem), 298px"
+                sizes="(max-width: 430px) 72vw, (max-width: 640px) 260px, 298px"
                 className="gallery-image h-full w-full origin-center object-cover object-center transition duration-500 ease-out group-hover:scale-[1.02]"
                 style={{
                   objectPosition: productMainImageObjectPosition(product),
@@ -118,13 +118,13 @@ export default function NewProductsScroll({
   };
 
   return (
-    <section className="min-w-0 space-y-6 sm:space-y-8">
+    <section className="new-products-section flex min-w-0 flex-col gap-6 sm:gap-8">
       <div className="text-center">
-        <p className="text-[14px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:text-[16px] sm:tracking-[0.28em]">
+        <p className="new-products-label text-[14px] font-medium uppercase tracking-[0.2em] text-slate-400 sm:text-[16px] sm:tracking-[0.28em]">
           {newLabel}
         </p>
       </div>
-      <div className="relative edge-bleed-x min-w-0 sm:no-edge-bleed">
+      <div className="relative min-w-0 overflow-x-clip">
         <div
           ref={marqueeRef}
           className="new-products-marquee pb-3 pt-1"

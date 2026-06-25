@@ -335,7 +335,7 @@ function GalleryDropdown({
             [
               "absolute z-50",
               menuPanelClass,
-              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100dvw-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
+              "left-1/2 top-[calc(100%+0.5rem)] w-[min(calc(100%-2rem),22rem)] -translate-x-1/2 lg:left-0 lg:translate-x-0",
             ].join(" ")
           )
         : null}
@@ -505,7 +505,7 @@ function NavBar() {
   return (
     <>
       <div
-        className="h-[104px] sm:h-[120px] lg:h-[88px]"
+        className="nav-spacer"
         style={headerHeight > 0 ? { height: `${headerHeight}px` } : undefined}
         aria-hidden
       />
@@ -514,13 +514,12 @@ function NavBar() {
         ref={headerRef}
         className={[
           "site-nav-shell fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 bg-white/80 backdrop-blur transition-transform duration-300 ease-out",
-          "pt-[env(safe-area-inset-top,0px)]",
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
         <div className="lg:hidden">
           {isHome ? (
-            <div className="grid w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-3 pt-3 sm:px-5 sm:pt-4">
+            <div className="grid w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 pt-3 sm:pt-4">
               <Link
                 href={buildHref("/")}
                 className="inline-flex shrink-0 items-center justify-self-start rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -539,7 +538,7 @@ function NavBar() {
               <Link
                 href={buildHref("/")}
                 className={[
-                  "min-w-0 max-w-[min(100dvw-8.5rem,16rem)] truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[min(100dvw-10rem,18rem)]",
+                  "min-w-0 max-w-full truncate text-center text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:max-w-[18rem]",
                   brandTitleClass,
                 ].join(" ")}
                 aria-label="Pod Lopuhom home"
@@ -549,7 +548,7 @@ function NavBar() {
               <div className="justify-self-end shrink-0">{mobileLangSwitcher}</div>
             </div>
           ) : (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-3 pt-3 sm:px-5 sm:pt-4">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-3 sm:pt-4">
               <Link
                 href={buildHref("/")}
                 className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -570,7 +569,7 @@ function NavBar() {
           )}
           <nav
             aria-label="Primary"
-            className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth px-3 py-3 [-webkit-overflow-scrolling:touch] sm:px-5 sm:py-4"
+            className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:py-4"
           >
             <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-5 sm:gap-7">
               {renderNavLinks(true)}

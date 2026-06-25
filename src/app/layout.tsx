@@ -45,6 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${reenieBeanie.variable} ${caveat.variable}`}>
       <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover"
+        />
         <link rel="icon" href="/images/products/Logo._pod_lopuhom-removebg-preview.png" type="image/png" />
         <link
           rel="preload"

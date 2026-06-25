@@ -176,7 +176,7 @@ export default function GalleryClient({
   }, [selected, categories, filteredProducts]);
 
   const renderCategoryMenu = (innerClassName: string) => (
-    <div className="category-tabs-scroll edge-bleed-x min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth pb-1 [-webkit-overflow-scrolling:touch] sm:no-edge-bleed sm:overflow-visible sm:pb-0">
+    <div className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth pb-1 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:pb-0">
       <div
         className={[
           "flex w-max min-w-full flex-nowrap items-center justify-center gap-x-3 gap-y-2 sm:gap-x-7",

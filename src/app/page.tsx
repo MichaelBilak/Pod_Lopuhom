@@ -32,8 +32,8 @@ export default async function HomePage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="page-x page-pb-20 mx-auto w-full min-w-0 max-w-6xl space-y-14 pt-8 sm:space-y-20 sm:page-pb-28 sm:pt-12">
-        <div className="min-w-0 space-y-5 sm:space-y-4">
+      <main className="page-x page-pb-20 page-main mx-auto w-full min-w-0 max-w-6xl sm:page-pb-28">
+        <div className="page-main-tight flex min-w-0 flex-col gap-5 sm:gap-4">
           <section className="hero-panel text-center">
             <div className="relative z-10 space-y-5 sm:space-y-6">
               <div className="space-y-4 sm:space-y-6">
@@ -50,7 +50,7 @@ export default async function HomePage({ searchParams }: PageProps) {
           </section>
           <nav
             aria-label="Shop categories"
-            className="home-category-menu edge-bleed-x min-w-0 sm:no-edge-bleed"
+            className="home-category-menu min-w-0"
           >
             <div className="home-category-band" aria-hidden />
             <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:py-4">
@@ -67,7 +67,7 @@ export default async function HomePage({ searchParams }: PageProps) {
                       `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}&category=${encodeURIComponent(item.id)}`,
                       locale
                     )}
-                    className="inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap px-2 py-1 text-[11px] font-normal uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-1 sm:text-sm sm:tracking-[0.24em] md:text-base md:tracking-[0.28em]"
+                    className="home-category-link inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap px-2 py-1 text-[11px] font-normal uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:px-3 sm:py-1 sm:text-sm sm:tracking-[0.24em] md:text-base md:tracking-[0.28em]"
                   >
                     <span className="border-b border-transparent pb-1 transition hover:border-slate-500 sm:pb-1.5">
                       {item.label}
