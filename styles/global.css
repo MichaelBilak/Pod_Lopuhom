@@ -499,19 +499,6 @@ select {
       100% var(--collection-fade-size) no-repeat;
 }
 
-.collection-split__half-fade {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  --collection-fade-size: clamp(0.625rem, 3.5vw, 1.25rem);
-  background:
-    linear-gradient(to bottom, rgb(255 255 255 / 1) 0%, transparent 70%) 0 0 /
-      100% var(--collection-fade-size) no-repeat,
-    linear-gradient(to top, rgb(255 255 255 / 1) 0%, transparent 70%) 0 100% /
-      100% var(--collection-fade-size) no-repeat;
-}
-
 .collection-split__grid {
   aspect-ratio: 4 / 3;
   min-height: 0;
