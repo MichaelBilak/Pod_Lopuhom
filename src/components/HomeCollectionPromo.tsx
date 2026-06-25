@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  COLLECTIONS,
   collectionImageObjectPosition,
   collectionImagePath,
   type CollectionId,
@@ -45,15 +44,12 @@ export default function HomeCollectionPromo({
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 50vw, 480px"
-                className="collection-split__image h-full w-full object-contain object-center saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.02] lg:object-cover"
+                className="collection-split__image h-full w-full object-cover object-center saturate-[0.62] brightness-[0.82] transition duration-300 group-hover:scale-[1.03]"
                 style={{
                   objectPosition: collectionImageObjectPosition("Herbarium"),
                 }}
               />
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"
-                aria-hidden
-              />
+              <div className="collection-split__overlay" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
                 Herbarium
               </span>
@@ -72,15 +68,12 @@ export default function HomeCollectionPromo({
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 50vw, 480px"
-                className="collection-split__image h-full w-full object-contain object-center saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.02] lg:object-cover"
+                className="collection-split__image h-full w-full object-cover object-center saturate-[0.62] brightness-[0.82] transition duration-300 group-hover:scale-[1.03]"
                 style={{
                   objectPosition: collectionImageObjectPosition("Folia"),
                 }}
               />
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"
-                aria-hidden
-              />
+              <div className="collection-split__overlay" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
                 Folia
               </span>
