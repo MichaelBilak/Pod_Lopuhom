@@ -538,9 +538,9 @@ select {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgb(15 23 42 / 0.12) 0%,
-    rgb(15 23 42 / 0.28) 52%,
-    rgb(15 23 42 / 0.46) 100%
+    rgb(15 23 42 / 0.08) 0%,
+    rgb(15 23 42 / 0.18) 52%,
+    rgb(15 23 42 / 0.32) 100%
   );
 }
 
@@ -556,8 +556,8 @@ select {
   inset: 0;
   z-index: 0;
   object-fit: cover;
-  opacity: 0.85;
-  filter: brightness(1.1);
+  opacity: 0.9;
+  filter: brightness(1.22) saturate(1.02);
 }
 
 .collection-split__half {
@@ -621,16 +621,16 @@ select {
   }
 
   .collection-split__image {
-    opacity: 1;
-    filter: brightness(0.9) saturate(0.96);
+    opacity: 0.94;
+    filter: brightness(1.14) saturate(1);
   }
 
   .collection-split__media::after {
     background: linear-gradient(
       180deg,
-      rgb(15 23 42 / 0.18) 0%,
-      rgb(15 23 42 / 0.36) 50%,
-      rgb(15 23 42 / 0.56) 100%
+      rgb(15 23 42 / 0.12) 0%,
+      rgb(15 23 42 / 0.24) 50%,
+      rgb(15 23 42 / 0.38) 100%
     );
   }
 
