@@ -19,9 +19,6 @@ function collectionHref(collection: CollectionId, locale: Locale) {
   );
 }
 
-const collectionImageClass =
-  "collection-split__image h-full w-full object-contain object-center transition duration-300 group-hover:scale-[1.03] lg:object-cover";
-
 export default function HomeCollectionPromo({
   locale,
   collectionsLabel,
@@ -47,10 +44,10 @@ export default function HomeCollectionPromo({
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 50vw, 480px"
-                className={collectionImageClass}
+                className="collection-split__image h-full w-full object-center transition duration-300 group-hover:scale-[1.03]"
                 style={{ objectPosition: "50% 100%" }}
               />
-              <div className="collection-split__label-scrim" aria-hidden />
+              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
                 Herbarium
               </span>
@@ -69,12 +66,12 @@ export default function HomeCollectionPromo({
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 50vw, 480px"
-                className={collectionImageClass}
+                className="collection-split__image h-full w-full object-center transition duration-300 group-hover:scale-[1.03]"
                 style={{
                   objectPosition: collectionImageObjectPosition("Folia"),
                 }}
               />
-              <div className="collection-split__label-scrim" aria-hidden />
+              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em] text-white">
                 Folia
               </span>
