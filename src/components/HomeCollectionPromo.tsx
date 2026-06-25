@@ -36,17 +36,20 @@ export default function HomeCollectionPromo({
           <div className="collection-split__grid grid grid-cols-[1fr_1px_1fr]">
             <Link
               href={collectionHref("Herbarium", locale)}
-              className="collection-split__half group relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              className="collection-split__half relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
               aria-label="Herbarium collection"
             >
-              <Image
-                src={collectionImagePath("Herbarium")}
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 50vw, 480px"
-                className="collection-split__image h-full w-full object-center transition duration-300 group-hover:scale-[1.03]"
-                style={{ objectPosition: "50% 100%" }}
-              />
+              <div className="collection-split__media" aria-hidden>
+                <Image
+                  src={collectionImagePath("Herbarium")}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 480px"
+                  className="collection-split__image h-full w-full object-center"
+                  style={{ objectPosition: "50% 100%" }}
+                />
+              </div>
+              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Herbarium</span>
               </span>
@@ -57,19 +60,22 @@ export default function HomeCollectionPromo({
             />
             <Link
               href={collectionHref("Folia", locale)}
-              className="collection-split__half group relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              className="collection-split__half relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
               aria-label="Folia collection"
             >
-              <Image
-                src={collectionImagePath("Folia")}
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 50vw, 480px"
-                className="collection-split__image h-full w-full object-center transition duration-300 group-hover:scale-[1.03]"
-                style={{
-                  objectPosition: collectionImageObjectPosition("Folia"),
-                }}
-              />
+              <div className="collection-split__media" aria-hidden>
+                <Image
+                  src={collectionImagePath("Folia")}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 480px"
+                  className="collection-split__image h-full w-full object-center"
+                  style={{
+                    objectPosition: collectionImageObjectPosition("Folia"),
+                  }}
+                />
+              </div>
+              <div className="collection-split__text-scrim" aria-hidden />
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Folia</span>
               </span>
