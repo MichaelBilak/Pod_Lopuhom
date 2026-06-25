@@ -507,6 +507,7 @@ select {
 
 .collection-split__image {
   object-fit: cover;
+  filter: brightness(1.1);
 }
 
 .collection-split__half {
