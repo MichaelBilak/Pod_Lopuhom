@@ -145,7 +145,7 @@ export const translations = {
       rings: "Кольца",
       necklaces: "Ожерелья",
       earrings: "Серьги",
-      sets: "Наборы",
+      sets: "Комплекты",
     },
     collections: {
       herbarium: "Herbarium",
