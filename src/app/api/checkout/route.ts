@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { CHECKOUT_SHIPPING_COUNTRIES } from "@/lib/checkout-shipping-countries";
 import { getStripe } from "@/lib/stripe";
 import { fetchProductBySlug } from "@/lib/products-server";
 import { productMainImageUrl } from "@/lib/products";
@@ -92,6 +93,7 @@ export async function POST(req: NextRequest) {
   const baseSession = {
     mode: "payment" as const,
     locale: toStripeLocale(body.locale),
+    adaptive_pricing: { enabled: true },
     line_items: [
       {
         quantity,
@@ -111,19 +113,7 @@ export async function POST(req: NextRequest) {
       },
     ],
     shipping_address_collection: {
-      allowed_countries: [
-        "IT",
-        "IL",
-        "DE",
-        "FR",
-        "ES",
-        "AT",
-        "NL",
-        "BE",
-        "CH",
-        "GB",
-        "US",
-      ] as ("IT" | "IL" | "DE" | "FR" | "ES" | "AT" | "NL" | "BE" | "CH" | "GB" | "US")[],
+      allowed_countries: [...CHECKOUT_SHIPPING_COUNTRIES],
     },
     phone_number_collection: { enabled: true },
     billing_address_collection: "auto" as const,

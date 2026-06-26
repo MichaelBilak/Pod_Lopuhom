@@ -47,6 +47,7 @@ function FooterSocialContent() {
   const locale = getLocale(searchParams?.get("lang"));
   const t = getTranslations(locale);
   const year = new Date().getFullYear();
+  const rightsMobile = t.footer.rights.replace(/\.\s*$/, "");
 
   const exploreLinks = [
     { label: t.nav.gallery, href: `/gallery?collection=${encodeURIComponent(DEFAULT_COLLECTION)}` },
@@ -86,6 +87,26 @@ function FooterSocialContent() {
             <p className="max-w-sm text-[13px] leading-relaxed text-slate-600 [overflow-wrap:anywhere]">
               {t.footer.tagline}
             </p>
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              >
+                <InstagramIcon className="h-[18px] w-[18px]" />
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+              >
+                <WhatsappIcon className="h-[18px] w-[18px]" />
+              </a>
+            </div>
           </div>
 
           <nav aria-label="Footer explore" className="min-w-0">
@@ -160,9 +181,15 @@ function FooterSocialContent() {
 
         <div className="mt-10 h-px w-full bg-slate-200 sm:mt-14" />
 
-        <div className="mt-6 text-center text-[11px] uppercase tracking-[0.2em] text-slate-500 sm:text-[12px] sm:tracking-[0.22em]">
+        <div className="mt-6 text-center text-[11px] tracking-[0.2em] text-slate-500 sm:text-[12px] sm:tracking-[0.22em]">
           <p suppressHydrationWarning>
-            © {year} Pod&nbsp;Lopuhom. {t.footer.rights}
+            <span className="block uppercase sm:inline">
+              © {year} Pod&nbsp;Lopuhom<span className="hidden sm:inline">.</span>
+            </span>
+            <span className="mt-1 block text-[11px] lowercase tracking-[0.14em] sm:mt-0 sm:inline sm:uppercase sm:text-[12px] sm:tracking-[0.22em]">
+              <span className="sm:hidden">{rightsMobile}</span>
+              <span className="hidden sm:inline"> {t.footer.rights}</span>
+            </span>
           </p>
         </div>
       </div>

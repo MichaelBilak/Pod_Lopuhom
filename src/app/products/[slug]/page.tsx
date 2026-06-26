@@ -70,6 +70,11 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <p className="mt-4 text-2xl font-semibold text-slate-900">
                 {productDisplayPrice(product)}
               </p>
+              {isPurchasable ? (
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  {t.product.priceCurrencyNote}
+                </p>
+              ) : null}
               <div className="mt-6 flex min-w-0 flex-col flex-wrap gap-3 sm:flex-row sm:items-start">
                 {isPurchasable ? (
                   <BuyButton

@@ -67,6 +67,8 @@ export const translations = {
       buyNow: "Buy now — pay with card",
       buyLoading: "Redirecting to checkout...",
       buyError: "Could not start checkout. Please try again.",
+      priceCurrencyNote:
+        "Prices are shown in EUR. At checkout you can pay in your local currency.",
     },
     order: {
       title: "Order & Delivery",
@@ -170,6 +172,8 @@ export const translations = {
       buyNow: "Купить — оплата картой",
       buyLoading: "Переходим к оплате...",
       buyError: "Не удалось открыть оплату. Попробуйте ещё раз.",
+      priceCurrencyNote:
+        "Цены указаны в евро. При оплате можно выбрать вашу локальную валюту.",
     },
     order: {
       title: "Заказ и доставка",
@@ -237,7 +241,7 @@ export const translations = {
     nav: {
       gallery: "Galleria",
       about: "Chi sono",
-      orderDelivery: "Ordine e consegna",
+      orderDelivery: "Ordine e Spedizione",
     },
     language: {
       en: "EN",
@@ -274,9 +278,11 @@ export const translations = {
       buyNow: "Acquista — paga con carta",
       buyLoading: "Reindirizzamento al pagamento...",
       buyError: "Impossibile avviare il pagamento. Riprova.",
+      priceCurrencyNote:
+        "I prezzi sono in EUR. Al pagamento puoi usare la tua valuta locale.",
     },
     order: {
-      title: "Ordine e consegna",
+      title: "Ordine e Spedizione",
       subtitle: "Spediamo gioielli in tutto il mondo.",
       deliveryItaly: "Italia — consegna con Poste Italiane",
       deliveryItalyDays: "2–4 giorni lavorativi",
