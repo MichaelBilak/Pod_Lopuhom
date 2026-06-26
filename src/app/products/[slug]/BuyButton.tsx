@@ -19,24 +19,6 @@ type Props = {
   closeLabel: string;
 };
 
-function CardIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <rect x="2.25" y="5.25" width="19.5" height="13.5" rx="2" />
-      <path d="M2.25 10.5h19.5" />
-    </svg>
-  );
-}
-
 function ButtonSpinner({ className }: { className?: string }) {
   return (
     <svg
@@ -176,10 +158,7 @@ export default function BuyButton({
             <span>{loadingLabel}</span>
           </>
         ) : (
-          <>
-            <CardIcon className="h-[17px] w-[17px] text-white/90 transition group-hover:text-white" />
-            <span>{idleLabel}</span>
-          </>
+          <span>{idleLabel}</span>
         )}
       </button>
       {error ? (

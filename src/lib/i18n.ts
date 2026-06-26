@@ -64,7 +64,7 @@ export const translations = {
       price: "Price",
       requestWhatsapp: "Request via WhatsApp",
       requestInstagram: "Request via Instagram",
-      buyNow: "Buy now — pay with card",
+      buyNow: "Buy now",
       buyLoading: "Redirecting to checkout...",
       buyError: "Could not start checkout. Please try again.",
       priceCurrencyNote:
@@ -168,7 +168,7 @@ export const translations = {
       price: "Цена",
       requestWhatsapp: "Запросить через WhatsApp",
       requestInstagram: "Запросить через Instagram",
-      buyNow: "Купить — оплата картой",
+      buyNow: "Купить",
       buyLoading: "Переходим к оплате...",
       buyError: "Не удалось открыть оплату. Попробуйте ещё раз.",
       priceCurrencyNote:
@@ -273,7 +273,7 @@ export const translations = {
       price: "Prezzo",
       requestWhatsapp: "Richiedi su WhatsApp",
       requestInstagram: "Richiedi su Instagram",
-      buyNow: "Acquista — paga con carta",
+      buyNow: "Acquista",
       buyLoading: "Reindirizzamento al pagamento...",
       buyError: "Impossibile avviare il pagamento. Riprova.",
       priceCurrencyNote:

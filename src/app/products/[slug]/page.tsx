@@ -8,6 +8,7 @@ import {
 import { fetchProductBySlug } from "@/lib/products-server";
 import FooterSocial from "@/src/components/FooterSocial";
 import Nav from "@/src/components/Nav";
+import { InstagramIcon, WhatsappIcon } from "@/src/components/SocialIcons";
 import ProductGallery from "./ProductGallery";
 import {
   getLocaleFromSearchParams,
@@ -75,7 +76,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                   {t.product.priceCurrencyNote}
                 </p>
               ) : null}
-              <div className="mt-6 flex min-w-0 flex-col flex-wrap gap-3 sm:flex-row sm:items-start">
+              <div className="mt-6 flex min-w-0 flex-col gap-3">
                 {isPurchasable ? (
                   <BuyButton
                     slug={product.slug}
@@ -86,18 +87,22 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                     closeLabel={t.common.close}
                   />
                 ) : null}
-                <a
-                  href={`${whatsappUrl}?text=${whatsappMessage}`}
-                  className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 sm:flex-initial"
-                >
-                  {t.product.requestWhatsapp}
-                </a>
-                <a
-                  href={instagramUrl}
-                  className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 sm:flex-initial"
-                >
-                  {t.product.requestInstagram}
-                </a>
+                <div className="flex items-center gap-3">
+                  <a
+                    href={`${whatsappUrl}?text=${whatsappMessage}`}
+                    aria-label={t.product.requestWhatsapp}
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+                  >
+                    <WhatsappIcon className="h-5 w-5" />
+                  </a>
+                  <a
+                    href={instagramUrl}
+                    aria-label={t.product.requestInstagram}
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+                  >
+                    <InstagramIcon className="h-5 w-5" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
