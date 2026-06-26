@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import BackButton from "./BackButton";
-import BuyButton from "./BuyButton";
 import {
   productDisplayPrice,
   productImagesWithPosition,
@@ -16,7 +15,7 @@ import {
   getLocaleFromSearchParams,
   getTranslations,
 } from "@/src/lib/i18n";
-import { instagramUrl, whatsappUrl } from "@/src/lib/contact";
+import { instagramDmUrl, whatsappUrl } from "@/src/lib/contact";
 
 export const revalidate = 300;
 export const runtime = "nodejs";
@@ -42,11 +41,6 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const whatsappMessage = encodeURIComponent(
     `${t.messages.order} ${product.title} (${productDisplayPrice(product)}).`
   );
-  const isPurchasable =
-    !product.price_on_request &&
-    product.price != null &&
-    Number.isFinite(Number(product.price)) &&
-    Number(product.price) > 0;
   const rawDescription =
     locale === "ru" && product.description_ru
       ? product.description_ru
@@ -84,22 +78,10 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <p className="mt-4 text-2xl font-semibold text-slate-900">
                 {productDisplayPrice(product)}
               </p>
-              {isPurchasable ? (
-                <p className="mt-2 text-xs leading-relaxed text-slate-500">
-                  {t.product.priceCurrencyNote}
-                </p>
-              ) : null}
               <div className="mt-6 flex min-w-0 flex-col gap-3">
-                {isPurchasable ? (
-                  <BuyButton
-                    slug={product.slug}
-                    locale={locale}
-                    idleLabel={t.product.buyNow}
-                    loadingLabel={t.product.buyLoading}
-                    errorLabel={t.product.buyError}
-                    closeLabel={t.common.close}
-                  />
-                ) : null}
+                <p className="text-sm text-slate-600 sm:text-[15px]">
+                  {t.cta.helperText}
+                </p>
                 <div className="flex items-center gap-3">
                   <a
                     href={`${whatsappUrl}?text=${whatsappMessage}`}
@@ -109,7 +91,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                     <WhatsappIcon className="h-5 w-5" />
                   </a>
                   <a
-                    href={instagramUrl}
+                    href={instagramDmUrl}
                     aria-label={t.product.requestInstagram}
                     className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
                   >
