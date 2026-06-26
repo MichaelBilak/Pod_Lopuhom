@@ -536,7 +536,7 @@ select {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 300ms ease;
   background: linear-gradient(
     180deg,
@@ -554,12 +554,12 @@ select {
 
   .collection-split__half:hover .collection-split__image,
   .collection-split__half:focus-visible .collection-split__image {
-    filter: brightness(0.86) saturate(1.02);
+    filter: none;
   }
 
   .collection-split__half:hover .collection-split__media::after,
   .collection-split__half:focus-visible .collection-split__media::after {
-    opacity: 1;
+    opacity: 0;
   }
 }
 
@@ -569,7 +569,7 @@ select {
   z-index: 0;
   object-fit: cover;
   opacity: 1;
-  filter: none;
+  filter: brightness(0.86) saturate(1.02);
   transition: filter 300ms ease;
 }
 
