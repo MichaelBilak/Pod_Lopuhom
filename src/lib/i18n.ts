@@ -289,7 +289,7 @@ export const translations = {
       deliveryWorldwideStandardDays: "5–12 giorni lavorativi",
       deliveryWorldwideExpress: "Mondo — spedizione express",
       deliveryWorldwideExpressDays: "2–5 giorni lavorativi",
-      orderCta: "Se hai bisogno di ulteriori informazioni, scrivimi:",
+      orderCta: "Se avete bisogno di ulteriori informazioni, scrivetemi:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
     },
