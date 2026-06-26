@@ -5,8 +5,10 @@ import {
   productDisplayPrice,
   productImagesWithPosition,
 } from "@/lib/products";
+import { stripJewelryCareFromDescription } from "@/lib/product-description";
 import { fetchProductBySlug } from "@/lib/products-server";
 import FooterSocial from "@/src/components/FooterSocial";
+import JewelryCare from "@/src/components/JewelryCare";
 import Nav from "@/src/components/Nav";
 import { InstagramIcon, WhatsappIcon } from "@/src/components/SocialIcons";
 import ProductGallery from "./ProductGallery";
@@ -45,6 +47,13 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     product.price != null &&
     Number.isFinite(Number(product.price)) &&
     Number(product.price) > 0;
+  const rawDescription =
+    locale === "ru" && product.description_ru
+      ? product.description_ru
+      : locale === "it" && product.description_it
+        ? product.description_it
+        : product.description;
+  const description = stripJewelryCareFromDescription(rawDescription);
 
   return (
     <>
@@ -61,13 +70,17 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <h1 className="text-[clamp(1.5rem,5vw,1.875rem)] font-semibold tracking-tight text-slate-900 [overflow-wrap:anywhere] sm:tracking-normal">
                 {product.title}
               </h1>
-              <p className="mt-3 whitespace-pre-line text-sm text-slate-600 [overflow-wrap:anywhere] sm:text-[15px]">
-                {locale === "ru" && product.description_ru
-                  ? product.description_ru
-                  : locale === "it" && product.description_it
-                    ? product.description_it
-                    : product.description}
-              </p>
+              {description ? (
+                <p className="mt-3 whitespace-pre-line text-sm text-slate-600 [overflow-wrap:anywhere] sm:text-[15px]">
+                  {description}
+                </p>
+              ) : null}
+              <JewelryCare
+                linkLabel={t.product.jewelryCare.link}
+                title={t.product.jewelryCare.title}
+                tips={t.product.jewelryCare.tips}
+                closeLabel={t.common.close}
+              />
               <p className="mt-4 text-2xl font-semibold text-slate-900">
                 {productDisplayPrice(product)}
               </p>

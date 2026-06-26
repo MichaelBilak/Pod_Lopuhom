@@ -3,10 +3,13 @@
 import {
   productDisplayPrice,
 } from "@/lib/products";
+import { stripJewelryCareFromDescription } from "@/lib/product-description";
 import { adminProductImageSrc } from "@/lib/admin-images";
 import type { ProductFormState } from "./ProductForm";
 import type { ProductImage } from "@/lib/supabase-products";
 import ProductImagePlaceholder from "@/src/components/ProductImagePlaceholder";
+import JewelryCare from "@/src/components/JewelryCare";
+import { getTranslations } from "@/src/lib/i18n";
 
 type ProductPreviewProps = {
   form: ProductFormState;
@@ -49,6 +52,8 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
   const mainUrl = mainImageUrl(images);
   const objectPosition = mainObjectPosition(images);
   const priceText = productDisplayPrice(product as Parameters<typeof productDisplayPrice>[0]);
+  const previewDescription = stripJewelryCareFromDescription(form.description);
+  const jewelryCare = getTranslations("ru").product.jewelryCare;
 
   const imagesWithPosition = images.map((img) => ({
     url: adminProductImageSrc(img.image_url, "preview"),
@@ -139,9 +144,19 @@ export default function ProductPreview({ form, images }: ProductPreviewProps) {
           <h3 className="mt-2 truncate text-sm font-semibold text-slate-900">
             {form.title || "Product title"}
           </h3>
-          <p className="mt-0.5 whitespace-pre-line text-xs text-slate-600">
-            {form.description || "No description."}
-          </p>
+          {previewDescription ? (
+            <p className="mt-0.5 whitespace-pre-line text-xs text-slate-600">
+              {previewDescription}
+            </p>
+          ) : (
+            <p className="mt-0.5 text-xs text-slate-400">Нет описания.</p>
+          )}
+          <JewelryCare
+            linkLabel={jewelryCare.link}
+            title={jewelryCare.title}
+            tips={jewelryCare.tips}
+            closeLabel={getTranslations("ru").common.close}
+          />
           <p className="mt-1 text-sm font-semibold text-slate-900">{priceText || "—"}</p>
         </div>
       </div>

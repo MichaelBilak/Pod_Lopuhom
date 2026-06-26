@@ -220,6 +220,10 @@ export default function ProductForm({
         <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
           Описание
         </p>
+        <p className="text-xs leading-relaxed text-slate-500">
+          Блок «Уход за украшениями» добавляется на страницу товара автоматически —
+          не вносите его в описание.
+        </p>
         <label className="block">
           <span className="text-xs font-medium text-slate-600">
             Описание для английской версии сайта

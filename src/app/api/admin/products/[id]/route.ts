@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { revalidateTag } from "next/cache";
 import { parseCollectionInput } from "@/src/lib/collections";
+import { sanitizeProductDescriptionField } from "@/lib/product-description";
 import {
   updateProduct,
   deleteProduct,
@@ -65,9 +66,9 @@ function buildProductUpdate(payload: Record<string, unknown>): ProductUpdate | n
   return {
     title,
     slug,
-    description: parseNullableString(payload.description),
-    description_ru: parseNullableString(payload.description_ru),
-    description_it: parseNullableString(payload.description_it),
+    description: sanitizeProductDescriptionField(parseNullableString(payload.description)),
+    description_ru: sanitizeProductDescriptionField(parseNullableString(payload.description_ru)),
+    description_it: sanitizeProductDescriptionField(parseNullableString(payload.description_it)),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     category: parseCategory(payload.category),

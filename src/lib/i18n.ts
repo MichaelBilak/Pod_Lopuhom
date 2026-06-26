@@ -69,6 +69,16 @@ export const translations = {
       buyError: "Could not start checkout. Please try again.",
       priceCurrencyNote:
         "Prices are shown in EUR. At checkout you can pay in your local currency.",
+      jewelryCare: {
+        link: "Jewelry care",
+        title: "Epoxy resin jewelry care",
+        tips: [
+          "Try not to drop the jewelry.",
+          "Avoid getting perfume or eau de toilette on the jewelry.",
+          "Remove before showering or swimming.",
+          "Store the jewelry away from direct sunlight.",
+        ],
+      },
     },
     order: {
       title: "Order & Delivery",
@@ -173,6 +183,16 @@ export const translations = {
       buyError: "Не удалось открыть оплату. Попробуйте ещё раз.",
       priceCurrencyNote:
         "Цены указаны в евро. При оплате можно выбрать вашу локальную валюту.",
+      jewelryCare: {
+        link: "Уход за украшениями",
+        title: "Уход за украшениями из эпоксидной смолы",
+        tips: [
+          "Старайтесь не ронять украшение.",
+          "Следите, чтобы на украшение не попадали духи или туалетная вода.",
+          "Снимайте перед душем или плаванием.",
+          "Храните украшение в месте, недоступном для прямых солнечных лучей.",
+        ],
+      },
     },
     order: {
       title: "Заказ и доставка",
@@ -278,6 +298,16 @@ export const translations = {
       buyError: "Impossibile avviare il pagamento. Riprova.",
       priceCurrencyNote:
         "I prezzi sono in EUR. Al pagamento puoi usare la tua valuta locale.",
+      jewelryCare: {
+        link: "Cura dei gioielli",
+        title: "Cura dei gioielli in resina epossidica",
+        tips: [
+          "Cercate di non far cadere il gioiello.",
+          "Assicuratevi che profumi o acqua di colonia non finiscano sul gioiello.",
+          "Toglietelo prima della doccia o del nuoto.",
+          "Conservatelo in un luogo lontano dalla luce diretta del sole.",
+        ],
+      },
     },
     order: {
       title: "Ordine e Spedizione",

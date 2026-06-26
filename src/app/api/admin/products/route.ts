@@ -8,6 +8,7 @@ import {
   type ProductInsert,
 } from "@/lib/supabase-products";
 import { parseCollectionInput } from "@/src/lib/collections";
+import { sanitizeProductDescriptionField } from "@/lib/product-description";
 
 export const runtime = "nodejs";
 
@@ -44,9 +45,9 @@ function buildProductInsert(payload: Record<string, unknown>): ProductInsert | n
   return {
     title,
     slug,
-    description: parseNullableString(payload.description),
-    description_ru: parseNullableString(payload.description_ru),
-    description_it: parseNullableString(payload.description_it),
+    description: sanitizeProductDescriptionField(parseNullableString(payload.description)),
+    description_ru: sanitizeProductDescriptionField(parseNullableString(payload.description_ru)),
+    description_it: sanitizeProductDescriptionField(parseNullableString(payload.description_it)),
     price: parseNum(payload.price),
     discount: parseNum(payload.discount) ?? 0,
     category: parseCategory(payload.category),
