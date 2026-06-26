@@ -536,12 +536,13 @@ select {
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  opacity: 0;
   transition: opacity 300ms ease;
   background: linear-gradient(
     180deg,
-    rgb(15 23 42 / 0.08) 0%,
-    rgb(15 23 42 / 0.18) 52%,
-    rgb(15 23 42 / 0.32) 100%
+    rgb(15 23 42 / 0.22) 0%,
+    rgb(15 23 42 / 0.38) 52%,
+    rgb(15 23 42 / 0.58) 100%
   );
 }
 
@@ -553,13 +554,12 @@ select {
 
   .collection-split__half:hover .collection-split__image,
   .collection-split__half:focus-visible .collection-split__image {
-    opacity: 1;
-    filter: brightness(1.04) saturate(1.03);
+    filter: brightness(0.86) saturate(1.02);
   }
 
   .collection-split__half:hover .collection-split__media::after,
   .collection-split__half:focus-visible .collection-split__media::after {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -568,9 +568,9 @@ select {
   inset: 0;
   z-index: 0;
   object-fit: cover;
-  opacity: 0.72;
-  filter: brightness(1.18) saturate(1);
-  transition: opacity 300ms ease, filter 300ms ease;
+  opacity: 1;
+  filter: none;
+  transition: filter 300ms ease;
 }
 
 .collection-split__half {
@@ -586,9 +586,7 @@ select {
   z-index: 3;
   font-size: clamp(0.8125rem, 3.8vw, 1.0625rem);
   letter-spacing: 0.24em;
-  text-shadow:
-    0 1px 3px rgb(15 23 42 / 0.85),
-    0 4px 14px rgb(15 23 42 / 0.6);
+  text-shadow: none;
 }
 
 .collection-split__label-text {
@@ -601,27 +599,7 @@ select {
 }
 
 .collection-split__label-text::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: -1;
-  width: calc(100% + 0.4em);
-  height: calc(100% + 1.75em);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse 70% 64% at 50% 50%,
-    rgb(15 23 42 / 0.82) 0%,
-    rgb(15 23 42 / 0.66) 22%,
-    rgb(15 23 42 / 0.44) 42%,
-    rgb(15 23 42 / 0.24) 58%,
-    rgb(15 23 42 / 0.1) 72%,
-    rgb(15 23 42 / 0.03) 84%,
-    transparent 100%
-  );
-  filter: blur(10px);
+  content: none;
 }
 
 @media (max-width: 430px) {
@@ -633,39 +611,9 @@ select {
     --collection-fade-size: clamp(0.875rem, 5vw, 1.5rem);
   }
 
-  .collection-split__image {
-    opacity: 0.76;
-    filter: brightness(1.12) saturate(0.98);
-  }
-
-  .collection-split__media::after {
-    background: linear-gradient(
-      180deg,
-      rgb(15 23 42 / 0.12) 0%,
-      rgb(15 23 42 / 0.24) 50%,
-      rgb(15 23 42 / 0.38) 100%
-    );
-  }
-
   .collection-split__label {
     font-size: clamp(0.75rem, 3.4vw, 0.9375rem);
     letter-spacing: 0.18em;
-  }
-
-  .collection-split__label-text::before {
-    width: calc(100% + 0.35em);
-    height: calc(100% + 1.85em);
-    background: radial-gradient(
-      ellipse 68% 62% at 50% 50%,
-      rgb(15 23 42 / 0.88) 0%,
-      rgb(15 23 42 / 0.72) 20%,
-      rgb(15 23 42 / 0.5) 40%,
-      rgb(15 23 42 / 0.28) 56%,
-      rgb(15 23 42 / 0.12) 70%,
-      rgb(15 23 42 / 0.04) 84%,
-      transparent 100%
-    );
-    filter: blur(12px);
   }
 }
 
