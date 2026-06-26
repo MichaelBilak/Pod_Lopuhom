@@ -386,37 +386,38 @@ export default function GalleryClient({
     <div className="category-tabs-scroll min-w-0 overflow-x-auto overscroll-x-contain scroll-smooth pb-1 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:pb-0">
       <div
         className={[
-          "flex w-max min-w-full flex-nowrap items-center justify-center gap-x-3 gap-y-2 sm:gap-x-7",
+          "flex w-max min-w-full flex-nowrap items-center justify-center",
           innerClassName,
         ].join(" ")}
       >
-        {COLLECTIONS.map((collection, index) => {
-          const isActive = selectedCollection === collection;
-          return (
-            <div
-              key={collection}
-              className="flex shrink-0 items-center gap-2 sm:gap-0"
-            >
+        <div
+          className="inline-flex shrink-0 items-center rounded-full bg-slate-100 p-1 ring-1 ring-slate-200/90"
+          role="tablist"
+          aria-label="Collections"
+        >
+          {COLLECTIONS.map((collection) => {
+            const isActive = selectedCollection === collection;
+            return (
               <Link
+                key={collection}
                 href={buildCollectionHref(pathname, searchParams, collection)}
                 scroll={false}
                 replace
+                role="tab"
+                aria-selected={isActive}
+                aria-current={isActive ? "page" : undefined}
                 className={[
-                  "inline-flex min-h-[40px] shrink-0 items-center whitespace-nowrap border-b border-transparent pb-1.5 pt-1.5 font-normal uppercase tracking-[0.22em] transition hover:border-slate-400 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:pb-2 sm:pt-0",
-                  isActive ? "border-slate-400 text-slate-900" : "",
+                  "inline-flex min-h-[36px] shrink-0 items-center whitespace-nowrap rounded-full px-4 py-2 uppercase tracking-[0.22em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:min-h-[40px] sm:px-6 sm:tracking-[0.28em]",
+                  isActive
+                    ? "bg-slate-900 text-[11px] font-semibold text-white shadow-md sm:text-xs"
+                    : "text-[11px] font-normal text-slate-400 hover:text-slate-600 sm:text-xs",
                 ].join(" ")}
               >
                 {collection}
               </Link>
-              {index < COLLECTIONS.length - 1 && (
-                <span
-                  className="h-3 w-px shrink-0 bg-slate-200/50 sm:hidden"
-                  aria-hidden
-                />
-              )}
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
