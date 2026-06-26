@@ -1086,7 +1086,7 @@ button:focus-visible {
 .splash-screen__glow {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 50%;
   width: min(88vw, 22rem);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
@@ -1115,18 +1115,23 @@ button:focus-visible {
 }
 
 .splash-screen__logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  height: 7rem;
   margin-bottom: 1.25rem;
   animation: splashLogoIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .splash-screen__logo {
-  height: 5.5rem;
-  width: 5.5rem;
-  border-radius: 9999px;
-  object-fit: cover;
-  box-shadow:
-    0 0 0 1px rgba(148, 163, 184, 0.25),
-    0 18px 40px rgba(15, 23, 42, 0.12);
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.1));
 }
 
 .splash-screen__brand {

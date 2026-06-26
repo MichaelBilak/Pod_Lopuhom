@@ -12,6 +12,9 @@ const caveat = Caveat({
   display: "swap",
 });
 
+const SPLASH_LOGO_SRC =
+  "/images/products/Logo._pod_lopuhom-removebg-preview.png";
+
 export const metadata = {
   title: "Pod Lopuhom",
   description: "Handmade jewelry",
@@ -46,7 +49,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/products/Logo.%20pod_lopuhom.jpeg"
+          href={SPLASH_LOGO_SRC}
         />
       </head>
       <body className="bg-white text-ink" suppressHydrationWarning>
@@ -61,10 +64,10 @@ export default function RootLayout({
             <div className="splash-screen__logo-wrap">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/products/Logo.%20pod_lopuhom.jpeg"
+                src={SPLASH_LOGO_SRC}
                 alt=""
-                width={112}
-                height={112}
+                width={128}
+                height={128}
                 className="splash-screen__logo"
                 fetchPriority="high"
                 decoding="async"
