@@ -466,7 +466,7 @@ function NavBar() {
         aria-controls="mobile-nav-drawer"
         aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
         onClick={() => setMobileNavOpen((value) => !value)}
-        className="mobile-nav-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+        className="mobile-nav-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white/35 text-slate-300 transition hover:border-slate-200 hover:bg-white/55 hover:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
           {mobileNavOpen ? (
@@ -474,7 +474,7 @@ function NavBar() {
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
-              strokeWidth="1.5"
+              strokeWidth="1.25"
               d="M6 6l12 12M18 6L6 18"
             />
           ) : (
@@ -482,7 +482,7 @@ function NavBar() {
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
-              strokeWidth="1.5"
+              strokeWidth="1.25"
               d="M4 7h16M4 12h16M4 17h16"
             />
           )}
