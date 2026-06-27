@@ -82,20 +82,24 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                 <p className="text-sm text-slate-600 sm:text-[15px]">
                   {t.cta.helperText}
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap">
                   <a
                     href={`${whatsappUrl}?text=${whatsappMessage}`}
-                    aria-label={t.product.requestWhatsapp}
-                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-xs font-normal uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                   >
-                    <WhatsappIcon className="h-5 w-5" />
+                    <WhatsappIcon className="h-4 w-4 shrink-0" />
+                    {t.product.requestWhatsapp}
                   </a>
                   <a
                     href={instagramDmUrl}
-                    aria-label={t.product.requestInstagram}
-                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-xs font-normal uppercase tracking-[0.2em] text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                   >
-                    <InstagramIcon className="h-5 w-5" />
+                    <InstagramIcon className="h-4 w-4 shrink-0" />
+                    {t.product.requestInstagram}
                   </a>
                 </div>
               </div>
