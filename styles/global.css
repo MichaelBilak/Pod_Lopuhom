@@ -133,35 +133,49 @@ select {
   container-name: hero;
   border-radius: 1.5rem;
   border: none;
-  background: #f8f7f5;
+  background: transparent;
   padding: 3rem 1.5rem;
-  min-height: clamp(14rem, 38vw, 22rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: none;
+  min-height: clamp(13rem, 38vw, 26rem);
 }
 
 .hero-panel::before {
-  content: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/images/hero/hero-market.jpg");
+  background-size: cover;
+  background-position: center 55%;
+  background-repeat: no-repeat;
+  opacity: 0.48;
 }
 
 .hero-panel::after {
-  content: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 @media (min-width: 1024px) {
   .hero-panel {
-    padding: 5rem 2.5rem;
-    min-height: clamp(20rem, 36vw, 28rem);
+    padding: 4.5rem 2.5rem;
+    min-height: clamp(18rem, 40vw, 30rem);
   }
 }
 
 @media (max-width: 639px) {
   .hero-panel {
-    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.75rem 1rem;
     border-radius: 1.25rem;
-    min-height: clamp(12rem, 55vw, 18rem);
+    min-height: clamp(11rem, 52vw, 16rem);
   }
 
   .hero-panel__content {
@@ -197,9 +211,12 @@ select {
   }
 
   .hero-panel {
-    padding: clamp(1.5rem, 4.8vw, 2rem) clamp(0.75rem, 3.2vw, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.125rem, 4.8vw, 1.5rem) clamp(0.75rem, 3.2vw, 1rem);
     border-radius: var(--ix-radius);
-    min-height: clamp(12rem, 55vw, 18rem);
+    min-height: clamp(10rem, 44vw, 14rem);
   }
 
   .hero-tagline {
