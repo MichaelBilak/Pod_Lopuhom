@@ -69,7 +69,7 @@ function LangDropdown({ locale, labels, buildLangHref }: LangDropdownProps) {
         aria-label="Change language"
         onClick={() => setOpen((value) => !value)}
         className={[
-          "inline-flex min-h-[40px] min-w-[68px] items-center justify-center gap-1 rounded-full border px-3.5 py-2 text-xs font-normal uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
+          "inline-flex min-h-[28px] min-w-[52px] items-center justify-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-normal uppercase tracking-[0.2em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2",
           open
             ? "border-slate-900 bg-white text-slate-900"
             : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-900",
@@ -336,7 +336,7 @@ function GalleryDropdown({
 function NavFallback() {
   return (
     <div
-      className="h-[72px] sm:h-[80px] lg:h-[88px]"
+      className="h-[36px] sm:h-[40px] lg:h-[44px]"
       aria-hidden
     />
   );
@@ -373,7 +373,7 @@ function NavBar() {
     buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
-    "font-brand text-[19px] sm:text-[25px] lg:text-[30px]";
+    "font-brand text-[15px] sm:text-[18px] lg:text-[20px]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
@@ -466,7 +466,7 @@ function NavBar() {
         aria-controls="mobile-nav-drawer"
         aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
         onClick={() => setMobileNavOpen((value) => !value)}
-        className="mobile-nav-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white/35 text-slate-300 transition hover:border-slate-200 hover:bg-white/55 hover:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+        className="mobile-nav-toggle inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-100 bg-white/35 text-slate-300 transition hover:border-slate-200 hover:bg-white/55 hover:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
           {mobileNavOpen ? (
@@ -529,9 +529,9 @@ function NavBar() {
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
-        <div className="lg:hidden pb-3">
+        <div className="lg:hidden pb-1.5">
           {isHome ? (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-3 sm:pt-4">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-1.5 sm:pt-2">
               <Link
                 href={buildHref("/")}
                 className="inline-flex min-w-0 shrink items-center gap-2 text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-2.5"
@@ -540,10 +540,10 @@ function NavBar() {
                 <Image
                   src="/images/products/Logo.%20pod_lopuhom.jpeg"
                   alt=""
-                  width={48}
-                  height={48}
-                  sizes="48px"
-                  className="h-10 w-10 shrink-0 rounded-full object-cover sm:h-12 sm:w-12"
+                  width={32}
+                  height={32}
+                  sizes="32px"
+                  className="h-7 w-7 shrink-0 rounded-full object-cover sm:h-8 sm:w-8"
                   priority
                 />
                 <span className={["min-w-0 truncate", brandTitleClass].join(" ")}>
@@ -553,7 +553,7 @@ function NavBar() {
               {mobileHeaderActions}
             </div>
           ) : (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-3 sm:pt-4">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-1.5 sm:pt-2">
               <Link
                 href={buildHref("/")}
                 className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -562,10 +562,10 @@ function NavBar() {
                 <Image
                   src="/images/products/Logo.%20pod_lopuhom.jpeg"
                   alt=""
-                  width={48}
-                  height={48}
-                  sizes="48px"
-                  className="h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
+                  width={32}
+                  height={32}
+                  sizes="32px"
+                  className="h-7 w-7 rounded-full object-cover sm:h-8 sm:w-8"
                   priority
                 />
               </Link>
@@ -587,7 +587,7 @@ function NavBar() {
           />
         </div>
 
-        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-5 text-left lg:grid">
+        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-2.5 text-left lg:grid">
           <Link
             href={buildHref("/")}
             className="inline-flex min-w-0 shrink-0 items-center gap-2.5 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
@@ -596,10 +596,10 @@ function NavBar() {
             <Image
               src="/images/products/Logo.%20pod_lopuhom.jpeg"
               alt=""
-              width={48}
-              height={48}
-              sizes="48px"
-              className="h-12 w-12 rounded-full object-cover"
+              width={36}
+              height={36}
+              sizes="36px"
+              className="h-9 w-9 rounded-full object-cover"
               priority
             />
             <span className={["truncate", brandTitleClass].join(" ")}>
