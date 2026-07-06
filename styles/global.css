@@ -131,7 +131,7 @@ select {
   overflow: hidden;
   container-type: inline-size;
   container-name: hero;
-  border-radius: 1.5rem;
+  border-radius: 0;
   border: none;
   background: transparent;
   padding: 3rem 1.5rem;
@@ -174,7 +174,7 @@ select {
     align-items: center;
     justify-content: center;
     padding: 1.75rem 1rem;
-    border-radius: 1.25rem;
+    border-radius: 0;
     min-height: clamp(11rem, 52vw, 16rem);
   }
 
@@ -215,7 +215,7 @@ select {
     align-items: center;
     justify-content: center;
     padding: clamp(1.125rem, 4.8vw, 1.5rem) clamp(0.75rem, 3.2vw, 1rem);
-    border-radius: var(--ix-radius);
+    border-radius: 0;
     min-height: clamp(10rem, 44vw, 14rem);
   }
 
