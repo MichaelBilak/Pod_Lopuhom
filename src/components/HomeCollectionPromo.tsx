@@ -32,11 +32,11 @@ export default function HomeCollectionPromo({
         {collectionsLabel}
       </p>
       <div className="collection-split-bleed edge-bleed-x min-w-0">
-        <div className="collection-split relative overflow-hidden rounded-none">
-          <div className="collection-split__grid grid grid-cols-[1fr_1px_1fr]">
+        <div className="collection-split relative">
+          <div className="collection-split__grid grid grid-cols-2 gap-5 sm:gap-6">
             <Link
               href={collectionHref("Herbarium", locale)}
-              className="collection-split__half relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              className="collection-split__half relative block min-h-0 overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
               aria-label="Herbarium collection"
             >
               <div className="collection-split__media" aria-hidden>
@@ -46,20 +46,16 @@ export default function HomeCollectionPromo({
                   fill
                   sizes="(max-width: 1024px) 50vw, 480px"
                   className="collection-split__image h-full w-full object-center"
-                  style={{ objectPosition: "50% 100%" }}
+                  style={{ objectPosition: collectionImageObjectPosition("Herbarium") }}
                 />
               </div>
               <span className="collection-split__label pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center font-normal uppercase tracking-[0.22em]">
                 <span className="collection-split__label-text">Herbarium</span>
               </span>
             </Link>
-            <div
-              className="collection-split__divider bg-white/90"
-              aria-hidden
-            />
             <Link
               href={collectionHref("Folia", locale)}
-              className="collection-split__half relative block min-h-0 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
+              className="collection-split__half relative block min-h-0 overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900"
               aria-label="Folia collection"
             >
               <div className="collection-split__media" aria-hidden>
@@ -79,7 +75,6 @@ export default function HomeCollectionPromo({
               </span>
             </Link>
           </div>
-          <div className="collection-split__edge-fade" aria-hidden />
         </div>
       </div>
     </section>
