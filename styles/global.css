@@ -149,7 +149,7 @@ select {
   background-size: cover;
   background-position: center 55%;
   background-repeat: no-repeat;
-  opacity: 0.52;
+  opacity: 0.36;
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
