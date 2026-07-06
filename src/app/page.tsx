@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
+import HeroBackdrop from "@/src/app/components/HeroBackdrop";
 import HomeCollectionPromo from "@/src/components/HomeCollectionPromo";
 import Nav from "@/src/components/Nav";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
@@ -35,8 +36,9 @@ export default async function HomePage({ searchParams }: PageProps) {
       <main className="home-page page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
         <div className="page-main-tight flex min-w-0 flex-col">
           <section className="hero-panel text-center">
+            <HeroBackdrop images={["/images/hero/hero-market.jpg"]} />
             <div className="hero-panel__content relative z-10">
-                <h1 className="hero-tagline font-tagline">
+              <h1 className="hero-tagline font-tagline">
                 {t.home.title}
               </h1>
             </div>

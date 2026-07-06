@@ -133,51 +133,17 @@ select {
   container-name: hero;
   border-radius: 1.5rem;
   border: none;
-  background: transparent;
+  background: #f8f7f5;
   padding: 3rem 1.5rem;
+  min-height: clamp(14rem, 38vw, 22rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: none;
-  --hero-mask-x: linear-gradient(
-    to right,
-    rgb(0 0 0 / 0.5) 0%,
-    rgb(0 0 0 / 0.78) 8%,
-    rgb(0 0 0 / 0.92) 16%,
-    #000 26%,
-    #000 66%,
-    rgb(0 0 0 / 0.82) 76%,
-    rgb(0 0 0 / 0.45) 86%,
-    rgb(0 0 0 / 0.12) 94%,
-    transparent 100%
-  );
-  --hero-mask-y: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgb(0 0 0 / 0.12) 6%,
-    rgb(0 0 0 / 0.45) 14%,
-    rgb(0 0 0 / 0.82) 24%,
-    #000 34%,
-    #000 66%,
-    rgb(0 0 0 / 0.82) 76%,
-    rgb(0 0 0 / 0.45) 86%,
-    rgb(0 0 0 / 0.12) 94%,
-    transparent 100%
-  );
 }
 
 .hero-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("/images/hero/hero-market.jpg");
-  background-size: 44% auto;
-  background-position: 8% 52%;
-  background-repeat: no-repeat;
-  opacity: 0.26;
-  -webkit-mask-image: var(--hero-mask-y), var(--hero-mask-x);
-  mask-image: var(--hero-mask-y), var(--hero-mask-x);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  content: none;
 }
 
 .hero-panel::after {
@@ -186,25 +152,16 @@ select {
 
 @media (min-width: 1024px) {
   .hero-panel {
-    padding: 4.5rem 2.5rem;
-    min-height: 14rem;
-  }
-
-  .hero-panel::before {
-    background-size: 42% auto;
-    background-position: 6% 50%;
-    opacity: 0.26;
+    padding: 5rem 2.5rem;
+    min-height: clamp(20rem, 36vw, 28rem);
   }
 }
 
 @media (max-width: 639px) {
   .hero-panel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.75rem 1rem;
+    padding: 2rem 1rem;
     border-radius: 1.25rem;
-    min-height: clamp(7.5rem, 32vw, 10rem);
+    min-height: clamp(12rem, 55vw, 18rem);
   }
 
   .hero-panel__content {
@@ -240,44 +197,9 @@ select {
   }
 
   .hero-panel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(1.125rem, 4.8vw, 1.5rem) clamp(0.75rem, 3.2vw, 1rem);
+    padding: clamp(1.5rem, 4.8vw, 2rem) clamp(0.75rem, 3.2vw, 1rem);
     border-radius: var(--ix-radius);
-    min-height: clamp(7.5rem, 32vw, 10rem);
-    --hero-mask-x: linear-gradient(
-      to right,
-      transparent 0%,
-      rgb(0 0 0 / 0.1) 4%,
-      rgb(0 0 0 / 0.35) 10%,
-      rgb(0 0 0 / 0.72) 18%,
-      #000 28%,
-      #000 72%,
-      rgb(0 0 0 / 0.72) 82%,
-      rgb(0 0 0 / 0.35) 90%,
-      rgb(0 0 0 / 0.1) 96%,
-      transparent 100%
-    );
-    --hero-mask-y: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(0 0 0 / 0.1) 4%,
-      rgb(0 0 0 / 0.35) 10%,
-      rgb(0 0 0 / 0.72) 18%,
-      #000 28%,
-      #000 72%,
-      rgb(0 0 0 / 0.72) 82%,
-      rgb(0 0 0 / 0.35) 90%,
-      rgb(0 0 0 / 0.1) 96%,
-      transparent 100%
-    );
-  }
-
-  .hero-panel::before {
-    opacity: 0.24;
-    background-size: 58% auto;
-    background-position: 6% 50%;
+    min-height: clamp(12rem, 55vw, 18rem);
   }
 
   .hero-tagline {
