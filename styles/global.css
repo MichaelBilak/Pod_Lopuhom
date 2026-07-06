@@ -134,9 +134,9 @@ select {
   border-radius: 0;
   border: none;
   background: transparent;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   box-shadow: none;
-  min-height: clamp(13rem, 38vw, 26rem);
+  min-height: clamp(6.5rem, 19vw, 13rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,8 +169,8 @@ select {
 
 @media (min-width: 1024px) {
   .hero-panel {
-    padding: 4.5rem 2.5rem;
-    min-height: clamp(18rem, 40vw, 30rem);
+    padding: 2.25rem 2.5rem;
+    min-height: clamp(9rem, 20vw, 15rem);
   }
 }
 
@@ -179,9 +179,9 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.75rem 1rem;
+    padding: 0.875rem 1rem;
     border-radius: 0;
-    min-height: clamp(11rem, 52vw, 16rem);
+    min-height: clamp(5.5rem, 26vw, 8rem);
   }
 
   .hero-panel__content {
@@ -220,9 +220,9 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(1.125rem, 4.8vw, 1.5rem) clamp(0.75rem, 3.2vw, 1rem);
+    padding: clamp(0.5rem, 2.4vw, 0.75rem) clamp(0.75rem, 3.2vw, 1rem);
     border-radius: 0;
-    min-height: clamp(10rem, 44vw, 14rem);
+    min-height: clamp(5rem, 22vw, 7rem);
   }
 
   .hero-tagline {
