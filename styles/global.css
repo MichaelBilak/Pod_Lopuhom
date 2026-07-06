@@ -149,16 +149,19 @@ select {
   background-size: cover;
   background-position: center 55%;
   background-repeat: no-repeat;
-  opacity: 0.48;
+  opacity: 0.52;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .hero-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.28);
+  content: none;
 }
 
 @media (min-width: 1024px) {
