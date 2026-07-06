@@ -910,8 +910,8 @@ button:focus-visible {
 }
 @media (min-width: 1024px) {
   .nav-spacer {
-    height: calc(38px + constant(safe-area-inset-top));
-    height: calc(38px + env(safe-area-inset-top, 0px));
+    height: calc(88px + constant(safe-area-inset-top));
+    height: calc(88px + env(safe-area-inset-top, 0px));
   }
 }
 

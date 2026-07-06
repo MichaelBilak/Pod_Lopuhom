@@ -373,7 +373,7 @@ function NavBar() {
     buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
-    "font-brand text-[15px] sm:text-[18px] lg:text-[20px]";
+    "font-brand text-[15px] sm:text-[18px] lg:text-[38px]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
@@ -587,19 +587,19 @@ function NavBar() {
           />
         </div>
 
-        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-1.5 text-left lg:grid">
+        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-5 text-left lg:grid">
           <Link
             href={buildHref("/")}
-            className="inline-flex min-w-0 shrink-0 items-center gap-2 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+            className="inline-flex min-w-0 shrink-0 items-center gap-3 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
             aria-label="Pod Lopuhom home"
           >
             <Image
               src="/images/products/Logo.%20pod_lopuhom.jpeg"
               alt=""
-              width={30}
-              height={30}
-              sizes="30px"
-              className="h-7 w-7 rounded-full object-cover"
+              width={52}
+              height={52}
+              sizes="52px"
+              className="h-12 w-12 rounded-full object-cover"
               priority
             />
             <span className={["truncate", brandTitleClass].join(" ")}>
