@@ -137,6 +137,9 @@ select {
   padding: 3rem 1.5rem;
   box-shadow: none;
   min-height: clamp(13rem, 38vw, 26rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-panel::before {
@@ -248,8 +251,8 @@ select {
   }
 
   .nav-spacer {
-    height: calc(40px + constant(safe-area-inset-top));
-    height: calc(40px + env(safe-area-inset-top, 0px));
+    height: calc(32px + constant(safe-area-inset-top));
+    height: calc(32px + env(safe-area-inset-top, 0px));
   }
 
   .site-nav-shell,
@@ -902,13 +905,13 @@ button:focus-visible {
 }
 
 .nav-spacer {
-  height: calc(40px + constant(safe-area-inset-top));
-  height: calc(40px + env(safe-area-inset-top, 0px));
+  height: calc(32px + constant(safe-area-inset-top));
+  height: calc(32px + env(safe-area-inset-top, 0px));
 }
 @media (min-width: 1024px) {
   .nav-spacer {
-    height: calc(50px + constant(safe-area-inset-top));
-    height: calc(50px + env(safe-area-inset-top, 0px));
+    height: calc(38px + constant(safe-area-inset-top));
+    height: calc(38px + env(safe-area-inset-top, 0px));
   }
 }
 

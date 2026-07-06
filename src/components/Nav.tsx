@@ -336,7 +336,7 @@ function GalleryDropdown({
 function NavFallback() {
   return (
     <div
-      className="h-[36px] sm:h-[40px] lg:h-[44px]"
+      className="h-[28px] sm:h-[30px] lg:h-[36px]"
       aria-hidden
     />
   );
@@ -529,21 +529,21 @@ function NavBar() {
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >
-        <div className="lg:hidden pb-1.5">
+        <div className="lg:hidden pb-1">
           {isHome ? (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-1.5 sm:pt-2">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 pt-1">
               <Link
                 href={buildHref("/")}
-                className="inline-flex min-w-0 shrink items-center gap-2 text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-2.5"
+                className="inline-flex min-w-0 shrink items-center gap-1.5 text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                 aria-label="Pod Lopuhom home"
               >
                 <Image
                   src="/images/products/Logo.%20pod_lopuhom.jpeg"
                   alt=""
-                  width={32}
-                  height={32}
-                  sizes="32px"
-                  className="h-7 w-7 shrink-0 rounded-full object-cover sm:h-8 sm:w-8"
+                  width={28}
+                  height={28}
+                  sizes="28px"
+                  className="h-6 w-6 shrink-0 rounded-full object-cover sm:h-7 sm:w-7"
                   priority
                 />
                 <span className={["min-w-0 truncate", brandTitleClass].join(" ")}>
@@ -553,7 +553,7 @@ function NavBar() {
               {mobileHeaderActions}
             </div>
           ) : (
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-1.5 sm:pt-2">
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 px-0 pt-1">
               <Link
                 href={buildHref("/")}
                 className="inline-flex shrink-0 items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
@@ -562,10 +562,10 @@ function NavBar() {
                 <Image
                   src="/images/products/Logo.%20pod_lopuhom.jpeg"
                   alt=""
-                  width={32}
-                  height={32}
-                  sizes="32px"
-                  className="h-7 w-7 rounded-full object-cover sm:h-8 sm:w-8"
+                  width={28}
+                  height={28}
+                  sizes="28px"
+                  className="h-6 w-6 rounded-full object-cover sm:h-7 sm:w-7"
                   priority
                 />
               </Link>
@@ -587,19 +587,19 @@ function NavBar() {
           />
         </div>
 
-        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-2.5 text-left lg:grid">
+        <div className="relative hidden w-full min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-3 px-6 py-1.5 text-left lg:grid">
           <Link
             href={buildHref("/")}
-            className="inline-flex min-w-0 shrink-0 items-center gap-2.5 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 sm:gap-3"
+            className="inline-flex min-w-0 shrink-0 items-center gap-2 justify-self-start text-slate-900 transition-all duration-300 ease-out hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
             aria-label="Pod Lopuhom home"
           >
             <Image
               src="/images/products/Logo.%20pod_lopuhom.jpeg"
               alt=""
-              width={36}
-              height={36}
-              sizes="36px"
-              className="h-9 w-9 rounded-full object-cover"
+              width={30}
+              height={30}
+              sizes="30px"
+              className="h-7 w-7 rounded-full object-cover"
               priority
             />
             <span className={["truncate", brandTitleClass].join(" ")}>
