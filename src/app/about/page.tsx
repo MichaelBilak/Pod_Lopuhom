@@ -47,6 +47,16 @@ export default async function AboutPage({ searchParams }: PageProps) {
                 <p>{t.about.paragraph3}</p>
                 <p>{t.about.paragraph4}</p>
                 {t.about.paragraph5 ? <p>{t.about.paragraph5}</p> : null}
+                {t.about.paragraph6 ? <p>{t.about.paragraph6}</p> : null}
+              </div>
+              <div className="about-gnome mt-6 flex justify-end">
+                <Image
+                  src="/images/about/gnome.png"
+                  alt=""
+                  width={120}
+                  height={120}
+                  className="h-auto w-[clamp(72px,18vw,120px)] object-contain opacity-90"
+                />
               </div>
             </div>
           </div>

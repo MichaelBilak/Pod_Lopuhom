@@ -98,12 +98,15 @@ export const translations = {
       title: "About me",
       paragraph1: "Hello! My name is Olga.",
       paragraph2:
-        "I create my jewellery using epoxy resin. In every piece, I try to preserve tiny fragments of nature - those gifts the world offers for just a moment before they quietly fade away. Real flowers, delicate little branches and leaves, gathered at their most fragile moment, carefully dried and preserved like small secrets of nature.",
+        "I create cozy jewelry by preserving natural plants in epoxy resin.",
       paragraph3:
-        "Flowers fade, moments dissolve into time… yet emotions and memories can remain, if we learn to hold them gently.",
+        "My workshop is called Pod Lopuhom, which gently translates to Under a Forest Leaf. This name was inspired by a sweet fairy tale about a tiny forest gnome who lives happily beneath a giant leaf. For me, that image is pure magic - a quiet, secret corner of the woods where little miracles are born.",
       paragraph4:
-        "My jewellery is made for dreamers, for those who are enchanted by the quiet beauty of nature and can see poetry in the smallest details.",
-      paragraph5: "",
+        "In every piece, I try to preserve tiny fragments of nature - those gifts the world offers for just a moment before they quietly fade away. Real flowers, delicate little branches and leaves, gathered at their most fragile moment, carefully dried and preserved like small secrets of nature.",
+      paragraph5:
+        "Flowers fade, moments dissolve into time… yet emotions and memories can remain, if we learn to hold them gently.",
+      paragraph6:
+        "My jewelry is made for dreamers, for those who are enchanted by the quiet beauty of nature and can see poetry in the smallest details.",
     },
     cta: {
       helperText: "To place an order, message me directly.",
@@ -212,13 +215,14 @@ export const translations = {
       title: "Обо мне",
       paragraph1: "Привет! Меня зовут Ольга.",
       paragraph2:
-        "Свои украшения я создаю вручную из ювелирной эпоксидной смолы.",
+        "Свои украшения я создаю вручную, сохраняя настоящие растения в эпоксидной смоле.",
       paragraph3:
-        "В каждом украшении я стараюсь сохранить то, что природа дарит нам лишь на короткое время. Внутри моих работ настоящие цветы, веточки и листья, высушенные и аккуратно сохраненные.",
+        "Название моей мастерской Pod Lopuhom вдохновлено детской сказкой о маленьком лесном гноме, живущем в лесу под большим листом. Для меня этот образ символизирует тихий уголок природы, где рождаются маленькие чудеса.",
       paragraph4:
-        "Цветы увядают, моменты проходят, а чувства и воспоминания иногда хочется удержать чуть дольше, нести с собой и бережно хранить.",
+        "В украшениях я стараюсь сохранить то, что природа дарит нам лишь на короткое время. Внутри моих работ настоящие цветы, веточки и листья, высушенные и аккуратно сохраненные. Цветы увядают, моменты проходят, а чувства и воспоминания иногда хочется удержать чуть дольше, нести с собой и бережно хранить.",
       paragraph5:
         "Мои украшения — для всех романтиков, тех, кого притягивает красота природы и кто любит замечать детали в вещах.",
+      paragraph6: "",
     },
     cta: {
       helperText: "Чтобы сделать заказ, напишите мне напрямую.",
@@ -277,7 +281,7 @@ export const translations = {
       folia: "Folia",
     },
     home: {
-      title: "Gioielli che racchiudono la bellezza della natura",
+      title: "Gioielli che custodiscono la bellezza della natura",
       collectionsLabel: "Collezioni",
       newLabel: "Novita",
       newTitle: "Ultimi pezzi",
@@ -327,12 +331,15 @@ export const translations = {
       title: "Chi sono",
       paragraph1: "Ciao! Mi chiamo Olga.",
       paragraph2:
-        "Creo gioielli fatti a mano in resina epossidica. In ogni creazione cerco di custodire piccoli frammenti di natura, quei doni che il mondo ci offre solo per un attimo e poi lascia svanire. Fiori veri, minuscoli rami e foglie raccolti nel loro momento più delicato, essiccati e conservati con cura, come piccoli segreti della natura.",
+        "Creo i miei gioielli a mano, custodendo piante vere nella resina epossidica.",
       paragraph3:
-        "I fiori appassiscono, i momenti si dissolvono nel tempo… ma emozioni e ricordi possono restare, se impariamo a trattenerli con dolcezza.",
+        "Il nome del mio laboratorio “Pod Lopuhom”, trae ispirazione da una fiaba per bambini che racconta di un piccolo gnomo che vive nel bosco sotto una grande foglia. Per me questa immagine simboleggia un angolo tranquillo della natura, dove nascono piccoli miracoli.",
       paragraph4:
+        "In ogni creazione cerco di custodire piccoli frammenti di natura, quei doni che il mondo ci offre solo per un attimo e poi lascia svanire. Fiori veri, minuscoli rami e foglie raccolti nel loro momento più delicato, essiccati e conservati con cura, come piccoli segreti della natura.",
+      paragraph5:
+        "I fiori appassiscono, i momenti si dissolvono nel tempo… ma emozioni e ricordi possono restare, se impariamo a trattenerli con dolcezza.",
+      paragraph6:
         "I miei gioielli nascono per i sognatori, per chi si lascia incantare dalla bellezza silenziosa della natura e sa vedere la poesia nei dettagli più piccoli.",
-      paragraph5: "",
     },
     cta: {
       helperText: "Per effettuare un ordine, scrivimi direttamente.",
