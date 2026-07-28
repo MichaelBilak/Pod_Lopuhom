@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
 import HomeCollectionPromo from "@/src/components/HomeCollectionPromo";
@@ -34,9 +35,20 @@ export default async function HomePage({ searchParams }: PageProps) {
       <Nav />
       <main className="home-page page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
         <div className="page-main-tight flex min-w-0 flex-col">
-          <section className="hero-panel text-center">
+          <section className="hero-panel">
+            <Image
+              src="/images/_drive_import/IMG_1352.JPG"
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1536px) 90vw, (min-width: 1280px) 94vw, (min-width: 640px) calc(100vw - 3rem), calc(100vw - 2rem)"
+              className="hero-panel__image"
+            />
+            <div className="hero-panel__veil" aria-hidden />
             <div className="hero-panel__content relative z-10">
-                <h1 className="hero-tagline font-tagline">
+              <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
+              <span className="hero-panel__rule" aria-hidden />
+              <h1 className="hero-tagline font-tagline" lang={locale}>
                 {t.home.title}
               </h1>
             </div>
