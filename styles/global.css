@@ -561,10 +561,6 @@ select {
   animation: mobileNavPanelIn 220ms ease-out both;
 }
 
-.collection-tile--drawer[data-collection="Herbarium"] .collection-tile__image {
-  object-position: 50% 0%;
-}
-
 .new-products-scroll-hint svg {
   filter: drop-shadow(0 1px 1px rgb(255 255 255 / 0.9));
 }

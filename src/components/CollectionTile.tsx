@@ -60,10 +60,7 @@ export default function CollectionTile({
           }
           className="collection-tile__image h-full w-full object-cover saturate-[0.72] brightness-[0.88] transition duration-300 group-hover:scale-[1.03]"
           style={{
-            objectPosition:
-              variant === "drawer" && collection === "Herbarium"
-                ? "50% 0%"
-                : collectionImageObjectPosition(collection),
+            objectPosition: collectionImageObjectPosition(collection),
           }}
         />
         <div
