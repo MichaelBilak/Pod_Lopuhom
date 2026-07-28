@@ -368,7 +368,7 @@ export const translations = {
       close: "Chiudi",
     },
     footer: {
-      tagline: "Creazioni artigianali in resina ispirate dalla natura",
+      tagline: "Creazioni artigianali in resina ispirate alla natura",
       exploreTitle: "Esplora",
       shopTitle: "Categorie",
       contactTitle: "Contatti",
