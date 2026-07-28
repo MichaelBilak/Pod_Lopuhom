@@ -566,6 +566,9 @@ select {
 
 .mobile-nav-drawer__panel {
   animation: mobileNavPanelIn 220ms ease-out both;
+  background: #ffffff;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .new-products-scroll-hint svg {

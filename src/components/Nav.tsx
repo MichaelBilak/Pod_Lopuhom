@@ -525,7 +525,8 @@ function NavBar() {
         id="main-nav"
         ref={headerRef}
         className={[
-          "site-nav-shell fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 bg-white/80 backdrop-blur transition-transform duration-300 ease-out",
+          "site-nav-shell fixed inset-x-0 top-0 z-50 min-w-0 border-b border-slate-200/70 backdrop-blur transition-transform duration-300 ease-out",
+          mobileNavOpen ? "bg-white" : "bg-white/80",
           isVisible ? "translate-y-0" : "-translate-y-full",
         ].join(" ")}
       >

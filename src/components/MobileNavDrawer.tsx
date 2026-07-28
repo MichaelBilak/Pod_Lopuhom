@@ -65,8 +65,8 @@ export default function MobileNavDrawer({
 
   const navItemClass = (active: boolean) =>
     [
-      "mobile-nav-drawer__link flex min-h-[44px] w-full items-center justify-between border-b border-slate-200/50 px-1 py-2.5 text-left text-xs font-normal uppercase tracking-[0.22em] transition-colors",
-      active ? "text-slate-900" : "text-slate-600 hover:text-slate-900",
+      "mobile-nav-drawer__link flex min-h-[44px] w-full items-center justify-between border-b border-slate-200 px-1 py-2.5 text-left text-xs font-normal uppercase tracking-[0.22em] transition-colors",
+      active ? "text-slate-900" : "text-slate-700 hover:text-slate-900",
     ].join(" ");
 
   return createPortal(
@@ -74,13 +74,13 @@ export default function MobileNavDrawer({
       <button
         type="button"
         aria-label="Close menu"
-        className="mobile-nav-drawer__backdrop fixed inset-0 bg-slate-900/40 backdrop-blur-[2px]"
+        className="mobile-nav-drawer__backdrop fixed inset-0 bg-slate-900/25"
         onClick={onClose}
       />
       <nav
         id="mobile-nav-drawer"
         aria-label="Primary"
-        className="mobile-nav-drawer__panel fixed inset-x-0 overflow-y-auto rounded-b-2xl border-b border-slate-200/50 bg-white/88 shadow-[0_12px_40px_rgba(15,23,42,0.12)] backdrop-blur-md"
+        className="mobile-nav-drawer__panel fixed inset-x-0 overflow-y-auto rounded-b-2xl border-b border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.14)]"
         style={{
           top: headerOffset > 0 ? `${headerOffset}px` : undefined,
           maxHeight:
@@ -89,7 +89,7 @@ export default function MobileNavDrawer({
               : "min(100dvh, 28rem)",
         }}
       >
-        <div className="mx-auto w-full max-w-lg px-5 pb-3 pt-2 sm:px-6">
+        <div className="mx-auto w-full max-w-lg px-5 pb-4 pt-2 sm:px-6">
           <div className="flex flex-col">
             <button
               type="button"
