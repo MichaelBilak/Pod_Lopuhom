@@ -801,7 +801,7 @@ button:focus-visible {
 
 @media (min-width: 640px) {
   .new-products-marquee .new-products-track {
-    animation: newProductsMarquee 32s linear infinite;
+    animation: newProductsMarquee 48s linear infinite;
   }
 }
 
