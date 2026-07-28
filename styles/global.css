@@ -1042,9 +1042,9 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 7rem;
-  height: 7rem;
-  margin-bottom: 1.25rem;
+  width: clamp(7.5rem, 28vw, 9.5rem);
+  height: clamp(7.5rem, 28vw, 9.5rem);
+  margin-bottom: 1.35rem;
   animation: splashLogoIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -1061,7 +1061,7 @@ button:focus-visible {
 .splash-screen__brand {
   margin: 0;
   font-family: "Matchbook", "Century Gothic", sans-serif;
-  font-size: clamp(1.1rem, 4.8vw, 1.45rem);
+  font-size: clamp(1.75rem, 7.2vw, 2.35rem);
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: none;
@@ -1070,9 +1070,9 @@ button:focus-visible {
 
 .splash-screen__rule {
   display: block;
-  width: 2.75rem;
+  width: clamp(3.25rem, 12vw, 4.5rem);
   height: 1px;
-  margin: 1rem 0 1.125rem;
+  margin: 1.1rem 0 1.25rem;
   background: linear-gradient(
     90deg,
     rgba(148, 163, 184, 0),
@@ -1085,18 +1085,26 @@ button:focus-visible {
 
 .splash-screen__tagline {
   margin: 0;
-  max-width: 100%;
-  padding-inline: 0.25rem;
+  max-width: 18ch;
+  padding-inline: 0.5rem;
   font-family: var(--font-tagline), "Caveat", cursive;
-  font-size: clamp(0.55rem, 2.2vw, 0.8rem);
-  font-size: clamp(0.55rem, 2.9cqi, 0.8rem);
+  font-size: clamp(1.25rem, 5.4vw, 1.7rem);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.25;
   letter-spacing: 0.02em;
-  color: rgb(71 85 105);
-  white-space: nowrap;
-  text-wrap: nowrap;
+  color: rgb(51 65 85);
+  white-space: normal;
+  text-wrap: balance;
   animation: splashTaglineIn 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+
+@media (min-width: 640px) {
+  .splash-screen__tagline {
+    max-width: none;
+    white-space: nowrap;
+    text-wrap: nowrap;
+    font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  }
 }
 
 @keyframes splashGlow {
