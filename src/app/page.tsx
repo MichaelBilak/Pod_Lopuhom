@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
 import FooterSocial from "@/src/components/FooterSocial";
 import HomeCollectionPromo from "@/src/components/HomeCollectionPromo";
 import Nav from "@/src/components/Nav";
+import HeroPanel from "@/src/app/components/HeroPanel";
 import NewProductsScroll from "@/src/app/components/NewProductsScroll";
 import { fetchNewProducts } from "@/lib/products-server";
 import {
@@ -34,24 +34,7 @@ export default async function HomePage({ searchParams }: PageProps) {
     <>
       <Nav />
       <main className="home-page page-pb-20 page-main mx-auto w-full min-w-0 sm:page-pb-28">
-        <section className="hero-panel">
-          <Image
-            src="/images/_drive_import/IMG_1352.JPG"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="hero-panel__image"
-          />
-          <div className="hero-panel__veil" aria-hidden />
-          <div className="hero-panel__content relative z-10">
-            <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
-            <span className="hero-panel__rule" aria-hidden />
-            <h1 className="hero-tagline font-tagline" lang={locale}>
-              {t.home.title}
-            </h1>
-          </div>
-        </section>
+        <HeroPanel title={t.home.title} locale={locale} />
         <div className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col">
           <nav
             aria-label="Shop categories"
