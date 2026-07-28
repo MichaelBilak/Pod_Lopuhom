@@ -19,5 +19,6 @@ export const collectionImagePath = (collection: CollectionId) =>
 
 export const collectionImageObjectPosition = (collection: CollectionId) => {
   if (collection === "Herbarium") return "50% 100%";
-  return "50% 100%";
+  // Folia cover: keep leaf earrings centered in landscape crops.
+  return "52% 42%";
 };
