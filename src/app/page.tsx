@@ -33,26 +33,26 @@ export default async function HomePage({ searchParams }: PageProps) {
   return (
     <>
       <Nav />
-      <main className="home-page page-x page-pb-20 page-main page-shell mx-auto w-full min-w-0 sm:page-pb-28">
-        <div className="page-main-tight flex min-w-0 flex-col">
-          <section className="hero-panel">
-            <Image
-              src="/images/_drive_import/IMG_1352.JPG"
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1536px) 90vw, (min-width: 1280px) 94vw, (min-width: 640px) calc(100vw - 3rem), calc(100vw - 2rem)"
-              className="hero-panel__image"
-            />
-            <div className="hero-panel__veil" aria-hidden />
-            <div className="hero-panel__content relative z-10">
-              <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
-              <span className="hero-panel__rule" aria-hidden />
-              <h1 className="hero-tagline font-tagline" lang={locale}>
-                {t.home.title}
-              </h1>
-            </div>
-          </section>
+      <main className="home-page page-pb-20 page-main mx-auto w-full min-w-0 sm:page-pb-28">
+        <section className="hero-panel">
+          <Image
+            src="/images/_drive_import/IMG_1352.JPG"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hero-panel__image"
+          />
+          <div className="hero-panel__veil" aria-hidden />
+          <div className="hero-panel__content relative z-10">
+            <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
+            <span className="hero-panel__rule" aria-hidden />
+            <h1 className="hero-tagline font-tagline" lang={locale}>
+              {t.home.title}
+            </h1>
+          </div>
+        </section>
+        <div className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col">
           <nav
             aria-label="Shop categories"
             className="home-category-menu min-w-0"
@@ -89,15 +89,17 @@ export default async function HomePage({ searchParams }: PageProps) {
           />
         </div>
         {newProducts.length > 0 ? (
-          <Suspense fallback={null}>
-            <NewProductsScroll
-              products={newProducts}
-              locale={locale}
-              newLabel={t.home.newLabel}
-              newTitle={t.home.newTitle}
-              viewDetails={t.home.viewDetails}
-            />
-          </Suspense>
+          <div className="page-x page-shell mx-auto w-full min-w-0">
+            <Suspense fallback={null}>
+              <NewProductsScroll
+                products={newProducts}
+                locale={locale}
+                newLabel={t.home.newLabel}
+                newTitle={t.home.newTitle}
+                viewDetails={t.home.viewDetails}
+              />
+            </Suspense>
+          </div>
         ) : null}
       </main>
       <FooterSocial />

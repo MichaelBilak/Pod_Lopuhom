@@ -132,12 +132,17 @@ select {
   container-type: inline-size;
   container-name: hero;
   isolation: isolate;
-  border-radius: clamp(1.25rem, 2.5vw, 2rem);
+  width: 100%;
+  border-radius: 0;
   border: none;
   background: #d8cec4;
-  padding: clamp(2rem, 6vw, 5rem);
-  box-shadow: 0 1.5rem 4rem rgb(75 58 44 / 0.12);
-  min-height: clamp(24rem, 46vw, 38rem);
+  padding:
+    clamp(2.25rem, 5.5vw, 4.75rem)
+    max(1.25rem, env(safe-area-inset-right, 0px))
+    clamp(2.25rem, 5.5vw, 4.75rem)
+    max(1.5rem, env(safe-area-inset-left, 0px));
+  box-shadow: none;
+  min-height: clamp(26rem, 48vw, 40rem);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -161,17 +166,18 @@ select {
   background:
     linear-gradient(
       90deg,
-      rgb(244 239 234 / 0.78) 0%,
-      rgb(244 239 234 / 0.5) 34%,
-      rgb(244 239 234 / 0.08) 62%,
-      transparent 78%
+      rgb(244 239 234 / 0.72) 0%,
+      rgb(244 239 234 / 0.42) 38%,
+      rgb(244 239 234 / 0.08) 66%,
+      transparent 82%
     ),
-    linear-gradient(180deg, rgb(255 255 255 / 0.12), transparent 42%, rgb(83 61 43 / 0.08));
+    linear-gradient(180deg, rgb(255 255 255 / 0.1), transparent 42%, rgb(83 61 43 / 0.08));
 }
 
 .hero-panel__content {
   display: flex;
-  width: min(47%, 34rem);
+  width: min(58%, 46rem);
+  max-width: 46rem;
   flex-direction: column;
   align-items: flex-start;
   color: #3f3128;
@@ -180,14 +186,14 @@ select {
 
 .hero-panel__eyebrow {
   margin: 0 0 0.65rem;
-  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  font-size: clamp(0.8rem, 1.35vw, 1.05rem);
   line-height: 1;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   color: rgb(63 49 40 / 0.72);
 }
 
 .hero-panel__rule {
-  width: clamp(2.75rem, 6vw, 5rem);
+  width: clamp(3.5rem, 8vw, 6.5rem);
   height: 1px;
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
   background: rgb(104 77 59 / 0.55);
@@ -196,12 +202,12 @@ select {
 .hero-tagline {
   margin: 0;
   width: 100%;
-  max-width: 12ch;
+  max-width: 18ch;
   padding: 0;
   font-weight: 400;
-  font-size: clamp(2rem, 4.4vw, 4.35rem);
-  line-height: 1.02;
-  letter-spacing: 0.01em;
+  font-size: clamp(2.15rem, 4.8vw, 4.75rem);
+  line-height: 1.05;
+  letter-spacing: 0.025em;
   color: #392c24;
   text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
   white-space: normal;
@@ -232,7 +238,11 @@ select {
   }
 
   .hero-panel {
-    padding: clamp(1.5rem, 7vw, 2rem);
+    padding:
+      clamp(1.5rem, 7vw, 2rem)
+      max(1rem, env(safe-area-inset-right, 0px))
+      clamp(1.5rem, 7vw, 2rem)
+      max(1rem, env(safe-area-inset-left, 0px));
     min-height: clamp(27rem, 132vw, 34rem);
   }
 
@@ -326,19 +336,21 @@ select {
   }
 
   .hero-panel__content {
-    width: 61%;
+    width: min(68%, 18rem);
+    max-width: none;
     padding-top: clamp(1rem, 7vw, 2rem);
   }
 
   .hero-tagline {
-    max-width: 10ch;
-    font-size: clamp(1.85rem, 9.3vw, 2.55rem);
-    line-height: 1.04;
+    max-width: 12ch;
+    font-size: clamp(1.9rem, 9.5vw, 2.65rem);
+    line-height: 1.05;
+    letter-spacing: 0.02em;
   }
 
   .hero-tagline:lang(ru) {
-    max-width: 11ch;
-    font-size: clamp(1.65rem, 7.5vw, 2.15rem);
+    max-width: 12ch;
+    font-size: clamp(1.7rem, 7.8vw, 2.25rem);
   }
 }
 
@@ -384,18 +396,16 @@ select {
   margin-top: -0.75rem;
 }
 
-.home-page .page-main-tight > .hero-panel + .home-category-menu {
-  margin-top: -2.5rem;
-}
-
 .home-page.page-main {
-  gap: 3rem;
+  gap: 2rem;
+  padding-top: 0;
 }
 
 .home-page .page-main-tight {
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  margin-top: 1.25rem;
 }
 
 .home-page .new-products-section {
@@ -404,15 +414,12 @@ select {
 
 @media (min-width: 640px) {
   .home-page.page-main {
-    gap: 6rem;
+    gap: 4.5rem;
   }
 
   .home-page .page-main-tight {
     gap: 3.5rem;
-  }
-
-  .home-page .page-main-tight > .hero-panel + .home-category-menu {
-    margin-top: -3.5rem;
+    margin-top: 2rem;
   }
 
   .home-page .page-main-tight > .home-category-menu + .home-collection-promo {
