@@ -47,10 +47,18 @@ html {
     "Trebuchet MS", sans-serif;
   overflow-x: hidden;
   overflow-x: clip;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   height: 100%;
   min-height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 #site-root {
@@ -65,11 +73,21 @@ body {
     "Trebuchet MS", sans-serif;
   line-height: 1.65;
   min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 /* Old iOS Safari fallback: keeps full-height layouts stable with dynamic browser chrome. */
@@ -136,33 +154,34 @@ select {
   border-radius: 0;
   border: none;
   background: #ffffff;
-  padding:
-    clamp(2.25rem, 5.5vw, 4.75rem)
-    max(1.25rem, env(safe-area-inset-right, 0px))
-    clamp(3.25rem, 8vw, 6rem)
-    max(1.5rem, env(safe-area-inset-left, 0px));
+  padding: 0;
   box-shadow: none;
-  min-height: clamp(26rem, 48vw, 40rem);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  min-height: clamp(22rem, 44vw, 36rem);
+  display: block;
 }
 
 .hero-panel__media {
   position: absolute;
-  inset: -14% 0;
-  z-index: -2;
+  inset: -8% 0;
+  z-index: 0;
+  width: 100%;
+  line-height: 0;
   will-change: transform;
-  transform: translate3d(0, 0, 0) scale(1.08);
-  transform-origin: center center;
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
 .hero-panel__image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 155% !important;
+  max-width: none !important;
+  transform: translateY(-34%);
   object-fit: cover;
   object-position: center center;
 }
@@ -170,42 +189,44 @@ select {
 .hero-panel__veil {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
-  background:
-    linear-gradient(
-      90deg,
-      rgb(244 239 234 / 0.72) 0%,
-      rgb(244 239 234 / 0.42) 38%,
-      rgb(244 239 234 / 0.08) 66%,
-      transparent 82%
-    ),
-    linear-gradient(180deg, rgb(255 255 255 / 0.1), transparent 42%, rgb(83 61 43 / 0.06));
+  background: linear-gradient(
+    90deg,
+    rgb(244 239 234 / 0.55) 0%,
+    rgb(244 239 234 / 0.28) 34%,
+    rgb(244 239 234 / 0.06) 58%,
+    transparent 76%
+  );
 }
 
 .hero-panel__fade {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: 1;
-  height: clamp(5.5rem, 22%, 10rem);
+  z-index: 2;
   pointer-events: none;
+}
+
+.hero-panel__fade--bottom {
+  bottom: -1px;
+  height: clamp(5rem, 20%, 9rem);
   background: linear-gradient(
     to bottom,
     rgb(255 255 255 / 0) 0%,
-    rgb(255 255 255 / 0.35) 38%,
-    rgb(255 255 255 / 0.82) 72%,
+    rgb(255 255 255 / 0.25) 35%,
+    rgb(255 255 255 / 0.75) 70%,
+    #ffffff 92%,
     #ffffff 100%
   );
 }
 
-.hero-panel__fade::before {
+.hero-panel__fade--bottom::before {
   content: "";
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -221,13 +242,20 @@ select {
 }
 
 .hero-panel__content {
+  position: absolute;
+  z-index: 3;
+  top: 34%;
+  left: 0;
   display: flex;
-  width: min(58%, 46rem);
-  max-width: 46rem;
+  width: min(56%, 44rem);
+  max-width: 44rem;
+  margin-left: clamp(3rem, 16vw, 12rem);
+  padding-right: 1rem;
   flex-direction: column;
   align-items: flex-start;
   color: #3f3128;
   text-align: left;
+  transform: translateY(-50%);
 }
 
 .hero-panel__eyebrow {
@@ -247,16 +275,16 @@ select {
 
 .hero-tagline {
   margin: 0;
-  width: 100%;
-  max-width: 18ch;
+  width: max-content;
+  max-width: min(100%, 28ch);
   padding: 0;
   font-weight: 400;
-  font-size: clamp(2.15rem, 4.8vw, 4.75rem);
-  line-height: 1.05;
+  font-size: clamp(1.65rem, 3.6vw, 3.35rem);
+  line-height: 1.08;
   letter-spacing: 0.025em;
   color: #392c24;
   text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
-  white-space: normal;
+  white-space: pre-line;
   text-wrap: balance;
   overflow-wrap: normal;
   -webkit-font-smoothing: antialiased;
@@ -284,12 +312,8 @@ select {
   }
 
   .hero-panel {
-    padding:
-      clamp(1.5rem, 7vw, 2rem)
-      max(1rem, env(safe-area-inset-right, 0px))
-      clamp(1.5rem, 7vw, 2rem)
-      max(1rem, env(safe-area-inset-left, 0px));
-    min-height: clamp(27rem, 132vw, 34rem);
+    padding: 0;
+    min-height: 0;
   }
 
   .home-category-menu .category-tabs-scroll {
@@ -345,10 +369,6 @@ select {
 }
 
 @media (max-width: 430px) and (orientation: landscape) {
-  .hero-panel {
-    min-height: clamp(18rem, 78vh, 25rem);
-  }
-
   .nav-spacer {
     height: calc(72px + constant(safe-area-inset-top));
     height: calc(72px + env(safe-area-inset-top, 0px));
@@ -361,14 +381,6 @@ select {
 }
 
 @media (max-width: 639px) {
-  .hero-panel {
-    align-items: flex-start;
-  }
-
-  .hero-panel__image {
-    object-position: 68% center;
-  }
-
   .hero-panel__veil {
     background:
       linear-gradient(
@@ -382,21 +394,23 @@ select {
   }
 
   .hero-panel__content {
-    width: min(68%, 18rem);
+    width: min(72%, 20rem);
     max-width: none;
-    padding-top: clamp(1rem, 7vw, 2rem);
+    top: 32%;
+    margin-left: clamp(1.25rem, 10vw, 3.5rem);
+    padding-top: 0;
   }
 
   .hero-tagline {
-    max-width: 12ch;
-    font-size: clamp(1.9rem, 9.5vw, 2.65rem);
-    line-height: 1.05;
+    max-width: min(100%, 18ch);
+    font-size: clamp(1.45rem, 7.2vw, 2rem);
+    line-height: 1.08;
     letter-spacing: 0.02em;
   }
 
   .hero-tagline:lang(ru) {
-    max-width: 12ch;
-    font-size: clamp(1.7rem, 7.8vw, 2.25rem);
+    max-width: min(100%, 16ch);
+    font-size: clamp(1.3rem, 6.2vw, 1.8rem);
   }
 }
 
@@ -407,7 +421,7 @@ select {
     will-change: auto;
   }
 
-  .hero-panel__fade::before {
+  .hero-panel__fade--bottom::before {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

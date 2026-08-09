@@ -28,14 +28,8 @@ export default function HeroPanel({ title, locale }: HeroPanelProps) {
     const update = () => {
       frame = 0;
       const rect = panel.getBoundingClientRect();
-      const viewHeight = window.innerHeight || 1;
-      // Move background slower than scroll while hero is in view.
-      const offset = Math.max(-80, Math.min(80, rect.top * -0.28));
-      const progress = Math.min(
-        1,
-        Math.max(0, (viewHeight - rect.top) / (viewHeight + rect.height))
-      );
-      media.style.transform = `translate3d(0, ${offset}px, 0) scale(${1.08 + progress * 0.04})`;
+      const offset = Math.max(-90, Math.min(90, rect.top * -0.32));
+      media.style.transform = `translate3d(0, ${offset}px, 0)`;
     };
 
     const onScroll = () => {
@@ -57,7 +51,7 @@ export default function HeroPanel({ title, locale }: HeroPanelProps) {
     <section ref={panelRef} className="hero-panel">
       <div ref={mediaRef} className="hero-panel__media" aria-hidden>
         <Image
-          src="/images/_drive_import/IMG_1352.JPG"
+          src="/images/_drive_import/IMG_1351.JPG"
           alt=""
           fill
           priority
@@ -66,8 +60,8 @@ export default function HeroPanel({ title, locale }: HeroPanelProps) {
         />
       </div>
       <div className="hero-panel__veil" aria-hidden />
-      <div className="hero-panel__fade" aria-hidden />
-      <div className="hero-panel__content relative z-10">
+      <div className="hero-panel__fade hero-panel__fade--bottom" aria-hidden />
+      <div className="hero-panel__content">
         <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
         <span className="hero-panel__rule" aria-hidden />
         <h1 className="hero-tagline font-tagline" lang={locale}>

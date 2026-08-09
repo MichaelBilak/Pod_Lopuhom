@@ -40,7 +40,6 @@ export default async function HomePage({ searchParams }: PageProps) {
             aria-label="Shop categories"
             className="home-category-menu min-w-0"
           >
-            <div className="home-category-band" aria-hidden />
             <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:py-4">
               <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
                 {[
