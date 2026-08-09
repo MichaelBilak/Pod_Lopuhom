@@ -146,9 +146,9 @@ select {
 
 .hero-panel {
   --hero-focal-x: 58%;
-  --hero-focal-y: 40%;
+  --hero-focal-y: 52%;
   --hero-text-top: 40%;
-  --hero-text-left: clamp(1.25rem, 7cqi, 5.5rem);
+  --hero-text-left: clamp(2.5rem, 12cqi, 9rem);
   --hero-text-size: clamp(1.5rem, 4.4cqi, 3rem);
   position: relative;
   overflow: hidden;
@@ -386,9 +386,9 @@ select {
 @media (max-width: 639px) {
   .hero-panel {
     --hero-focal-x: 68%;
-    --hero-focal-y: 38%;
+    --hero-focal-y: 50%;
     --hero-text-top: 36%;
-    --hero-text-left: clamp(1rem, 5cqi, 1.75rem);
+    --hero-text-left: clamp(1.5rem, 9cqi, 3rem);
     --hero-text-size: clamp(1.35rem, 6.8cqi, 1.85rem);
     aspect-ratio: 5 / 4;
     min-height: clamp(17rem, 78vw, 24rem);
@@ -425,9 +425,9 @@ select {
 @media (min-width: 640px) and (max-width: 1023px) {
   .hero-panel {
     --hero-focal-x: 60%;
-    --hero-focal-y: 40%;
+    --hero-focal-y: 52%;
     --hero-text-top: 38%;
-    --hero-text-left: clamp(1.5rem, 6cqi, 3.5rem);
+    --hero-text-left: clamp(2.25rem, 10cqi, 5.5rem);
     --hero-text-size: clamp(1.55rem, 4.2cqi, 2.45rem);
     aspect-ratio: 2 / 1;
     min-height: clamp(18rem, 46vw, 28rem);
@@ -438,9 +438,9 @@ select {
 @media (min-width: 1024px) {
   .hero-panel {
     --hero-focal-x: 56%;
-    --hero-focal-y: 40%;
+    --hero-focal-y: 52%;
     --hero-text-top: 40%;
-    --hero-text-left: clamp(2.5rem, 8cqi, 6rem);
+    --hero-text-left: clamp(4rem, 14cqi, 10rem);
     --hero-text-size: clamp(1.75rem, 3.6cqi, 3rem);
   }
 }
