@@ -28,7 +28,8 @@ export default function HeroPanel({ title, locale }: HeroPanelProps) {
     const update = () => {
       frame = 0;
       const rect = panel.getBoundingClientRect();
-      const offset = Math.max(-90, Math.min(90, rect.top * -0.32));
+      const range = Math.min(72, panel.offsetHeight * 0.14);
+      const offset = Math.max(-range, Math.min(range, rect.top * -0.28));
       media.style.transform = `translate3d(0, ${offset}px, 0)`;
     };
 

@@ -145,6 +145,11 @@ select {
 }
 
 .hero-panel {
+  --hero-focal-x: 58%;
+  --hero-focal-y: 40%;
+  --hero-text-top: 40%;
+  --hero-text-left: clamp(1.25rem, 7cqi, 5.5rem);
+  --hero-text-size: clamp(1.5rem, 4.4cqi, 3rem);
   position: relative;
   overflow: hidden;
   container-type: inline-size;
@@ -156,13 +161,15 @@ select {
   background: #ffffff;
   padding: 0;
   box-shadow: none;
-  min-height: clamp(22rem, 44vw, 36rem);
+  aspect-ratio: 2.35 / 1;
+  min-height: clamp(18rem, 42vw, 34rem);
+  max-height: min(70vh, 36rem);
   display: block;
 }
 
 .hero-panel__media {
   position: absolute;
-  inset: -8% 0;
+  inset: -10% 0;
   z-index: 0;
   width: 100%;
   line-height: 0;
@@ -174,16 +181,13 @@ select {
 .hero-panel__image {
   display: block !important;
   position: absolute !important;
-  left: 0 !important;
-  right: 0 !important;
-  top: 0 !important;
-  bottom: auto !important;
+  inset: 0 !important;
   width: 100% !important;
-  height: 155% !important;
+  height: 100% !important;
   max-width: none !important;
-  transform: translateY(-34%);
+  transform: none !important;
   object-fit: cover;
-  object-position: center center;
+  object-position: var(--hero-focal-x) var(--hero-focal-y);
 }
 
 .hero-panel__veil {
@@ -210,7 +214,7 @@ select {
 
 .hero-panel__fade--bottom {
   bottom: -1px;
-  height: clamp(5rem, 20%, 9rem);
+  height: clamp(4.5rem, 18%, 8rem);
   background: linear-gradient(
     to bottom,
     rgb(255 255 255 / 0) 0%,
@@ -244,12 +248,12 @@ select {
 .hero-panel__content {
   position: absolute;
   z-index: 3;
-  top: 34%;
-  left: 0;
+  top: var(--hero-text-top);
+  left: var(--hero-text-left);
   display: flex;
-  width: min(56%, 44rem);
-  max-width: 44rem;
-  margin-left: clamp(3rem, 16vw, 12rem);
+  width: min(50%, 38rem);
+  max-width: 38rem;
+  margin-left: 0;
   padding-right: 1rem;
   flex-direction: column;
   align-items: flex-start;
@@ -259,29 +263,29 @@ select {
 }
 
 .hero-panel__eyebrow {
-  margin: 0 0 0.65rem;
-  font-size: clamp(0.8rem, 1.35vw, 1.05rem);
+  margin: 0 0 0.55rem;
+  font-size: clamp(0.72rem, 1.5cqi, 0.95rem);
   line-height: 1;
   letter-spacing: 0.2em;
   color: rgb(63 49 40 / 0.72);
 }
 
 .hero-panel__rule {
-  width: clamp(3.5rem, 8vw, 6.5rem);
+  width: clamp(2.75rem, 7cqi, 5.5rem);
   height: 1px;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(0.75rem, 1.8cqi, 1.25rem);
   background: rgb(104 77 59 / 0.55);
 }
 
 .hero-tagline {
   margin: 0;
   width: max-content;
-  max-width: min(100%, 28ch);
+  max-width: min(100%, 26ch);
   padding: 0;
   font-weight: 400;
-  font-size: clamp(1.65rem, 3.6vw, 3.35rem);
-  line-height: 1.08;
-  letter-spacing: 0.025em;
+  font-size: var(--hero-text-size);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   color: #392c24;
   text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
   white-space: pre-line;
@@ -313,7 +317,6 @@ select {
 
   .hero-panel {
     padding: 0;
-    min-height: 0;
   }
 
   .home-category-menu .category-tabs-scroll {
@@ -381,6 +384,17 @@ select {
 }
 
 @media (max-width: 639px) {
+  .hero-panel {
+    --hero-focal-x: 68%;
+    --hero-focal-y: 38%;
+    --hero-text-top: 36%;
+    --hero-text-left: clamp(1rem, 5cqi, 1.75rem);
+    --hero-text-size: clamp(1.35rem, 6.8cqi, 1.85rem);
+    aspect-ratio: 5 / 4;
+    min-height: clamp(17rem, 78vw, 24rem);
+    max-height: none;
+  }
+
   .hero-panel__veil {
     background:
       linear-gradient(
@@ -394,23 +408,40 @@ select {
   }
 
   .hero-panel__content {
-    width: min(72%, 20rem);
+    width: min(70%, 18rem);
     max-width: none;
-    top: 32%;
-    margin-left: clamp(1.25rem, 10vw, 3.5rem);
-    padding-top: 0;
   }
 
   .hero-tagline {
-    max-width: min(100%, 18ch);
-    font-size: clamp(1.45rem, 7.2vw, 2rem);
-    line-height: 1.08;
-    letter-spacing: 0.02em;
+    max-width: min(100%, 16ch);
   }
 
   .hero-tagline:lang(ru) {
-    max-width: min(100%, 16ch);
-    font-size: clamp(1.3rem, 6.2vw, 1.8rem);
+    --hero-text-size: clamp(1.2rem, 5.8cqi, 1.65rem);
+    max-width: min(100%, 15ch);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero-panel {
+    --hero-focal-x: 60%;
+    --hero-focal-y: 40%;
+    --hero-text-top: 38%;
+    --hero-text-left: clamp(1.5rem, 6cqi, 3.5rem);
+    --hero-text-size: clamp(1.55rem, 4.2cqi, 2.45rem);
+    aspect-ratio: 2 / 1;
+    min-height: clamp(18rem, 46vw, 28rem);
+    max-height: min(62vh, 30rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-panel {
+    --hero-focal-x: 56%;
+    --hero-focal-y: 40%;
+    --hero-text-top: 40%;
+    --hero-text-left: clamp(2.5rem, 8cqi, 6rem);
+    --hero-text-size: clamp(1.75rem, 3.6cqi, 3rem);
   }
 }
 
