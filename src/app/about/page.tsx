@@ -46,6 +46,7 @@ export default async function AboutPage({ searchParams }: PageProps) {
                 <p>{t.about.paragraph2}</p>
                 <p>{t.about.paragraph3}</p>
                 <p>{t.about.paragraph4}</p>
+                <p>{t.about.paragraph5}</p>
               </div>
               <div className="about-gnome mt-10 flex justify-end">
                 <Image
