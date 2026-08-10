@@ -42,11 +42,9 @@ export default async function AboutPage({ searchParams }: PageProps) {
             </div>
             <div className="min-w-0 text-base leading-relaxed text-slate-700 md:pt-2">
               <div className="space-y-4 text-[15px] [overflow-wrap:anywhere] md:text-base">
-                <p>{t.about.paragraph1}</p>
-                <p>{t.about.paragraph2}</p>
-                <p>{t.about.paragraph3}</p>
-                <p>{t.about.paragraph4}</p>
-                <p>{t.about.paragraph5}</p>
+                {t.about.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
               <div className="about-gnome mt-10 flex justify-end">
                 <Image
