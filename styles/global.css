@@ -413,12 +413,17 @@ select {
   }
 
   .hero-tagline {
-    max-width: min(100%, 16ch);
+    max-width: 100%;
+    text-wrap: initial;
   }
 
   .hero-tagline:lang(ru) {
-    --hero-text-size: clamp(1.2rem, 5.8cqi, 1.65rem);
-    max-width: min(100%, 15ch);
+    --hero-text-size: clamp(1.15rem, 5.4cqi, 1.55rem);
+    max-width: 100%;
+  }
+
+  .hero-tagline:lang(it) {
+    --hero-text-size: clamp(1.2rem, 5.8cqi, 1.6rem);
   }
 }
 
