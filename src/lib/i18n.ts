@@ -82,14 +82,16 @@ export const translations = {
     },
     order: {
       title: "Order & Delivery",
+      intro:
+        "Shipping across Italy and to all countries. Estimated Shipping Times & Rates:",
       deliveryItaly: "Italy — delivery by Poste Italiane",
       deliveryItalyDays: "2–4 working days",
-      deliveryEurope: "Europe — international delivery",
+      deliveryEurope: "Europe — Standard Shipping",
       deliveryEuropeDays: "3–7 working days",
-      deliveryWorldwideStandard: "Worldwide shipping — Standard",
+      deliveryWorldwideStandard: "Rest of the World — Standard Shipping",
       deliveryWorldwideStandardDays: "5–12 working days",
-      deliveryWorldwideExpress: "Worldwide shipping — Express",
-      deliveryWorldwideExpressDays: "2–5 working days",
+      shippingNote:
+        "Shipping costs depend on the destination and the weight of the package. If expedited shipping outside of Italy is required, an additional fee may apply.",
       orderCta: "If you need additional information, write to me:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
@@ -139,6 +141,9 @@ export const translations = {
       contactTitle: "Get in touch",
       rights: "All rights reserved.",
       madeIn: "Handmade in Italy",
+      websiteByBefore: "Website by",
+      studioName: "DormUp Studio",
+      illustrationBy: "Illustration by Anka Bilak",
     },
   },
   ru: {
@@ -197,14 +202,16 @@ export const translations = {
     },
     order: {
       title: "Заказ и доставка",
+      intro:
+        "Доставка по всей Италии и в другие страны. Ориентировочные сроки и цены доставки:",
       deliveryItaly: "Италия — доставка Poste Italiane",
       deliveryItalyDays: "2–4 рабочих дня",
-      deliveryEurope: "Европа — международная доставка",
+      deliveryEurope: "Европа — стандартная доставка",
       deliveryEuropeDays: "3–7 рабочих дней",
-      deliveryWorldwideStandard: "Мир — стандартная доставка",
+      deliveryWorldwideStandard: "Остальной мир — стандартная доставка",
       deliveryWorldwideStandardDays: "5–12 рабочих дней",
-      deliveryWorldwideExpress: "Мир — экспресс-доставка",
-      deliveryWorldwideExpressDays: "2–5 рабочих дней",
+      shippingNote:
+        "Стоимость доставки зависит от места назначения, а также от веса посылки. В случае необходимости срочной доставки за пределы Италии может взиматься дополнительная плата.",
       orderCta: "Если вам нужна дополнительная информация, пишите мне:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
@@ -253,6 +260,9 @@ export const translations = {
       contactTitle: "Связаться",
       rights: "Все права защищены.",
       madeIn: "Сделано вручную в Италии",
+      websiteByBefore: "Разработка сайта:",
+      studioName: "DormUp Studio",
+      illustrationBy: "Иллюстрация: Анка Билак",
     },
   },
   it: {
@@ -311,14 +321,16 @@ export const translations = {
     },
     order: {
       title: "Ordine e Spedizione",
+      intro:
+        "Spedizione in tutta Italia e all'estero. Tempi e costi di spedizione stimati:",
       deliveryItaly: "Italia — consegna con Poste Italiane",
       deliveryItalyDays: "2–4 giorni lavorativi",
-      deliveryEurope: "Europa — spedizione internazionale",
+      deliveryEurope: "Europa — Spedizione standard",
       deliveryEuropeDays: "3–7 giorni lavorativi",
-      deliveryWorldwideStandard: "Mondo — spedizione standard",
+      deliveryWorldwideStandard: "Resto del mondo — Spedizione standard",
       deliveryWorldwideStandardDays: "5–12 giorni lavorativi",
-      deliveryWorldwideExpress: "Mondo — spedizione express",
-      deliveryWorldwideExpressDays: "2–5 giorni lavorativi",
+      shippingNote:
+        "Il costo della spedizione dipende dalla destinazione e dal peso del pacco. In caso di necessità di una spedizione urgente al di fuori dell'Italia, potrebbe essere applicato un supplemento.",
       orderCta: "Se avete bisogno di ulteriori informazioni, scrivetemi:",
       whatsapp: "WhatsApp",
       instagram: "Instagram",
@@ -367,6 +379,9 @@ export const translations = {
       contactTitle: "Contatti",
       rights: "Tutti i diritti riservati.",
       madeIn: "Fatto a mano in Italia",
+      websiteByBefore: "Sito realizzato da",
+      studioName: "DormUp Studio",
+      illustrationBy: "Illustrazione di Anka Bilak",
     },
   },
 } as const;

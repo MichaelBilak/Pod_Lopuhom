@@ -174,6 +174,19 @@ function FooterSocialContent() {
               <span className="hidden sm:inline"> {t.footer.rights}</span>
             </span>
           </p>
+          <p className="mt-2 text-[11px] normal-case tracking-[0.08em] text-slate-500 sm:text-[12px] sm:tracking-[0.1em]">
+            {t.footer.websiteByBefore}{" "}
+            <a
+              href="https://www.dormup-it.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-slate-300 underline-offset-2 transition hover:text-slate-900 hover:decoration-slate-900"
+            >
+              {t.footer.studioName}
+            </a>
+            {" • "}
+            {t.footer.illustrationBy}
+          </p>
         </div>
       </div>
       <div
