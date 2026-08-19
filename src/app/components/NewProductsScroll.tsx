@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ProductImage from "@/src/components/ProductImage";
 import { withLang, type Locale } from "@/src/lib/i18n";
 import type { Product } from "@/lib/supabase-products";
@@ -20,6 +20,10 @@ type NewProductsScrollProps = {
   viewDetails: string;
 };
 
+const MARQUEE_DURATION_SEC = 48;
+const MOBILE_MQ = "(max-width: 639px)";
+const SCROLL_SETTLE_MS = 120;
+
 export default function NewProductsScroll({
   products,
   locale,
@@ -27,37 +31,161 @@ export default function NewProductsScroll({
   viewDetails,
 }: NewProductsScrollProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const [showScrollHint, setShowScrollHint] = useState(true);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
     if (!marquee) return;
 
-    const pause = () => marquee.classList.add("is-paused");
-    const resume = () => marquee.classList.remove("is-paused");
+    const mobileQuery = window.matchMedia(MOBILE_MQ);
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
 
-    const updateScrollHint = () => {
-      const atEnd =
-        marquee.scrollLeft + marquee.clientWidth >= marquee.scrollWidth - 12;
-      setShowScrollHint(!atEnd);
+    let rafId = 0;
+    let lastTime = 0;
+    let segmentWidth = 0;
+    let initialized = false;
+    let isTouching = false;
+    let isUserScrolling = false;
+    let scrollEndTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const getOrigSegment = () =>
+      marquee.querySelector<HTMLElement>('[data-copy="orig"]');
+
+    const measureSegment = () => {
+      segmentWidth = getOrigSegment()?.offsetWidth ?? 0;
+      return segmentWidth;
     };
 
-    marquee.addEventListener("touchstart", pause, { passive: true });
-    marquee.addEventListener("touchend", resume, { passive: true });
-    marquee.addEventListener("touchcancel", resume, { passive: true });
-    marquee.addEventListener("mouseenter", pause);
-    marquee.addEventListener("mouseleave", resume);
-    marquee.addEventListener("scroll", updateScrollHint, { passive: true });
-    updateScrollHint();
+    const normalizeScroll = () => {
+      if (segmentWidth <= 0) return;
+      if (marquee.scrollLeft >= segmentWidth * 2 - 1) {
+        marquee.scrollLeft -= segmentWidth;
+      } else if (marquee.scrollLeft <= 1) {
+        marquee.scrollLeft += segmentWidth;
+      }
+    };
+
+    const initMobileScroll = () => {
+      if (!mobileQuery.matches || segmentWidth <= 0) return;
+      marquee.scrollLeft = segmentWidth;
+      initialized = true;
+    };
+
+    const scheduleScrollEnd = () => {
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        isUserScrolling = false;
+        normalizeScroll();
+      }, SCROLL_SETTLE_MS);
+    };
+
+    const tick = (time: number) => {
+      rafId = requestAnimationFrame(tick);
+
+      if (!mobileQuery.matches || !initialized || segmentWidth <= 0) return;
+
+      const dt = lastTime ? (time - lastTime) / 1000 : 0;
+      lastTime = time;
+
+      if (
+        !isTouching &&
+        !isUserScrolling &&
+        !reducedMotionQuery.matches
+      ) {
+        marquee.scrollLeft += (segmentWidth / MARQUEE_DURATION_SEC) * dt;
+        normalizeScroll();
+      }
+    };
+
+    const onTouchStart = () => {
+      if (!mobileQuery.matches) return;
+      isTouching = true;
+      isUserScrolling = true;
+    };
+
+    const onTouchEnd = () => {
+      if (!mobileQuery.matches) return;
+      isTouching = false;
+      normalizeScroll();
+      scheduleScrollEnd();
+    };
+
+    const onScroll = () => {
+      if (!mobileQuery.matches) return;
+      if (isTouching || isUserScrolling) {
+        normalizeScroll();
+        scheduleScrollEnd();
+      }
+    };
+
+    const onScrollEnd = () => {
+      if (!mobileQuery.matches) return;
+      isUserScrolling = false;
+      normalizeScroll();
+    };
+
+    const pauseDesktop = () => {
+      if (!mobileQuery.matches) marquee.classList.add("is-paused");
+    };
+
+    const resumeDesktop = () => {
+      if (!mobileQuery.matches) marquee.classList.remove("is-paused");
+    };
+
+    const onMobileChange = () => {
+      measureSegment();
+      if (mobileQuery.matches) {
+        marquee.classList.remove("is-paused");
+        initMobileScroll();
+      } else {
+        isTouching = false;
+        isUserScrolling = false;
+        initialized = false;
+        marquee.scrollLeft = 0;
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      const hadSegment = segmentWidth > 0;
+      measureSegment();
+      if (!mobileQuery.matches || segmentWidth <= 0) return;
+      if (!initialized || !hadSegment) {
+        initMobileScroll();
+      }
+    });
+
+    const orig = getOrigSegment();
+    if (orig) resizeObserver.observe(orig);
+
+    measureSegment();
+    initMobileScroll();
+    rafId = requestAnimationFrame(tick);
+
+    marquee.addEventListener("touchstart", onTouchStart, { passive: true });
+    marquee.addEventListener("touchend", onTouchEnd, { passive: true });
+    marquee.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    marquee.addEventListener("scroll", onScroll, { passive: true });
+    marquee.addEventListener("scrollend", onScrollEnd, { passive: true });
+    marquee.addEventListener("mouseenter", pauseDesktop);
+    marquee.addEventListener("mouseleave", resumeDesktop);
+    mobileQuery.addEventListener("change", onMobileChange);
+    reducedMotionQuery.addEventListener("change", onMobileChange);
 
     return () => {
+      cancelAnimationFrame(rafId);
+      if (scrollEndTimer) clearTimeout(scrollEndTimer);
+      resizeObserver.disconnect();
+      marquee.removeEventListener("touchstart", onTouchStart);
+      marquee.removeEventListener("touchend", onTouchEnd);
+      marquee.removeEventListener("touchcancel", onTouchEnd);
+      marquee.removeEventListener("scroll", onScroll);
+      marquee.removeEventListener("scrollend", onScrollEnd);
+      marquee.removeEventListener("mouseenter", pauseDesktop);
+      marquee.removeEventListener("mouseleave", resumeDesktop);
+      mobileQuery.removeEventListener("change", onMobileChange);
+      reducedMotionQuery.removeEventListener("change", onMobileChange);
       marquee.classList.remove("is-paused");
-      marquee.removeEventListener("touchstart", pause);
-      marquee.removeEventListener("touchend", resume);
-      marquee.removeEventListener("touchcancel", resume);
-      marquee.removeEventListener("mouseenter", pause);
-      marquee.removeEventListener("mouseleave", resume);
-      marquee.removeEventListener("scroll", updateScrollHint);
     };
   }, [products.length]);
 
@@ -165,29 +293,6 @@ export default function NewProductsScroll({
               {products.map((product, index) => renderCard(product, index, "post"))}
             </div>
           </div>
-        </div>
-        <div
-          className={[
-            "new-products-scroll-hint pointer-events-none absolute right-0 top-1 bottom-3 z-10 flex w-12 items-center justify-end pr-0.5 transition-opacity duration-300 sm:hidden",
-            showScrollHint ? "opacity-100" : "opacity-0",
-          ].join(" ")}
-          aria-hidden
-        >
-          <div className="absolute inset-0 bg-gradient-to-l from-white via-white/90 to-transparent" />
-          <svg
-            viewBox="0 0 20 20"
-            className="relative h-4 w-4 text-slate-400"
-            aria-hidden
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="M8 5l5 5-5 5"
-            />
-          </svg>
         </div>
         <div
           className="pointer-events-none absolute right-0 top-1 bottom-3 hidden w-12 bg-gradient-to-l from-white via-white/80 to-transparent sm:block sm:w-24"
