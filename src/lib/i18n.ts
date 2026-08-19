@@ -48,7 +48,7 @@ export const translations = {
       folia: "Folia",
     },
     home: {
-      title: "Handcrafted resin creations\ninspired by nature",
+      title: "Jewellery that carries\nthe beauty of nature",
       collectionsLabel: "Collections",
       newLabel: "New",
       newTitle: "Latest pieces",
@@ -168,7 +168,7 @@ export const translations = {
       folia: "Folia",
     },
     home: {
-      title: "Украшения ручной работы,\nвдохновленные природой",
+      title: "Украшения, в которых\nтаится красота природы",
       collectionsLabel: "Коллекции",
       newLabel: "Новинки",
       newTitle: "Новые изделия",
