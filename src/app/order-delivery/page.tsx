@@ -47,9 +47,10 @@ export default async function OrderDeliveryPage({ searchParams }: PageProps) {
           <h1 className="text-[clamp(1.5rem,5.6vw,2.25rem)] font-normal tracking-tight text-slate-900 sm:tracking-normal">
             {t.order.title}
           </h1>
-          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            {t.order.intro}
-          </p>
+          <div className="mx-auto max-w-2xl space-y-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+            <p>{t.order.intro}</p>
+            <p>{t.order.ratesIntro}</p>
+          </div>
         </section>
         <section className="mx-auto w-full max-w-2xl space-y-4 text-left">
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)] sm:p-6">

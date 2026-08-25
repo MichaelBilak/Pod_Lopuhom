@@ -82,8 +82,8 @@ export const translations = {
     },
     order: {
       title: "Order & Delivery",
-      intro:
-        "Shipping across Italy and to all countries. Estimated Shipping Times & Rates:",
+      intro: "Shipping across Italy and to all countries.",
+      ratesIntro: "Estimated Shipping Times & Rates:",
       deliveryItaly: "Italy — Standard Shipping",
       deliveryItalyDays: "2–4 business days",
       deliveryEurope: "Europe — Standard Shipping",
@@ -202,8 +202,8 @@ export const translations = {
     },
     order: {
       title: "Заказ и доставка",
-      intro:
-        "Доставка по всей Италии и в другие страны. Ориентировочные сроки и цены доставки:",
+      intro: "Доставка по всей Италии и в другие страны.",
+      ratesIntro: "Ориентировочные сроки и цены доставки:",
       deliveryItaly: "Италия — стандартная доставка",
       deliveryItalyDays: "2–4 рабочих дня",
       deliveryEurope: "Европа — стандартная доставка",
@@ -321,8 +321,8 @@ export const translations = {
     },
     order: {
       title: "Ordine e Spedizione",
-      intro:
-        "Spedizione in tutta Italia e all'estero. Tempi e costi di spedizione stimati:",
+      intro: "Spedizione in tutta Italia e all'estero.",
+      ratesIntro: "Tempi e costi di spedizione stimati:",
       deliveryItaly: "Italia — Spedizione standard",
       deliveryItalyDays: "2–4 giorni lavorativi",
       deliveryEurope: "Europa — Spedizione standard",
