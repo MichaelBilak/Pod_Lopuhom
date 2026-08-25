@@ -373,7 +373,7 @@ function NavBar() {
     buildQueryHref(pathname, searchParams, { lang: nextLocale });
   const isHome = pathname === "/";
   const brandTitleClass =
-    "font-brand text-[19px] sm:text-[22px] lg:text-[29px] [text-stroke:0.35px_currentColor] [-webkit-text-stroke:0.35px_currentColor]";
+    "font-brand text-[19px] sm:text-[22px] lg:text-[36px] [text-stroke:0.35px_currentColor] [-webkit-text-stroke:0.35px_currentColor]";
 
   useIsomorphicLayoutEffect(() => {
     const header = headerRef.current;
