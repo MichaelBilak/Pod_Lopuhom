@@ -448,17 +448,6 @@ select {
     --hero-text-left: clamp(10rem, 18cqi, 16rem);
     --hero-text-size: clamp(1.75rem, 3.6cqi, 3rem);
   }
-
-  .hero-panel__content {
-    width: max-content;
-    max-width: min(92%, 52rem);
-  }
-
-  .hero-tagline {
-    max-width: none;
-    white-space: nowrap;
-    text-wrap: nowrap;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
