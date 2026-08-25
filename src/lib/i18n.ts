@@ -84,12 +84,12 @@ export const translations = {
       title: "Order & Delivery",
       intro:
         "Shipping across Italy and to all countries. Estimated Shipping Times & Rates:",
-      deliveryItaly: "Italy — delivery by Poste Italiane",
-      deliveryItalyDays: "2–4 working days",
+      deliveryItaly: "Italy — Standard Shipping",
+      deliveryItalyDays: "2–4 business days",
       deliveryEurope: "Europe — Standard Shipping",
-      deliveryEuropeDays: "3–7 working days",
+      deliveryEuropeDays: "3–7 business days",
       deliveryWorldwideStandard: "Rest of the World — Standard Shipping",
-      deliveryWorldwideStandardDays: "5–12 working days",
+      deliveryWorldwideStandardDays: "5–12 business days",
       shippingNote:
         "Shipping costs depend on the destination and the weight of the package. If expedited shipping outside of Italy is required, an additional fee may apply.",
       orderCta: "If you need additional information, write to me:",
@@ -204,7 +204,7 @@ export const translations = {
       title: "Заказ и доставка",
       intro:
         "Доставка по всей Италии и в другие страны. Ориентировочные сроки и цены доставки:",
-      deliveryItaly: "Италия — доставка Poste Italiane",
+      deliveryItaly: "Италия — стандартная доставка",
       deliveryItalyDays: "2–4 рабочих дня",
       deliveryEurope: "Европа — стандартная доставка",
       deliveryEuropeDays: "3–7 рабочих дней",
@@ -323,7 +323,7 @@ export const translations = {
       title: "Ordine e Spedizione",
       intro:
         "Spedizione in tutta Italia e all'estero. Tempi e costi di spedizione stimati:",
-      deliveryItaly: "Italia — consegna con Poste Italiane",
+      deliveryItaly: "Italia — Spedizione standard",
       deliveryItalyDays: "2–4 giorni lavorativi",
       deliveryEurope: "Europa — Spedizione standard",
       deliveryEuropeDays: "3–7 giorni lavorativi",
