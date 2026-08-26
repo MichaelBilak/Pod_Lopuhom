@@ -309,7 +309,7 @@ select {
 }
 
 .hero-panel__shop {
-  margin-top: clamp(1.75rem, 4cqi, 2.75rem);
+  margin-top: clamp(2.75rem, 6cqi, 4rem);
   display: inline-flex;
   align-items: center;
   justify-content: center;
