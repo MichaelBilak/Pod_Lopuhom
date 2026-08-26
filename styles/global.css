@@ -150,6 +150,8 @@ select {
   --hero-text-top: 40%;
   --hero-text-left: clamp(2.5rem, 12cqi, 9rem);
   --hero-text-size: clamp(1.5rem, 4.4cqi, 3rem);
+  --hero-nav-offset: calc(32px + constant(safe-area-inset-top));
+  --hero-nav-offset: calc(32px + env(safe-area-inset-top, 0px));
   position: relative;
   overflow: hidden;
   container-type: inline-size;
@@ -161,9 +163,10 @@ select {
   background: #ffffff;
   padding: 0;
   box-shadow: none;
-  aspect-ratio: 2.35 / 1;
-  min-height: clamp(18rem, 42vw, 34rem);
-  max-height: min(70vh, 36rem);
+  aspect-ratio: auto;
+  height: calc(100svh - var(--hero-nav-offset));
+  min-height: calc(100svh - var(--hero-nav-offset));
+  max-height: none;
   display: block;
 }
 
@@ -287,7 +290,10 @@ select {
   line-height: 1.1;
   letter-spacing: 0.02em;
   color: #392c24;
-  text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+  text-shadow:
+    0 0 12px rgb(255 255 255 / 0.55),
+    0 0 28px rgb(255 255 255 / 0.35),
+    0 1px 2px rgb(255 255 255 / 0.4);
   white-space: pre-line;
   text-wrap: balance;
   overflow-wrap: normal;
@@ -390,8 +396,9 @@ select {
     --hero-text-top: 36%;
     --hero-text-left: clamp(1.5rem, 9cqi, 3rem);
     --hero-text-size: clamp(1.35rem, 6.8cqi, 1.85rem);
-    aspect-ratio: 5 / 4;
-    min-height: clamp(17rem, 78vw, 24rem);
+    aspect-ratio: auto;
+    height: calc(100svh - var(--hero-nav-offset));
+    min-height: calc(100svh - var(--hero-nav-offset));
     max-height: none;
   }
 
@@ -434,19 +441,37 @@ select {
     --hero-text-top: 38%;
     --hero-text-left: clamp(2.25rem, 10cqi, 5.5rem);
     --hero-text-size: clamp(1.55rem, 4.2cqi, 2.45rem);
-    aspect-ratio: 2 / 1;
-    min-height: clamp(18rem, 46vw, 28rem);
-    max-height: min(62vh, 30rem);
+    aspect-ratio: auto;
+    height: calc(100svh - var(--hero-nav-offset));
+    min-height: calc(100svh - var(--hero-nav-offset));
+    max-height: none;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-panel {
     --hero-focal-x: 56%;
-    --hero-focal-y: 85%;
-    --hero-text-top: 40%;
-    --hero-text-left: clamp(10rem, 18cqi, 16rem);
+    --hero-focal-y: 70%;
+    --hero-text-top: 34%;
+    --hero-text-left: clamp(3rem, 7cqi, 6.5rem);
     --hero-text-size: clamp(1.75rem, 3.6cqi, 3rem);
+    --hero-nav-offset: calc(88px + constant(safe-area-inset-top));
+    --hero-nav-offset: calc(88px + env(safe-area-inset-top, 0px));
+    aspect-ratio: auto;
+    height: calc(100svh - var(--hero-nav-offset));
+    min-height: calc(100svh - var(--hero-nav-offset));
+    max-height: none;
+  }
+
+  .hero-panel__content {
+    width: max-content;
+    max-width: min(92%, 52rem);
+  }
+
+  .hero-tagline {
+    max-width: none;
+    white-space: nowrap;
+    text-wrap: nowrap;
   }
 }
 
