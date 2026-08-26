@@ -49,6 +49,7 @@ export const translations = {
     },
     home: {
       title: "Jewellery that carries\nthe beauty of nature",
+      shopAll: "Shop all",
       collectionsLabel: "Collections",
       newLabel: "New",
       newTitle: "Latest pieces",
@@ -169,6 +170,7 @@ export const translations = {
     },
     home: {
       title: "Украшения, в которых\nтаится красота природы",
+      shopAll: "Смотреть все",
       collectionsLabel: "Коллекции",
       newLabel: "Новинки",
       newTitle: "Новые изделия",
@@ -288,6 +290,7 @@ export const translations = {
     },
     home: {
       title: "Gioielli che custodiscono\nla bellezza della natura",
+      shopAll: "Scopri tutto",
       collectionsLabel: "Collezioni",
       newLabel: "Novita",
       newTitle: "Ultimi pezzi",

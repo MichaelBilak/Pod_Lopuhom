@@ -34,7 +34,11 @@ export default async function HomePage({ searchParams }: PageProps) {
     <>
       <Nav />
       <main className="home-page page-pb-20 page-main mx-auto w-full min-w-0 sm:page-pb-28">
-        <HeroPanel title={t.home.title} locale={locale} />
+        <HeroPanel
+          title={t.home.title}
+          shopAllLabel={t.home.shopAll}
+          locale={locale}
+        />
         <div className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col">
           <nav
             aria-label="Shop categories"

@@ -1,15 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
-import type { Locale } from "@/src/lib/i18n";
+import { withLang, type Locale } from "@/src/lib/i18n";
 
 type HeroPanelProps = {
   title: string;
+  shopAllLabel: string;
   locale: Locale;
 };
 
-export default function HeroPanel({ title, locale }: HeroPanelProps) {
+export default function HeroPanel({
+  title,
+  shopAllLabel,
+  locale,
+}: HeroPanelProps) {
   const panelRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +74,9 @@ export default function HeroPanel({ title, locale }: HeroPanelProps) {
         <h1 className="hero-tagline font-tagline" lang={locale}>
           {title}
         </h1>
+        <Link href={withLang("/gallery", locale)} className="hero-panel__shop">
+          {shopAllLabel}
+        </Link>
       </div>
     </section>
   );
