@@ -71,12 +71,14 @@ export default function HeroPanel({
       <div className="hero-panel__content">
         <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
         <span className="hero-panel__rule" aria-hidden />
-        <h1 className="hero-tagline font-tagline" lang={locale}>
-          {title}
-        </h1>
-        <Link href={withLang("/gallery", locale)} className="hero-panel__shop">
-          {shopAllLabel}
-        </Link>
+        <div className="hero-panel__copy">
+          <h1 className="hero-tagline font-tagline" lang={locale}>
+            {title}
+          </h1>
+          <Link href={withLang("/gallery", locale)} className="hero-panel__shop">
+            {shopAllLabel}
+          </Link>
+        </div>
       </div>
     </section>
   );
