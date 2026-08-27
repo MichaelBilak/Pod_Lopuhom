@@ -306,7 +306,6 @@ select {
   text-wrap: balance;
   overflow-wrap: normal;
   -webkit-font-smoothing: antialiased;
-  transform: translateY(-0.85rem);
 }
 
 .hero-panel__shop {
@@ -438,10 +437,16 @@ select {
     --hero-text-top: 36%;
     --hero-text-left: clamp(1.5rem, 9cqi, 3rem);
     --hero-text-size: clamp(1.35rem, 6.8cqi, 1.85rem);
-    aspect-ratio: auto;
-    height: calc(100svh - var(--hero-nav-offset));
-    min-height: calc(100svh - var(--hero-nav-offset));
+    aspect-ratio: 5 / 4;
+    height: auto;
+    min-height: clamp(17rem, 78vw, 24rem);
     max-height: none;
+  }
+
+  .hero-panel__media {
+    inset: 0;
+    transform: none !important;
+    will-change: auto;
   }
 
   .hero-panel__veil {
@@ -464,6 +469,7 @@ select {
   .hero-tagline {
     max-width: 100%;
     text-wrap: initial;
+    transform: none;
   }
 
   .hero-tagline:lang(ru) {
@@ -473,6 +479,10 @@ select {
 
   .hero-tagline:lang(it) {
     --hero-text-size: clamp(1.2rem, 5.8cqi, 1.6rem);
+  }
+
+  .hero-panel__shop {
+    margin-top: clamp(1rem, 2.4cqi, 1.5rem);
   }
 }
 
@@ -514,6 +524,55 @@ select {
     max-width: none;
     white-space: nowrap;
     text-wrap: nowrap;
+    transform: translateY(-0.85rem);
+  }
+}
+
+.hero-panel__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.85rem, 3.5%, 1.75rem);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgb(63 49 40 / 0.72);
+  cursor: pointer;
+  transform: translateX(-50%);
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+.hero-panel__scroll:hover,
+.hero-panel__scroll:focus-visible {
+  color: #2a201a;
+}
+
+.hero-panel__scroll:focus-visible {
+  outline: 2px solid #3f3128;
+  outline-offset: 3px;
+}
+
+.hero-panel__scroll svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  animation: heroScrollNudge 1.8s ease-in-out infinite;
+}
+
+@keyframes heroScrollNudge {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(0.35rem);
+    opacity: 1;
   }
 }
 
@@ -527,6 +586,10 @@ select {
   .hero-panel__fade--bottom::before {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  .hero-panel__scroll svg {
+    animation: none;
   }
 }
 

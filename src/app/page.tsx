@@ -39,7 +39,10 @@ export default async function HomePage({ searchParams }: PageProps) {
           shopAllLabel={t.home.shopAll}
           locale={locale}
         />
-        <div className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col">
+        <div
+          id="home-after-hero"
+          className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col"
+        >
           <nav
             aria-label="Shop categories"
             className="home-category-menu min-w-0"
