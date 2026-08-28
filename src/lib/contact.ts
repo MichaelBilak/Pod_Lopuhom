@@ -12,3 +12,5 @@ export const instagramDmUrl = `https://ig.me/m/${instagramHandle}`;
 
 export const illustratorInstagramUrl =
   "https://www.instagram.com/st.jacobs_socks";
+
+export const illustratorInstagramHandle = "st.jacobs_socks";
