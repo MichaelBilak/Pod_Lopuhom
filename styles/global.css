@@ -505,7 +505,7 @@ select {
     --hero-focal-x: 56%;
     --hero-focal-y: 70%;
     --hero-text-top: 44%;
-    --hero-text-left: clamp(3rem, 7cqi, 6.5rem);
+    --hero-text-left: clamp(6rem, 11cqi, 10rem);
     --hero-text-size: clamp(1.75rem, 3.6cqi, 3rem);
     --hero-nav-offset: calc(88px + constant(safe-area-inset-top));
     --hero-nav-offset: calc(88px + env(safe-area-inset-top, 0px));
