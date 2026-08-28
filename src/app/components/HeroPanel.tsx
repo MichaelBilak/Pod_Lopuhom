@@ -8,12 +8,14 @@ import { withLang, type Locale } from "@/src/lib/i18n";
 type HeroPanelProps = {
   title: string;
   shopAllLabel: string;
+  scrollHintLabel: string;
   locale: Locale;
 };
 
 export default function HeroPanel({
   title,
   shopAllLabel,
+  scrollHintLabel,
   locale,
 }: HeroPanelProps) {
   const panelRef = useRef<HTMLElement>(null);
@@ -102,17 +104,20 @@ export default function HeroPanel({
         type="button"
         className="hero-panel__scroll"
         onClick={scrollToNext}
-        aria-label="Scroll down"
+        aria-label={scrollHintLabel}
       >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M6 9l6 6 6-6"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <span className="hero-panel__scroll-icon" aria-hidden>
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6 9l6 6 6-6"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <span className="hero-panel__scroll-label">{scrollHintLabel}</span>
       </button>
     </section>
   );

@@ -536,6 +536,7 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0;
   width: 2.75rem;
   height: 2.75rem;
   margin: 0;
@@ -548,6 +549,16 @@ select {
   transition: color 200ms ease, opacity 200ms ease;
 }
 
+.hero-panel__scroll-label {
+  display: none;
+}
+
+.hero-panel__scroll-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .hero-panel__scroll:hover,
 .hero-panel__scroll:focus-visible {
   color: #2a201a;
@@ -558,7 +569,7 @@ select {
   outline-offset: 3px;
 }
 
-.hero-panel__scroll svg {
+.hero-panel__scroll-icon svg {
   width: 1.35rem;
   height: 1.35rem;
   animation: heroScrollNudge 1.8s ease-in-out infinite;
@@ -567,33 +578,30 @@ select {
 @media (min-width: 640px) {
   .hero-panel__scroll {
     bottom: clamp(1.25rem, 4.5%, 2.25rem);
-    width: 3.5rem;
-    height: 3.5rem;
-    border: 1.5px solid rgb(63 49 40 / 0.45);
-    border-radius: 9999px;
-    background: rgb(255 255 255 / 0.72);
+    width: auto;
+    height: auto;
+    gap: 0.65rem;
+    padding: 0.25rem 0.35rem;
     color: #3f3128;
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.35),
-      0 8px 24px rgb(63 49 40 / 0.14);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
   }
 
-  .hero-panel__scroll:hover,
-  .hero-panel__scroll:focus-visible {
-    color: #2a201a;
-    background: rgb(255 255 255 / 0.92);
-    border-color: rgb(63 49 40 / 0.65);
+  .hero-panel__scroll-label {
+    display: inline;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgb(255 255 255 / 0.45);
+    white-space: nowrap;
   }
 
-  .hero-panel__scroll svg {
+  .hero-panel__scroll-icon svg {
     width: 1.75rem;
     height: 1.75rem;
     animation: heroScrollNudgeDesktop 1.6s ease-in-out infinite;
   }
 
-  .hero-panel__scroll svg path {
+  .hero-panel__scroll-icon svg path {
     stroke-width: 2.25;
   }
 }
@@ -634,7 +642,7 @@ select {
     -webkit-backdrop-filter: none;
   }
 
-  .hero-panel__scroll svg {
+  .hero-panel__scroll-icon svg {
     animation: none;
   }
 }
