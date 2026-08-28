@@ -9,3 +9,6 @@ export const instagramUrl =
 
 /** Opens Instagram DM on mobile; falls back to profile on desktop. */
 export const instagramDmUrl = `https://ig.me/m/${instagramHandle}`;
+
+export const illustratorInstagramUrl =
+  "https://www.instagram.com/st.jacobs_socks";

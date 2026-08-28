@@ -145,7 +145,8 @@ export const translations = {
       madeIn: "Handmade in Italy",
       websiteByBefore: "Website by",
       studioName: "DormUp Studio",
-      illustrationBy: "Illustration by Anka Bilak",
+      illustrationByBefore: "Illustration by",
+      illustrationArtistName: "Anka Bilak",
     },
   },
   ru: {
@@ -266,7 +267,8 @@ export const translations = {
       madeIn: "Сделано вручную в Италии",
       websiteByBefore: "Разработка сайта:",
       studioName: "DormUp Studio",
-      illustrationBy: "Иллюстрация: Анка Билак",
+      illustrationByBefore: "Иллюстрация:",
+      illustrationArtistName: "Анка Билак",
     },
   },
   it: {
@@ -387,7 +389,8 @@ export const translations = {
       madeIn: "Fatto a mano in Italia",
       websiteByBefore: "Sito realizzato da",
       studioName: "DormUp Studio",
-      illustrationBy: "Illustrazione di Anka Bilak",
+      illustrationByBefore: "Illustrazione di",
+      illustrationArtistName: "Anka Bilak",
     },
   },
 } as const;

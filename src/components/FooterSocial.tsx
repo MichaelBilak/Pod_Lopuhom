@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { DEFAULT_COLLECTION } from "@/src/lib/collections";
 import {
   instagramUrl,
+  illustratorInstagramUrl,
   whatsappDisplay,
   whatsappUrl,
 } from "@/src/lib/contact";
@@ -185,7 +186,15 @@ function FooterSocialContent() {
               {t.footer.studioName}
             </a>
             {" • "}
-            {t.footer.illustrationBy}
+            {t.footer.illustrationByBefore}{" "}
+            <a
+              href={illustratorInstagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-slate-300 underline-offset-2 transition hover:text-slate-900 hover:decoration-slate-900"
+            >
+              {t.footer.illustrationArtistName}
+            </a>
           </p>
         </div>
       </div>
