@@ -280,6 +280,14 @@ select {
   background: rgb(104 77 59 / 0.55);
 }
 
+.hero-panel__tagline-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+}
+
 .hero-tagline {
   margin: 0;
   width: max-content;
@@ -484,22 +492,22 @@ select {
 }
 
 .hero-panel__scroll {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(0.85rem, 3.5%, 1.75rem);
+  position: relative;
+  left: auto;
+  bottom: auto;
   z-index: 4;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  margin: 0;
+  margin: clamp(2.75rem, 8cqi, 4.5rem) 0 0;
   padding: 0;
   border: none;
   background: transparent;
   color: rgb(63 49 40 / 0.72);
   cursor: pointer;
-  transform: translateX(-50%);
+  transform: none;
   transition: color 200ms ease, opacity 200ms ease;
 }
 
@@ -521,9 +529,9 @@ select {
 
 @media (min-width: 640px) {
   .hero-panel__scroll {
-    bottom: clamp(1.25rem, 4.5%, 2.25rem);
     width: 3.5rem;
     height: 3.5rem;
+    margin-top: clamp(4.5rem, 12cqi, 7rem);
     border: 1.5px solid rgb(63 49 40 / 0.45);
     border-radius: 9999px;
     background: rgb(255 255 255 / 0.72);

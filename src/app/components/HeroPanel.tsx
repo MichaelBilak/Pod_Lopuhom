@@ -88,26 +88,28 @@ export default function HeroPanel({
       <div className="hero-panel__content">
         <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
         <span className="hero-panel__rule" aria-hidden />
-        <h1 className="hero-tagline font-tagline" lang={locale}>
-          {title}
-        </h1>
+        <div className="hero-panel__tagline-block">
+          <h1 className="hero-tagline font-tagline" lang={locale}>
+            {title}
+          </h1>
+          <button
+            type="button"
+            className="hero-panel__scroll"
+            onClick={scrollToNext}
+            aria-label={scrollHintLabel}
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M6 9l6 6 6-6"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-      <button
-        type="button"
-        className="hero-panel__scroll"
-        onClick={scrollToNext}
-        aria-label={scrollHintLabel}
-      >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M6 9l6 6 6-6"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
     </section>
   );
 }
