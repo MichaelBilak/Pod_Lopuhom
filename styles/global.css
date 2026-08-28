@@ -501,7 +501,7 @@ select {
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  margin: clamp(2.75rem, 8cqi, 4.5rem) 0 0;
+  margin: 0;
   padding: 0;
   border: none;
   background: transparent;
@@ -509,6 +509,18 @@ select {
   cursor: pointer;
   transform: none;
   transition: color 200ms ease, opacity 200ms ease;
+}
+
+.hero-panel__scroll--tagline {
+  display: none;
+  margin-top: clamp(2.75rem, 8cqi, 4.5rem);
+}
+
+.hero-panel__scroll--bottom {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.85rem, 3.5%, 1.75rem);
+  transform: translateX(-50%);
 }
 
 .hero-panel__scroll:hover,
@@ -528,7 +540,8 @@ select {
 }
 
 @media (min-width: 640px) {
-  .hero-panel__scroll {
+  .hero-panel__scroll--tagline {
+    display: inline-flex;
     width: 3.5rem;
     height: 3.5rem;
     margin-top: clamp(4.5rem, 12cqi, 7rem);
@@ -543,20 +556,24 @@ select {
     -webkit-backdrop-filter: blur(8px);
   }
 
-  .hero-panel__scroll:hover,
-  .hero-panel__scroll:focus-visible {
+  .hero-panel__scroll--bottom {
+    display: none;
+  }
+
+  .hero-panel__scroll--tagline:hover,
+  .hero-panel__scroll--tagline:focus-visible {
     color: #2a201a;
     background: rgb(255 255 255 / 0.92);
     border-color: rgb(63 49 40 / 0.65);
   }
 
-  .hero-panel__scroll svg {
+  .hero-panel__scroll--tagline svg {
     width: 1.75rem;
     height: 1.75rem;
     animation: heroScrollNudgeDesktop 1.6s ease-in-out infinite;
   }
 
-  .hero-panel__scroll svg path {
+  .hero-panel__scroll--tagline svg path {
     stroke-width: 2.25;
   }
 }

@@ -71,6 +71,18 @@ export default function HeroPanel({
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const scrollIcon = (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   return (
     <section ref={panelRef} className="hero-panel">
       <div ref={mediaRef} className="hero-panel__media" aria-hidden>
@@ -94,22 +106,22 @@ export default function HeroPanel({
           </h1>
           <button
             type="button"
-            className="hero-panel__scroll"
+            className="hero-panel__scroll hero-panel__scroll--tagline"
             onClick={scrollToNext}
             aria-label={scrollHintLabel}
           >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-              <path
-                d="M6 9l6 6 6-6"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {scrollIcon}
           </button>
         </div>
       </div>
+      <button
+        type="button"
+        className="hero-panel__scroll hero-panel__scroll--bottom"
+        onClick={scrollToNext}
+        aria-label={scrollHintLabel}
+      >
+        {scrollIcon}
+      </button>
     </section>
   );
 }
