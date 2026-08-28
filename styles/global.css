@@ -280,14 +280,6 @@ select {
   background: rgb(104 77 59 / 0.55);
 }
 
-.hero-panel__copy {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: max-content;
-  max-width: 100%;
-}
-
 .hero-tagline {
   margin: 0;
   width: max-content;
@@ -306,39 +298,6 @@ select {
   text-wrap: balance;
   overflow-wrap: normal;
   -webkit-font-smoothing: antialiased;
-}
-
-.hero-panel__shop {
-  margin-top: clamp(4rem, 8cqi, 5.5rem);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.5rem;
-  padding: 0.55rem 1.35rem;
-  border: 1.5px solid rgb(63 49 40 / 0.75);
-  background: rgb(255 255 255 / 0.42);
-  color: #3f3128;
-  font-size: clamp(0.7rem, 1.4cqi, 0.8rem);
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  text-shadow: 0 0 10px rgb(255 255 255 / 0.45);
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
-}
-
-.hero-panel__shop:hover {
-  background: rgb(255 255 255 / 0.72);
-  border-color: #3f3128;
-  color: #2a201a;
-}
-
-.hero-panel__shop:focus-visible {
-  outline: 2px solid #3f3128;
-  outline-offset: 3px;
 }
 
 /* iPhone X / 375px phone proportions */
@@ -480,10 +439,6 @@ select {
   .hero-tagline:lang(it) {
     --hero-text-size: clamp(1.2rem, 5.8cqi, 1.6rem);
   }
-
-  .hero-panel__shop {
-    display: none;
-  }
 }
 
 @media (min-width: 640px) and (max-width: 1023px) {
@@ -536,7 +491,6 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
   width: 2.75rem;
   height: 2.75rem;
   margin: 0;
@@ -549,16 +503,6 @@ select {
   transition: color 200ms ease, opacity 200ms ease;
 }
 
-.hero-panel__scroll-label {
-  display: none;
-}
-
-.hero-panel__scroll-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .hero-panel__scroll:hover,
 .hero-panel__scroll:focus-visible {
   color: #2a201a;
@@ -569,7 +513,7 @@ select {
   outline-offset: 3px;
 }
 
-.hero-panel__scroll-icon svg {
+.hero-panel__scroll svg {
   width: 1.35rem;
   height: 1.35rem;
   animation: heroScrollNudge 1.8s ease-in-out infinite;
@@ -578,30 +522,33 @@ select {
 @media (min-width: 640px) {
   .hero-panel__scroll {
     bottom: clamp(1.25rem, 4.5%, 2.25rem);
-    width: auto;
-    height: auto;
-    gap: 0.65rem;
-    padding: 0.25rem 0.35rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1.5px solid rgb(63 49 40 / 0.45);
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.72);
     color: #3f3128;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.35),
+      0 8px 24px rgb(63 49 40 / 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
-  .hero-panel__scroll-label {
-    display: inline;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgb(255 255 255 / 0.45);
-    white-space: nowrap;
+  .hero-panel__scroll:hover,
+  .hero-panel__scroll:focus-visible {
+    color: #2a201a;
+    background: rgb(255 255 255 / 0.92);
+    border-color: rgb(63 49 40 / 0.65);
   }
 
-  .hero-panel__scroll-icon svg {
+  .hero-panel__scroll svg {
     width: 1.75rem;
     height: 1.75rem;
     animation: heroScrollNudgeDesktop 1.6s ease-in-out infinite;
   }
 
-  .hero-panel__scroll-icon svg path {
+  .hero-panel__scroll svg path {
     stroke-width: 2.25;
   }
 }
@@ -642,7 +589,7 @@ select {
     -webkit-backdrop-filter: none;
   }
 
-  .hero-panel__scroll-icon svg {
+  .hero-panel__scroll svg {
     animation: none;
   }
 }

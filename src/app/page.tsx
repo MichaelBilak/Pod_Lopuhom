@@ -36,7 +36,6 @@ export default async function HomePage({ searchParams }: PageProps) {
       <main className="home-page page-pb-20 page-main mx-auto w-full min-w-0 sm:page-pb-28">
         <HeroPanel
           title={t.home.title}
-          shopAllLabel={t.home.shopAll}
           scrollHintLabel={t.home.scrollHint}
           locale={locale}
         />

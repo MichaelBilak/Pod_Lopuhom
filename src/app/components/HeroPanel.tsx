@@ -1,20 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { withLang, type Locale } from "@/src/lib/i18n";
+import { type Locale } from "@/src/lib/i18n";
 
 type HeroPanelProps = {
   title: string;
-  shopAllLabel: string;
   scrollHintLabel: string;
   locale: Locale;
 };
 
 export default function HeroPanel({
   title,
-  shopAllLabel,
   scrollHintLabel,
   locale,
 }: HeroPanelProps) {
@@ -91,14 +88,9 @@ export default function HeroPanel({
       <div className="hero-panel__content">
         <p className="hero-panel__eyebrow font-brand">Pod Lopuhom</p>
         <span className="hero-panel__rule" aria-hidden />
-        <div className="hero-panel__copy">
-          <h1 className="hero-tagline font-tagline" lang={locale}>
-            {title}
-          </h1>
-          <Link href={withLang("/gallery", locale)} className="hero-panel__shop">
-            {shopAllLabel}
-          </Link>
-        </div>
+        <h1 className="hero-tagline font-tagline" lang={locale}>
+          {title}
+        </h1>
       </div>
       <button
         type="button"
@@ -106,18 +98,15 @@ export default function HeroPanel({
         onClick={scrollToNext}
         aria-label={scrollHintLabel}
       >
-        <span className="hero-panel__scroll-icon" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none">
-            <path
-              d="M6 9l6 6 6-6"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-        <span className="hero-panel__scroll-label">{scrollHintLabel}</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M6 9l6 6 6-6"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
     </section>
   );
