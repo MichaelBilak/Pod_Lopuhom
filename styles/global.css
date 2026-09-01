@@ -401,7 +401,7 @@ select {
   .hero-panel {
     --hero-focal-x: 68%;
     --hero-focal-y: 50%;
-    --hero-text-top: 30%;
+    --hero-text-top: 32%;
     --hero-text-left: clamp(1.5rem, 9cqi, 3rem);
     --hero-text-size: clamp(1.35rem, 6.8cqi, 1.85rem);
     aspect-ratio: 5 / 4;
@@ -431,7 +431,7 @@ select {
   .hero-panel__content {
     width: min(70%, 18rem);
     max-width: none;
-    transform: translateY(calc(-50% - 0.75cm));
+    transform: translateY(calc(-50% - 0.25cm));
   }
 
   .hero-tagline {
