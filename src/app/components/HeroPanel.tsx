@@ -66,9 +66,15 @@ export default function HeroPanel({
   }, []);
 
   const scrollToNext = () => {
-    const target = document.getElementById("home-after-hero");
+    const target = document.getElementById("home-category-menu");
     if (!target) return;
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const nav = document.getElementById("main-nav");
+    const navHeight = nav?.getBoundingClientRect().height ?? 0;
+    const top =
+      target.getBoundingClientRect().top + window.scrollY - navHeight;
+
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   };
 
   const scrollIcon = (

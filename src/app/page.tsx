@@ -39,13 +39,11 @@ export default async function HomePage({ searchParams }: PageProps) {
           scrollHintLabel={t.home.scrollHint}
           locale={locale}
         />
-        <div
-          id="home-after-hero"
-          className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col"
-        >
+        <div className="page-main-tight page-x page-shell mx-auto flex w-full min-w-0 flex-col">
           <nav
+            id="home-category-menu"
             aria-label="Shop categories"
-            className="home-category-menu min-w-0"
+            className="home-category-menu min-w-0 scroll-mt-[calc(32px+env(safe-area-inset-top,0px))] lg:scroll-mt-[calc(88px+env(safe-area-inset-top,0px))]"
           >
             <div className="category-tabs-scroll overflow-x-auto overscroll-x-contain scroll-smooth py-3 [-webkit-overflow-scrolling:touch] sm:overflow-visible sm:py-4">
               <div className="flex w-max min-w-full flex-nowrap items-center justify-center gap-3 sm:gap-6">
