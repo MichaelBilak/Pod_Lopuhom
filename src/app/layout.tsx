@@ -3,6 +3,7 @@ import type { Viewport } from "next";
 import { Caveat } from "next/font/google";
 import FirstVisitSplash from "@/src/components/FirstVisitSplash";
 import ViewportOverflowDebug from "@/src/components/ViewportOverflowDebug";
+import { SPLASH_STORAGE_KEY } from "@/src/lib/splash";
 
 /** Handwritten tagline — Latin + Cyrillic (EN / RU / IT hero). */
 const caveat = Caveat({
@@ -14,6 +15,11 @@ const caveat = Caveat({
 
 const SPLASH_LOGO_SRC =
   "/images/products/Logo._pod_lopuhom-removebg-preview.png";
+
+/** Runs before first paint so returning visits never flash the splash, and first visits cover the site immediately. */
+const SPLASH_BOOT_SCRIPT = `(function(){try{var k=${JSON.stringify(SPLASH_STORAGE_KEY)};var skip=sessionStorage.getItem(k)||window.matchMedia("(prefers-reduced-motion: reduce)").matches;document.documentElement.classList.add(skip?"splash-skip":"splash-active");}catch(e){document.documentElement.classList.add("splash-skip");}})();`;
+
+const SPLASH_CRITICAL_CSS = `html.splash-active{overflow:hidden}html.splash-skip #initial-splash{display:none!important}#initial-splash{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:linear-gradient(165deg,#fff 0%,#f8fafc 42%,#f1f5f9 100%)}`;
 
 export const metadata = {
   title: "Pod Lopuhom",
@@ -51,6 +57,8 @@ export default function RootLayout({
           as="image"
           href={SPLASH_LOGO_SRC}
         />
+        <style dangerouslySetInnerHTML={{ __html: SPLASH_CRITICAL_CSS }} />
+        <script dangerouslySetInnerHTML={{ __html: SPLASH_BOOT_SCRIPT }} />
       </head>
       <body className="bg-white text-ink" suppressHydrationWarning>
         <div

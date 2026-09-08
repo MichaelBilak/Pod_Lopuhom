@@ -1,21 +1,21 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import { SPLASH_STORAGE_KEY } from "@/src/lib/splash";
 
-const STORAGE_KEY = "pod-lopuhom-splash-v1";
 const HOLD_MS = 2600;
 
 function markSplashSeen() {
   try {
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    sessionStorage.setItem(SPLASH_STORAGE_KEY, "1");
   } catch {
     /* ignore */
   }
+  document.documentElement.classList.remove("splash-active");
   document.body.style.overflow = "";
 }
 
 function hideSplashElement(splash: HTMLElement) {
-  splash.classList.remove("splash-screen--visible");
   splash.classList.add("splash-screen--exit");
   splash.setAttribute("aria-hidden", "true");
 }
@@ -27,36 +27,35 @@ export default function FirstVisitSplash() {
     if (startedRef.current) return;
     startedRef.current = true;
 
+    const html = document.documentElement;
     const splash = document.getElementById("initial-splash");
-    if (!splash) {
-      markSplashSeen();
+
+    if (html.classList.contains("splash-skip") || !splash) {
+      html.classList.remove("splash-active");
+      document.body.style.overflow = "";
       return;
     }
 
-    let shouldShow = false;
     try {
-      shouldShow = !sessionStorage.getItem(STORAGE_KEY);
+      if (sessionStorage.getItem(SPLASH_STORAGE_KEY)) {
+        markSplashSeen();
+        hideSplashElement(splash);
+        return;
+      }
     } catch {
       markSplashSeen();
       hideSplashElement(splash);
       return;
     }
 
-    if (!shouldShow) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       markSplashSeen();
       hideSplashElement(splash);
       return;
     }
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    splash.classList.add("splash-screen--visible");
+    html.classList.add("splash-active");
     document.body.style.overflow = "hidden";
-
-    if (reducedMotion) {
-      markSplashSeen();
-      hideSplashElement(splash);
-      return;
-    }
 
     const exitTimer = window.setTimeout(() => {
       hideSplashElement(splash);
@@ -65,6 +64,7 @@ export default function FirstVisitSplash() {
 
     return () => {
       window.clearTimeout(exitTimer);
+      html.classList.remove("splash-active");
       document.body.style.overflow = "";
     };
   }, []);
